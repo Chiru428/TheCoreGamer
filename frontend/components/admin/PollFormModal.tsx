@@ -109,7 +109,7 @@ function EditPollForm({ pollId, onClose, onMutate }: { pollId: string; onClose: 
     if (poll) {
       setValues({
         question: poll.question,
-        options: poll.Options.map((o) => o.text),
+        options: poll.Options.map((o: any) => ({ text: o.text, allowCustomInput: o.allowCustomInput || false })),
         allowMultiple: poll.allowMultiple,
         homepageSlot: (poll.homepageSlot as 1 | 2 | null) ?? null,
         articleId: poll.articleId ?? '',
