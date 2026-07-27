@@ -1,0 +1,1192 @@
+/* ── Game Hub (games/[slug]) — IGN-style tabbed layout ─────────────────
+   All colours come from the globals.css custom properties.
+   Corners stay square (var(--r) = 0px) per the design system. */
+
+/* ════ HERO ═══════════════════════════════════════════════════════════ */
+
+.hero {
+  /* Hero always uses the dark-theme palette, regardless of the active
+     site theme, since it sits on top of a dark blurred artwork backdrop. */
+  --bg: #1a1a1a;
+  --bg2: #242424;
+  --bg3: #2d2d2d;
+  --bg4: #333333;
+  --border: rgba(255, 255, 255, 0.15);
+  --border-hover: rgba(59, 130, 246, 0.50);
+  --accent: #3b82f6;
+  --text: #ffffff;
+  --text-strong: #ffffff;
+  --muted: rgba(255, 255, 255, 0.85);
+  --muted2: rgba(255, 255, 255, 0.65);
+
+  position: relative;
+  min-height: 380px;
+  overflow: hidden;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  margin-top: -90px;
+  padding-top: 90px;
+}
+
+.heroBackdrop {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 1;
+}
+
+.heroBackdropBlur {
+  filter: blur(2px);
+}
+
+@media (min-width: 768px) {
+  .heroBackdropBlur {
+    filter: none;
+  }
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, var(--bg) 0%, transparent 55%),
+    linear-gradient(to right, rgba(0, 0, 0, 0.65) 0%, transparent 65%);
+}
+
+.heroInner {
+  position: relative;
+  z-index: 1;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 40px 16px 32px;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 28px;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .heroInner {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 56px 16px 36px;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Center the cover+circles row and all the info below it as one column. */
+  .heroInner {
+    align-items: center;
+  }
+
+  .heroLeft {
+    text-align: center;
+  }
+
+  .platformRow,
+  .heroMeta,
+  .buyRow,
+  .actionRow {
+    justify-content: center;
+  }
+}
+
+.heroLeft {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  /* Cap the column so the platform/status badge row wraps at roughly the
+     same width as the 3 price buttons below it, instead of spreading across
+     the full available hero width. */
+  .heroLeft {
+    max-width: 760px;
+  }
+}
+
+.heroTitle {
+  font-family: var(--font-condensed, 'acumin-pro-condensed', sans-serif);
+  font-size: 3rem;
+  line-height: 1.02;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  color: var(--text);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+  margin: 10px 0 8px;
+}
+
+@media (max-width: 640px) {
+  .heroTitle { font-size: 2.1rem; }
+}
+
+.heroMeta {
+  color: var(--muted);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin-bottom: 12px;
+}
+
+.heroMeta strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* Platform badges */
+.platformRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.platformBadge {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 3px 10px;
+  border-radius: var(--r);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.badgePc {
+  background: rgba(59, 130, 246, 0.28);
+  color: #cfe3ff;
+  border: 1px solid rgba(59, 130, 246, 0.55);
+}
+
+.badgePs5 {
+  background: rgba(0, 70, 160, 0.32);
+  color: #aee2ff;
+  border: 1px solid rgba(79, 195, 247, 0.5);
+}
+
+.badgeXbox {
+  background: rgba(16, 119, 32, 0.3);
+  color: #b7f0bd;
+  border: 1px solid rgba(76, 175, 80, 0.5);
+}
+
+.badgeSwitch {
+  background: rgba(230, 0, 21, 0.25);
+  color: #ffc4c4;
+  border: 1px solid rgba(255, 107, 107, 0.5);
+}
+
+.badgeOther {
+  background: rgba(45, 45, 45, 0.7);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+/* Buy buttons */
+.buyRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 14px 0;
+  align-items: center;
+}
+
+.buyBtn {
+  display: inline-flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 10px 20px;
+  background: rgba(45, 45, 45, 0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 10px;
+  color: var(--text);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+  transition: border-color 0.15s, background 0.15s, transform 0.15s, box-shadow 0.15s;
+}
+
+.buyBtn:hover {
+  border-color: var(--border-hover);
+  background: rgba(51, 51, 51, 0.85);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.buyBtnBest {
+  background: rgba(34, 197, 94, 0.18);
+  border-color: rgba(34, 197, 94, 0.6);
+  box-shadow: 0 4px 18px rgba(34, 197, 94, 0.25);
+}
+
+.buyBtnBest:hover {
+  background: rgba(34, 197, 94, 0.26);
+  border-color: var(--green);
+  box-shadow: 0 8px 22px rgba(34, 197, 94, 0.35);
+}
+
+.buyPrice {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--green);
+}
+
+.buyStore {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+@media (max-width: 640px) {
+  /* Stack the 3 price buttons into full-width rows: store name left, price right. */
+  .buyRow {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .buyBtn {
+    flex-direction: row;
+    width: 92%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+  }
+
+  .buyPrice {
+    font-size: 0.95rem;
+    white-space: nowrap;
+    order: 2;
+  }
+
+  .buyStore {
+    font-size: 0.75rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    order: 1;
+  }
+}
+
+.buyCut {
+  color: var(--green);
+  font-weight: 700;
+}
+
+.actionRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-top: 6px;
+}
+
+/* Right column: cover + scores */
+.heroRight {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .heroRight {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+  }
+}
+
+.coverWrap {
+  position: relative;
+  width: 288px;
+  aspect-ratio: 2 / 3;
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 640px) {
+  .coverWrap { width: 240px; }
+}
+
+.scoreValue {
+  font-family: var(--font-condensed, 'acumin-pro-condensed', sans-serif);
+  font-size: 1.7rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+/* ════ TAB BAR ════════════════════════════════════════════════════════ */
+
+.tabBar {
+  position: sticky;
+  top: var(--sticky-offset, 90px);
+  z-index: 30;
+  height: 40px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+}
+
+@media (min-width: 1024px) {
+  .tabBar {
+    height: 50px;
+  }
+}
+
+.tabBarInner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 16px;
+  height: 100%;
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+
+.tabBarInner::-webkit-scrollbar {
+  display: none;
+}
+
+.tabBtn {
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  font-family: 'acumin-pro', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted2);
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color 0.15s, border-bottom-color 0.15s;
+}
+
+.tabBtn:hover {
+  color: var(--muted);
+  border-bottom-color: var(--muted);
+}
+
+.tabBtnActive {
+  color: var(--text);
+  border-bottom-color: var(--accent);
+}
+
+/* ════ TAB CONTENT ════════════════════════════════════════════════════ */
+
+.tabContent {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 28px 16px 32px;
+  min-height: 30vh;
+}
+
+/* Give the shared section titles breathing room inside the tab panels, and use
+   Rubik for headings within the game hub tabs (Synopsis, Ratings, Details, etc.) —
+   scoped here rather than in the shared .section-title-bar definition, which is
+   also used outside the game hub. */
+.tabContent :global(.section-title-bar) {
+  display: flex;
+  margin-bottom: 14px;
+  font-family: 'Rubik', sans-serif;
+}
+
+/* Overview layout: main column + 300px sidebar */
+.overviewLayout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px 28px;
+}
+
+@media (min-width: 1024px) {
+  .overviewLayout {
+    grid-template-columns: minmax(0, 1fr) 300px;
+    align-items: start;
+  }
+}
+
+/* Mobile: mainCol/asideCol disappear from the box tree via `display: contents`,
+   promoting their children (synopsis/ratings/details/links/rest2) to direct
+   grid items so `order` can freely interleave them: Synopsis, Ratings,
+   Details, Links, then Release Dates/Language Support.
+
+   Desktop: mainCol/asideCol become real flex columns instead, each flowing
+   independently in DOM order (`order` no longer applies once they're plain
+   block/flex children) — so a long Synopsis can never push the sidebar
+   column's own content down; only its own column. */
+.mainCol, .asideCol {
+  display: contents;
+}
+
+.orderSynopsis { order: 1; }
+.orderRatings { order: 2; }
+.orderDetails { order: 3; }
+.orderLinks { order: 4; }
+.orderReleaseDates { order: 5; }
+.orderRest2 { order: 6; }
+
+/* Spacing between boxes comes entirely from the grid's own gap (and the
+   flex gaps below) — each card's own margin-bottom would otherwise stack
+   on top of that gap too, doubling up into large gaps. */
+.overviewLayout .contentCard,
+.overviewLayout :global(.widget) {
+  margin-bottom: 0;
+}
+
+.orderRest2 {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@media (min-width: 1024px) {
+  .mainCol, .asideCol {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+/* Overview tab text bump — +1px over each element's own base size, scoped to
+   this tab only (some of these classes/utilities are shared with other tabs
+   or other pages, e.g. .scoreValue on GameHero, .genre-tag site-wide). */
+.overviewLayout .synopsis { font-size: calc(0.95rem + 1px); }
+.overviewLayout .readMoreBtn { font-size: calc(0.85rem + 1px); }
+.overviewLayout .detailLabel { font-size: calc(0.7rem + 1px); }
+.overviewLayout .detailValue { font-size: calc(0.9rem + 1px); }
+.overviewLayout .scoreValue { font-size: calc(1.7rem + 1px); }
+.overviewLayout :global(.genre-tag) { font-size: calc(12px + 1px); }
+.overviewLayout :global(.gh-tag) { font-size: calc(9px + 1px); }
+
+.overviewLayout .writeReviewBtn {
+  font-family: "Rubik", sans-serif;
+  font-size: 16px !important;
+}
+
+.contentCard,
+.overviewLayout :global(.widget) {
+  border-radius: 10px;
+}
+
+.overviewLayout :global(.widget) {
+  background: var(--bg2);
+  padding: 20px;
+}
+
+.contentCard {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+:global([data-theme="dark"]) .contentCard,
+:global([data-theme="dark"]) .overviewLayout :global(.widget),
+:global([data-theme="dark"]) .tabBar,
+:global([data-theme="dark"]) .priceRow:not(.priceRowBest),
+:global([data-theme="dark"]) .ratingCard {
+  background: #3a3f4a;
+}
+
+.synopsis {
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 0.95rem;
+  white-space: pre-line;
+}
+
+.linkIconGrid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  margin-top: 16px;
+}
+
+@media (max-width: 640px) {
+  .linkIconGrid {
+    grid-template-columns: repeat(8, 1fr);
+  }
+}
+
+.linkIconTile {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.linkIconTile img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.linkDivider {
+  border-top: 1px solid var(--border);
+  margin: 16px 0;
+}
+
+.synopsisClamped {
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media (min-width: 640px) {
+  .synopsisClamped {
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+  }
+}
+
+.readMoreBtn {
+  margin-top: 10px;
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.detailsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px 24px;
+}
+
+@media (min-width: 640px) {
+  .detailsGrid { grid-template-columns: 1fr 1fr; }
+}
+
+/* Multi-column instead of grid — a grid row stretches every field in it to
+   match its tallest neighbour (e.g. a long "Supporting" studio list), which
+   left dead space next to short fields like "Release Date". Columns let
+   each field size to its own content instead. */
+.detailsColumns {
+  column-count: 2;
+  column-gap: 24px;
+}
+
+@media (min-width: 640px) {
+  .detailsColumns { column-count: 3; }
+}
+
+.detailsColumnItem {
+  break-inside: avoid;
+  margin-bottom: 16px;
+}
+
+.detailLabel {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted2);
+  margin-bottom: 4px;
+}
+
+.detailValue {
+  font-size: 0.9rem;
+  color: var(--text);
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+/* ════ REVIEWS TAB ════════════════════════════════════════════════════ */
+
+.reviewHero {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: center;
+}
+
+.reviewHeroMeta {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  flex: 1 1 280px;
+  margin-left: 24px;
+}
+
+.hexBadge {
+  width: 126px;
+  height: 145px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.hexBadgeScore {
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: #ffffff;
+}
+
+@media (max-width: 640px) {
+  .hexBadge {
+    width: 104px;
+    height: 120px;
+  }
+
+  .hexBadgeScore {
+    font-size: 1.9rem;
+  }
+}
+
+.reviewVerdictLabel {
+  font-family: 'Rubik', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text-strong);
+}
+
+.reviewPlatformRow {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.reviewPlatformIcon {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  border-bottom: 2px solid transparent;
+  transition: border-bottom-color 0.15s;
+}
+
+.reviewPlatformIcon:hover {
+  border-bottom-color: var(--accent);
+}
+
+.reviewReadBtn {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 14px;
+  padding: 10px 24px;
+  background: #141824;
+  color: #ffffff;
+  font-weight: 700;
+  border-radius: 9999px;
+  box-shadow: var(--shadow-sm);
+  transition: background 0.2s;
+}
+
+.reviewReadBtn:hover {
+  background: #1f2534;
+}
+
+:global([data-theme="light"]) .reviewReadBtn {
+  background: var(--accent);
+}
+
+:global([data-theme="light"]) .reviewReadBtn:hover {
+  background: var(--accent2);
+}
+
+.reviewHeroImage {
+  position: relative;
+  flex: 1 1 320px;
+  aspect-ratio: 16 / 9;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.platformScoreGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 640px) {
+  .platformScoreGrid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (min-width: 1024px) {
+  .platformScoreGrid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.platformScoreCard {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  padding: 14px 16px;
+}
+
+.historyRow {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.85rem;
+}
+
+.historyRow:last-child {
+  border-bottom: none;
+}
+
+.sortTabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+@media (max-width: 640px) {
+  /* Single scrollable row of pills instead of wrapping to a second line. */
+  .sortTabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: thin;
+  }
+
+  .sortTabs .sortTab {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+}
+
+.sortTab {
+  padding: 6px 16px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: var(--bg2);
+  color: var(--muted2);
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+
+.sortTab:hover {
+  color: var(--brand-green);
+  border-color: var(--brand-green);
+}
+
+.sortTabActive {
+  color: var(--text);
+  border-color: var(--accent);
+  background: rgba(59, 130, 246, 0.1);
+}
+
+/* Multi-column instead of grid — a grid row stretches every card in it to
+   match its tallest neighbour, which is what left the large empty gap under
+   shorter cards. Columns let each card size to its own content instead. */
+.ratingGrid {
+  column-count: 1;
+  column-gap: 14px;
+}
+
+@media (min-width: 768px) {
+  .ratingGrid { column-count: 2; }
+}
+
+.ratingCard {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 14px;
+  break-inside: avoid;
+}
+
+.reviewScoreBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 46px;
+  padding: 0 4px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: #fff;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+/* ════ ARTICLES TAB ═══════════════════════════════════════════════════ */
+
+.filterPills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 640px) {
+  /* Single scrollable row of smaller pills — text size stays the same. */
+  .filterPills {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: thin;
+  }
+
+  .filterPills .sortTab {
+    flex-shrink: 0;
+    white-space: nowrap;
+    padding: 4px 10px;
+  }
+}
+
+.loadMoreWrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
+}
+
+/* ════ SCREENSHOTS TAB ════════════════════════════════════════════════ */
+
+.masonry {
+  columns: 1;
+  column-gap: 12px;
+}
+
+@media (min-width: 640px) {
+  .masonry { columns: 2; }
+}
+
+@media (min-width: 1024px) {
+  .masonry { columns: 3; }
+}
+
+.masonryItem {
+  position: relative;
+  break-inside: avoid;
+  margin-bottom: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  cursor: zoom-in;
+  overflow: hidden;
+}
+
+.masonryItem:hover img {
+  transform: scale(1.03);
+}
+
+.masonryOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 10px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.78), transparent 65%);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.masonryItem:hover .masonryOverlay {
+  opacity: 1;
+}
+
+.masonryOverlayText {
+  color: #fff;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.masonryOverlayText .date {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 11px;
+}
+
+.masonryCaption {
+  padding: 6px 10px;
+  font-size: 12px;
+  color: var(--muted2);
+  border-top: 1px solid var(--border);
+}
+
+.pendingBadge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #1a1a1a;
+  background: #fbbf24;
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+/* ════ DLC & SIMILAR TABS ═════════════════════════════════════════════ */
+
+.dlcGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+@media (min-width: 640px) {
+  .dlcGrid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .dlcGrid { grid-template-columns: repeat(6, 1fr); }
+}
+
+.dlcCard {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: border-color 0.15s;
+  height: 100%;
+}
+
+.dlcCard:hover {
+  border-color: var(--border-hover);
+}
+
+.dlcCardImage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background: var(--bg3);
+}
+
+.dlcCardContent {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.similarGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+@media (min-width: 640px) {
+  .similarGrid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .similarGrid { grid-template-columns: repeat(6, 1fr); }
+}
+
+.similarCard {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+
+.similarCard:hover {
+  border-color: var(--border-hover);
+}
+
+.similarCardImage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: var(--bg3);
+  flex-shrink: 0;
+}
+
+.similarCardTitle {
+  padding: 8px 10px;
+  font-family: var(--font-condensed, 'acumin-pro-condensed', sans-serif);
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: var(--text-strong, #ffffff);
+  line-height: 1.3;
+  background: var(--bg3);
+}
+
+.similarCard:hover .similarCardTitle {
+  color: var(--accent);
+}
+
+.similarCardInitial {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-condensed, 'acumin-pro-condensed', sans-serif);
+  font-size: 4rem;
+  font-weight: 800;
+  color: var(--muted2);
+  opacity: 0.4;
+}
+
+/* ════ PRICES TAB ═════════════════════════════════════════════════════ */
+
+.priceList {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+@media (min-width: 768px) {
+  .priceList {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.priceRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 18px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition: border-color 0.15s;
+}
+
+.priceRow:hover {
+  border-color: var(--border-hover);
+}
+
+.priceRowBest {
+  background: rgba(34, 197, 94, 0.1);
+  border-color: rgba(34, 197, 94, 0.5);
+}
+
+.priceRowInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.priceRowBadge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--green);
+}
+
+.priceRowShop {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+.priceRowUpdated {
+  font-size: 0.75rem;
+  color: var(--muted2);
+}
+
+.priceRowAmount {
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.priceRowBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  padding: 9px 16px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-strong);
+  transition: all 0.15s;
+  cursor: pointer;
+}
+
+.priceRowBtn:hover {
+  border-color: var(--border-hover);
+  background: rgba(59, 130, 246, 0.12);
+}
+
+@media (max-width: 640px) {
+  .priceRow {
+    flex-wrap: wrap;
+  }
+
+  .priceRowBtn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ════ SHARED ═════════════════════════════════════════════════════════ */
+
+.emptyState {
+  text-align: center;
+  padding: 56px 16px;
+  color: var(--muted2);
+  font-size: 0.95rem;
+  background: var(--bg2);
+  border: 1px dashed var(--border);
+}
+
+.shimmerHex {
+  width: 90px;
+  height: 103px;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+/* Upload modal (screenshots tab) */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.modalBox {
+  width: 100%;
+  max-width: 520px;
+}

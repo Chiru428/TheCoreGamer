@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\dhana\\\\Downloads\\\\Project files\\\\frameRateHub\" -Recurse -ErrorAction SilentlyContinue)",
+      "Bash(Select-Object -First 50)",
+      "Bash(powershell -Command \"Get-ChildItem -Path 'C:\\\\Users\\\\dhana\\\\Downloads\\\\Project files\\\\frameRateHub' -Recurse -Filter 'scheduler.worker.ts' -ErrorAction SilentlyContinue\")",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\dhana\\\\Downloads\\\\Project files\\\\frameRateHub\" -Recurse -Force)",
+      "Bash(Select-Object FullName)",
+      "PowerShell(head -200)",
+      "Bash(Find-Item -Path \"C:\\\\Users\\\\dhana\\\\Downloads\\\\Project files\\\\frameRateHub\\\\backend\\\\src\" -Type Directory)",
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "Bash(Sort-Object)",
+      "Bash(Remove-Item -Path \"C:\\\\Users\\\\dhana\\\\Downloads\\\\Project files\\\\frameRateHub\\\\backend\\\\src\\\\proxy.ts\" -Force)",
+      "Bash(rm \"C:\\\\Users\\\\dhana\\\\Downloads\\\\Project files\\\\frameRateHub\\\\backend\\\\src\\\\app\\\\[slug]\\\\route.ts\")",
+      "Bash(rmdir \"C:\\\\Users\\\\dhana\\\\Downloads\\\\Project files\\\\frameRateHub\\\\backend\\\\src\\\\app\\\\[slug]\")",
+      "Bash(npx prisma *)",
+      "Bash(npx tsc *)",
+      "Bash(npm test *)",
+      "Bash(npm run *)",
+      "Bash(New-Item -ItemType Directory -Force \"C:\\\\Users\\\\dhana\\\\Downloads\\\\Project files\\\\frameRateHub\\\\backend\\\\src\\\\app\\\\api\\\\deals\\\\prices\")",
+      "Bash(Out-Null)",
+      "Bash(New-Item -ItemType Directory -Force \"C:\\\\Users\\\\dhana\\\\Downloads\\\\Project files\\\\frameRateHub\\\\backend\\\\src\\\\app\\\\api\\\\wishlist\\\\[gameId]\")",
+      "Bash(Write-Output \"Directories created\")",
+      "Bash(mkdir -p \"C:/Users/dhana/Downloads/Project files/frameRateHub/backend/src/app/api/deals/prices\" && mkdir -p \"C:/Users/dhana/Downloads/Project files/frameRateHub/backend/src/app/api/wishlist/[gameId]\" && echo \"done\")",
+      "Bash(echo \"exit: $?\")",
+      "Bash(DEBUG=prisma* npx prisma migrate dev --name verify_fix)",
+      "Bash(Remove-Item \"C:\\\\Users\\\\dhana\\\\Downloads\\\\Project files\\\\frameRateHub\\\\backend\\\\prisma\\\\fix_migration_history.sql\" -Force)",
+      "Bash(Remove-Item \"C:\\\\Users\\\\dhana\\\\Downloads\\\\Project files\\\\frameRateHub\\\\backend\\\\prisma\\\\drop_scaffold_tables.sql\" -Force)",
+      "Bash(Write-Output \"Cleaned up temporary SQL files\")",
+      "Bash(npx tsx *)",
+      "Bash(NODE_OPTIONS=\"--import tsx/esm\" npx tsx --tsconfig tsconfig.json -e \"require\")",
+      "Bash(echo \"GIN index applied: $?\")",
+      "Bash(npx jest *)"
+    ]
+  }
+}

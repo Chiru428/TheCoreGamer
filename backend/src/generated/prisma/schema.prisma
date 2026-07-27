@@ -1,0 +1,1004 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model AdPlacement {
+  id        String   @id @default(cuid())
+  zoneId    String   @unique
+  name      String
+  isActive  Boolean  @default(true)
+  adUnitId  String
+  format    String
+  updatedAt DateTime @updatedAt
+}
+
+model AffiliateClick {
+  id          String   @id @default(cuid())
+  articleId   String?
+  gameId      String?
+  store       String
+  url         String
+  /// UTM source slug — always lowercase "thecoregamer" (no spaces/caps).
+  /// This intentionally differs from the display name "TheCoreGamer".
+  /// Filter analytics dashboards by utmSource = "thecoregamer".
+  utmSource   String   @default("thecoregamer")
+  utmMedium   String   @default("affiliate")
+  utmCampaign String?
+  ipAddress   String
+  userAgent   String?
+  referrer    String?
+  createdAt   DateTime @default(now())
+  userId      String?
+  Article     Article? @relation(fields: [articleId], references: [id])
+  Game        Game?    @relation(fields: [gameId], references: [id])
+  User        User?    @relation(fields: [userId], references: [id])
+
+  @@index([createdAt])
+  @@index([createdAt, store])
+  @@index([store])
+  @@index([articleId])
+  @@index([userId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Article {
+  id                                       String                   @id @default(cuid())
+  title                                    String                   @db.VarChar(255)
+  slug                                     String                   @unique @db.VarChar(75)
+  content                                  Json
+  excerpt                                  String?                  @db.VarChar(300)
+  featuredImageUrl                         String?
+  featuredImageCredit                      String?
+  status                                   ArticleStatus            @default(DRAFT)
+  contentType                              ContentType
+  authorId                                 String
+  editorId                                 String?
+  seoTitle                                 String?                  @db.VarChar(90)
+  seoDescription                           String?                  @db.VarChar(250)
+  publishedAt                              DateTime?
+  scheduledAt                              DateTime?
+  viewCount                                BigInt                   @default(0)
+  featured                                 Boolean                  @default(false)
+  isBreaking                               Boolean                  @default(false)
+  rejectionReason                          String?
+  createdAt                                DateTime                 @default(now())
+  updatedAt                                DateTime                 @updatedAt
+  /// GIN index: article_search_gin_idx (see migration 20260606200000_add_search_gin_index)
+  searchVector                             Unsupported("tsvector")?
+  autosaveContent                          Json?
+  autosavedAt                              DateTime?
+  focusKeyword                             String?                  @db.VarChar(100)
+  embargoUntil                             DateTime?
+  isSponsored                              Boolean                  @default(false)
+  sponsorName                              String?
+  originallyPublishedAt                    DateTime?
+  lastMajorUpdateAt                        DateTime?
+  lastMajorUpdateNote                      String?
+  isLiveBlog                               Boolean                  @default(false)
+  liveBlogEndedAt                          DateTime?
+  deletionRequestReason                    String?                  @db.VarChar(500)
+  deletionRequestedAt                      DateTime?
+  deletionRequestedById                    String?
+  AffiliateClick                           AffiliateClick[]
+  User_Article_authorIdToUser              User                     @relation("Article_authorIdToUser", fields: [authorId], references: [id], onDelete: Cascade)
+  User_Article_deletionRequestedByIdToUser User?                    @relation("Article_deletionRequestedByIdToUser", fields: [deletionRequestedById], references: [id])
+  User_Article_editorIdToUser              User?                    @relation("Article_editorIdToUser", fields: [editorId], references: [id])
+  ArticleAuthor                            ArticleAuthor[]
+  ArticleReaction                          ArticleReaction[]
+  SeriesEntry                              ArticleSeriesEntry?
+  ArticleTag                               ArticleTag[]
+  ArticleVersion                           ArticleVersion[]
+  Bookmark                                 Bookmark[]
+  Comment                                  Comment[]
+  EditorNote                               EditorNote[]
+  GameReview                               GameReview?
+  LiveBlogUpdate                           LiveBlogUpdate[]
+  ModGuide                                 ModGuide?
+  Poll                                     Poll[]
+  ReadingListItem                          ReadingListItem[]
+  RecentlyViewed                           RecentlyViewed[]
+  PinnedByUsers                            User[]                   @relation("UserPinnedArticle")
+  VideoAsset                               VideoAsset[]
+  Game                                     Game[]                   @relation("ArticleGames")
+
+  @@index([authorId])
+  @@index([contentType])
+  @@index([contentType, publishedAt])
+  @@index([deletionRequestedAt])
+  @@index([featured])
+  @@index([isBreaking])
+  @@index([publishedAt])
+  @@index([slug])
+  @@index([status])
+  @@index([viewCount])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model LiveBlogUpdate {
+  id          String   @id @default(cuid())
+  articleId   String
+  authorId    String
+  content     Json
+  publishedAt DateTime @default(now())
+  isPinned    Boolean  @default(false)
+  label       String?
+  position    Int      @default(0)
+  Article     Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  User        User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([articleId, publishedAt])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model ArticleReaction {
+  id        String   @id @default(cuid())
+  articleId String
+  userId    String?
+  sessionId String?
+  type      String
+  createdAt DateTime @default(now())
+  Article   Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  User      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([articleId, sessionId, type])
+  @@unique([articleId, userId, type])
+  @@index([articleId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model ArticleTag {
+  articleId String
+  tagId     String
+  Article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  Tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([articleId, tagId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model ArticleVersion {
+  id            String   @id @default(cuid())
+  articleId     String
+  versionNumber Int
+  title         String
+  content       Json
+  editorId      String
+  createdAt     DateTime @default(now())
+  Article       Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  User          User     @relation(fields: [editorId], references: [id], onDelete: Cascade)
+
+  @@index([articleId])
+  @@index([articleId, versionNumber])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Bookmark {
+  id        String   @id @default(cuid())
+  userId    String
+  articleId String
+  createdAt DateTime @default(now())
+  Article   Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, articleId])
+}
+
+model ReadingList {
+  id          String            @id @default(dbgenerated("(gen_random_uuid())::text"))
+  userId      String
+  name        String
+  description String?
+  isPublic    Boolean           @default(false)
+  slug        String
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @default(now()) @updatedAt
+  User        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Items       ReadingListItem[]
+
+  @@unique([userId, slug])
+  @@index([userId])
+}
+
+/// "articleId IS NOT NULL OR gameId IS NOT NULL" enforced via CHECK constraint ReadingListItem_content_check (see migration)
+model ReadingListItem {
+  id          String      @id @default(dbgenerated("(gen_random_uuid())::text"))
+  listId      String
+  articleId   String?
+  gameId      String?
+  position    Int         @default(0)
+  addedAt     DateTime    @default(now())
+  Article     Article?    @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  Game        Game?       @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  ReadingList ReadingList @relation(fields: [listId], references: [id], onDelete: Cascade)
+
+  @@index([listId])
+  @@index([articleId])
+  @@index([gameId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Comment {
+  id               String            @id @default(cuid())
+  articleId        String
+  parentId         String?
+  authorId         String?
+  authorName       String
+  authorEmail      String
+  body             String            @db.VarChar(2000)
+  status           CommentStatus     @default(PENDING)
+  upvotes          Int               @default(0)
+  downvotes        Int               @default(0)
+  isPinned         Boolean           @default(false)
+  ipAddress        String
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  reportCount      Int               @default(0)
+  gifId            String?
+  gifUrl           String?
+  mentionedUserIds String[]          @default([])
+  sortScore        Float             @default(0)
+  rootId           String?
+  Article          Article           @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  User             User?             @relation(fields: [authorId], references: [id])
+  Comment          Comment?          @relation("CommentToComment", fields: [parentId], references: [id])
+  other_Comment    Comment[]         @relation("CommentToComment")
+  RootComment      Comment?          @relation("CommentRoot", fields: [rootId], references: [id], onDelete: Cascade)
+  root_Comments    Comment[]         @relation("CommentRoot")
+  CommentReaction  CommentReaction[]
+  CommentVote      CommentVote[]
+
+  @@index([articleId])
+  @@index([authorId])
+  @@index([parentId])
+  @@index([status])
+  @@index([articleId, status, parentId])
+  @@index([createdAt])
+  @@index([rootId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model CommentReaction {
+  id        String   @id @default(cuid())
+  commentId String
+  userId    String?
+  sessionId String?
+  type      String
+  createdAt DateTime @default(now())
+  Comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  User      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([commentId, sessionId, type])
+  @@unique([commentId, userId, type])
+  @@index([commentId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model CommentVote {
+  id        String  @id @default(cuid())
+  commentId String
+  userId    String
+  value     Int
+  Comment   Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  User      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([commentId, userId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Game {
+  id                         String            @id @default(cuid())
+  title                      String            @unique
+  slug                       String            @unique
+  coverImageUrl              String?
+  description                String?
+  createdAt                  DateTime          @default(now())
+  updatedAt                  DateTime          @updatedAt
+  trailerUrl                 String?
+  developer                  String?
+  publisher                  String?
+  releaseDate                DateTime?
+  platforms                  String[]
+  genres                     String[]
+  steamAppId                 String?
+  esrbRating                 String?
+  metacritic                 Int?
+  playtime                   Int?
+  rating                     Float?
+  redditUrl                  String?
+  tags                       String[]
+  website                    String?
+  pegiRating                 String?
+  regionalReleaseDates       Json?
+  avgUserScore               Float?
+  igdbId                     Int?              @unique
+  storyline                  String?
+  igdbUrl                    String?
+  totalRating                Float?
+  totalRatingCount           Int?
+  franchiseNames             String[]          @default([])
+  dlcNames                   String[]          @default([])
+  similarGameNames           String[]          @default([])
+  igdbHypes                  Int?              @default(0)
+  igdbFollows                Int?              @default(0)
+  releaseStatus              String?           @default("Released")
+  dlcOfId                    String?
+  gameEdition                String?           @default("STANDARD")
+  igdbSlug                   String?
+  screenshotUrls             String[]          @default([])
+  artworkUrls                String[]          @default([])
+  allCompaniesJson           Json?             @default("[]")
+  releaseDatesByPlatformJson Json?             @default("[]")
+  themes                     String?
+  keywords                   String?
+  gameModes                  String[]          @default([])
+  playerPerspectives         String[]          @default([])
+  gameEngine                 String?
+  aggregatedRating           Float?
+  aggregatedRatingCount      Int?
+  igdbCommunityRating        Float?
+  igdbCommunityRatingCount   Int?
+  collectionName             String?
+  dlcsJson                   Json?             @default("[]")
+  expansionsJson             Json?             @default("[]")
+  similarGamesJson           Json?             @default("[]")
+  videosJson                 Json?             @default("[]")
+  websitesJson               Json?             @default("{}")
+  multiplayerModesJson       Json?
+  languageSupportsJson       Json?             @default("[]")
+  backgroundImageUrl         String?
+  AffiliateClick             AffiliateClick[]
+  Award                      Award[]
+  dlcOf                      Game?             @relation("DLCOf", fields: [dlcOfId], references: [id])
+  dlcs                       Game[]            @relation("DLCOf")
+  GameReview                 GameReview[]
+  ModGuide                   ModGuide[]
+  PriceSnapshot              PriceSnapshot[]
+  ReadingListItem            ReadingListItem[]
+  UserRating                 UserRating[]
+  UserScreenshot             UserScreenshot[]
+  Article                    Article[]         @relation("ArticleGames")
+
+  @@index([dlcOfId])
+}
+
+model Award {
+  id           String      @id @default(dbgenerated("gen_random_uuid()"))
+  year         Int
+  category     String
+  winnerGameId String?
+  nomineesJson Json?       @default("[]")
+  editorPickId String?
+  isVotingOpen Boolean?    @default(false)
+  createdAt    DateTime?   @default(now()) @db.Timestamp(6)
+  updatedAt    DateTime?   @default(now()) @updatedAt @db.Timestamp(6)
+  editorPick   User?       @relation(fields: [editorPickId], references: [id])
+  winnerGame   Game?       @relation(fields: [winnerGameId], references: [id])
+  AwardVote    AwardVote[]
+}
+
+model AwardVote {
+  id        String    @id @default(dbgenerated("gen_random_uuid()"))
+  awardId   String
+  userId    String?
+  sessionId String?
+  gameId    String
+  createdAt DateTime? @default(now()) @db.Timestamp(6)
+  award     Award     @relation(fields: [awardId], references: [id], onDelete: Cascade)
+  user      User?     @relation(fields: [userId], references: [id])
+
+  @@unique([awardId, userId])
+  @@unique([awardId, sessionId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model GameReview {
+  id                      String                @id @default(cuid())
+  articleId               String                @unique
+  gameTitle               String
+  developer               String
+  publisher               String
+  releaseDate             DateTime
+  platforms               String[]
+  genres                  String[]
+  reviewScore             Decimal               @db.Decimal(3, 1)
+  verdict                 String
+  originalScore           Decimal?              @db.Decimal(3, 1)
+  scoreUpdatedAt          DateTime?
+  scoreUpdateReason       String?
+  gameId                  String
+  showReviewDetails       Boolean               @default(true)
+  copyProvidedByPublisher Boolean               @default(false)
+  platformsTested         String[]              @default([])
+  Article                 Article               @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  Game                    Game                  @relation(fields: [gameId], references: [id])
+  ScoreHistory            ReviewScoreHistory[]
+  ReviewScorePlatforms    ReviewScorePlatform[]
+
+  @@index([gameId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model ReviewScorePlatform {
+  id          String     @id @default(cuid())
+  reviewId    String
+  platform    String
+  gameplay    Float?
+  visuals     Float?
+  story       Float?
+  performance Float?
+  value       Float?
+  overall     Float
+  notes       String?    @db.VarChar(500)
+  Review      GameReview @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+
+  @@unique([reviewId, platform])
+  @@index([reviewId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model ReviewScoreHistory {
+  id          String     @id @default(cuid())
+  reviewId    String
+  oldScore    Float
+  newScore    Float
+  reason      String     @db.VarChar(500)
+  changedAt   DateTime   @default(now())
+  changedById String?
+  ChangedBy   User?      @relation("ReviewScoreHistoryUser", fields: [changedById], references: [id])
+  Review      GameReview @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+
+  @@index([reviewId])
+  @@index([changedAt])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model MediaAttachment {
+  id            String   @id @default(cuid())
+  modGuideId    String
+  filename      String
+  fileUrl       String
+  fileSizeBytes BigInt
+  mimeType      String
+  createdAt     DateTime @default(now())
+  ModGuide      ModGuide @relation(fields: [modGuideId], references: [id], onDelete: Cascade)
+
+  @@index([modGuideId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model ModGuide {
+  id                                   String            @id @default(cuid())
+  articleId                            String            @unique
+  gameName                             String
+  modName                              String
+  gameVersionNotes                     String
+  difficulty                           Difficulty
+  estimatedInstallMinutes              Int
+  prerequisiteList                     Json
+  gameId                               String?
+  bodyTitle                            String?           @default("About This Guide")
+  installationTitle                    String?           @default("Installation Steps")
+  sections                             Json?
+  helpfulCount                         Int               @default(0)
+  notHelpfulCount                      Int               @default(0)
+  gameVersion                          String            @default("")
+  gameVersionDate                      DateTime?
+  lastVerifiedAt                       DateTime?
+  lastVerifiedVersion                  String?
+  lastVerifiedById                     String?
+  compatibilityNotes                   String?           @db.VarChar(500)
+  MediaAttachment                      MediaAttachment[]
+  Article                              Article           @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  Game                                 Game?             @relation(fields: [gameId], references: [id])
+  User_ModGuide_lastVerifiedByIdToUser User?             @relation("ModGuide_lastVerifiedByIdToUser", fields: [lastVerifiedById], references: [id])
+  ModGuideVote                         ModGuideVote[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model ArticleAuthor {
+  articleId String
+  userId    String
+  role      String? @default("AUTHOR")
+  isPrimary Boolean @default(false)
+  Article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  User      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([articleId, userId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model EditorNote {
+  id        String   @id @default(cuid())
+  articleId String
+  authorId  String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Article   Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  User      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([articleId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model VideoAsset {
+  id              String   @id @default(cuid())
+  articleId       String?
+  title           String
+  muxAssetId      String   @unique
+  muxPlaybackId   String
+  status          String   @default("preparing")
+  duration        Float?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  aspectRatio     String?
+  uploadId        String?  @unique
+  transcript      String?
+  subtitleTrackId String?
+  thumbnailUrl    String?
+  Article         Article? @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  @@index([articleId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model NewsletterSubscriber {
+  id             String    @id @default(cuid())
+  email          String    @unique
+  confirmed      Boolean   @default(false)
+  confirmToken   String?
+  preferences    Json?
+  subscribedAt   DateTime  @default(now())
+  unsubscribedAt DateTime?
+  status         String    @default("ACTIVE")
+
+  @@index([subscribedAt])
+}
+
+model NewsletterSend {
+  id             String   @id @default(dbgenerated("(gen_random_uuid())::text"))
+  subject        String
+  sentAt         DateTime @default(now())
+  recipientCount Int      @default(0)
+  openCount      Int      @default(0)
+  clickCount     Int      @default(0)
+  hasSponsored   Boolean  @default(false)
+  sponsorName    String?
+  campaignId     String?  @unique
+  content        Json?
+
+  @@index([sentAt])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model NotificationPreference {
+  id                      String  @id @default(cuid())
+  userId                  String  @unique
+  newArticlesInCategories Boolean @default(true)
+  commentReplies          Boolean @default(true)
+  newsletter              Boolean @default(true)
+  pushEnabled             Boolean @default(false)
+  User                    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model PushSubscription {
+  id        String   @id @default(cuid())
+  userId    String?
+  endpoint  String   @unique
+  keys      Json
+  createdAt DateTime @default(now())
+  User      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Tag {
+  id          String       @id @default(cuid())
+  name        String       @unique
+  slug        String       @unique
+  description String?      @db.VarChar(300)
+  /// hex color e.g. "#7b5cfa"
+  color       String?      @db.VarChar(7)
+  ArticleTag  ArticleTag[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model User {
+  id                                          String                  @id @default(cuid())
+  email                                       String?                 @unique
+  username                                    String                  @unique @db.VarChar(50)
+  displayName                                 String                  @db.VarChar(100)
+  avatarUrl                                   String?
+  bio                                         String?
+  passwordHash                                String?
+  role                                        Role                    @default(USER)
+  emailVerified                               Boolean                 @default(false)
+  emailVerificationToken                      String?
+  emailVerificationExpires                    DateTime?
+  passwordResetToken                          String?
+  passwordResetExpires                        DateTime?
+  twoFactorEnabled                            Boolean                 @default(false)
+  twoFactorSecret                             String?
+  oauthProvider                               String?
+  oauthId                                     String?
+  loginAttempts                               Int                     @default(0)
+  lockUntil                                   DateTime?
+  premiumUntil                                DateTime?
+  createdAt                                   DateTime                @default(now())
+  lastLoginAt                                 DateTime?
+  sessionVersion                              Int                     @default(0)
+  usernameChangedAt                           DateTime?
+  authorBio                                   String?                 @db.VarChar(1000)
+  expertise                                   String[]                @default([])
+  linkedinUrl                                 String?
+  reviewCount                                 Int                     @default(0)
+  totalAuthorViewCount                        BigInt                  @default(0)
+  twitterHandle                               String?
+  yearsExperience                             Int?
+  profileVisibility                           String?                 @default("PUBLIC")
+  pinnedArticleId                             String?
+  isPublicBookmarks                           Boolean                 @default(false)
+  twoFactorBackupCodes                        String[]                @default([])
+  AffiliateClick                              AffiliateClick[]
+  Article_Article_authorIdToUser              Article[]               @relation("Article_authorIdToUser")
+  Article_Article_deletionRequestedByIdToUser Article[]               @relation("Article_deletionRequestedByIdToUser")
+  Article_Article_editorIdToUser              Article[]               @relation("Article_editorIdToUser")
+  ArticleAuthor                               ArticleAuthor[]
+  ArticleReaction                             ArticleReaction[]
+  SeriesList                                  ArticleSeries[]         @relation("SeriesAuthor")
+  ArticleVersion                              ArticleVersion[]
+  AwardEditorPicks                            Award[]
+  AwardVotes                                  AwardVote[]
+  Bookmark                                    Bookmark[]
+  Comment                                     Comment[]
+  CommentReaction                             CommentReaction[]
+  CommentVote                                 CommentVote[]
+  EditorNote                                  EditorNote[]
+  InAppNotification                           InAppNotification[]
+  LiveBlogUpdate                              LiveBlogUpdate[]
+  ModGuide_lastVerifiedBy                     ModGuide[]              @relation("ModGuide_lastVerifiedByIdToUser")
+  ModGuideVote                                ModGuideVote[]
+  ModerationActions                           ModerationLog[]         @relation("ModerationActions")
+  NotificationPreference                      NotificationPreference?
+  PollsCreated                                Poll[]                  @relation("PollCreator")
+  PollVote                                    PollVote[]
+  PushSubscription                            PushSubscription[]
+  ReadingList                                 ReadingList[]
+  RecentlyViewed                              RecentlyViewed[]
+  ReviewScoreHistoryIssued                    ReviewScoreHistory[]    @relation("ReviewScoreHistoryUser")
+  PinnedArticle                               Article?                @relation("UserPinnedArticle", fields: [pinnedArticleId], references: [id])
+  ContentPreference                           UserContentPreference?
+  UserDevice                                  UserDevice[]
+  UserRating                                  UserRating[]
+  UserRatingVotesGiven                        UserRatingVote[]        @relation("UserRatingVoteVoter")
+  UserScreenshot                              UserScreenshot[]
+  StrikesIssued                               UserStrike[]            @relation("StrikesIssued")
+  StrikesReceived                             UserStrike[]            @relation("StrikesReceived")
+
+  @@index([email])
+  @@index([oauthProvider, oauthId])
+  @@index([username])
+  @@index([pinnedArticleId])
+}
+
+model UserDevice {
+  id         String    @id @default(cuid())
+  userId     String
+  deviceHash String
+  userAgent  String
+  ipAddress  String
+  lastSeenAt DateTime  @default(now())
+  createdAt  DateTime  @default(now())
+  revokedAt  DateTime?
+  location   String?
+  User       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, deviceHash])
+  @@index([userId, lastSeenAt])
+}
+
+model PriceSnapshot {
+  id          String    @id @default(cuid())
+  gameId      String
+  shop        String
+  priceINR    Decimal   @db.Decimal(10, 2)
+  regularINR  Decimal?  @db.Decimal(10, 2)
+  storeLowINR Decimal?  @db.Decimal(10, 2)
+  cutPercent  Int       @default(0)
+  voucher     String?
+  expiry      DateTime?
+  drm         String?
+  url         String
+  recordedAt  DateTime  @default(now())
+  Game        Game      @relation(fields: [gameId], references: [id], onDelete: Cascade)
+
+  @@unique([gameId, shop, recordedAt])
+  @@index([gameId])
+  @@index([gameId, recordedAt])
+  @@index([recordedAt])
+}
+
+model UserRating {
+  id           String           @id @default(cuid())
+  userId       String
+  gameId       String
+  score        Int
+  body         String?          @db.VarChar(1000)
+  helpfulCount Int              @default(0)
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  Game         Game             @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  User         User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Votes        UserRatingVote[]
+
+  @@unique([userId, gameId])
+  @@index([gameId])
+  @@index([userId])
+}
+
+model UserScreenshot {
+  id        String               @id @default(cuid())
+  gameId    String
+  userId    String
+  imageUrl  String
+  caption   String?
+  status    UserScreenshotStatus @default(PENDING)
+  createdAt DateTime             @default(now())
+  Game      Game                 @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  User      User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([gameId])
+  @@index([userId])
+  @@index([status])
+}
+
+model UserRatingVote {
+  id           String     @id @default(cuid())
+  userRatingId String
+  voterId      String
+  value        Int
+  UserRating   UserRating @relation(fields: [userRatingId], references: [id], onDelete: Cascade)
+  Voter        User       @relation("UserRatingVoteVoter", fields: [voterId], references: [id], onDelete: Cascade)
+
+  @@unique([userRatingId, voterId])
+  @@index([userRatingId])
+}
+
+model Poll {
+  id            String       @id @default(cuid())
+  question      String       @db.VarChar(200)
+  articleId     String?
+  createdById   String
+  expiresAt     DateTime?
+  isActive      Boolean      @default(true)
+  createdAt     DateTime     @default(now())
+  allowMultiple Boolean      @default(false)
+  voterCount    Int          @default(0)
+  homepageSlot  Int?
+  Article       Article?     @relation(fields: [articleId], references: [id])
+  Creator       User         @relation("PollCreator", fields: [createdById], references: [id])
+  Options       PollOption[]
+  Votes         PollVote[]
+
+  @@index([articleId])
+  @@index([isActive])
+  @@index([homepageSlot])
+}
+
+model PollOption {
+  id               String     @id @default(cuid())
+  pollId           String
+  text             String     @db.VarChar(100)
+  voteCount        Int        @default(0)
+  allowCustomInput Boolean    @default(false)
+  Poll             Poll       @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  Votes            PollVote[]
+
+  @@index([pollId])
+}
+
+model PollVote {
+  id         String     @id @default(cuid())
+  pollId     String
+  optionId   String
+  userId     String?
+  sessionId  String?
+  customText String?    @db.VarChar(500)
+  createdAt  DateTime   @default(now())
+  Option     PollOption @relation(fields: [optionId], references: [id], onDelete: Cascade)
+  Poll       Poll       @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  User       User?      @relation(fields: [userId], references: [id])
+
+  @@unique([pollId, userId, optionId])
+  @@unique([pollId, sessionId, optionId])
+  @@index([pollId])
+}
+
+model UserContentPreference {
+  id                String   @id @default(cuid())
+  userId            String   @unique
+  followedGenres    String[]
+  followedPlatforms String[]
+  updatedAt         DateTime @updatedAt
+  User              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model InAppNotification {
+  id        String   @id @default(cuid())
+  userId    String
+  type      String
+  title     String   @db.VarChar(100)
+  body      String   @db.VarChar(300)
+  url       String?
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isRead])
+  @@index([userId, createdAt])
+}
+
+model ModGuideVote {
+  id         String   @id @default(cuid())
+  modGuideId String
+  userId     String?
+  sessionId  String?
+  value      Int
+  createdAt  DateTime @default(now())
+  ModGuide   ModGuide @relation(fields: [modGuideId], references: [id], onDelete: Cascade)
+  User       User?    @relation(fields: [userId], references: [id])
+
+  @@unique([modGuideId, userId])
+  @@unique([modGuideId, sessionId])
+  @@index([modGuideId])
+}
+
+model SearchMiss {
+  id        String   @id @default(cuid())
+  query     String   @db.VarChar(200)
+  userId    String?
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([query])
+}
+
+model SearchQuery {
+  id          String   @id @default(cuid())
+  query       String   @db.VarChar(200)
+  resultCount Int      @default(0)
+  userId      String?
+  sessionId   String?
+  createdAt   DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([query])
+  @@index([resultCount])
+}
+
+model RecentlyViewed {
+  id        String   @id @default(cuid())
+  userId    String
+  articleId String
+  viewedAt  DateTime @default(now())
+  Article   Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, articleId])
+  @@index([userId, viewedAt(sort: Desc)])
+}
+
+model UserStrike {
+  id         String    @id @default(cuid())
+  userId     String
+  reason     String    @db.VarChar(500)
+  severity   Int       @default(1)
+  issuedById String?
+  issuedAt   DateTime  @default(now())
+  expiresAt  DateTime?
+  IssuedBy   User?     @relation("StrikesIssued", fields: [issuedById], references: [id])
+  User       User      @relation("StrikesReceived", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([issuedAt])
+}
+
+model ModerationLog {
+  id          String   @id @default(cuid())
+  action      String
+  targetType  String
+  targetId    String
+  moderatorId String?
+  reason      String?  @db.VarChar(500)
+  createdAt   DateTime @default(now())
+  Moderator   User?    @relation("ModerationActions", fields: [moderatorId], references: [id])
+
+  @@index([createdAt])
+  @@index([moderatorId])
+  @@index([targetType, targetId])
+}
+
+model ArticleSeries {
+  id            String               @id @default(cuid())
+  name          String
+  slug          String               @unique
+  description   String?
+  coverImageUrl String?
+  authorId      String?
+  isComplete    Boolean              @default(false)
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
+  Author        User?                @relation("SeriesAuthor", fields: [authorId], references: [id])
+  Entries       ArticleSeriesEntry[]
+
+  @@index([authorId])
+}
+
+model ArticleSeriesEntry {
+  id           String        @id @default(cuid())
+  seriesId     String
+  articleId    String        @unique
+  position     Int
+  displayTitle String?
+  Article      Article       @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  Series       ArticleSeries @relation(fields: [seriesId], references: [id], onDelete: Cascade)
+
+  @@unique([seriesId, position])
+  @@index([seriesId])
+}
+
+enum ArticleStatus {
+  DRAFT
+  IN_PROGRESS
+  IN_REVIEW
+  APPROVED
+  PUBLISHED
+  ARCHIVED
+}
+
+enum CommentStatus {
+  PENDING
+  APPROVED
+  SPAM
+  HIDDEN
+}
+
+enum UserScreenshotStatus {
+  PENDING
+  APPROVED
+}
+
+enum ContentType {
+  NEWS
+  REVIEW
+  MOD_GUIDE
+  WALKTHROUGH
+  OPINION
+  DEAL
+  FEATURE
+  LISTICLE
+}
+
+enum Difficulty {
+  EASY
+  INTERMEDIATE
+  ADVANCED
+}
+
+enum Role {
+  VISITOR
+  USER
+  AUTHOR
+  EDITOR
+  ADMIN
+}

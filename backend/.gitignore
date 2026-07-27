@@ -1,0 +1,18 @@
+# ─── Environment variables — NEVER commit real secrets ────────────────────────
+.env
+.env.*
+!.env.example
+!.env.test.example
+
+# ─── Google service-account key files ─────────────────────────────────────────
+*service-account*.json
+*service_account*.json
+*-credentials.json
+*-key.json
+
+# ─── Build / runtime ──────────────────────────────────────────────────────────
+.next/
+dist/
+node_modules/
+logs/
+*.log

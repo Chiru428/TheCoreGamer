@@ -1,0 +1,11 @@
+# ─── Environment variables — NEVER commit real secrets ────────────────────────
+.env
+.env.*
+!.env.example
+!.env.test.example
+
+# ─── Build / runtime ──────────────────────────────────────────────────────────
+.next/
+dist/
+node_modules/
+*.log
