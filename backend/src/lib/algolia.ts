@@ -2,8 +2,8 @@ import { algoliasearch } from "algoliasearch";
 import { logger } from "@/lib/logger";
 
 export const algoliaClient = algoliasearch(
-  process.env.ALGOLIA_APP_ID!,
-  process.env.ALGOLIA_ADMIN_KEY!
+  process.env.ALGOLIA_APP_ID || "mock_app_id",
+  process.env.ALGOLIA_ADMIN_KEY || "mock_api_key"
 );
 
 export const algoliaInsightsClient = algoliaClient.initInsights({});

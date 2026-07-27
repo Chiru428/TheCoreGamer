@@ -7,8 +7,8 @@ const globalForRedis = globalThis as unknown as {
 export const redis =
   globalForRedis.redis ??
   new Redis({
-    url: process.env.UPSTASH_REDIS_REST_URL!,
-    token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+    url: process.env.UPSTASH_REDIS_REST_URL || "https://fake.upstash.io",
+    token: process.env.UPSTASH_REDIS_REST_TOKEN || "fake_token",
   });
 
 if (process.env.NODE_ENV !== "production") {
