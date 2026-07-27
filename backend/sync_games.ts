@@ -1,6 +1,6 @@
 import "dotenv/config";
-import { prisma } from "./src/lib/prisma.ts";
-import { syncGame } from "./src/workers/algolia.worker.ts";
+import { prisma } from "./src/lib/prisma";
+import { syncGame } from "./src/workers/algolia.worker";
 
 async function run() {
   const games = await prisma.game.findMany({ select: { id: true } });

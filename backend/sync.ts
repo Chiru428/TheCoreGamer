@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { configureIndexes } from "./src/lib/algolia.ts";
+import { configureIndexes } from "./src/lib/algolia";
 
 async function run() {
   await configureIndexes();
