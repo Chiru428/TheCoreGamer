@@ -90,6 +90,35 @@ export default function LoginPage() {
     setButtonState('loading');
     setSubmitError(null);
     try {
+      // 1. Pre-flight check to bypass NextAuth's aggressive error swallowing
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
+      const preFlightRes = await fetch(`${apiUrl}/api/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: data.email, password: data.password })
+      });
+      
+      const preFlightJson = await preFlightRes.json();
+      
+      if (!preFlightRes.ok) {
+        if (preFlightJson.error === '2FA_REQUIRED') {
+          setPendingCredentials({ email: data.email, password: data.password });
+          setButtonState('idle');
+          return;
+        }
+        
+        const friendlyError = preFlightJson.error === 'EMAIL_NOT_VERIFIED'
+          ? 'Please verify your email before signing in. Check your inbox for the verification link.'
+          : preFlightJson.error || preFlightJson.message || 'Invalid credentials';
+          
+        setButtonState('error');
+        setSubmitError(friendlyError);
+        addToast({ type: 'error', message: friendlyError });
+        setTimeout(() => setButtonState('idle'), 1500);
+        return;
+      }
+
+      // 2. Pre-flight succeeded; establish NextAuth session
       const result = await signIn('credentials', {
         email: data.email,
         password: data.password,
@@ -97,17 +126,9 @@ export default function LoginPage() {
       });
 
       if (result?.error) {
-        if (result.error === '2FA_REQUIRED') {
-          setPendingCredentials({ email: data.email, password: data.password });
-          setButtonState('idle');
-          return;
-        }
-        const friendlyError = result.error === 'EMAIL_NOT_VERIFIED'
-          ? 'Please verify your email before signing in. Check your inbox for the verification link.'
-          : result.error || 'Invalid credentials';
         setButtonState('error');
-        setSubmitError(friendlyError);
-        addToast({ type: 'error', message: friendlyError });
+        setSubmitError('Invalid credentials');
+        addToast({ type: 'error', message: 'Invalid credentials' });
         setTimeout(() => setButtonState('idle'), 1500);
       } else {
         setButtonState('success');
@@ -127,6 +148,27 @@ export default function LoginPage() {
     setTwoFactorSubmitting(true);
     setTwoFactorError(null);
     try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
+      const preFlightRes = await fetch(`${apiUrl}/api/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: pendingCredentials.email,
+          password: pendingCredentials.password,
+          totpCode: twoFactorMode === 'totp' ? twoFactorCode : undefined,
+          recoveryCode: twoFactorMode === 'recovery' ? twoFactorCode : undefined,
+        })
+      });
+      
+      const preFlightJson = await preFlightRes.json();
+      
+      if (!preFlightRes.ok) {
+        const msg = preFlightJson.error === '2FA_REQUIRED' ? 'Invalid code' : preFlightJson.error || preFlightJson.message || 'Invalid code';
+        setTwoFactorError(msg);
+        setTwoFactorCode('');
+        return;
+      }
+
       const result = await signIn('credentials', {
         email: pendingCredentials.email,
         password: pendingCredentials.password,
@@ -136,8 +178,7 @@ export default function LoginPage() {
       });
 
       if (result?.error) {
-        const msg = result.error === '2FA_REQUIRED' ? 'Invalid code' : result.error || 'Invalid code';
-        setTwoFactorError(msg);
+        setTwoFactorError('Invalid code');
         setTwoFactorCode('');
         return;
       }
