@@ -9,7 +9,7 @@ import type { Role } from '@/types';
 class CustomAuthError extends AuthError {
   constructor(message?: string) {
     super();
-    this.type = message || 'CredentialsSignin';
+    this.type = (message || 'CredentialsSignin') as any;
   }
 }
 
