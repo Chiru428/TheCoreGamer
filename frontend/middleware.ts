@@ -31,7 +31,11 @@ export default async function proxy(request: NextRequest) {
       (process.env.NODE_ENV === 'development'
         ? 'dev-fallback-secret-do-not-use-in-production-32chars!!'
         : undefined);
-    const token = await getToken({ req: request, secret });
+    const token = await getToken({ 
+      req: request, 
+      secret,
+      secureCookie: (process.env.NEXTAUTH_URL || '').startsWith('https://')
+    });
     if (!token) {
       const loginUrl = new URL('/auth/login', request.url);
       loginUrl.searchParams.set('callbackUrl', pathname);
