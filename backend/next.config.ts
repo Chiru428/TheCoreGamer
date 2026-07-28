@@ -35,9 +35,10 @@ const nextConfig: NextConfig = {
     ].join("; ");
 
     // Allow the frontend origin to make cross-origin requests to the backend API.
-    // NEXTAUTH_URL is the public frontend URL (e.g. https://the-core-gamer-cqay.vercel.app
-    // or https://thecoregamer.com). Falls back to localhost for local dev.
-    const frontendOrigin = (process.env.NEXTAUTH_URL || "http://localhost:3000").replace(/\/$/, "");
+    // CORS_ORIGIN is a dedicated env var pointing to the frontend URL.
+    // We do NOT use NEXTAUTH_URL or SITE_URL — Vercel overrides those on the
+    // backend project with the backend's own deployment URL.
+    const frontendOrigin = (process.env.CORS_ORIGIN || "http://localhost:3000").replace(/\/$/, "");
 
     return [
       {

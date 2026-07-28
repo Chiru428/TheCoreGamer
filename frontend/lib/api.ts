@@ -39,8 +39,11 @@ import type {
 } from '@/types';
 
 const API_BASE = typeof window === 'undefined'
+  // Server-side (SSR/RSC): call the backend directly using the internal URL.
   ? (process.env.BACKEND_URL || 'http://localhost:3001')
-  : (process.env.NEXT_PUBLIC_API_URL || '');
+  // Browser-side: use relative paths (/api/...) so the Next.js rewrite proxy
+  // forwards them to the backend — same-origin request, no CORS required.
+  : '';
 
 async function apiFetch<T>(url: string, options?: RequestInit & { revalidate?: number }): Promise<ApiResponse<T>> {
   const isServer = typeof window === 'undefined';
