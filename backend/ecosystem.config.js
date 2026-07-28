@@ -5,26 +5,6 @@
 
 module.exports = {
   apps: [
-    // ── Next.js API server ─────────────────────────────────────────────────
-    // Requires `npm run build` first. Listens on port 3001.
-    {
-      name: 'thecoregamer-backend',
-      script: 'node_modules/next/dist/bin/next',
-      args: 'start',
-      cwd: process.cwd(),
-      watch: false,
-      autorestart: true,
-      max_restarts: 10,
-      restart_delay: 5000,
-      env: {
-        NODE_ENV: 'production',
-        PORT: process.env.PORT || 3001,
-      },
-      log_file: 'logs/backend-combined.log',
-      error_file: 'logs/backend-error.log',
-      merge_logs: true,
-      time: true,
-    },
 
     // ── Background workers ─────────────────────────────────────────────────
     {

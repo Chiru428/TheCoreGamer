@@ -47,6 +47,23 @@ logger.info("[Workers]   - Article cron worker (scheduling & embargoes)");
 logger.info("[Workers]   - Deals price poll worker (hourly ITAD sync)");
 logger.info("[Workers]   - IGDB sync worker (imports & nightly rating refresh)");
 
+// Start a tiny HTTP server to satisfy Render's Web Service port binding requirement
+// and provide a target for cron-job.org without running the heavy Next.js API server.
+import http from "http";
+const PORT = process.env.PORT || 3001;
+const server = http.createServer((req, res) => {
+  if (req.url === "/api/health") {
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ status: "ok", type: "worker" }));
+  } else {
+    res.writeHead(404);
+    res.end("Not found");
+  }
+});
+server.listen(PORT, () => {
+  logger.info(`[Workers] Health check server listening on port ${PORT}`);
+});
+
 process.on("SIGTERM", async () => {
   logger.info("[Workers] SIGTERM received — shutting down gracefully");
   await Promise.allSettled([
