@@ -1,4 +1,4 @@
-import NextAuth, { CredentialsSignin } from 'next-auth';
+import NextAuth, { AuthError } from 'next-auth';
 import { headers } from 'next/headers';
 import { getToken } from 'next-auth/jwt';
 import Credentials from 'next-auth/providers/credentials';
@@ -6,11 +6,10 @@ import Google from 'next-auth/providers/google';
 import Discord from 'next-auth/providers/discord';
 import type { Role } from '@/types';
 
-class CustomAuthError extends CredentialsSignin {
-  code: string;
+class CustomAuthError extends AuthError {
   constructor(message?: string) {
     super();
-    this.code = message || 'CredentialsSignin';
+    this.type = message || 'CredentialsSignin';
   }
 }
 
