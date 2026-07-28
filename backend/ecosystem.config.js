@@ -34,7 +34,7 @@ module.exports = {
       // running `npm run dev:workers` via execSync — that chain failed because
       // npm resolved tsx as a local package import (ERR_MODULE_NOT_FOUND).
       script: 'node_modules/.bin/tsx',
-      args: '--env-file=.env src/workers/index.ts',
+      args: 'src/workers/index.ts',
       interpreter: 'none', // tsx is already an executable; don't wrap in node
 
       // Do not watch filesystem — workers are long-running processes
