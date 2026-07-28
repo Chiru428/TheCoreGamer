@@ -10,7 +10,7 @@ module.exports = {
     {
       name: 'thecoregamer-backend',
       script: 'node_modules/next/dist/bin/next',
-      args: 'start -p 3001',
+      args: 'start',
       cwd: process.cwd(),
       watch: false,
       autorestart: true,
@@ -18,6 +18,7 @@ module.exports = {
       restart_delay: 5000,
       env: {
         NODE_ENV: 'production',
+        PORT: process.env.PORT || 3001,
       },
       log_file: 'logs/backend-combined.log',
       error_file: 'logs/backend-error.log',
