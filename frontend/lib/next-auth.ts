@@ -255,6 +255,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               token.role = existingToken.role;
               token.username = existingToken.username;
               token.displayName = existingToken.displayName;
+            } else {
+              // Re-throw so the outer catch can abort the login
+              throw err;
             }
           }
         } else if (user) {
@@ -268,7 +271,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         return token;
       } catch (err) {
         console.error("JWT Callback Error:", err);
-        return token;
+        // If this is an update trigger, we can safely return the existing token
+        if (trigger === 'update') return token;
+        // Otherwise, abort the login process by throwing the error.
+        // Returning `token` here would issue a broken session to the browser!
+        throw err;
       }
     },
     async session({ session, token }) {
