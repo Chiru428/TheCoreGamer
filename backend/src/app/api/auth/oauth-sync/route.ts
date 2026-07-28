@@ -8,9 +8,6 @@ import { csrfProtection } from "@/middleware/csrfProtection";
 
 export async function POST(request: Request) {
   try {
-    const csrfError = csrfProtection(request);
-    if (csrfError) return csrfError;
-
     const internalSecret = request.headers.get("x-internal-secret");
     if (!internalSecret || internalSecret !== process.env.INTERNAL_API_SECRET) {
       return NextResponse.json(errorResponse("Unauthorized"), { status: 401 });

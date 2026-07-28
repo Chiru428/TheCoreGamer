@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 const ALLOWED_ORIGINS = [
   process.env.FRONTEND_URL,
   process.env.NEXT_PUBLIC_SITE_URL,
+  process.env.CORS_ORIGIN,
   "http://localhost:3000",
   "http://localhost:3001",
 ].filter(Boolean) as string[];

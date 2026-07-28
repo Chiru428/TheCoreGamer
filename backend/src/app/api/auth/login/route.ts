@@ -20,9 +20,6 @@ import { findRecoveryCodeIndex } from "@/lib/recovery";
  */
 export async function POST(request: Request) {
   try {
-    const csrfError = csrfProtection(request);
-    if (csrfError) return csrfError;
-
     // 10 login attempts per hour per IP
     const rateLimitResponse = await rateLimit(request, "LOGIN");
     if (rateLimitResponse) return rateLimitResponse;
