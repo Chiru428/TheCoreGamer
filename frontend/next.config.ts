@@ -140,7 +140,36 @@ const nextConfig: NextConfig = {
       " https://m.media-amazon.com" +
       " https://xboxwire.thesourcemediaassets.com",
       "font-src 'self' https://fonts.gstatic.com https://use.typekit.net https://p.typekit.net https://db.onlinewebfonts.com",
-      `connect-src 'self' https://res.cloudinary.com https://pagead2.googlesyndication.com https://www.google-analytics.com https://analytics.google.com https://googleads.g.doubleclick.net https://adservice.google.com https://api.igdb.com https://*.sentry.io https://raw.githubusercontent.com https://images.igdb.com https://game.intel.com https://fonts.googleapis.com https://fonts.gstatic.com https://www.googletagmanager.com https://images.unsplash.com https://*.imgur.com https://*.steamstatic.com https://use.typekit.net https://p.typekit.net https://*.algolia.net https://*.algolianet.com https://*.algolia.io${process.env.NEXT_PUBLIC_R2_HOST ? ` https://${process.env.NEXT_PUBLIC_R2_HOST.replace(/^https?:\/\//, '')}` : ''}`,
+      `connect-src 'self'` +
+      ` https://res.cloudinary.com` +
+      ` https://pagead2.googlesyndication.com` +
+      ` https://www.google-analytics.com` +
+      ` https://analytics.google.com` +
+      ` https://googleads.g.doubleclick.net` +
+      ` https://adservice.google.com` +
+      ` https://api.igdb.com` +
+      ` https://*.sentry.io` +
+      ` https://raw.githubusercontent.com` +
+      ` https://images.igdb.com` +
+      ` https://game.intel.com` +
+      ` https://fonts.googleapis.com` +
+      ` https://fonts.gstatic.com` +
+      ` https://www.googletagmanager.com` +
+      ` https://images.unsplash.com` +
+      ` https://*.imgur.com` +
+      ` https://*.steamstatic.com` +
+      ` https://use.typekit.net` +
+      ` https://p.typekit.net` +
+      ` https://*.algolia.net` +
+      ` https://*.algolianet.com` +
+      ` https://*.algolia.io` +
+      ` https://*.clarity.ms` +
+      (process.env.NEXT_PUBLIC_API_URL
+        ? ` ${process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, '')}`
+        : '') +
+      (process.env.NEXT_PUBLIC_R2_HOST
+        ? ` https://${process.env.NEXT_PUBLIC_R2_HOST.replace(/^https?:\/\//, '')}`
+        : ''),
       "frame-src 'self'" +
       " https://pagead2.googlesyndication.com" +
       " https://googleads.g.doubleclick.net" +

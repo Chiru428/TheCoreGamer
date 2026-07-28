@@ -98,20 +98,28 @@ export async function POST(request: Request) {
         },
       });
     } else {
-      if (user.oauthProvider || !user.passwordHash) {
-        user = await prisma.user.update({
-          where: { id: user.id },
-          data: {
-            oauthProvider: provider,
-            oauthId: providerAccountId,
-            lastLoginAt: new Date(),
-          },
-        });
-      } else {
-        return NextResponse.json(errorResponse("Email already in use by a credential account"), {
-          status: 409,
-        });
+      // An existing account was found by email.
+      // If it's already linked to a DIFFERENT OAuth identity (e.g. another Google account),
+      // block the sync to avoid account takeover.
+      if (user.oauthId && user.oauthId !== providerAccountId) {
+        return NextResponse.json(
+          errorResponse(
+            `This account is already linked to a different ${user.oauthProvider ?? provider} account`
+          ),
+          { status: 409 }
+        );
       }
+      // Otherwise — whether it was a credentials-only account or already linked to this
+      // same provider — link (or re-confirm) the OAuth identity and sign in.
+      // Google's email verification guarantees ownership, so auto-linking is safe.
+      user = await prisma.user.update({
+        where: { id: user.id },
+        data: {
+          oauthProvider: provider,
+          oauthId: providerAccountId,
+          lastLoginAt: new Date(),
+        },
+      });
     }
 
     const { device, isNewDevice } = await recordLoginDevice(user.id, request);

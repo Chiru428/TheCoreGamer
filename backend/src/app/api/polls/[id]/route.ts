@@ -157,7 +157,10 @@ export async function DELETE(request: NextRequest, { params }: Params) {
     }
 
     try {
-      await cacheDeletePattern("polls:list:*");
+      await Promise.all([
+        cacheDeletePattern("polls:list:*"),
+        cacheDelete("homepage:data"),  // bust homepage so a closed/deleted slot-poll is no longer shown
+      ]);
     } catch {
       /* intentionally empty */
     }

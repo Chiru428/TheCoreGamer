@@ -235,14 +235,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               token.displayName = json.data.displayName;
             } else {
               console.error("OAuth sync failed:", json.error);
-              // A failed "connect provider" attempt (e.g. that account is
-              // already linked elsewhere) must not log the user out of their
-              // existing session — restore it as-is.
               if (linkingUserId && existingToken) {
+                // A failed "connect provider" attempt from Settings → Security must not
+                // log the user out of their existing session — restore it as-is.
                 token.id = existingToken.id;
                 token.role = existingToken.role;
                 token.username = existingToken.username;
                 token.displayName = existingToken.displayName;
+              } else {
+                // Fresh sign-in that couldn't be synced — throw so NextAuth surfaces
+                // the error on /auth/error rather than issuing a broken session.
+                throw new Error(json.error || "OAuth account sync failed");
               }
             }
           } catch (err) {
