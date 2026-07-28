@@ -31,10 +31,19 @@ export default async function proxy(request: NextRequest) {
       (process.env.NODE_ENV === 'development'
         ? 'dev-fallback-secret-do-not-use-in-production-32chars!!'
         : undefined);
+    let cookieName = 'authjs.session-token';
+    if (request.cookies.has('__Secure-authjs.session-token')) {
+      cookieName = '__Secure-authjs.session-token';
+    } else if (request.cookies.has('__Secure-next-auth.session-token')) {
+      cookieName = '__Secure-next-auth.session-token';
+    } else if (request.cookies.has('next-auth.session-token')) {
+      cookieName = 'next-auth.session-token';
+    }
+
     const token = await getToken({ 
       req: request, 
       secret,
-      secureCookie: (process.env.NEXTAUTH_URL || '').startsWith('https://')
+      cookieName
     });
     if (!token) {
       const loginUrl = new URL('/auth/login', request.url);
