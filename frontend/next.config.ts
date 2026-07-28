@@ -55,6 +55,42 @@ const nextConfig: NextConfig = {
           source: '/offline',
           destination: '/offline',
         },
+        // Exact-match rules (no trailing segment) — must come BEFORE the :path* variants
+        // so that bare POST /api/auth/register (etc.) are proxied to the backend
+        // instead of falling through to NextAuth's [...nextauth] catch-all.
+        {
+          source: '/api/auth/2fa',
+          destination: `${apiUrl}/api/auth/2fa`,
+        },
+        {
+          source: '/api/auth/login',
+          destination: `${apiUrl}/api/auth/login`,
+        },
+        {
+          source: '/api/auth/register',
+          destination: `${apiUrl}/api/auth/register`,
+        },
+        {
+          source: '/api/auth/forgot-password',
+          destination: `${apiUrl}/api/auth/forgot-password`,
+        },
+        {
+          source: '/api/auth/reset-password',
+          destination: `${apiUrl}/api/auth/reset-password`,
+        },
+        {
+          source: '/api/auth/verify-email',
+          destination: `${apiUrl}/api/auth/verify-email`,
+        },
+        {
+          source: '/api/auth/oauth-sync',
+          destination: `${apiUrl}/api/auth/oauth-sync`,
+        },
+        {
+          source: '/api/auth/refresh',
+          destination: `${apiUrl}/api/auth/refresh`,
+        },
+        // Wildcard rules — catch sub-paths like /api/auth/register/confirm etc.
         {
           source: '/api/auth/2fa/:path*',
           destination: `${apiUrl}/api/auth/2fa/:path*`,

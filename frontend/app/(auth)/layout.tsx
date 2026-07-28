@@ -5,8 +5,10 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
   return (
     <div className="relative min-h-screen bg-bg transition-colors duration-300 flex items-center justify-center overflow-hidden font-sans">
       {/* Background SVG Tech Lines (Angular 45-deg) */}
+      {/* NOTE: SVG path `d` and `transform` attributes do NOT support CSS calc().
+          Use a viewBox-based coordinate system instead for responsive positioning. */}
       <div className="absolute inset-0 z-0 pointer-events-none opacity-30 dark:opacity-30 opacity-60">
-        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 800" preserveAspectRatio="none">
           <defs>
             <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
               <feGaussianBlur stdDeviation="3" result="blur" />
@@ -26,10 +28,11 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
             <path d="M 60 15 L 80 15" className="stroke-gray-300 dark:stroke-[#333]" strokeWidth="1" fill="none" />
             <rect x="78" y="13" width="4" height="4" className="fill-gray-400 dark:fill-[#666]" filter="url(#glow)" />
           </g>
-          <path d="M 140 75 L 200 75 L 250 125 L calc(50vw - 220px) 125 L calc(50vw - 180px) 165 L calc(50vw - 180px) 200" className="stroke-gray-200 dark:stroke-[#222]" strokeWidth="1" fill="none" />
+          {/* Top-left connector line toward center (viewBox: 1000×800, center≈500×400) */}
+          <path d="M 140 75 L 200 75 L 250 125 L 280 125 L 320 165 L 320 200" className="stroke-gray-200 dark:stroke-[#222]" strokeWidth="1" fill="none" />
           
           {/* Bottom Left */}
-          <g transform="translate(60, calc(100vh - 90px))">
+          <g transform="translate(60, 710)">
             <rect x="0" y="0" width="60" height="30" rx="2" className="fill-white stroke-gray-200 dark:fill-[#0a0a0a] dark:stroke-[#222]" strokeWidth="1" />
             <circle cx="15" cy="10" r="1" className="fill-gray-300 dark:fill-[#444]" />
             <circle cx="30" cy="10" r="1" className="fill-gray-300 dark:fill-[#444]" />
@@ -40,10 +43,10 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
             <path d="M 60 15 L 80 15" className="stroke-gray-300 dark:stroke-[#333]" strokeWidth="1" fill="none" />
             <rect x="78" y="13" width="4" height="4" className="fill-gray-400 dark:fill-[#666]" filter="url(#glow)" />
           </g>
-          <path d="M 140 calc(100vh - 75px) L 200 calc(100vh - 75px) L 250 calc(100vh - 125px) L calc(50vw - 220px) calc(100vh - 125px) L calc(50vw - 180px) calc(100vh - 165px) L calc(50vw - 180px) calc(100vh - 200px)" className="stroke-gray-200 dark:stroke-[#222]" strokeWidth="1" fill="none" />
+          <path d="M 140 725 L 200 725 L 250 675 L 280 675 L 320 635 L 320 600" className="stroke-gray-200 dark:stroke-[#222]" strokeWidth="1" fill="none" />
 
           {/* Top Right */}
-          <g transform="translate(calc(100vw - 120px), 60)">
+          <g transform="translate(880, 60)">
             <rect x="0" y="0" width="60" height="30" rx="2" className="fill-white stroke-gray-200 dark:fill-[#0a0a0a] dark:stroke-[#222]" strokeWidth="1" />
             <circle cx="15" cy="10" r="1" className="fill-gray-300 dark:fill-[#444]" />
             <circle cx="30" cy="10" r="1" className="fill-gray-300 dark:fill-[#444]" />
@@ -54,10 +57,10 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
             <path d="M 0 15 L -20 15" className="stroke-gray-300 dark:stroke-[#333]" strokeWidth="1" fill="none" />
             <rect x="-22" y="13" width="4" height="4" className="fill-gray-400 dark:fill-[#666]" filter="url(#glow)" />
           </g>
-          <path d="M calc(100vw - 140px) 75 L calc(100vw - 200px) 75 L calc(100vw - 250px) 125 L calc(50vw + 220px) 125 L calc(50vw + 180px) 165 L calc(50vw + 180px) 200" className="stroke-gray-200 dark:stroke-[#222]" strokeWidth="1" fill="none" />
+          <path d="M 860 75 L 800 75 L 750 125 L 720 125 L 680 165 L 680 200" className="stroke-gray-200 dark:stroke-[#222]" strokeWidth="1" fill="none" />
 
           {/* Bottom Right */}
-          <g transform="translate(calc(100vw - 120px), calc(100vh - 90px))">
+          <g transform="translate(880, 710)">
             <rect x="0" y="0" width="60" height="30" rx="2" className="fill-white stroke-gray-200 dark:fill-[#0a0a0a] dark:stroke-[#222]" strokeWidth="1" />
             <circle cx="15" cy="10" r="1" className="fill-gray-300 dark:fill-[#444]" />
             <circle cx="30" cy="10" r="1" className="fill-gray-300 dark:fill-[#444]" />
@@ -68,7 +71,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
             <path d="M 0 15 L -20 15" className="stroke-gray-300 dark:stroke-[#333]" strokeWidth="1" fill="none" />
             <rect x="-22" y="13" width="4" height="4" className="fill-gray-400 dark:fill-[#666]" filter="url(#glow)" />
           </g>
-          <path d="M calc(100vw - 140px) calc(100vh - 75px) L calc(100vw - 200px) calc(100vh - 75px) L calc(100vw - 250px) calc(100vh - 125px) L calc(50vw + 220px) calc(100vh - 125px) L calc(50vw + 180px) calc(100vh - 165px) L calc(50vw + 180px) calc(100vh - 200px)" className="stroke-gray-200 dark:stroke-[#222]" strokeWidth="1" fill="none" />
+          <path d="M 860 725 L 800 725 L 750 675 L 720 675 L 680 635 L 680 600" className="stroke-gray-200 dark:stroke-[#222]" strokeWidth="1" fill="none" />
         </svg>
       </div>
 
