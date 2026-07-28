@@ -278,7 +278,7 @@ export const createGameSchema = z.object({
   regionalReleaseDates: z.any().optional(),
   playtime: z.number().int().min(0).optional(),
   rating: z.number().min(0).max(5).optional(),
-  dlcOfId: z.string().optional(),
+  dlcOfId: z.string().optional().transform(v => v === "" ? null : v),
   gameEdition: z.enum(["STANDARD", "DELUXE", "GOTY_EDITION", "EXPANSION", "DLC"]).optional(),
   igdbId: z.number().int().positive().optional().nullable(),
   igdbSlug: z.string().optional().nullable(),
