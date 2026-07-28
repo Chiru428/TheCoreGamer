@@ -23,7 +23,7 @@
     "db:upgrade-cover-resolution": "npx tsx scripts/upgrade-cover-resolution.ts",
     "db:clear-content": "npx tsx prisma/clear-content.ts",
     "prepare": "husky",
-    "workers:start": "pm2 start ecosystem.config.js",
+    "workers:start": "npx pm2 start ecosystem.config.js --no-daemon",
     "workers:stop": "pm2 stop thecoregamer-workers",
     "workers:restart": "pm2 restart thecoregamer-workers",
     "workers:logs": "pm2 logs thecoregamer-workers",
