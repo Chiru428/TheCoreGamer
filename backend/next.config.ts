@@ -34,6 +34,11 @@ const nextConfig: NextConfig = {
       "form-action 'self'",
     ].join("; ");
 
+    // Allow the frontend origin to make cross-origin requests to the backend API.
+    // NEXTAUTH_URL is the public frontend URL (e.g. https://the-core-gamer-cqay.vercel.app
+    // or https://thecoregamer.com). Falls back to localhost for local dev.
+    const frontendOrigin = (process.env.NEXTAUTH_URL || "http://localhost:3000").replace(/\/$/, "");
+
     return [
       {
         source: "/(.*)",
@@ -45,6 +50,18 @@ const nextConfig: NextConfig = {
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
           { key: "Content-Security-Policy", value: csp },
           { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
+        ],
+      },
+      {
+        // CORS for all API routes — allows the frontend to make browser-side
+        // cross-origin requests (e.g. SWR revalidation for polls, screenshots)
+        // without hitting CORS preflight failures.
+        source: "/api/:path*",
+        headers: [
+          { key: "Access-Control-Allow-Origin", value: frontendOrigin },
+          { key: "Access-Control-Allow-Methods", value: "GET,POST,PUT,PATCH,DELETE,OPTIONS" },
+          { key: "Access-Control-Allow-Headers", value: "Content-Type,Authorization,x-csrf-token,x-internal-secret" },
+          { key: "Access-Control-Allow-Credentials", value: "true" },
         ],
       },
     ];

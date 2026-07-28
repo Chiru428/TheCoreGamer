@@ -107,7 +107,9 @@ const nextConfig: NextConfig = {
       " https://googleads.g.doubleclick.net" +
       " https://tpc.googlesyndication.com" +
       " https://adservice.google.com" +
-      " https://cdn.jsdelivr.net",
+      " https://cdn.jsdelivr.net" +
+      " https://www.clarity.ms" +
+      " https://clarity.ms",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://use.typekit.net https://p.typekit.net https://db.onlinewebfonts.com",
       "img-src 'self' data: blob:" +
       " https://res.cloudinary.com" +
