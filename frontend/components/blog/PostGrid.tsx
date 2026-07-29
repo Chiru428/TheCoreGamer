@@ -9,9 +9,11 @@ interface PostGridProps {
   adSlot?: React.ReactNode;
   adInterval?: number;
   aspectVideo?: boolean;
+  /** Pass through to PostCard — shows full untruncated title at 16–18px */
+  fullTitle?: boolean;
 }
 
-export default function PostGrid({ articles, variant = 'default', className, adSlot, adInterval = 6, aspectVideo }: PostGridProps) {
+export default function PostGrid({ articles, variant = 'default', className, adSlot, adInterval = 6, aspectVideo, fullTitle }: PostGridProps) {
   if (!articles || articles.length === 0) {
     return (
       <div className="py-20 text-center text-text-muted bg-bg-surface rounded-xl border border-border">
@@ -38,7 +40,7 @@ export default function PostGrid({ articles, variant = 'default', className, adS
         item === 'ad' ? (
           <div key={`ad-${i}`} className="col-span-full flex justify-center py-4">{adSlot}</div>
         ) : (
-          <PostCard key={item.id} article={item} variant={variant === 'compact' ? 'small' : 'medium'} aspectVideo={aspectVideo} />
+          <PostCard key={item.id} article={item} variant={variant === 'compact' ? 'small' : 'medium'} aspectVideo={aspectVideo} fullTitle={fullTitle} />
         )
       )}
     </div>

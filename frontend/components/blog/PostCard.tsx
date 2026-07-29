@@ -21,9 +21,11 @@ interface PostCardProps {
   /** Whether to show the content-type badge. Default: true */
   showBadge?: boolean;
   index?: number;
+  /** Show the full title without truncation and at a smaller size (tags page). */
+  fullTitle?: boolean;
 }
 
-export default function PostCard({ article, variant = 'medium', className, aspectVideo, showBadge = true, index = 0 }: PostCardProps) {
+export default function PostCard({ article, variant = 'medium', className, aspectVideo, showBadge = true, index = 0, fullTitle = false }: PostCardProps) {
   const cardRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -270,7 +272,20 @@ export default function PostCard({ article, variant = 'medium', className, aspec
           </div>
         )}
         <Link href={href} className="shrink-0 group-hover:underline">
-          <h3 className="line-clamp-2 text-[20px] text-[var(--text-strong)]" style={{ fontFamily: '"Rubik", sans-serif', fontWeight: 700, lineHeight: 1.35 }}>{article.title}</h3>
+          <h3
+            className={cn(
+              fullTitle ? '' : 'line-clamp-2',
+              'text-[var(--text-strong)]'
+            )}
+            style={{
+              fontFamily: '"Rubik", sans-serif',
+              fontWeight: 700,
+              lineHeight: 1.35,
+              fontSize: fullTitle ? 'clamp(16px, 2.5vw, 18px)' : '20px',
+            }}
+          >
+            {article.title}
+          </h3>
         </Link>
         <div className="mt-auto flex items-center gap-1.5 text-xs sm:text-[14px] shrink-0" style={{ color: 'var(--text)' }}>
           {article.author?.username ? (

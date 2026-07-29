@@ -9,6 +9,7 @@ import SessionProvider from '@/components/ui/SessionProvider';
 import WebVitals from '@/components/ui/WebVitals';
 import ServiceWorkerRegistration from '@/components/ui/ServiceWorkerRegistration';
 import ClarityScript from '@/components/shared/ClarityScript';
+import ScrollRestoration from '@/components/ui/ScrollRestoration';
 import { SITE_NAME, SITE_DESCRIPTION, SITE_URL } from '@/lib/constants';
 import { Orbitron } from 'next/font/google';
 
@@ -103,6 +104,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* B7 — Core Web Vitals reporting to GA4 */}
         <WebVitals />
         <ServiceWorkerRegistration />
+        <ScrollRestoration />
         <ClarityScript />
       </body>
     </html>

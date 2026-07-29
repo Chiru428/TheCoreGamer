@@ -117,7 +117,7 @@ function MobileNavItem({ link, index, setMobileMenuOpen, pathname, isActive, get
 
 export default function Header({ tickerArticles = [] }: { tickerArticles?: Article[] }) {
   const pathname = usePathname();
-  const { user, isAuthenticated, clearSession } = useAuthStore();
+  const { user, isAuthenticated, isLoading: authLoading, clearSession } = useAuthStore();
   const { mobileMenuOpen, setMobileMenuOpen, setSearchOverlayOpen, theme, setTheme } = useUIStore();
   const [themeMounted, setThemeMounted] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -419,7 +419,17 @@ export default function Header({ tickerArticles = [] }: { tickerArticles?: Artic
             ))}
           </button>
 
-          {isAuthenticated && user ? (
+          {authLoading ? (
+            // Skeleton placeholder while NextAuth session is hydrating —
+            // prevents the Sign In button from flashing for authenticated users.
+            <div className="hidden md:flex items-center gap-2 shrink-0 animate-pulse" aria-hidden="true">
+              <div className="w-8 h-8 rounded-full bg-white/10" />
+              <div className="flex flex-col gap-1.5">
+                <div className="w-20 h-3 rounded bg-white/10" />
+                <div className="w-12 h-2 rounded bg-white/10" />
+              </div>
+            </div>
+          ) : isAuthenticated && user ? (
             <div ref={accountMenuRef} className="hidden md:flex items-center gap-2 relative shrink-0">
               <button
                 type="button"
@@ -547,7 +557,16 @@ export default function Header({ tickerArticles = [] }: { tickerArticles?: Artic
               {/* Header row — Profile left, Close right */}
               <div className="flex items-center justify-between px-6 py-6 border-b border-[color:var(--border)] shrink-0">
                 <div className="flex items-center gap-4">
-                  {isAuthenticated && user ? (
+                  {authLoading ? (
+                    // Skeleton while session hydrates — prevents Sign In flash
+                    <div className="flex items-center gap-4 animate-pulse" aria-hidden="true">
+                      <div className="w-12 h-12 rounded-full bg-white/10 shrink-0" />
+                      <div className="flex flex-col gap-2">
+                        <div className="w-16 h-2.5 rounded bg-white/10" />
+                        <div className="w-24 h-3 rounded bg-white/10" />
+                      </div>
+                    </div>
+                  ) : isAuthenticated && user ? (
                     <>
                       {user.avatarUrl ? (
                         <img src={user.avatarUrl} alt={user.displayName} className="w-12 h-12 rounded-full object-cover shrink-0" />
@@ -568,6 +587,7 @@ export default function Header({ tickerArticles = [] }: { tickerArticles?: Artic
                       </HeaderPill>
                     </div>
                   )}
+
                 </div>
 
                 <div className="flex items-center gap-2">

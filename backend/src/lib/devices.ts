@@ -1,6 +1,5 @@
 import crypto from "crypto";
 import { prisma } from "./prisma";
-import { getClientIp } from "@/middleware/rateLimit";
 import type { UserDevice } from "@/generated/prisma";
 
 /**
@@ -34,10 +33,14 @@ export function anonymizeIp(ip: string): string {
 }
 
 /**
- * Stable hash identifying a "device" from its user agent and anonymized IP.
+ * Stable hash identifying a "device" from its user agent only.
+ *
+ * Deliberately excludes IP: dynamic IPs, VPN toggles, and network switches
+ * would otherwise create a new device record on every login from the same
+ * physical device, leading to dozens of duplicate entries.
  */
-export function hashDevice(userAgent: string, anonymizedIp: string): string {
-  return crypto.createHash("sha256").update(userAgent + anonymizedIp).digest("hex");
+export function hashDevice(userAgent: string): string {
+  return crypto.createHash("sha256").update(userAgent).digest("hex");
 }
 
 /**
@@ -87,9 +90,23 @@ export async function recordLoginDevice(
   req: Request
 ): Promise<{ device: UserDevice; isNewDevice: boolean }> {
   const userAgent = req.headers.get("user-agent") || "unknown";
-  const rawIp = getClientIp(req);
-  const anonymizedIp = anonymizeIp(rawIp);
-  const deviceHash = hashDevice(userAgent, anonymizedIp);
+
+  // Hash by user agent only — IP is intentionally excluded so that network
+  // changes (dynamic IP, VPN, switching WiFi ↔ mobile data) don't create
+  // duplicate device records for the same physical browser.
+  const deviceHash = hashDevice(userAgent);
+
+  // For GeoIP we need the real client IP.
+  // On Vercel, the FIRST entry of x-forwarded-for is the original client IP
+  // (set by Vercel's edge before it appends its own IPs). The last entry
+  // is Vercel's own US-based server, which is why location was showing
+  // "United States" for all users regardless of their actual location.
+  const xForwardedFor = req.headers.get("x-forwarded-for");
+  const realClientIp = xForwardedFor
+    ? xForwardedFor.split(",")[0].trim()   // first = real client
+    : (req.headers.get("x-real-ip") ?? "127.0.0.1");
+
+  const anonymizedIp = anonymizeIp(realClientIp);
 
   const existing = await prisma.userDevice.findUnique({
     where: { userId_deviceHash: { userId, deviceHash } },
@@ -98,7 +115,7 @@ export async function recordLoginDevice(
   let location: string | undefined = undefined;
   if (!existing) {
     try {
-      const res = await fetch(`http://ip-api.com/json/${rawIp}?fields=country`);
+      const res = await fetch(`http://ip-api.com/json/${realClientIp}?fields=country`);
       if (res.ok) {
         const data = await res.json();
         if (data.country) {

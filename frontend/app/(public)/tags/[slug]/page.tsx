@@ -50,7 +50,7 @@ export default async function TagPage({ params, searchParams }: Props) {
           <p className="text-text-muted">Articles tagged with &ldquo;{slug}&rdquo;</p>
         )}
       </div>
-      <PostGrid articles={res.data || []} className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-2" />
+      <PostGrid articles={res.data || []} className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-2" fullTitle />
       {res.pagination && (
         <Pagination
           currentPage={page}
