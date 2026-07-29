@@ -64,7 +64,7 @@ async function staleWhileRevalidate(request) {
   const cached = await caches.match(request);
   const networkFetch = fetch(request)
     .then((response) => putInCache(request, response))
-    .catch(() => cached);
+    .catch(() => cached || Response.error());
   return cached || networkFetch;
 }
 
