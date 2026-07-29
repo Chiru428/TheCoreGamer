@@ -5,12 +5,13 @@ import {
   Bold, Italic, Underline as UnderlineIcon, Strikethrough, Code,
   Palette, ArrowUp, ArrowDown, MoreHorizontal, X, AlignLeft,
   AlignCenter, AlignRight, AlignJustify, Target, Info, Link as LinkIcon,
-  Highlighter, Sparkles, Minus, Plus, BookOpen
+  Highlighter, Sparkles, Minus, Plus, BookOpen, Gamepad2
 } from 'lucide-react';
 import { TEXT_COLOR_PALETTE, getGroupedPalette, ColorEntry } from '@/config/textColors';
 import { cn } from '@/lib/utils';
 import { sanitizeUrl } from '@/lib/sanitize';
 import { ArticlePicker, PickedArticle } from '../../extensions/gaming/shared/ArticlePicker';
+import { GamePicker, PickedGame } from '../../extensions/gaming/shared/GamePicker';
 
 interface BubbleToolbarProps {
   editor: Editor;
@@ -231,6 +232,7 @@ export const BubbleToolbar = ({ editor, addToast }: BubbleToolbarProps) => {
   const [showRow3, setShowRow3] = useState(false);
   const [showLinkPanel, setShowLinkPanel] = useState(false);
   const [showArticleLinkPanel, setShowArticleLinkPanel] = useState(false);
+  const [showGameLinkPanel, setShowGameLinkPanel] = useState(false);
   const [showCalloutMenu, setShowCalloutMenu] = useState(false);
   const [showBadgeMenu, setShowBadgeMenu] = useState(false);
   const [showLineHeightMenu, setShowLineHeightMenu] = useState(false);
@@ -261,6 +263,7 @@ export const BubbleToolbar = ({ editor, addToast }: BubbleToolbarProps) => {
         setShowRow3(false);
         setShowLinkPanel(false);
         setShowArticleLinkPanel(false);
+        setShowGameLinkPanel(false);
         setShowCalloutMenu(false);
         setShowBadgeMenu(false);
         setShowLineHeightMenu(false);
@@ -308,6 +311,12 @@ export const BubbleToolbar = ({ editor, addToast }: BubbleToolbarProps) => {
     const href = `/${path}/${article.slug}`;
     editor.chain().focus().extendMarkRange('link').setLink({ href, target: null, rel: null }).run();
     setShowArticleLinkPanel(false);
+  };
+
+  const handleApplyGameLink = (game: PickedGame) => {
+    const href = `/games/${game.slug}`;
+    editor.chain().focus().extendMarkRange('link').setLink({ href, target: null, rel: null }).run();
+    setShowGameLinkPanel(false);
   };
 
   const handleFontSize = (delta: number) => {
@@ -413,7 +422,7 @@ export const BubbleToolbar = ({ editor, addToast }: BubbleToolbarProps) => {
         <ToolBtn onClick={() => {
           setLinkHref(editor.isActive('link') ? (editor.getAttributes('link').href || '') : '');
           setShowLinkPanel(v => {
-            if (!v) setShowArticleLinkPanel(false);
+            if (!v) { setShowArticleLinkPanel(false); setShowGameLinkPanel(false); }
             return !v;
           });
         }} active={showLinkPanel || (editor.isActive('link') && !editor.getAttributes('link').href?.startsWith('/'))} title="Link">
@@ -421,11 +430,19 @@ export const BubbleToolbar = ({ editor, addToast }: BubbleToolbarProps) => {
         </ToolBtn>
         <ToolBtn onClick={() => {
           setShowArticleLinkPanel(v => {
-            if (!v) setShowLinkPanel(false);
+            if (!v) { setShowLinkPanel(false); setShowGameLinkPanel(false); }
             return !v;
           });
-        }} active={showArticleLinkPanel || (editor.isActive('link') && editor.getAttributes('link').href?.startsWith('/'))} title="Article Link">
+        }} active={showArticleLinkPanel || (editor.isActive('link') && editor.getAttributes('link').href?.match(/^\/(articles|reviews|mod-guides)\//))} title="Article Link">
           <BookOpen className="w-3.5 h-3.5" />
+        </ToolBtn>
+        <ToolBtn onClick={() => {
+          setShowGameLinkPanel(v => {
+            if (!v) { setShowLinkPanel(false); setShowArticleLinkPanel(false); }
+            return !v;
+          });
+        }} active={showGameLinkPanel || (editor.isActive('link') && editor.getAttributes('link').href?.startsWith('/games/'))} title="Game Link">
+          <Gamepad2 className="w-3.5 h-3.5" />
         </ToolBtn>
 
         {showLinkPanel && (
@@ -447,6 +464,15 @@ export const BubbleToolbar = ({ editor, addToast }: BubbleToolbarProps) => {
           <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 p-2 rounded-lg z-50 shadow-xl w-64" style={{ background: 'var(--ed-surface)', border: '1px solid var(--ed-border)' }}>
             <ArticlePicker 
               onSelect={handleApplyArticleLink} 
+              stopProp={(e) => { e.stopPropagation(); }} 
+            />
+          </div>
+        )}
+
+        {showGameLinkPanel && (
+          <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 p-2 rounded-lg z-50 shadow-xl w-64" style={{ background: 'var(--ed-surface)', border: '1px solid var(--ed-border)' }}>
+            <GamePicker 
+              onSelect={handleApplyGameLink} 
               stopProp={(e) => { e.stopPropagation(); }} 
             />
           </div>

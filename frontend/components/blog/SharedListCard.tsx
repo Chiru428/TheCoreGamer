@@ -26,7 +26,7 @@ export default function SharedListCard({ article, priority = false }: SharedList
       href={href}
       className="group flex flex-col sm:flex-row w-full bg-transparent relative overflow-hidden pb-3 sm:pb-4 mb-6 sm:mb-8 border-b-2 border-border h-auto sm:min-h-[135px] lg:min-h-[180px]"
     >
-      <article className="flex flex-col sm:flex-row sm:items-start w-full">
+      <article className="flex flex-col sm:flex-row sm:items-center w-full">
         {/* Image Area */}
         <div className="block w-full sm:w-[240px] lg:w-[320px] aspect-[16/9] shrink-0 relative overflow-hidden bg-[var(--deep,#0d0d1a)]">
           {article.featuredImageUrl ? (
