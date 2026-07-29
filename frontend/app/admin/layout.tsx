@@ -10,7 +10,8 @@ import { useAuthStore } from '@/store/authStore';
 import {
   LayoutDashboard, FileText, Star, Wrench, Gamepad,
   FolderOpen, Tags, MessageSquare, Mail, Megaphone, BarChart3,
-  Users, ChevronLeft, Menu, X, Sun, Moon, BookOpen, PieChart, Shield, Bell, Calendar, BookMarked
+  Users, ChevronLeft, Menu, X, Sun, Moon, BookOpen, PieChart, Shield, Bell, Calendar, BookMarked,
+  Newspaper, Sparkles, Tag, MessageCircle, List
 } from 'lucide-react';
 import { useUIStore } from '@/store/uiStore';
 import { STAFF_ROLES } from '@/lib/constants';
@@ -21,14 +22,19 @@ import { STAFF_ROLES } from '@/lib/constants';
 const links = [
   // -- Content ------------------------------------------------------
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard, group: 'Content', roles: ['EDITOR', 'ADMIN'] },
-  { href: '/admin/posts', label: 'Posts', icon: FileText, group: 'Content' },
   { href: '/admin/calendar', label: 'Calendar', icon: Calendar, group: 'Content' },
   { href: '/admin/series', label: 'Series', icon: BookMarked, group: 'Content' },
-  { href: '/admin/reviews', label: 'Reviews', icon: Star, group: 'Content' },
-  { href: '/admin/mod-guides', label: 'Mod Guides', icon: Wrench, group: 'Content' },
-  { href: '/admin/walkthroughs', label: 'Walkthroughs', icon: BookOpen, group: 'Content' },
   { href: '/admin/games', label: 'Games', icon: Gamepad, group: 'Content', roles: ['EDITOR', 'ADMIN'] },
   { href: '/admin/polls', label: 'Polls', icon: PieChart, group: 'Content', roles: ['EDITOR', 'ADMIN'] },
+  // -- Posts --------------------------------------------------------
+  { href: '/admin/news', label: 'News', icon: Newspaper, group: 'Posts' },
+  { href: '/admin/features', label: 'Features', icon: Sparkles, group: 'Posts' },
+  { href: '/admin/deals', label: 'Deals', icon: Tag, group: 'Posts' },
+  { href: '/admin/opinions', label: 'Opinions', icon: MessageCircle, group: 'Posts' },
+  { href: '/admin/listicles', label: 'Listicles', icon: List, group: 'Posts' },
+  { href: '/admin/reviews', label: 'Reviews', icon: Star, group: 'Posts' },
+  { href: '/admin/mod-guides', label: 'Mod Guides', icon: Wrench, group: 'Posts' },
+  { href: '/admin/walkthroughs', label: 'Walkthroughs', icon: BookOpen, group: 'Posts' },
   // -- Management ---------------------------------------------------
   { href: '/admin/tags', label: 'Tags', icon: Tags, group: 'Management', roles: ['EDITOR', 'ADMIN'] },
   { href: '/admin/comments', label: 'Comments', icon: MessageSquare, group: 'Management', roles: ['EDITOR', 'ADMIN'] },

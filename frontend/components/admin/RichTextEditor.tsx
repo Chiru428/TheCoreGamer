@@ -227,9 +227,10 @@ import {
   BarChart2, Plus, X, AlertTriangle, Info, Code2,
   Eye, Monitor, Tablet, Smartphone, Download, FileText, Copy, Sparkles,
   Star, FileCode, Zap, Globe, EyeOff, History, Type, RotateCcw,
-  Target, Columns, ShieldAlert, ChevronDown, Tag, BookOpen,
+  Target, Columns, ShieldAlert, ChevronDown, Tag, BookOpen, Gamepad2,
 } from 'lucide-react';
 import { ArticlePicker, PickedArticle } from '../../extensions/gaming/shared/ArticlePicker';
+import { GamePicker, PickedGame } from '../../extensions/gaming/shared/GamePicker';
 
 const lowlight = createLowlight(common);
 
@@ -2061,6 +2062,8 @@ interface FullscreenTopToolbarProps {
   setShowLinkPanel: React.Dispatch<React.SetStateAction<boolean>>;
   showArticleLinkPanel: boolean;
   setShowArticleLinkPanel: React.Dispatch<React.SetStateAction<boolean>>;
+  showGameLinkPanel: boolean;
+  setShowGameLinkPanel: React.Dispatch<React.SetStateAction<boolean>>;
   showTextColor: boolean;
   setShowTextColor: React.Dispatch<React.SetStateAction<boolean>>;
   showHighlight: boolean;
@@ -2080,16 +2083,17 @@ interface FullscreenTopToolbarProps {
   handleYoutube: () => void;
   handleApplyLink: (href: string, newTab: boolean) => void;
   handleApplyArticleLink: (article: PickedArticle) => void;
+  handleApplyGameLink: (game: PickedGame) => void;
   insertCallout: (type: 'info' | 'warning' | 'tip' | 'danger') => void;
   handleSlashAction: (action: any) => void;
 }
 
 const FullscreenTopToolbar = ({
-  editor, showLinkPanel, setShowLinkPanel, showArticleLinkPanel, setShowArticleLinkPanel, showTextColor, setShowTextColor,
+  editor, showLinkPanel, setShowLinkPanel, showArticleLinkPanel, setShowArticleLinkPanel, showGameLinkPanel, setShowGameLinkPanel, showTextColor, setShowTextColor,
   showHighlight, setShowHighlight, showCalloutMenu, setShowCalloutMenu, calloutMenuRef,
   showBadgeMenu, setShowBadgeMenu,
   showFindReplace, setShowFindReplace, setShowShortcutsPanel, activePanel, togglePanel,
-  slug, handleAddImage, handleYoutube, handleApplyLink, handleApplyArticleLink,
+  slug, handleAddImage, handleYoutube, handleApplyLink, handleApplyArticleLink, handleApplyGameLink,
   // Kept in the prop interface for parity with the sidebar's callout API; the
   // dropdown below reuses the richer 6-type `callout` node insertion instead.
   insertCallout: _insertCallout,
@@ -2220,17 +2224,24 @@ const FullscreenTopToolbar = ({
       <div className="relative shrink-0 flex items-center gap-0.5">
         <ToolBtn onClick={() => {
           setShowLinkPanel((v: boolean) => {
-            if (!v) setShowArticleLinkPanel(false);
+            if (!v) { setShowArticleLinkPanel(false); setShowGameLinkPanel(false); }
             return !v;
           });
         }} active={showLinkPanel || (editor.isActive('link') && !editor.getAttributes('link').href?.startsWith('/'))} label="Link (⌘K)"><LinkIcon className="w-4 h-4" /></ToolBtn>
         
         <ToolBtn onClick={() => {
           setShowArticleLinkPanel(v => {
-            if (!v) setShowLinkPanel(false);
+            if (!v) { setShowLinkPanel(false); setShowGameLinkPanel(false); }
             return !v;
           });
-        }} active={showArticleLinkPanel || (editor.isActive('link') && editor.getAttributes('link').href?.startsWith('/'))} label="Article Link"><BookOpen className="w-4 h-4" /></ToolBtn>
+        }} active={showArticleLinkPanel || (editor.isActive('link') && editor.getAttributes('link').href?.match(/^\/(articles|reviews|mod-guides)\//))} label="Article Link"><BookOpen className="w-4 h-4" /></ToolBtn>
+
+        <ToolBtn onClick={() => {
+          setShowGameLinkPanel(v => {
+            if (!v) { setShowLinkPanel(false); setShowArticleLinkPanel(false); }
+            return !v;
+          });
+        }} active={showGameLinkPanel || (editor.isActive('link') && editor.getAttributes('link').href?.startsWith('/games/'))} label="Game Link"><Gamepad2 className="w-4 h-4" /></ToolBtn>
 
         {showLinkPanel && (
           <LinkPanel onApply={handleApplyLink} onClose={() => setShowLinkPanel(false)} initialHref={editor.isActive('link') ? (editor.getAttributes('link').href || '') : ''} />
@@ -2240,6 +2251,15 @@ const FullscreenTopToolbar = ({
           <div className="absolute top-full left-0 mt-1 p-2 rounded-lg z-50 shadow-xl w-64" style={{ background: 'var(--ed-surface)', border: '1px solid var(--ed-border)' }}>
             <ArticlePicker 
               onSelect={handleApplyArticleLink} 
+              stopProp={(e) => { e.stopPropagation(); }} 
+            />
+          </div>
+        )}
+
+        {showGameLinkPanel && (
+          <div className="absolute top-full left-0 mt-1 p-2 rounded-lg z-50 shadow-xl w-64" style={{ background: 'var(--ed-surface)', border: '1px solid var(--ed-border)' }}>
+            <GamePicker 
+              onSelect={handleApplyGameLink} 
               stopProp={(e) => { e.stopPropagation(); }} 
             />
           </div>
@@ -2381,6 +2401,7 @@ export default function RichTextEditor({
   const calloutMenuRef = useRef<HTMLDivElement>(null);
   const [showLinkPanel, setShowLinkPanel] = useState(false);
   const [showArticleLinkPanel, setShowArticleLinkPanel] = useState(false);
+  const [showGameLinkPanel, setShowGameLinkPanel] = useState(false);
   const [findText, setFindText] = useState('');
   const [replaceText, setReplaceText] = useState('');
   const [autoSaveStatus, setAutoSaveStatus] = useState<'idle' | 'saving' | 'saved'>('idle');
@@ -2925,6 +2946,12 @@ export default function RichTextEditor({
     setShowArticleLinkPanel(false);
   };
 
+  const handleApplyGameLink = (game: PickedGame) => {
+    const href = `/games/${game.slug}`;
+    editor.chain().focus().extendMarkRange('link').setLink({ href, target: null, rel: null }).run();
+    setShowGameLinkPanel(false);
+  };
+
   const handleYoutube = () => {
     setBlockModalConfig({
       title: 'YouTube Embed',
@@ -3218,6 +3245,8 @@ export default function RichTextEditor({
           setShowLinkPanel={setShowLinkPanel}
           showArticleLinkPanel={showArticleLinkPanel}
           setShowArticleLinkPanel={setShowArticleLinkPanel}
+          showGameLinkPanel={showGameLinkPanel}
+          setShowGameLinkPanel={setShowGameLinkPanel}
           showTextColor={showTextColor}
           setShowTextColor={setShowTextColor}
           showHighlight={showHighlight}
@@ -3238,6 +3267,7 @@ export default function RichTextEditor({
           handleYoutube={handleYoutube}
           handleApplyLink={handleApplyLink}
           handleApplyArticleLink={handleApplyArticleLink}
+          handleApplyGameLink={handleApplyGameLink}
           insertCallout={insertCallout}
         />
       )}

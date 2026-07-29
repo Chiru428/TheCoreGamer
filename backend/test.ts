@@ -1,0 +1,1 @@
+import { prisma } from './src/lib/prisma'; async function main() { const users = await prisma.user.findMany({ include: { accounts: true } }); console.log(JSON.stringify(users, null, 2)); } main().finally(() => prisma.$disconnect());
