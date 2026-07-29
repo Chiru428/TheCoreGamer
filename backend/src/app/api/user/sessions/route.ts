@@ -2,10 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAuth } from "@/middleware/requireRole";
 import { rateLimit } from "@/middleware/rateLimit";
-import { getClientIp } from "@/middleware/rateLimit";
+
 import { captureError } from "@/lib/sentry";
 import { successResponse, errorResponse } from "@/types";
-import { parseUserAgent, anonymizeIp, hashDevice } from "@/lib/devices";
+import { parseUserAgent, hashDevice } from "@/lib/devices";
 
 export async function GET(request: NextRequest) {
   try {
@@ -22,8 +22,7 @@ export async function GET(request: NextRequest) {
     });
 
     const currentUserAgent = request.headers.get("user-agent") || "unknown";
-    const currentAnonymizedIp = anonymizeIp(getClientIp(request));
-    const currentDeviceHash = hashDevice(currentUserAgent, currentAnonymizedIp);
+    const currentDeviceHash = hashDevice(currentUserAgent);
 
     return NextResponse.json(
       successResponse(
