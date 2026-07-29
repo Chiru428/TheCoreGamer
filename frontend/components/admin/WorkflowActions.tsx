@@ -14,6 +14,7 @@ import EmbargoCountdown from './EmbargoCountdown';
 
 interface WorkflowActionsProps {
   articleSlug: string;
+  contentType?: string;
   currentStatus: string;
   onStatusChange?: () => void;
   validationData?: PublishValidationInput;
@@ -24,7 +25,7 @@ interface WorkflowActionsProps {
   deletionRequestReason?: string | null;
 }
 
-export default function WorkflowActions({ articleSlug, currentStatus, onStatusChange, validationData, embargoUntil, scheduledAt, deletionRequestedAt, deletionRequestedByName, deletionRequestReason }: WorkflowActionsProps) {
+export default function WorkflowActions({ articleSlug, contentType, currentStatus, onStatusChange, validationData, embargoUntil, scheduledAt, deletionRequestedAt, deletionRequestedByName, deletionRequestReason }: WorkflowActionsProps) {
   const router = useRouter();
   const { user } = useAuthStore();
   const { addToast } = useUIStore();
@@ -120,7 +121,17 @@ export default function WorkflowActions({ articleSlug, currentStatus, onStatusCh
     setLoadingAction(null);
     if (res.success) {
       addToast({ message: 'Draft deleted', type: 'success' });
-      router.push('/admin/posts');
+      const redirectMap: Record<string, string> = {
+        MOD_GUIDE: '/admin/mod-guides',
+        REVIEW: '/admin/reviews',
+        WALKTHROUGH: '/admin/walkthroughs',
+        NEWS: '/admin/news',
+        DEAL: '/admin/deals',
+        FEATURE: '/admin/features',
+        OPINION: '/admin/opinions',
+        LISTICLE: '/admin/listicles',
+      };
+      router.push(redirectMap[contentType || ''] || '/admin');
     } else {
       addToast({ message: res.error || 'Failed to delete draft', type: 'error' });
     }
@@ -163,7 +174,17 @@ export default function WorkflowActions({ articleSlug, currentStatus, onStatusCh
     setLoadingAction(null);
     if (res.success) {
       addToast({ message: 'Article deleted', type: 'success' });
-      router.push('/admin/posts');
+      const redirectMap: Record<string, string> = {
+        MOD_GUIDE: '/admin/mod-guides',
+        REVIEW: '/admin/reviews',
+        WALKTHROUGH: '/admin/walkthroughs',
+        NEWS: '/admin/news',
+        DEAL: '/admin/deals',
+        FEATURE: '/admin/features',
+        OPINION: '/admin/opinions',
+        LISTICLE: '/admin/listicles',
+      };
+      router.push(redirectMap[contentType || ''] || '/admin');
     } else {
       addToast({ message: res.error || 'Failed to delete article', type: 'error' });
     }

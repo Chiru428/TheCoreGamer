@@ -621,9 +621,13 @@ export default function PostForm({
         MOD_GUIDE: "/admin/mod-guides",
         REVIEW: "/admin/reviews",
         WALKTHROUGH: "/admin/walkthroughs",
-        NEWS: "/admin/posts",
+        NEWS: "/admin/news",
+        DEAL: "/admin/deals",
+        FEATURE: "/admin/features",
+        OPINION: "/admin/opinions",
+        LISTICLE: "/admin/listicles",
       };
-      router.push(redirectMap[data.contentType] || "/admin/posts");
+      router.push(redirectMap[data.contentType] || "/admin");
     } else {
       addToast({ type: "error", message: res.error || "Failed" });
     }
@@ -1294,6 +1298,7 @@ export default function PostForm({
             <>
               <WorkflowActions
                 articleSlug={slug}
+                contentType={(initialData?.contentType as string) || type}
                 currentStatus={(initialData?.status as string) || "DRAFT"}
                 validationData={validationData}
                 // EditPostPage is a client component fetching initialData via useSWR
