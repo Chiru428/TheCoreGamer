@@ -138,11 +138,10 @@ async function handleNightlySync() {
               totalRating: igdbGame.aggregated_rating ?? null,
               totalRatingCount: igdbGame.aggregated_rating_count ?? null,
               igdbFollows: igdbGame.follows ?? 0,
-              igdbHypes: igdbGame.hypes ?? 0,
             },
           })
         );
-        // Re-sync to Algolia so totalRating/igdbFollows sort fields stay fresh
+        // Re-sync to Algolia so totalRating and igdbFollows sort fields stay fresh
         // (Top Rated and Most Popular sort replicas use these fields).
         syncGameToAlgolia(game.id).catch((err) =>
           logger.warn({ err }, `[IGDBWorker] Algolia re-sync failed for "${game.title}"`)

@@ -74,6 +74,8 @@ export interface AlgoliaGameRecord {
   metacriticScore: number | null;
   editorialScore: number | null;
   totalRating: number | null;
+  totalRatingCount: number | null;
+  igdbFollows: number | null;
   tags: string[];
   collectionName: string | null;
 }

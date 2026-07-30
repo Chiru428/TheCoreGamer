@@ -263,21 +263,20 @@ export const createGameSchema = z.object({
   coverImageUrl: z.string().url().optional().or(z.literal("")),
   backgroundImageUrl: z.string().url().optional().or(z.literal("")).nullable(),
   steamAppId: z.string().optional().or(z.literal("")),
-  trailerUrl: z.string().url().optional().or(z.literal("")),
+
   developer: z.string().optional(),
   publisher: z.string().optional(),
   releaseDate: z.string().datetime().optional(),
   platforms: z.array(z.string()).optional(),
   genres: z.array(z.string()).optional(),
   tags: z.array(z.string()).optional(),
-  website: z.string().url().optional().or(z.literal("")),
-  redditUrl: z.string().url().optional().or(z.literal("")),
+
   metacritic: z.number().int().min(0).max(100).optional(),
   esrbRating: z.string().optional(),
   pegiRating: z.string().optional(),
-  regionalReleaseDates: z.any().optional(),
+
   playtime: z.number().int().min(0).optional(),
-  rating: z.number().min(0).max(5).optional(),
+
   dlcOfId: z.string().optional().transform(v => v === "" ? null : v),
   gameEdition: z.enum(["STANDARD", "DELUXE", "GOTY_EDITION", "EXPANSION", "DLC"]).optional(),
   igdbId: z.number().int().positive().optional().nullable(),
@@ -288,7 +287,7 @@ export const createGameSchema = z.object({
   themes: z.string().optional().nullable(),
   keywords: z.string().optional().nullable(),
   collectionName: z.string().optional().nullable(),
-  franchiseNames: z.array(z.string()).optional(),
+
   gameModes: z.array(z.string()).optional(),
   playerPerspectives: z.array(z.string()).optional(),
   screenshotUrls: z.array(z.string()).optional(),

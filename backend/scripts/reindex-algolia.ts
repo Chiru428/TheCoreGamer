@@ -148,6 +148,8 @@ function buildGameRecord(game: GameForAlgolia): AlgoliaGameRecord {
     editorialScore: game.GameReview[0] ? Number(game.GameReview[0].reviewScore) : null,
     tags: game.tags,
     totalRating: game.totalRating,
+    totalRatingCount: game.totalRatingCount,
+    igdbFollows: game.igdbFollows,
     collectionName: game.collectionName ?? null,
   };
 }

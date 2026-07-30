@@ -204,7 +204,7 @@ export default function AdminDashboard() {
             <Plus className="w-5 h-5" />
             New Post
           </Link>
-          <Link href="/admin/posts?status=IN_REVIEW" className="flex items-center gap-2 bg-bg-surface hover:bg-bg-elevated border border-border px-5 py-2.5 rounded-xl font-medium transition-all text-text-primary">
+          <Link href="/admin/news?status=IN_REVIEW" className="flex items-center gap-2 bg-bg-surface hover:bg-bg-elevated border border-border px-5 py-2.5 rounded-xl font-medium transition-all text-text-primary">
             <CheckCircle2 className="w-5 h-5 text-emerald-400" />
             Review Queue
           </Link>

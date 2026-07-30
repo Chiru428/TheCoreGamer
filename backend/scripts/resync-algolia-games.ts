@@ -69,6 +69,8 @@ async function main() {
           editorialScore: game.GameReview[0] ? Number(game.GameReview[0].reviewScore) : null,
           tags: game.tags,
           totalRating: game.totalRating,
+          totalRatingCount: game.totalRatingCount,
+          igdbFollows: game.igdbFollows,
         };
         await upsertRecord(GAMES_INDEX, record);
         synced++;

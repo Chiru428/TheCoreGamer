@@ -317,6 +317,7 @@ model Game {
   igdbUrl                    String?
   totalRating                Float?
   totalRatingCount           Int?
+  igdbFollows                Int?              @default(0)
   releaseStatus              String?           @default("Released")
   dlcOfId                    String?
   gameEdition                String?           @default("STANDARD")
