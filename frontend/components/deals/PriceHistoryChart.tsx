@@ -89,9 +89,9 @@ export default function PriceHistoryChart({ gameId, gameTitle }: Props) {
     return <p className="text-sm text-gray-500 mt-4">No price history available yet.</p>;
   }
 
-  // Only show last 7 days (today + 6 previous days = 7 days total, UTC based to prevent timezone bleed)
+  // Only show last 5 days (today + 4 previous days = 5 days total, UTC based to prevent timezone bleed)
   const now = new Date();
-  const cutoff = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - 6));
+  const cutoff = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - 4));
   const cutoffStr = cutoff.toISOString().substring(0, 10);
 
   // Flatten into chart data points
@@ -177,7 +177,7 @@ export default function PriceHistoryChart({ gameId, gameTitle }: Props) {
       `}</style>
 
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-2 gap-1">
-        <h3 className="text-sm font-semibold text-gray-900 dark:text-white">Price History (last 7 days, in INR)</h3>
+        <h3 className="text-sm font-semibold text-gray-900 dark:text-white">Price History (last 5 days, in INR)</h3>
         {currentLowestPrice != null && (
           <span className="text-xs text-gray-800 dark:text-[#eab308] font-bold">
             Current lowest: ₹{currentLowestPrice.toFixed(2)}

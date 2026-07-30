@@ -62,10 +62,9 @@ export default async function GameHubPage({ params }: Props) {
   if (!gameRes.data) notFound();
   const game = gameRes.data;
 
-  // Trailer resolution: stored URL → YouTube embed; otherwise the modal
-  // falls back to a YouTube search link.
-  const youtubeId = getYoutubeId(game.trailerUrl);
-  const trailerUrl = youtubeId ? `https://www.youtube.com/embed/${youtubeId}?autoplay=0` : null;
+  // Trailer modal now falls back to a YouTube search link.
+  const trailerUrl = null;
+  const youtubeId = null;
   const youtubeSearchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(
     game.title + ' official trailer'
   )}`;

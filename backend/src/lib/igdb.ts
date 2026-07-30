@@ -648,13 +648,8 @@ export interface IGDBFullGame {
   pegiRating: string | undefined;
   aggregatedRating: number | undefined;
   aggregatedRatingCount: number | undefined;
-  igdbCommunityRating: number | undefined;
-  igdbCommunityRatingCount: number | undefined;
   totalRating: number | undefined;
   totalRatingCount: number | undefined;
-  igdbFollows: number | undefined;
-  igdbHypes: number | undefined;
-  franchiseNames: string[];
   collectionName: string | undefined;
   dlcs: IGDBMediaEntry[];
   expansions: IGDBMediaEntry[];
@@ -742,13 +737,8 @@ export function mapIGDBToDb(igdb: IGDBGame): IGDBFullGame {
     pegiRating: mapIGDBPegi(igdb.age_ratings, 2),
     aggregatedRating: igdb.aggregated_rating,
     aggregatedRatingCount: igdb.aggregated_rating_count,
-    igdbCommunityRating: igdb.rating,
-    igdbCommunityRatingCount: igdb.rating_count,
     totalRating: igdb.total_rating,
     totalRatingCount: igdb.total_rating_count,
-    igdbFollows: igdb.follows,
-    igdbHypes: igdb.hypes,
-    franchiseNames: igdb.franchises?.map((f) => f.name) ?? [],
     collectionName: igdb.collections?.[0]?.name,
     dlcs: dedupeMediaEntries(
       [
@@ -913,20 +903,13 @@ export function mapIGDBGameToDb(igdb: IGDBGame): IGDBMappedGame {
     gameModes: full.gameModes,
     playerPerspectives: full.playerPerspectives,
     gameEngine: full.gameEngine ?? null,
-    franchiseNames: full.franchiseNames,
     collectionName: full.collectionName ?? null,
-    dlcNames: igdb.dlcs?.map((d) => d.name) ?? [],
-    similarGameNames: igdb.similar_games?.map((g) => g.name) ?? [],
     esrbRating: full.esrbRating ?? null,
     pegiRating: full.pegiRating ?? null,
     aggregatedRating: full.aggregatedRating ?? null,
     aggregatedRatingCount: full.aggregatedRatingCount ?? null,
-    igdbCommunityRating: full.igdbCommunityRating ?? null,
-    igdbCommunityRatingCount: full.igdbCommunityRatingCount ?? null,
     totalRating: full.totalRating ?? null,
     totalRatingCount: full.totalRatingCount ?? null,
-    igdbFollows: full.igdbFollows ?? 0,
-    igdbHypes: full.igdbHypes ?? 0,
     releaseStatus: full.releaseStatus,
     steamAppId: full.steamAppId ?? null,
     allCompaniesJson: full.allCompanies as unknown as Prisma.InputJsonValue,

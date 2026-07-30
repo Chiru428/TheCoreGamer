@@ -301,7 +301,6 @@ model Game {
   description                String?
   createdAt                  DateTime          @default(now())
   updatedAt                  DateTime          @updatedAt
-  trailerUrl                 String?
   developer                  String?
   publisher                  String?
   releaseDate                DateTime?
@@ -311,23 +310,13 @@ model Game {
   esrbRating                 String?
   metacritic                 Int?
   playtime                   Int?
-  rating                     Float?
-  redditUrl                  String?
   tags                       String[]
-  website                    String?
   pegiRating                 String?
-  regionalReleaseDates       Json?
-  avgUserScore               Float?
   igdbId                     Int?              @unique
   storyline                  String?
   igdbUrl                    String?
   totalRating                Float?
   totalRatingCount           Int?
-  franchiseNames             String[]          @default([])
-  dlcNames                   String[]          @default([])
-  similarGameNames           String[]          @default([])
-  igdbHypes                  Int?              @default(0)
-  igdbFollows                Int?              @default(0)
   releaseStatus              String?           @default("Released")
   dlcOfId                    String?
   gameEdition                String?           @default("STANDARD")
@@ -343,8 +332,6 @@ model Game {
   gameEngine                 String?
   aggregatedRating           Float?
   aggregatedRatingCount      Int?
-  igdbCommunityRating        Float?
-  igdbCommunityRatingCount   Int?
   collectionName             String?
   dlcsJson                   Json?             @default("[]")
   expansionsJson             Json?             @default("[]")

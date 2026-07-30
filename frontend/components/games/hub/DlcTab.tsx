@@ -54,10 +54,9 @@ export default function DlcTab({ game }: { game: GameHubData }) {
   const linkedEditions = game.dlcs ?? [];
   const dlcsJson = (game.dlcsJson ?? []).filter(e => !/promod/i.test(e.name || ''));
   const expansionsJson = (game.expansionsJson ?? []).filter(e => !/promod/i.test(e.name || ''));
-  const dlcNames = game.dlcNames ?? [];
 
   const hasNothing =
-    linkedEditions.length === 0 && dlcsJson.length === 0 && expansionsJson.length === 0 && dlcNames.length === 0;
+    linkedEditions.length === 0 && dlcsJson.length === 0 && expansionsJson.length === 0;
 
   if (hasNothing) {
     return <div className={styles.emptyState}>No DLC tracked yet for {game.title}.</div>;
@@ -125,28 +124,6 @@ export default function DlcTab({ game }: { game: GameHubData }) {
         </div>
       ))}
 
-      {dlcsJson.length === 0 && expansionsJson.length === 0 && dlcNames.length > 0 && (
-        <div>
-          <div className="section-title-bar">DLC &amp; Editions ({dlcNames.length})</div>
-          <div className={styles.dlcGrid}>
-            {dlcNames.map((name) => (
-              <a key={name} href={`https://store.steampowered.com/search/?term=${encodeURIComponent(name)}`} target="_blank" rel="noopener noreferrer" className={`${styles.dlcCard} hover:border-primary transition-colors group`}>
-                <div className={styles.dlcCardImage}>
-                  <div className="absolute inset-0 flex items-center justify-center opacity-30">
-                    <Package size={32} />
-                  </div>
-                </div>
-                <div className={styles.dlcCardContent}>
-                  <span className="text-[13px] font-bold leading-snug line-clamp-2" style={{ color: 'var(--text-strong)' }}>{name}</span>
-                  <div className="mt-auto pt-2 flex items-center justify-between text-xs" style={{ color: 'var(--muted2)' }}>
-                    <span>DLC</span>
-                  </div>
-                </div>
-              </a>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 }

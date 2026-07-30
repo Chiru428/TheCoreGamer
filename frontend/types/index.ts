@@ -520,7 +520,6 @@ export interface Game {
   coverImageUrl: string | null;
   backgroundImageUrl?: string | null;
   steamAppId: string | null;
-  trailerUrl: string | null;
   description: string | null;
   developer: string | null;
   publisher: string | null;
@@ -528,28 +527,18 @@ export interface Game {
   platforms: string[];
   genres: string[];
   tags: string[];
-  website: string | null;
-  redditUrl: string | null;
   metacritic: number | null;
   esrbRating: string | null;
   /** PEGI content rating (e.g. "PEGI 18") — added in recent migration */
   pegiRating: string | null;
   playtime: number | null;
-  rating: number | null;
-  /** Computed average of community UserRatings — stored on the row via migration */
-  avgUserScore: number | null;
   /** IGDB-sourced fields (nullable until a game is linked to IGDB) */
   storyline?: string | null;
   igdbId?: number | null;
   igdbSlug?: string | null;
   igdbUrl?: string | null;
-  igdbHypes?: number | null;
-  igdbFollows?: number | null;
   totalRating?: number | null;
   totalRatingCount?: number | null;
-  franchiseNames?: string[];
-  dlcNames?: string[];
-  similarGameNames?: string[];
   releaseStatus?: string | null;
   /** IGDB media galleries */
   screenshotUrls?: string[];
@@ -563,8 +552,6 @@ export interface Game {
   /** IGDB ratings */
   aggregatedRating?: number | null;
   aggregatedRatingCount?: number | null;
-  igdbCommunityRating?: number | null;
-  igdbCommunityRatingCount?: number | null;
   /** Collection (series) name, e.g. "The Witcher" */
   collectionName?: string | null;
   /** Rich IGDB JSON columns */
@@ -582,8 +569,6 @@ export interface Game {
   dlcOf?: Game | null;
   dlcs?: Game[];
   gameEdition?: string | null;
-  /** Per-region release dates stored as JSON */
-  regionalReleaseDates: Record<string, string> | null;
   createdAt: string;
   updatedAt: string;
   reviews?: GameReview[];

@@ -131,11 +131,11 @@ export const dealsWorker = new Worker<DealsJobData>(
         logger.info(`[DealsWorker] ISR revalidation triggered for ${revalidatedSlugs.size} game(s)`);
       }
 
-      // Cleanup: delete price snapshots older than 7 days.
+      // Cleanup: delete price snapshots older than 5 days (today + 4 previous days = 5 days inclusive).
       // Note: if this table grows into millions of rows, switch to raw SQL chunked deletes.
       try {
         const now = new Date();
-        const cutoff = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - 6));
+        const cutoff = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - 4));
         const { count } = await prisma.priceSnapshot.deleteMany({
           where: { recordedAt: { lt: cutoff } },
         });

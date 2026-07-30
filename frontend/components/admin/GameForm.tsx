@@ -302,20 +302,14 @@ export default function GameForm({ mode, gameId }: GameFormProps) {
         coverImageUrl: d.coverImageUrl || '',
         backgroundImageUrl: d.backgroundImageUrl || '',
         steamAppId: d.steamAppId || '',
-        trailerUrl: d.trailerUrl || '',
         developer: d.developer || '',
         publisher: d.publisher || '',
         releaseDate: d.releaseDate ? new Date(d.releaseDate).toISOString().split('T')[0] : '',
         platforms: Array.isArray(d.platforms) ? d.platforms.join(', ') : '',
         genres: Array.isArray(d.genres) ? d.genres.join(', ') : '',
-        website: d.website || '',
-        redditUrl: d.redditUrl || '',
         metacritic: d.metacritic != null ? String(d.metacritic) : '',
         esrbRating: d.esrbRating || '',
         pegiRating: d.pegiRating || '',
-        regionalReleaseDateEU: (d.regionalReleaseDates as any)?.eu || '',
-        regionalReleaseDateJP: (d.regionalReleaseDates as any)?.jp || '',
-        regionalReleaseDateNA: (d.regionalReleaseDates as any)?.na || '',
         tags: Array.isArray(d.tags) ? d.tags.join(', ') : (d.tags || ''),
       });
 
@@ -325,12 +319,8 @@ export default function GameForm({ mode, gameId }: GameFormProps) {
       setIgdbReleaseStatus(d.releaseStatus || 'Released');
       setIgdbWebsites((d.websitesJson as IgdbWebsiteLinks) || {});
       setIgdbStats({
-        igdbCommunityRating: d.igdbCommunityRating ?? undefined,
-        igdbCommunityRatingCount: d.igdbCommunityRatingCount ?? undefined,
         aggregatedRating: d.aggregatedRating ?? undefined,
         aggregatedRatingCount: d.aggregatedRatingCount ?? undefined,
-        igdbFollows: d.igdbFollows ?? undefined,
-        igdbHypes: d.igdbHypes ?? undefined,
       });
     }
   }, [existingGame, reset]);
@@ -574,7 +564,7 @@ export default function GameForm({ mode, gameId }: GameFormProps) {
   return (
     <div className="max-w-4xl mx-auto space-y-5 pb-10">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           <Link href="/admin/games" className="p-2 hover:bg-bg-elevated rounded-lg transition-colors">
             <ArrowLeft className="w-5 h-5" />
@@ -590,7 +580,7 @@ export default function GameForm({ mode, gameId }: GameFormProps) {
             )}
           </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
           {mode === 'edit' && (
             <button
               type="button"
@@ -722,7 +712,7 @@ export default function GameForm({ mode, gameId }: GameFormProps) {
 
         {/* -- Scores & Ratings -- */}
         <FormSection title="Scores & Ratings" icon={<Star className="w-4 h-4 text-yellow-400" />} defaultOpen={true}>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <Field label="Critic Rating (IGDB)" hint="Aggregated critic score, out of 100">
               <input type="number" {...register('metacritic')} className={inputCls} placeholder="85" min="0" max="100" />
             </Field>
@@ -736,7 +726,7 @@ export default function GameForm({ mode, gameId }: GameFormProps) {
 
           {/* IGDB stats (read-only display) */}
           {(igdbStats.igdbCommunityRating != null || igdbStats.aggregatedRating != null || igdbStats.igdbFollows != null || igdbStats.igdbHypes != null) && (
-            <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div className="mt-3 grid grid-cols-2 lg:grid-cols-4 gap-3">
               {igdbStats.igdbCommunityRating != null && (
                 <div className="bg-bg-elevated border border-border rounded-lg p-3 text-center">
                   <p className="text-[10px] uppercase tracking-wider text-text-muted mb-1">IGDB Community</p>

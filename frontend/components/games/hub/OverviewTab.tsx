@@ -71,8 +71,8 @@ export default function OverviewTab({ game, onWriteReview }: { game: GameHubData
 
   const websites = game.websitesJson || {};
   
-  const officialSite = websites.official || game.website;
-  const redditLink = websites.reddit || game.redditUrl;
+  const officialSite = websites.official;
+  const redditLink = websites.reddit;
 
   // Real brand logos live in public/icons/links/. Wikipedia's mark ships
   // with no background fill, so it gets a white chip behind it for contrast.

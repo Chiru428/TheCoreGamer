@@ -21864,33 +21864,21 @@ export namespace Prisma {
   export type GameAvgAggregateOutputType = {
     metacritic: number | null
     playtime: number | null
-    rating: number | null
-    avgUserScore: number | null
     igdbId: number | null
     totalRating: number | null
     totalRatingCount: number | null
-    igdbHypes: number | null
-    igdbFollows: number | null
     aggregatedRating: number | null
     aggregatedRatingCount: number | null
-    igdbCommunityRating: number | null
-    igdbCommunityRatingCount: number | null
   }
 
   export type GameSumAggregateOutputType = {
     metacritic: number | null
     playtime: number | null
-    rating: number | null
-    avgUserScore: number | null
     igdbId: number | null
     totalRating: number | null
     totalRatingCount: number | null
-    igdbHypes: number | null
-    igdbFollows: number | null
     aggregatedRating: number | null
     aggregatedRatingCount: number | null
-    igdbCommunityRating: number | null
-    igdbCommunityRatingCount: number | null
   }
 
   export type GameMinAggregateOutputType = {
@@ -21901,7 +21889,6 @@ export namespace Prisma {
     description: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    trailerUrl: string | null
     developer: string | null
     publisher: string | null
     releaseDate: Date | null
@@ -21909,18 +21896,12 @@ export namespace Prisma {
     esrbRating: string | null
     metacritic: number | null
     playtime: number | null
-    rating: number | null
-    redditUrl: string | null
-    website: string | null
     pegiRating: string | null
-    avgUserScore: number | null
     igdbId: number | null
     storyline: string | null
     igdbUrl: string | null
     totalRating: number | null
     totalRatingCount: number | null
-    igdbHypes: number | null
-    igdbFollows: number | null
     releaseStatus: string | null
     dlcOfId: string | null
     gameEdition: string | null
@@ -21930,8 +21911,6 @@ export namespace Prisma {
     gameEngine: string | null
     aggregatedRating: number | null
     aggregatedRatingCount: number | null
-    igdbCommunityRating: number | null
-    igdbCommunityRatingCount: number | null
     collectionName: string | null
     backgroundImageUrl: string | null
   }
@@ -21944,7 +21923,6 @@ export namespace Prisma {
     description: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    trailerUrl: string | null
     developer: string | null
     publisher: string | null
     releaseDate: Date | null
@@ -21952,18 +21930,12 @@ export namespace Prisma {
     esrbRating: string | null
     metacritic: number | null
     playtime: number | null
-    rating: number | null
-    redditUrl: string | null
-    website: string | null
     pegiRating: string | null
-    avgUserScore: number | null
     igdbId: number | null
     storyline: string | null
     igdbUrl: string | null
     totalRating: number | null
     totalRatingCount: number | null
-    igdbHypes: number | null
-    igdbFollows: number | null
     releaseStatus: string | null
     dlcOfId: string | null
     gameEdition: string | null
@@ -21973,8 +21945,6 @@ export namespace Prisma {
     gameEngine: string | null
     aggregatedRating: number | null
     aggregatedRatingCount: number | null
-    igdbCommunityRating: number | null
-    igdbCommunityRatingCount: number | null
     collectionName: string | null
     backgroundImageUrl: string | null
   }
@@ -21987,7 +21957,6 @@ export namespace Prisma {
     description: number
     createdAt: number
     updatedAt: number
-    trailerUrl: number
     developer: number
     publisher: number
     releaseDate: number
@@ -21997,23 +21966,13 @@ export namespace Prisma {
     esrbRating: number
     metacritic: number
     playtime: number
-    rating: number
-    redditUrl: number
     tags: number
-    website: number
     pegiRating: number
-    regionalReleaseDates: number
-    avgUserScore: number
     igdbId: number
     storyline: number
     igdbUrl: number
     totalRating: number
     totalRatingCount: number
-    franchiseNames: number
-    dlcNames: number
-    similarGameNames: number
-    igdbHypes: number
-    igdbFollows: number
     releaseStatus: number
     dlcOfId: number
     gameEdition: number
@@ -22029,8 +21988,6 @@ export namespace Prisma {
     gameEngine: number
     aggregatedRating: number
     aggregatedRatingCount: number
-    igdbCommunityRating: number
-    igdbCommunityRatingCount: number
     collectionName: number
     dlcsJson: number
     expansionsJson: number
@@ -22047,33 +22004,21 @@ export namespace Prisma {
   export type GameAvgAggregateInputType = {
     metacritic?: true
     playtime?: true
-    rating?: true
-    avgUserScore?: true
     igdbId?: true
     totalRating?: true
     totalRatingCount?: true
-    igdbHypes?: true
-    igdbFollows?: true
     aggregatedRating?: true
     aggregatedRatingCount?: true
-    igdbCommunityRating?: true
-    igdbCommunityRatingCount?: true
   }
 
   export type GameSumAggregateInputType = {
     metacritic?: true
     playtime?: true
-    rating?: true
-    avgUserScore?: true
     igdbId?: true
     totalRating?: true
     totalRatingCount?: true
-    igdbHypes?: true
-    igdbFollows?: true
     aggregatedRating?: true
     aggregatedRatingCount?: true
-    igdbCommunityRating?: true
-    igdbCommunityRatingCount?: true
   }
 
   export type GameMinAggregateInputType = {
@@ -22084,7 +22029,6 @@ export namespace Prisma {
     description?: true
     createdAt?: true
     updatedAt?: true
-    trailerUrl?: true
     developer?: true
     publisher?: true
     releaseDate?: true
@@ -22092,18 +22036,12 @@ export namespace Prisma {
     esrbRating?: true
     metacritic?: true
     playtime?: true
-    rating?: true
-    redditUrl?: true
-    website?: true
     pegiRating?: true
-    avgUserScore?: true
     igdbId?: true
     storyline?: true
     igdbUrl?: true
     totalRating?: true
     totalRatingCount?: true
-    igdbHypes?: true
-    igdbFollows?: true
     releaseStatus?: true
     dlcOfId?: true
     gameEdition?: true
@@ -22113,8 +22051,6 @@ export namespace Prisma {
     gameEngine?: true
     aggregatedRating?: true
     aggregatedRatingCount?: true
-    igdbCommunityRating?: true
-    igdbCommunityRatingCount?: true
     collectionName?: true
     backgroundImageUrl?: true
   }
@@ -22127,7 +22063,6 @@ export namespace Prisma {
     description?: true
     createdAt?: true
     updatedAt?: true
-    trailerUrl?: true
     developer?: true
     publisher?: true
     releaseDate?: true
@@ -22135,18 +22070,12 @@ export namespace Prisma {
     esrbRating?: true
     metacritic?: true
     playtime?: true
-    rating?: true
-    redditUrl?: true
-    website?: true
     pegiRating?: true
-    avgUserScore?: true
     igdbId?: true
     storyline?: true
     igdbUrl?: true
     totalRating?: true
     totalRatingCount?: true
-    igdbHypes?: true
-    igdbFollows?: true
     releaseStatus?: true
     dlcOfId?: true
     gameEdition?: true
@@ -22156,8 +22085,6 @@ export namespace Prisma {
     gameEngine?: true
     aggregatedRating?: true
     aggregatedRatingCount?: true
-    igdbCommunityRating?: true
-    igdbCommunityRatingCount?: true
     collectionName?: true
     backgroundImageUrl?: true
   }
@@ -22170,7 +22097,6 @@ export namespace Prisma {
     description?: true
     createdAt?: true
     updatedAt?: true
-    trailerUrl?: true
     developer?: true
     publisher?: true
     releaseDate?: true
@@ -22180,23 +22106,13 @@ export namespace Prisma {
     esrbRating?: true
     metacritic?: true
     playtime?: true
-    rating?: true
-    redditUrl?: true
     tags?: true
-    website?: true
     pegiRating?: true
-    regionalReleaseDates?: true
-    avgUserScore?: true
     igdbId?: true
     storyline?: true
     igdbUrl?: true
     totalRating?: true
     totalRatingCount?: true
-    franchiseNames?: true
-    dlcNames?: true
-    similarGameNames?: true
-    igdbHypes?: true
-    igdbFollows?: true
     releaseStatus?: true
     dlcOfId?: true
     gameEdition?: true
@@ -22212,8 +22128,6 @@ export namespace Prisma {
     gameEngine?: true
     aggregatedRating?: true
     aggregatedRatingCount?: true
-    igdbCommunityRating?: true
-    igdbCommunityRatingCount?: true
     collectionName?: true
     dlcsJson?: true
     expansionsJson?: true
@@ -22320,7 +22234,6 @@ export namespace Prisma {
     description: string | null
     createdAt: Date
     updatedAt: Date
-    trailerUrl: string | null
     developer: string | null
     publisher: string | null
     releaseDate: Date | null
@@ -22330,23 +22243,13 @@ export namespace Prisma {
     esrbRating: string | null
     metacritic: number | null
     playtime: number | null
-    rating: number | null
-    redditUrl: string | null
     tags: string[]
-    website: string | null
     pegiRating: string | null
-    regionalReleaseDates: JsonValue | null
-    avgUserScore: number | null
     igdbId: number | null
     storyline: string | null
     igdbUrl: string | null
     totalRating: number | null
     totalRatingCount: number | null
-    franchiseNames: string[]
-    dlcNames: string[]
-    similarGameNames: string[]
-    igdbHypes: number | null
-    igdbFollows: number | null
     releaseStatus: string | null
     dlcOfId: string | null
     gameEdition: string | null
@@ -22362,8 +22265,6 @@ export namespace Prisma {
     gameEngine: string | null
     aggregatedRating: number | null
     aggregatedRatingCount: number | null
-    igdbCommunityRating: number | null
-    igdbCommunityRatingCount: number | null
     collectionName: string | null
     dlcsJson: JsonValue | null
     expansionsJson: JsonValue | null
@@ -22402,7 +22303,6 @@ export namespace Prisma {
     description?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    trailerUrl?: boolean
     developer?: boolean
     publisher?: boolean
     releaseDate?: boolean
@@ -22412,23 +22312,13 @@ export namespace Prisma {
     esrbRating?: boolean
     metacritic?: boolean
     playtime?: boolean
-    rating?: boolean
-    redditUrl?: boolean
     tags?: boolean
-    website?: boolean
     pegiRating?: boolean
-    regionalReleaseDates?: boolean
-    avgUserScore?: boolean
     igdbId?: boolean
     storyline?: boolean
     igdbUrl?: boolean
     totalRating?: boolean
     totalRatingCount?: boolean
-    franchiseNames?: boolean
-    dlcNames?: boolean
-    similarGameNames?: boolean
-    igdbHypes?: boolean
-    igdbFollows?: boolean
     releaseStatus?: boolean
     dlcOfId?: boolean
     gameEdition?: boolean
@@ -22444,8 +22334,6 @@ export namespace Prisma {
     gameEngine?: boolean
     aggregatedRating?: boolean
     aggregatedRatingCount?: boolean
-    igdbCommunityRating?: boolean
-    igdbCommunityRatingCount?: boolean
     collectionName?: boolean
     dlcsJson?: boolean
     expansionsJson?: boolean
@@ -22477,7 +22365,6 @@ export namespace Prisma {
     description?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    trailerUrl?: boolean
     developer?: boolean
     publisher?: boolean
     releaseDate?: boolean
@@ -22487,23 +22374,13 @@ export namespace Prisma {
     esrbRating?: boolean
     metacritic?: boolean
     playtime?: boolean
-    rating?: boolean
-    redditUrl?: boolean
     tags?: boolean
-    website?: boolean
     pegiRating?: boolean
-    regionalReleaseDates?: boolean
-    avgUserScore?: boolean
     igdbId?: boolean
     storyline?: boolean
     igdbUrl?: boolean
     totalRating?: boolean
     totalRatingCount?: boolean
-    franchiseNames?: boolean
-    dlcNames?: boolean
-    similarGameNames?: boolean
-    igdbHypes?: boolean
-    igdbFollows?: boolean
     releaseStatus?: boolean
     dlcOfId?: boolean
     gameEdition?: boolean
@@ -22519,8 +22396,6 @@ export namespace Prisma {
     gameEngine?: boolean
     aggregatedRating?: boolean
     aggregatedRatingCount?: boolean
-    igdbCommunityRating?: boolean
-    igdbCommunityRatingCount?: boolean
     collectionName?: boolean
     dlcsJson?: boolean
     expansionsJson?: boolean
@@ -22541,7 +22416,6 @@ export namespace Prisma {
     description?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    trailerUrl?: boolean
     developer?: boolean
     publisher?: boolean
     releaseDate?: boolean
@@ -22551,23 +22425,13 @@ export namespace Prisma {
     esrbRating?: boolean
     metacritic?: boolean
     playtime?: boolean
-    rating?: boolean
-    redditUrl?: boolean
     tags?: boolean
-    website?: boolean
     pegiRating?: boolean
-    regionalReleaseDates?: boolean
-    avgUserScore?: boolean
     igdbId?: boolean
     storyline?: boolean
     igdbUrl?: boolean
     totalRating?: boolean
     totalRatingCount?: boolean
-    franchiseNames?: boolean
-    dlcNames?: boolean
-    similarGameNames?: boolean
-    igdbHypes?: boolean
-    igdbFollows?: boolean
     releaseStatus?: boolean
     dlcOfId?: boolean
     gameEdition?: boolean
@@ -22583,8 +22447,6 @@ export namespace Prisma {
     gameEngine?: boolean
     aggregatedRating?: boolean
     aggregatedRatingCount?: boolean
-    igdbCommunityRating?: boolean
-    igdbCommunityRatingCount?: boolean
     collectionName?: boolean
     dlcsJson?: boolean
     expansionsJson?: boolean
@@ -22605,7 +22467,6 @@ export namespace Prisma {
     description?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    trailerUrl?: boolean
     developer?: boolean
     publisher?: boolean
     releaseDate?: boolean
@@ -22615,23 +22476,13 @@ export namespace Prisma {
     esrbRating?: boolean
     metacritic?: boolean
     playtime?: boolean
-    rating?: boolean
-    redditUrl?: boolean
     tags?: boolean
-    website?: boolean
     pegiRating?: boolean
-    regionalReleaseDates?: boolean
-    avgUserScore?: boolean
     igdbId?: boolean
     storyline?: boolean
     igdbUrl?: boolean
     totalRating?: boolean
     totalRatingCount?: boolean
-    franchiseNames?: boolean
-    dlcNames?: boolean
-    similarGameNames?: boolean
-    igdbHypes?: boolean
-    igdbFollows?: boolean
     releaseStatus?: boolean
     dlcOfId?: boolean
     gameEdition?: boolean
@@ -22647,8 +22498,6 @@ export namespace Prisma {
     gameEngine?: boolean
     aggregatedRating?: boolean
     aggregatedRatingCount?: boolean
-    igdbCommunityRating?: boolean
-    igdbCommunityRatingCount?: boolean
     collectionName?: boolean
     dlcsJson?: boolean
     expansionsJson?: boolean
@@ -22660,7 +22509,7 @@ export namespace Prisma {
     backgroundImageUrl?: boolean
   }
 
-  export type GameOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "slug" | "coverImageUrl" | "description" | "createdAt" | "updatedAt" | "trailerUrl" | "developer" | "publisher" | "releaseDate" | "platforms" | "genres" | "steamAppId" | "esrbRating" | "metacritic" | "playtime" | "rating" | "redditUrl" | "tags" | "website" | "pegiRating" | "regionalReleaseDates" | "avgUserScore" | "igdbId" | "storyline" | "igdbUrl" | "totalRating" | "totalRatingCount" | "franchiseNames" | "dlcNames" | "similarGameNames" | "igdbHypes" | "igdbFollows" | "releaseStatus" | "dlcOfId" | "gameEdition" | "igdbSlug" | "screenshotUrls" | "artworkUrls" | "allCompaniesJson" | "releaseDatesByPlatformJson" | "themes" | "keywords" | "gameModes" | "playerPerspectives" | "gameEngine" | "aggregatedRating" | "aggregatedRatingCount" | "igdbCommunityRating" | "igdbCommunityRatingCount" | "collectionName" | "dlcsJson" | "expansionsJson" | "similarGamesJson" | "videosJson" | "websitesJson" | "multiplayerModesJson" | "languageSupportsJson" | "backgroundImageUrl", ExtArgs["result"]["game"]>
+  export type GameOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "slug" | "coverImageUrl" | "description" | "createdAt" | "updatedAt" | "developer" | "publisher" | "releaseDate" | "platforms" | "genres" | "steamAppId" | "esrbRating" | "metacritic" | "playtime" | "tags" | "pegiRating" | "igdbId" | "storyline" | "igdbUrl" | "totalRating" | "totalRatingCount" | "releaseStatus" | "dlcOfId" | "gameEdition" | "igdbSlug" | "screenshotUrls" | "artworkUrls" | "allCompaniesJson" | "releaseDatesByPlatformJson" | "themes" | "keywords" | "gameModes" | "playerPerspectives" | "gameEngine" | "aggregatedRating" | "aggregatedRatingCount" | "collectionName" | "dlcsJson" | "expansionsJson" | "similarGamesJson" | "videosJson" | "websitesJson" | "multiplayerModesJson" | "languageSupportsJson" | "backgroundImageUrl", ExtArgs["result"]["game"]>
   export type GameInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     AffiliateClick?: boolean | Game$AffiliateClickArgs<ExtArgs>
     Award?: boolean | Game$AwardArgs<ExtArgs>
@@ -22705,7 +22554,6 @@ export namespace Prisma {
       description: string | null
       createdAt: Date
       updatedAt: Date
-      trailerUrl: string | null
       developer: string | null
       publisher: string | null
       releaseDate: Date | null
@@ -22715,23 +22563,13 @@ export namespace Prisma {
       esrbRating: string | null
       metacritic: number | null
       playtime: number | null
-      rating: number | null
-      redditUrl: string | null
       tags: string[]
-      website: string | null
       pegiRating: string | null
-      regionalReleaseDates: Prisma.JsonValue | null
-      avgUserScore: number | null
       igdbId: number | null
       storyline: string | null
       igdbUrl: string | null
       totalRating: number | null
       totalRatingCount: number | null
-      franchiseNames: string[]
-      dlcNames: string[]
-      similarGameNames: string[]
-      igdbHypes: number | null
-      igdbFollows: number | null
       releaseStatus: string | null
       dlcOfId: string | null
       gameEdition: string | null
@@ -22747,8 +22585,6 @@ export namespace Prisma {
       gameEngine: string | null
       aggregatedRating: number | null
       aggregatedRatingCount: number | null
-      igdbCommunityRating: number | null
-      igdbCommunityRatingCount: number | null
       collectionName: string | null
       dlcsJson: Prisma.JsonValue | null
       expansionsJson: Prisma.JsonValue | null
@@ -23199,7 +23035,6 @@ export namespace Prisma {
     readonly description: FieldRef<"Game", 'String'>
     readonly createdAt: FieldRef<"Game", 'DateTime'>
     readonly updatedAt: FieldRef<"Game", 'DateTime'>
-    readonly trailerUrl: FieldRef<"Game", 'String'>
     readonly developer: FieldRef<"Game", 'String'>
     readonly publisher: FieldRef<"Game", 'String'>
     readonly releaseDate: FieldRef<"Game", 'DateTime'>
@@ -23209,23 +23044,13 @@ export namespace Prisma {
     readonly esrbRating: FieldRef<"Game", 'String'>
     readonly metacritic: FieldRef<"Game", 'Int'>
     readonly playtime: FieldRef<"Game", 'Int'>
-    readonly rating: FieldRef<"Game", 'Float'>
-    readonly redditUrl: FieldRef<"Game", 'String'>
     readonly tags: FieldRef<"Game", 'String[]'>
-    readonly website: FieldRef<"Game", 'String'>
     readonly pegiRating: FieldRef<"Game", 'String'>
-    readonly regionalReleaseDates: FieldRef<"Game", 'Json'>
-    readonly avgUserScore: FieldRef<"Game", 'Float'>
     readonly igdbId: FieldRef<"Game", 'Int'>
     readonly storyline: FieldRef<"Game", 'String'>
     readonly igdbUrl: FieldRef<"Game", 'String'>
     readonly totalRating: FieldRef<"Game", 'Float'>
     readonly totalRatingCount: FieldRef<"Game", 'Int'>
-    readonly franchiseNames: FieldRef<"Game", 'String[]'>
-    readonly dlcNames: FieldRef<"Game", 'String[]'>
-    readonly similarGameNames: FieldRef<"Game", 'String[]'>
-    readonly igdbHypes: FieldRef<"Game", 'Int'>
-    readonly igdbFollows: FieldRef<"Game", 'Int'>
     readonly releaseStatus: FieldRef<"Game", 'String'>
     readonly dlcOfId: FieldRef<"Game", 'String'>
     readonly gameEdition: FieldRef<"Game", 'String'>
@@ -23241,8 +23066,6 @@ export namespace Prisma {
     readonly gameEngine: FieldRef<"Game", 'String'>
     readonly aggregatedRating: FieldRef<"Game", 'Float'>
     readonly aggregatedRatingCount: FieldRef<"Game", 'Int'>
-    readonly igdbCommunityRating: FieldRef<"Game", 'Float'>
-    readonly igdbCommunityRatingCount: FieldRef<"Game", 'Int'>
     readonly collectionName: FieldRef<"Game", 'String'>
     readonly dlcsJson: FieldRef<"Game", 'Json'>
     readonly expansionsJson: FieldRef<"Game", 'Json'>
@@ -63779,7 +63602,6 @@ export namespace Prisma {
     description: 'description',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-    trailerUrl: 'trailerUrl',
     developer: 'developer',
     publisher: 'publisher',
     releaseDate: 'releaseDate',
@@ -63789,23 +63611,13 @@ export namespace Prisma {
     esrbRating: 'esrbRating',
     metacritic: 'metacritic',
     playtime: 'playtime',
-    rating: 'rating',
-    redditUrl: 'redditUrl',
     tags: 'tags',
-    website: 'website',
     pegiRating: 'pegiRating',
-    regionalReleaseDates: 'regionalReleaseDates',
-    avgUserScore: 'avgUserScore',
     igdbId: 'igdbId',
     storyline: 'storyline',
     igdbUrl: 'igdbUrl',
     totalRating: 'totalRating',
     totalRatingCount: 'totalRatingCount',
-    franchiseNames: 'franchiseNames',
-    dlcNames: 'dlcNames',
-    similarGameNames: 'similarGameNames',
-    igdbHypes: 'igdbHypes',
-    igdbFollows: 'igdbFollows',
     releaseStatus: 'releaseStatus',
     dlcOfId: 'dlcOfId',
     gameEdition: 'gameEdition',
@@ -63821,8 +63633,6 @@ export namespace Prisma {
     gameEngine: 'gameEngine',
     aggregatedRating: 'aggregatedRating',
     aggregatedRatingCount: 'aggregatedRatingCount',
-    igdbCommunityRating: 'igdbCommunityRating',
-    igdbCommunityRatingCount: 'igdbCommunityRatingCount',
     collectionName: 'collectionName',
     dlcsJson: 'dlcsJson',
     expansionsJson: 'expansionsJson',
@@ -65743,7 +65553,6 @@ export namespace Prisma {
     description?: StringNullableFilter<"Game"> | string | null
     createdAt?: DateTimeFilter<"Game"> | Date | string
     updatedAt?: DateTimeFilter<"Game"> | Date | string
-    trailerUrl?: StringNullableFilter<"Game"> | string | null
     developer?: StringNullableFilter<"Game"> | string | null
     publisher?: StringNullableFilter<"Game"> | string | null
     releaseDate?: DateTimeNullableFilter<"Game"> | Date | string | null
@@ -65753,23 +65562,13 @@ export namespace Prisma {
     esrbRating?: StringNullableFilter<"Game"> | string | null
     metacritic?: IntNullableFilter<"Game"> | number | null
     playtime?: IntNullableFilter<"Game"> | number | null
-    rating?: FloatNullableFilter<"Game"> | number | null
-    redditUrl?: StringNullableFilter<"Game"> | string | null
     tags?: StringNullableListFilter<"Game">
-    website?: StringNullableFilter<"Game"> | string | null
     pegiRating?: StringNullableFilter<"Game"> | string | null
-    regionalReleaseDates?: JsonNullableFilter<"Game">
-    avgUserScore?: FloatNullableFilter<"Game"> | number | null
     igdbId?: IntNullableFilter<"Game"> | number | null
     storyline?: StringNullableFilter<"Game"> | string | null
     igdbUrl?: StringNullableFilter<"Game"> | string | null
     totalRating?: FloatNullableFilter<"Game"> | number | null
     totalRatingCount?: IntNullableFilter<"Game"> | number | null
-    franchiseNames?: StringNullableListFilter<"Game">
-    dlcNames?: StringNullableListFilter<"Game">
-    similarGameNames?: StringNullableListFilter<"Game">
-    igdbHypes?: IntNullableFilter<"Game"> | number | null
-    igdbFollows?: IntNullableFilter<"Game"> | number | null
     releaseStatus?: StringNullableFilter<"Game"> | string | null
     dlcOfId?: StringNullableFilter<"Game"> | string | null
     gameEdition?: StringNullableFilter<"Game"> | string | null
@@ -65785,8 +65584,6 @@ export namespace Prisma {
     gameEngine?: StringNullableFilter<"Game"> | string | null
     aggregatedRating?: FloatNullableFilter<"Game"> | number | null
     aggregatedRatingCount?: IntNullableFilter<"Game"> | number | null
-    igdbCommunityRating?: FloatNullableFilter<"Game"> | number | null
-    igdbCommunityRatingCount?: IntNullableFilter<"Game"> | number | null
     collectionName?: StringNullableFilter<"Game"> | string | null
     dlcsJson?: JsonNullableFilter<"Game">
     expansionsJson?: JsonNullableFilter<"Game">
@@ -65817,7 +65614,6 @@ export namespace Prisma {
     description?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    trailerUrl?: SortOrderInput | SortOrder
     developer?: SortOrderInput | SortOrder
     publisher?: SortOrderInput | SortOrder
     releaseDate?: SortOrderInput | SortOrder
@@ -65827,23 +65623,13 @@ export namespace Prisma {
     esrbRating?: SortOrderInput | SortOrder
     metacritic?: SortOrderInput | SortOrder
     playtime?: SortOrderInput | SortOrder
-    rating?: SortOrderInput | SortOrder
-    redditUrl?: SortOrderInput | SortOrder
     tags?: SortOrder
-    website?: SortOrderInput | SortOrder
     pegiRating?: SortOrderInput | SortOrder
-    regionalReleaseDates?: SortOrderInput | SortOrder
-    avgUserScore?: SortOrderInput | SortOrder
     igdbId?: SortOrderInput | SortOrder
     storyline?: SortOrderInput | SortOrder
     igdbUrl?: SortOrderInput | SortOrder
     totalRating?: SortOrderInput | SortOrder
     totalRatingCount?: SortOrderInput | SortOrder
-    franchiseNames?: SortOrder
-    dlcNames?: SortOrder
-    similarGameNames?: SortOrder
-    igdbHypes?: SortOrderInput | SortOrder
-    igdbFollows?: SortOrderInput | SortOrder
     releaseStatus?: SortOrderInput | SortOrder
     dlcOfId?: SortOrderInput | SortOrder
     gameEdition?: SortOrderInput | SortOrder
@@ -65859,8 +65645,6 @@ export namespace Prisma {
     gameEngine?: SortOrderInput | SortOrder
     aggregatedRating?: SortOrderInput | SortOrder
     aggregatedRatingCount?: SortOrderInput | SortOrder
-    igdbCommunityRating?: SortOrderInput | SortOrder
-    igdbCommunityRatingCount?: SortOrderInput | SortOrder
     collectionName?: SortOrderInput | SortOrder
     dlcsJson?: SortOrderInput | SortOrder
     expansionsJson?: SortOrderInput | SortOrder
@@ -65895,7 +65679,6 @@ export namespace Prisma {
     description?: StringNullableFilter<"Game"> | string | null
     createdAt?: DateTimeFilter<"Game"> | Date | string
     updatedAt?: DateTimeFilter<"Game"> | Date | string
-    trailerUrl?: StringNullableFilter<"Game"> | string | null
     developer?: StringNullableFilter<"Game"> | string | null
     publisher?: StringNullableFilter<"Game"> | string | null
     releaseDate?: DateTimeNullableFilter<"Game"> | Date | string | null
@@ -65905,22 +65688,12 @@ export namespace Prisma {
     esrbRating?: StringNullableFilter<"Game"> | string | null
     metacritic?: IntNullableFilter<"Game"> | number | null
     playtime?: IntNullableFilter<"Game"> | number | null
-    rating?: FloatNullableFilter<"Game"> | number | null
-    redditUrl?: StringNullableFilter<"Game"> | string | null
     tags?: StringNullableListFilter<"Game">
-    website?: StringNullableFilter<"Game"> | string | null
     pegiRating?: StringNullableFilter<"Game"> | string | null
-    regionalReleaseDates?: JsonNullableFilter<"Game">
-    avgUserScore?: FloatNullableFilter<"Game"> | number | null
     storyline?: StringNullableFilter<"Game"> | string | null
     igdbUrl?: StringNullableFilter<"Game"> | string | null
     totalRating?: FloatNullableFilter<"Game"> | number | null
     totalRatingCount?: IntNullableFilter<"Game"> | number | null
-    franchiseNames?: StringNullableListFilter<"Game">
-    dlcNames?: StringNullableListFilter<"Game">
-    similarGameNames?: StringNullableListFilter<"Game">
-    igdbHypes?: IntNullableFilter<"Game"> | number | null
-    igdbFollows?: IntNullableFilter<"Game"> | number | null
     releaseStatus?: StringNullableFilter<"Game"> | string | null
     dlcOfId?: StringNullableFilter<"Game"> | string | null
     gameEdition?: StringNullableFilter<"Game"> | string | null
@@ -65936,8 +65709,6 @@ export namespace Prisma {
     gameEngine?: StringNullableFilter<"Game"> | string | null
     aggregatedRating?: FloatNullableFilter<"Game"> | number | null
     aggregatedRatingCount?: IntNullableFilter<"Game"> | number | null
-    igdbCommunityRating?: FloatNullableFilter<"Game"> | number | null
-    igdbCommunityRatingCount?: IntNullableFilter<"Game"> | number | null
     collectionName?: StringNullableFilter<"Game"> | string | null
     dlcsJson?: JsonNullableFilter<"Game">
     expansionsJson?: JsonNullableFilter<"Game">
@@ -65968,7 +65739,6 @@ export namespace Prisma {
     description?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    trailerUrl?: SortOrderInput | SortOrder
     developer?: SortOrderInput | SortOrder
     publisher?: SortOrderInput | SortOrder
     releaseDate?: SortOrderInput | SortOrder
@@ -65978,23 +65748,13 @@ export namespace Prisma {
     esrbRating?: SortOrderInput | SortOrder
     metacritic?: SortOrderInput | SortOrder
     playtime?: SortOrderInput | SortOrder
-    rating?: SortOrderInput | SortOrder
-    redditUrl?: SortOrderInput | SortOrder
     tags?: SortOrder
-    website?: SortOrderInput | SortOrder
     pegiRating?: SortOrderInput | SortOrder
-    regionalReleaseDates?: SortOrderInput | SortOrder
-    avgUserScore?: SortOrderInput | SortOrder
     igdbId?: SortOrderInput | SortOrder
     storyline?: SortOrderInput | SortOrder
     igdbUrl?: SortOrderInput | SortOrder
     totalRating?: SortOrderInput | SortOrder
     totalRatingCount?: SortOrderInput | SortOrder
-    franchiseNames?: SortOrder
-    dlcNames?: SortOrder
-    similarGameNames?: SortOrder
-    igdbHypes?: SortOrderInput | SortOrder
-    igdbFollows?: SortOrderInput | SortOrder
     releaseStatus?: SortOrderInput | SortOrder
     dlcOfId?: SortOrderInput | SortOrder
     gameEdition?: SortOrderInput | SortOrder
@@ -66010,8 +65770,6 @@ export namespace Prisma {
     gameEngine?: SortOrderInput | SortOrder
     aggregatedRating?: SortOrderInput | SortOrder
     aggregatedRatingCount?: SortOrderInput | SortOrder
-    igdbCommunityRating?: SortOrderInput | SortOrder
-    igdbCommunityRatingCount?: SortOrderInput | SortOrder
     collectionName?: SortOrderInput | SortOrder
     dlcsJson?: SortOrderInput | SortOrder
     expansionsJson?: SortOrderInput | SortOrder
@@ -66039,7 +65797,6 @@ export namespace Prisma {
     description?: StringNullableWithAggregatesFilter<"Game"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Game"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Game"> | Date | string
-    trailerUrl?: StringNullableWithAggregatesFilter<"Game"> | string | null
     developer?: StringNullableWithAggregatesFilter<"Game"> | string | null
     publisher?: StringNullableWithAggregatesFilter<"Game"> | string | null
     releaseDate?: DateTimeNullableWithAggregatesFilter<"Game"> | Date | string | null
@@ -66049,23 +65806,13 @@ export namespace Prisma {
     esrbRating?: StringNullableWithAggregatesFilter<"Game"> | string | null
     metacritic?: IntNullableWithAggregatesFilter<"Game"> | number | null
     playtime?: IntNullableWithAggregatesFilter<"Game"> | number | null
-    rating?: FloatNullableWithAggregatesFilter<"Game"> | number | null
-    redditUrl?: StringNullableWithAggregatesFilter<"Game"> | string | null
     tags?: StringNullableListFilter<"Game">
-    website?: StringNullableWithAggregatesFilter<"Game"> | string | null
     pegiRating?: StringNullableWithAggregatesFilter<"Game"> | string | null
-    regionalReleaseDates?: JsonNullableWithAggregatesFilter<"Game">
-    avgUserScore?: FloatNullableWithAggregatesFilter<"Game"> | number | null
     igdbId?: IntNullableWithAggregatesFilter<"Game"> | number | null
     storyline?: StringNullableWithAggregatesFilter<"Game"> | string | null
     igdbUrl?: StringNullableWithAggregatesFilter<"Game"> | string | null
     totalRating?: FloatNullableWithAggregatesFilter<"Game"> | number | null
     totalRatingCount?: IntNullableWithAggregatesFilter<"Game"> | number | null
-    franchiseNames?: StringNullableListFilter<"Game">
-    dlcNames?: StringNullableListFilter<"Game">
-    similarGameNames?: StringNullableListFilter<"Game">
-    igdbHypes?: IntNullableWithAggregatesFilter<"Game"> | number | null
-    igdbFollows?: IntNullableWithAggregatesFilter<"Game"> | number | null
     releaseStatus?: StringNullableWithAggregatesFilter<"Game"> | string | null
     dlcOfId?: StringNullableWithAggregatesFilter<"Game"> | string | null
     gameEdition?: StringNullableWithAggregatesFilter<"Game"> | string | null
@@ -66081,8 +65828,6 @@ export namespace Prisma {
     gameEngine?: StringNullableWithAggregatesFilter<"Game"> | string | null
     aggregatedRating?: FloatNullableWithAggregatesFilter<"Game"> | number | null
     aggregatedRatingCount?: IntNullableWithAggregatesFilter<"Game"> | number | null
-    igdbCommunityRating?: FloatNullableWithAggregatesFilter<"Game"> | number | null
-    igdbCommunityRatingCount?: IntNullableWithAggregatesFilter<"Game"> | number | null
     collectionName?: StringNullableWithAggregatesFilter<"Game"> | string | null
     dlcsJson?: JsonNullableWithAggregatesFilter<"Game">
     expansionsJson?: JsonNullableWithAggregatesFilter<"Game">
@@ -70026,7 +69771,6 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    trailerUrl?: string | null
     developer?: string | null
     publisher?: string | null
     releaseDate?: Date | string | null
@@ -70036,23 +69780,13 @@ export namespace Prisma {
     esrbRating?: string | null
     metacritic?: number | null
     playtime?: number | null
-    rating?: number | null
-    redditUrl?: string | null
     tags?: GameCreatetagsInput | string[]
-    website?: string | null
     pegiRating?: string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: number | null
     igdbId?: number | null
     storyline?: string | null
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    franchiseNames?: GameCreatefranchiseNamesInput | string[]
-    dlcNames?: GameCreatedlcNamesInput | string[]
-    similarGameNames?: GameCreatesimilarGameNamesInput | string[]
-    igdbHypes?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     gameEdition?: string | null
     igdbSlug?: string | null
@@ -70067,8 +69801,6 @@ export namespace Prisma {
     gameEngine?: string | null
     aggregatedRating?: number | null
     aggregatedRatingCount?: number | null
-    igdbCommunityRating?: number | null
-    igdbCommunityRatingCount?: number | null
     collectionName?: string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -70099,7 +69831,6 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    trailerUrl?: string | null
     developer?: string | null
     publisher?: string | null
     releaseDate?: Date | string | null
@@ -70109,23 +69840,13 @@ export namespace Prisma {
     esrbRating?: string | null
     metacritic?: number | null
     playtime?: number | null
-    rating?: number | null
-    redditUrl?: string | null
     tags?: GameCreatetagsInput | string[]
-    website?: string | null
     pegiRating?: string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: number | null
     igdbId?: number | null
     storyline?: string | null
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    franchiseNames?: GameCreatefranchiseNamesInput | string[]
-    dlcNames?: GameCreatedlcNamesInput | string[]
-    similarGameNames?: GameCreatesimilarGameNamesInput | string[]
-    igdbHypes?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     dlcOfId?: string | null
     gameEdition?: string | null
@@ -70141,8 +69862,6 @@ export namespace Prisma {
     gameEngine?: string | null
     aggregatedRating?: number | null
     aggregatedRatingCount?: number | null
-    igdbCommunityRating?: number | null
-    igdbCommunityRatingCount?: number | null
     collectionName?: string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -70172,7 +69891,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    trailerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -70182,23 +69900,13 @@ export namespace Prisma {
     esrbRating?: NullableStringFieldUpdateOperationsInput | string | null
     metacritic?: NullableIntFieldUpdateOperationsInput | number | null
     playtime?: NullableIntFieldUpdateOperationsInput | number | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    redditUrl?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: GameUpdatetagsInput | string[]
-    website?: NullableStringFieldUpdateOperationsInput | string | null
     pegiRating?: NullableStringFieldUpdateOperationsInput | string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: NullableFloatFieldUpdateOperationsInput | number | null
     igdbId?: NullableIntFieldUpdateOperationsInput | number | null
     storyline?: NullableStringFieldUpdateOperationsInput | string | null
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    franchiseNames?: GameUpdatefranchiseNamesInput | string[]
-    dlcNames?: GameUpdatedlcNamesInput | string[]
-    similarGameNames?: GameUpdatesimilarGameNamesInput | string[]
-    igdbHypes?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
     igdbSlug?: NullableStringFieldUpdateOperationsInput | string | null
@@ -70213,8 +69921,6 @@ export namespace Prisma {
     gameEngine?: NullableStringFieldUpdateOperationsInput | string | null
     aggregatedRating?: NullableFloatFieldUpdateOperationsInput | number | null
     aggregatedRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbCommunityRating?: NullableFloatFieldUpdateOperationsInput | number | null
-    igdbCommunityRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
     collectionName?: NullableStringFieldUpdateOperationsInput | string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -70245,7 +69951,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    trailerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -70255,23 +69960,13 @@ export namespace Prisma {
     esrbRating?: NullableStringFieldUpdateOperationsInput | string | null
     metacritic?: NullableIntFieldUpdateOperationsInput | number | null
     playtime?: NullableIntFieldUpdateOperationsInput | number | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    redditUrl?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: GameUpdatetagsInput | string[]
-    website?: NullableStringFieldUpdateOperationsInput | string | null
     pegiRating?: NullableStringFieldUpdateOperationsInput | string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: NullableFloatFieldUpdateOperationsInput | number | null
     igdbId?: NullableIntFieldUpdateOperationsInput | number | null
     storyline?: NullableStringFieldUpdateOperationsInput | string | null
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    franchiseNames?: GameUpdatefranchiseNamesInput | string[]
-    dlcNames?: GameUpdatedlcNamesInput | string[]
-    similarGameNames?: GameUpdatesimilarGameNamesInput | string[]
-    igdbHypes?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     dlcOfId?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
@@ -70287,8 +69982,6 @@ export namespace Prisma {
     gameEngine?: NullableStringFieldUpdateOperationsInput | string | null
     aggregatedRating?: NullableFloatFieldUpdateOperationsInput | number | null
     aggregatedRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbCommunityRating?: NullableFloatFieldUpdateOperationsInput | number | null
-    igdbCommunityRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
     collectionName?: NullableStringFieldUpdateOperationsInput | string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -70318,7 +70011,6 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    trailerUrl?: string | null
     developer?: string | null
     publisher?: string | null
     releaseDate?: Date | string | null
@@ -70328,23 +70020,13 @@ export namespace Prisma {
     esrbRating?: string | null
     metacritic?: number | null
     playtime?: number | null
-    rating?: number | null
-    redditUrl?: string | null
     tags?: GameCreatetagsInput | string[]
-    website?: string | null
     pegiRating?: string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: number | null
     igdbId?: number | null
     storyline?: string | null
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    franchiseNames?: GameCreatefranchiseNamesInput | string[]
-    dlcNames?: GameCreatedlcNamesInput | string[]
-    similarGameNames?: GameCreatesimilarGameNamesInput | string[]
-    igdbHypes?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     dlcOfId?: string | null
     gameEdition?: string | null
@@ -70360,8 +70042,6 @@ export namespace Prisma {
     gameEngine?: string | null
     aggregatedRating?: number | null
     aggregatedRatingCount?: number | null
-    igdbCommunityRating?: number | null
-    igdbCommunityRatingCount?: number | null
     collectionName?: string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -70381,7 +70061,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    trailerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -70391,23 +70070,13 @@ export namespace Prisma {
     esrbRating?: NullableStringFieldUpdateOperationsInput | string | null
     metacritic?: NullableIntFieldUpdateOperationsInput | number | null
     playtime?: NullableIntFieldUpdateOperationsInput | number | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    redditUrl?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: GameUpdatetagsInput | string[]
-    website?: NullableStringFieldUpdateOperationsInput | string | null
     pegiRating?: NullableStringFieldUpdateOperationsInput | string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: NullableFloatFieldUpdateOperationsInput | number | null
     igdbId?: NullableIntFieldUpdateOperationsInput | number | null
     storyline?: NullableStringFieldUpdateOperationsInput | string | null
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    franchiseNames?: GameUpdatefranchiseNamesInput | string[]
-    dlcNames?: GameUpdatedlcNamesInput | string[]
-    similarGameNames?: GameUpdatesimilarGameNamesInput | string[]
-    igdbHypes?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
     igdbSlug?: NullableStringFieldUpdateOperationsInput | string | null
@@ -70422,8 +70091,6 @@ export namespace Prisma {
     gameEngine?: NullableStringFieldUpdateOperationsInput | string | null
     aggregatedRating?: NullableFloatFieldUpdateOperationsInput | number | null
     aggregatedRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbCommunityRating?: NullableFloatFieldUpdateOperationsInput | number | null
-    igdbCommunityRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
     collectionName?: NullableStringFieldUpdateOperationsInput | string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -70443,7 +70110,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    trailerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -70453,23 +70119,13 @@ export namespace Prisma {
     esrbRating?: NullableStringFieldUpdateOperationsInput | string | null
     metacritic?: NullableIntFieldUpdateOperationsInput | number | null
     playtime?: NullableIntFieldUpdateOperationsInput | number | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    redditUrl?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: GameUpdatetagsInput | string[]
-    website?: NullableStringFieldUpdateOperationsInput | string | null
     pegiRating?: NullableStringFieldUpdateOperationsInput | string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: NullableFloatFieldUpdateOperationsInput | number | null
     igdbId?: NullableIntFieldUpdateOperationsInput | number | null
     storyline?: NullableStringFieldUpdateOperationsInput | string | null
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    franchiseNames?: GameUpdatefranchiseNamesInput | string[]
-    dlcNames?: GameUpdatedlcNamesInput | string[]
-    similarGameNames?: GameUpdatesimilarGameNamesInput | string[]
-    igdbHypes?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     dlcOfId?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
@@ -70485,8 +70141,6 @@ export namespace Prisma {
     gameEngine?: NullableStringFieldUpdateOperationsInput | string | null
     aggregatedRating?: NullableFloatFieldUpdateOperationsInput | number | null
     aggregatedRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbCommunityRating?: NullableFloatFieldUpdateOperationsInput | number | null
-    igdbCommunityRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
     collectionName?: NullableStringFieldUpdateOperationsInput | string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -74674,7 +74328,6 @@ export namespace Prisma {
     description?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    trailerUrl?: SortOrder
     developer?: SortOrder
     publisher?: SortOrder
     releaseDate?: SortOrder
@@ -74684,23 +74337,13 @@ export namespace Prisma {
     esrbRating?: SortOrder
     metacritic?: SortOrder
     playtime?: SortOrder
-    rating?: SortOrder
-    redditUrl?: SortOrder
     tags?: SortOrder
-    website?: SortOrder
     pegiRating?: SortOrder
-    regionalReleaseDates?: SortOrder
-    avgUserScore?: SortOrder
     igdbId?: SortOrder
     storyline?: SortOrder
     igdbUrl?: SortOrder
     totalRating?: SortOrder
     totalRatingCount?: SortOrder
-    franchiseNames?: SortOrder
-    dlcNames?: SortOrder
-    similarGameNames?: SortOrder
-    igdbHypes?: SortOrder
-    igdbFollows?: SortOrder
     releaseStatus?: SortOrder
     dlcOfId?: SortOrder
     gameEdition?: SortOrder
@@ -74716,8 +74359,6 @@ export namespace Prisma {
     gameEngine?: SortOrder
     aggregatedRating?: SortOrder
     aggregatedRatingCount?: SortOrder
-    igdbCommunityRating?: SortOrder
-    igdbCommunityRatingCount?: SortOrder
     collectionName?: SortOrder
     dlcsJson?: SortOrder
     expansionsJson?: SortOrder
@@ -74732,17 +74373,11 @@ export namespace Prisma {
   export type GameAvgOrderByAggregateInput = {
     metacritic?: SortOrder
     playtime?: SortOrder
-    rating?: SortOrder
-    avgUserScore?: SortOrder
     igdbId?: SortOrder
     totalRating?: SortOrder
     totalRatingCount?: SortOrder
-    igdbHypes?: SortOrder
-    igdbFollows?: SortOrder
     aggregatedRating?: SortOrder
     aggregatedRatingCount?: SortOrder
-    igdbCommunityRating?: SortOrder
-    igdbCommunityRatingCount?: SortOrder
   }
 
   export type GameMaxOrderByAggregateInput = {
@@ -74753,7 +74388,6 @@ export namespace Prisma {
     description?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    trailerUrl?: SortOrder
     developer?: SortOrder
     publisher?: SortOrder
     releaseDate?: SortOrder
@@ -74761,18 +74395,12 @@ export namespace Prisma {
     esrbRating?: SortOrder
     metacritic?: SortOrder
     playtime?: SortOrder
-    rating?: SortOrder
-    redditUrl?: SortOrder
-    website?: SortOrder
     pegiRating?: SortOrder
-    avgUserScore?: SortOrder
     igdbId?: SortOrder
     storyline?: SortOrder
     igdbUrl?: SortOrder
     totalRating?: SortOrder
     totalRatingCount?: SortOrder
-    igdbHypes?: SortOrder
-    igdbFollows?: SortOrder
     releaseStatus?: SortOrder
     dlcOfId?: SortOrder
     gameEdition?: SortOrder
@@ -74782,8 +74410,6 @@ export namespace Prisma {
     gameEngine?: SortOrder
     aggregatedRating?: SortOrder
     aggregatedRatingCount?: SortOrder
-    igdbCommunityRating?: SortOrder
-    igdbCommunityRatingCount?: SortOrder
     collectionName?: SortOrder
     backgroundImageUrl?: SortOrder
   }
@@ -74796,7 +74422,6 @@ export namespace Prisma {
     description?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    trailerUrl?: SortOrder
     developer?: SortOrder
     publisher?: SortOrder
     releaseDate?: SortOrder
@@ -74804,18 +74429,12 @@ export namespace Prisma {
     esrbRating?: SortOrder
     metacritic?: SortOrder
     playtime?: SortOrder
-    rating?: SortOrder
-    redditUrl?: SortOrder
-    website?: SortOrder
     pegiRating?: SortOrder
-    avgUserScore?: SortOrder
     igdbId?: SortOrder
     storyline?: SortOrder
     igdbUrl?: SortOrder
     totalRating?: SortOrder
     totalRatingCount?: SortOrder
-    igdbHypes?: SortOrder
-    igdbFollows?: SortOrder
     releaseStatus?: SortOrder
     dlcOfId?: SortOrder
     gameEdition?: SortOrder
@@ -74825,8 +74444,6 @@ export namespace Prisma {
     gameEngine?: SortOrder
     aggregatedRating?: SortOrder
     aggregatedRatingCount?: SortOrder
-    igdbCommunityRating?: SortOrder
-    igdbCommunityRatingCount?: SortOrder
     collectionName?: SortOrder
     backgroundImageUrl?: SortOrder
   }
@@ -74834,17 +74451,11 @@ export namespace Prisma {
   export type GameSumOrderByAggregateInput = {
     metacritic?: SortOrder
     playtime?: SortOrder
-    rating?: SortOrder
-    avgUserScore?: SortOrder
     igdbId?: SortOrder
     totalRating?: SortOrder
     totalRatingCount?: SortOrder
-    igdbHypes?: SortOrder
-    igdbFollows?: SortOrder
     aggregatedRating?: SortOrder
     aggregatedRatingCount?: SortOrder
-    igdbCommunityRating?: SortOrder
-    igdbCommunityRatingCount?: SortOrder
   }
 
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -78045,18 +77656,6 @@ export namespace Prisma {
     set: string[]
   }
 
-  export type GameCreatefranchiseNamesInput = {
-    set: string[]
-  }
-
-  export type GameCreatedlcNamesInput = {
-    set: string[]
-  }
-
-  export type GameCreatesimilarGameNamesInput = {
-    set: string[]
-  }
-
   export type GameCreatescreenshotUrlsInput = {
     set: string[]
   }
@@ -78235,32 +77834,17 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type GameUpdatetagsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
   export type NullableFloatFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
-  }
-
-  export type GameUpdatetagsInput = {
-    set?: string[]
-    push?: string | string[]
-  }
-
-  export type GameUpdatefranchiseNamesInput = {
-    set?: string[]
-    push?: string | string[]
-  }
-
-  export type GameUpdatedlcNamesInput = {
-    set?: string[]
-    push?: string | string[]
-  }
-
-  export type GameUpdatesimilarGameNamesInput = {
-    set?: string[]
-    push?: string | string[]
   }
 
   export type GameUpdatescreenshotUrlsInput = {
@@ -81822,7 +81406,6 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    trailerUrl?: string | null
     developer?: string | null
     publisher?: string | null
     releaseDate?: Date | string | null
@@ -81832,23 +81415,13 @@ export namespace Prisma {
     esrbRating?: string | null
     metacritic?: number | null
     playtime?: number | null
-    rating?: number | null
-    redditUrl?: string | null
     tags?: GameCreatetagsInput | string[]
-    website?: string | null
     pegiRating?: string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: number | null
     igdbId?: number | null
     storyline?: string | null
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    franchiseNames?: GameCreatefranchiseNamesInput | string[]
-    dlcNames?: GameCreatedlcNamesInput | string[]
-    similarGameNames?: GameCreatesimilarGameNamesInput | string[]
-    igdbHypes?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     gameEdition?: string | null
     igdbSlug?: string | null
@@ -81863,8 +81436,6 @@ export namespace Prisma {
     gameEngine?: string | null
     aggregatedRating?: number | null
     aggregatedRatingCount?: number | null
-    igdbCommunityRating?: number | null
-    igdbCommunityRatingCount?: number | null
     collectionName?: string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -81894,7 +81465,6 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    trailerUrl?: string | null
     developer?: string | null
     publisher?: string | null
     releaseDate?: Date | string | null
@@ -81904,23 +81474,13 @@ export namespace Prisma {
     esrbRating?: string | null
     metacritic?: number | null
     playtime?: number | null
-    rating?: number | null
-    redditUrl?: string | null
     tags?: GameCreatetagsInput | string[]
-    website?: string | null
     pegiRating?: string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: number | null
     igdbId?: number | null
     storyline?: string | null
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    franchiseNames?: GameCreatefranchiseNamesInput | string[]
-    dlcNames?: GameCreatedlcNamesInput | string[]
-    similarGameNames?: GameCreatesimilarGameNamesInput | string[]
-    igdbHypes?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     dlcOfId?: string | null
     gameEdition?: string | null
@@ -81936,8 +81496,6 @@ export namespace Prisma {
     gameEngine?: string | null
     aggregatedRating?: number | null
     aggregatedRatingCount?: number | null
-    igdbCommunityRating?: number | null
-    igdbCommunityRatingCount?: number | null
     collectionName?: string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -82250,7 +81808,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    trailerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -82260,23 +81817,13 @@ export namespace Prisma {
     esrbRating?: NullableStringFieldUpdateOperationsInput | string | null
     metacritic?: NullableIntFieldUpdateOperationsInput | number | null
     playtime?: NullableIntFieldUpdateOperationsInput | number | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    redditUrl?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: GameUpdatetagsInput | string[]
-    website?: NullableStringFieldUpdateOperationsInput | string | null
     pegiRating?: NullableStringFieldUpdateOperationsInput | string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: NullableFloatFieldUpdateOperationsInput | number | null
     igdbId?: NullableIntFieldUpdateOperationsInput | number | null
     storyline?: NullableStringFieldUpdateOperationsInput | string | null
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    franchiseNames?: GameUpdatefranchiseNamesInput | string[]
-    dlcNames?: GameUpdatedlcNamesInput | string[]
-    similarGameNames?: GameUpdatesimilarGameNamesInput | string[]
-    igdbHypes?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
     igdbSlug?: NullableStringFieldUpdateOperationsInput | string | null
@@ -82291,8 +81838,6 @@ export namespace Prisma {
     gameEngine?: NullableStringFieldUpdateOperationsInput | string | null
     aggregatedRating?: NullableFloatFieldUpdateOperationsInput | number | null
     aggregatedRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbCommunityRating?: NullableFloatFieldUpdateOperationsInput | number | null
-    igdbCommunityRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
     collectionName?: NullableStringFieldUpdateOperationsInput | string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -82322,7 +81867,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    trailerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -82332,23 +81876,13 @@ export namespace Prisma {
     esrbRating?: NullableStringFieldUpdateOperationsInput | string | null
     metacritic?: NullableIntFieldUpdateOperationsInput | number | null
     playtime?: NullableIntFieldUpdateOperationsInput | number | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    redditUrl?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: GameUpdatetagsInput | string[]
-    website?: NullableStringFieldUpdateOperationsInput | string | null
     pegiRating?: NullableStringFieldUpdateOperationsInput | string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: NullableFloatFieldUpdateOperationsInput | number | null
     igdbId?: NullableIntFieldUpdateOperationsInput | number | null
     storyline?: NullableStringFieldUpdateOperationsInput | string | null
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    franchiseNames?: GameUpdatefranchiseNamesInput | string[]
-    dlcNames?: GameUpdatedlcNamesInput | string[]
-    similarGameNames?: GameUpdatesimilarGameNamesInput | string[]
-    igdbHypes?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     dlcOfId?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
@@ -82364,8 +81898,6 @@ export namespace Prisma {
     gameEngine?: NullableStringFieldUpdateOperationsInput | string | null
     aggregatedRating?: NullableFloatFieldUpdateOperationsInput | number | null
     aggregatedRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbCommunityRating?: NullableFloatFieldUpdateOperationsInput | number | null
-    igdbCommunityRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
     collectionName?: NullableStringFieldUpdateOperationsInput | string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -83661,7 +83193,6 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    trailerUrl?: string | null
     developer?: string | null
     publisher?: string | null
     releaseDate?: Date | string | null
@@ -83671,23 +83202,13 @@ export namespace Prisma {
     esrbRating?: string | null
     metacritic?: number | null
     playtime?: number | null
-    rating?: number | null
-    redditUrl?: string | null
     tags?: GameCreatetagsInput | string[]
-    website?: string | null
     pegiRating?: string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: number | null
     igdbId?: number | null
     storyline?: string | null
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    franchiseNames?: GameCreatefranchiseNamesInput | string[]
-    dlcNames?: GameCreatedlcNamesInput | string[]
-    similarGameNames?: GameCreatesimilarGameNamesInput | string[]
-    igdbHypes?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     gameEdition?: string | null
     igdbSlug?: string | null
@@ -83702,8 +83223,6 @@ export namespace Prisma {
     gameEngine?: string | null
     aggregatedRating?: number | null
     aggregatedRatingCount?: number | null
-    igdbCommunityRating?: number | null
-    igdbCommunityRatingCount?: number | null
     collectionName?: string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -83733,7 +83252,6 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    trailerUrl?: string | null
     developer?: string | null
     publisher?: string | null
     releaseDate?: Date | string | null
@@ -83743,23 +83261,13 @@ export namespace Prisma {
     esrbRating?: string | null
     metacritic?: number | null
     playtime?: number | null
-    rating?: number | null
-    redditUrl?: string | null
     tags?: GameCreatetagsInput | string[]
-    website?: string | null
     pegiRating?: string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: number | null
     igdbId?: number | null
     storyline?: string | null
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    franchiseNames?: GameCreatefranchiseNamesInput | string[]
-    dlcNames?: GameCreatedlcNamesInput | string[]
-    similarGameNames?: GameCreatesimilarGameNamesInput | string[]
-    igdbHypes?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     dlcOfId?: string | null
     gameEdition?: string | null
@@ -83775,8 +83283,6 @@ export namespace Prisma {
     gameEngine?: string | null
     aggregatedRating?: number | null
     aggregatedRatingCount?: number | null
-    igdbCommunityRating?: number | null
-    igdbCommunityRatingCount?: number | null
     collectionName?: string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -84872,7 +84378,6 @@ export namespace Prisma {
     description?: StringNullableFilter<"Game"> | string | null
     createdAt?: DateTimeFilter<"Game"> | Date | string
     updatedAt?: DateTimeFilter<"Game"> | Date | string
-    trailerUrl?: StringNullableFilter<"Game"> | string | null
     developer?: StringNullableFilter<"Game"> | string | null
     publisher?: StringNullableFilter<"Game"> | string | null
     releaseDate?: DateTimeNullableFilter<"Game"> | Date | string | null
@@ -84882,23 +84387,13 @@ export namespace Prisma {
     esrbRating?: StringNullableFilter<"Game"> | string | null
     metacritic?: IntNullableFilter<"Game"> | number | null
     playtime?: IntNullableFilter<"Game"> | number | null
-    rating?: FloatNullableFilter<"Game"> | number | null
-    redditUrl?: StringNullableFilter<"Game"> | string | null
     tags?: StringNullableListFilter<"Game">
-    website?: StringNullableFilter<"Game"> | string | null
     pegiRating?: StringNullableFilter<"Game"> | string | null
-    regionalReleaseDates?: JsonNullableFilter<"Game">
-    avgUserScore?: FloatNullableFilter<"Game"> | number | null
     igdbId?: IntNullableFilter<"Game"> | number | null
     storyline?: StringNullableFilter<"Game"> | string | null
     igdbUrl?: StringNullableFilter<"Game"> | string | null
     totalRating?: FloatNullableFilter<"Game"> | number | null
     totalRatingCount?: IntNullableFilter<"Game"> | number | null
-    franchiseNames?: StringNullableListFilter<"Game">
-    dlcNames?: StringNullableListFilter<"Game">
-    similarGameNames?: StringNullableListFilter<"Game">
-    igdbHypes?: IntNullableFilter<"Game"> | number | null
-    igdbFollows?: IntNullableFilter<"Game"> | number | null
     releaseStatus?: StringNullableFilter<"Game"> | string | null
     dlcOfId?: StringNullableFilter<"Game"> | string | null
     gameEdition?: StringNullableFilter<"Game"> | string | null
@@ -84914,8 +84409,6 @@ export namespace Prisma {
     gameEngine?: StringNullableFilter<"Game"> | string | null
     aggregatedRating?: FloatNullableFilter<"Game"> | number | null
     aggregatedRatingCount?: IntNullableFilter<"Game"> | number | null
-    igdbCommunityRating?: FloatNullableFilter<"Game"> | number | null
-    igdbCommunityRatingCount?: IntNullableFilter<"Game"> | number | null
     collectionName?: StringNullableFilter<"Game"> | string | null
     dlcsJson?: JsonNullableFilter<"Game">
     expansionsJson?: JsonNullableFilter<"Game">
@@ -87820,7 +87313,6 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    trailerUrl?: string | null
     developer?: string | null
     publisher?: string | null
     releaseDate?: Date | string | null
@@ -87830,23 +87322,13 @@ export namespace Prisma {
     esrbRating?: string | null
     metacritic?: number | null
     playtime?: number | null
-    rating?: number | null
-    redditUrl?: string | null
     tags?: GameCreatetagsInput | string[]
-    website?: string | null
     pegiRating?: string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: number | null
     igdbId?: number | null
     storyline?: string | null
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    franchiseNames?: GameCreatefranchiseNamesInput | string[]
-    dlcNames?: GameCreatedlcNamesInput | string[]
-    similarGameNames?: GameCreatesimilarGameNamesInput | string[]
-    igdbHypes?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     gameEdition?: string | null
     igdbSlug?: string | null
@@ -87861,8 +87343,6 @@ export namespace Prisma {
     gameEngine?: string | null
     aggregatedRating?: number | null
     aggregatedRatingCount?: number | null
-    igdbCommunityRating?: number | null
-    igdbCommunityRatingCount?: number | null
     collectionName?: string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -87892,7 +87372,6 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    trailerUrl?: string | null
     developer?: string | null
     publisher?: string | null
     releaseDate?: Date | string | null
@@ -87902,23 +87381,13 @@ export namespace Prisma {
     esrbRating?: string | null
     metacritic?: number | null
     playtime?: number | null
-    rating?: number | null
-    redditUrl?: string | null
     tags?: GameCreatetagsInput | string[]
-    website?: string | null
     pegiRating?: string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: number | null
     igdbId?: number | null
     storyline?: string | null
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    franchiseNames?: GameCreatefranchiseNamesInput | string[]
-    dlcNames?: GameCreatedlcNamesInput | string[]
-    similarGameNames?: GameCreatesimilarGameNamesInput | string[]
-    igdbHypes?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     dlcOfId?: string | null
     gameEdition?: string | null
@@ -87934,8 +87403,6 @@ export namespace Prisma {
     gameEngine?: string | null
     aggregatedRating?: number | null
     aggregatedRatingCount?: number | null
-    igdbCommunityRating?: number | null
-    igdbCommunityRatingCount?: number | null
     collectionName?: string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -88128,7 +87595,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    trailerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -88138,23 +87604,13 @@ export namespace Prisma {
     esrbRating?: NullableStringFieldUpdateOperationsInput | string | null
     metacritic?: NullableIntFieldUpdateOperationsInput | number | null
     playtime?: NullableIntFieldUpdateOperationsInput | number | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    redditUrl?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: GameUpdatetagsInput | string[]
-    website?: NullableStringFieldUpdateOperationsInput | string | null
     pegiRating?: NullableStringFieldUpdateOperationsInput | string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: NullableFloatFieldUpdateOperationsInput | number | null
     igdbId?: NullableIntFieldUpdateOperationsInput | number | null
     storyline?: NullableStringFieldUpdateOperationsInput | string | null
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    franchiseNames?: GameUpdatefranchiseNamesInput | string[]
-    dlcNames?: GameUpdatedlcNamesInput | string[]
-    similarGameNames?: GameUpdatesimilarGameNamesInput | string[]
-    igdbHypes?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
     igdbSlug?: NullableStringFieldUpdateOperationsInput | string | null
@@ -88169,8 +87625,6 @@ export namespace Prisma {
     gameEngine?: NullableStringFieldUpdateOperationsInput | string | null
     aggregatedRating?: NullableFloatFieldUpdateOperationsInput | number | null
     aggregatedRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbCommunityRating?: NullableFloatFieldUpdateOperationsInput | number | null
-    igdbCommunityRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
     collectionName?: NullableStringFieldUpdateOperationsInput | string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -88200,7 +87654,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    trailerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -88210,23 +87663,13 @@ export namespace Prisma {
     esrbRating?: NullableStringFieldUpdateOperationsInput | string | null
     metacritic?: NullableIntFieldUpdateOperationsInput | number | null
     playtime?: NullableIntFieldUpdateOperationsInput | number | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    redditUrl?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: GameUpdatetagsInput | string[]
-    website?: NullableStringFieldUpdateOperationsInput | string | null
     pegiRating?: NullableStringFieldUpdateOperationsInput | string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: NullableFloatFieldUpdateOperationsInput | number | null
     igdbId?: NullableIntFieldUpdateOperationsInput | number | null
     storyline?: NullableStringFieldUpdateOperationsInput | string | null
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    franchiseNames?: GameUpdatefranchiseNamesInput | string[]
-    dlcNames?: GameUpdatedlcNamesInput | string[]
-    similarGameNames?: GameUpdatesimilarGameNamesInput | string[]
-    igdbHypes?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     dlcOfId?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
@@ -88242,8 +87685,6 @@ export namespace Prisma {
     gameEngine?: NullableStringFieldUpdateOperationsInput | string | null
     aggregatedRating?: NullableFloatFieldUpdateOperationsInput | number | null
     aggregatedRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbCommunityRating?: NullableFloatFieldUpdateOperationsInput | number | null
-    igdbCommunityRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
     collectionName?: NullableStringFieldUpdateOperationsInput | string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -90253,7 +89694,6 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    trailerUrl?: string | null
     developer?: string | null
     publisher?: string | null
     releaseDate?: Date | string | null
@@ -90263,23 +89703,13 @@ export namespace Prisma {
     esrbRating?: string | null
     metacritic?: number | null
     playtime?: number | null
-    rating?: number | null
-    redditUrl?: string | null
     tags?: GameCreatetagsInput | string[]
-    website?: string | null
     pegiRating?: string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: number | null
     igdbId?: number | null
     storyline?: string | null
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    franchiseNames?: GameCreatefranchiseNamesInput | string[]
-    dlcNames?: GameCreatedlcNamesInput | string[]
-    similarGameNames?: GameCreatesimilarGameNamesInput | string[]
-    igdbHypes?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     gameEdition?: string | null
     igdbSlug?: string | null
@@ -90294,8 +89724,6 @@ export namespace Prisma {
     gameEngine?: string | null
     aggregatedRating?: number | null
     aggregatedRatingCount?: number | null
-    igdbCommunityRating?: number | null
-    igdbCommunityRatingCount?: number | null
     collectionName?: string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -90325,7 +89753,6 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    trailerUrl?: string | null
     developer?: string | null
     publisher?: string | null
     releaseDate?: Date | string | null
@@ -90335,23 +89762,13 @@ export namespace Prisma {
     esrbRating?: string | null
     metacritic?: number | null
     playtime?: number | null
-    rating?: number | null
-    redditUrl?: string | null
     tags?: GameCreatetagsInput | string[]
-    website?: string | null
     pegiRating?: string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: number | null
     igdbId?: number | null
     storyline?: string | null
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    franchiseNames?: GameCreatefranchiseNamesInput | string[]
-    dlcNames?: GameCreatedlcNamesInput | string[]
-    similarGameNames?: GameCreatesimilarGameNamesInput | string[]
-    igdbHypes?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     dlcOfId?: string | null
     gameEdition?: string | null
@@ -90367,8 +89784,6 @@ export namespace Prisma {
     gameEngine?: string | null
     aggregatedRating?: number | null
     aggregatedRatingCount?: number | null
-    igdbCommunityRating?: number | null
-    igdbCommunityRatingCount?: number | null
     collectionName?: string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -90402,7 +89817,6 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    trailerUrl?: string | null
     developer?: string | null
     publisher?: string | null
     releaseDate?: Date | string | null
@@ -90412,23 +89826,13 @@ export namespace Prisma {
     esrbRating?: string | null
     metacritic?: number | null
     playtime?: number | null
-    rating?: number | null
-    redditUrl?: string | null
     tags?: GameCreatetagsInput | string[]
-    website?: string | null
     pegiRating?: string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: number | null
     igdbId?: number | null
     storyline?: string | null
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    franchiseNames?: GameCreatefranchiseNamesInput | string[]
-    dlcNames?: GameCreatedlcNamesInput | string[]
-    similarGameNames?: GameCreatesimilarGameNamesInput | string[]
-    igdbHypes?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     gameEdition?: string | null
     igdbSlug?: string | null
@@ -90443,8 +89847,6 @@ export namespace Prisma {
     gameEngine?: string | null
     aggregatedRating?: number | null
     aggregatedRatingCount?: number | null
-    igdbCommunityRating?: number | null
-    igdbCommunityRatingCount?: number | null
     collectionName?: string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -90474,7 +89876,6 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    trailerUrl?: string | null
     developer?: string | null
     publisher?: string | null
     releaseDate?: Date | string | null
@@ -90484,23 +89885,13 @@ export namespace Prisma {
     esrbRating?: string | null
     metacritic?: number | null
     playtime?: number | null
-    rating?: number | null
-    redditUrl?: string | null
     tags?: GameCreatetagsInput | string[]
-    website?: string | null
     pegiRating?: string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: number | null
     igdbId?: number | null
     storyline?: string | null
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    franchiseNames?: GameCreatefranchiseNamesInput | string[]
-    dlcNames?: GameCreatedlcNamesInput | string[]
-    similarGameNames?: GameCreatesimilarGameNamesInput | string[]
-    igdbHypes?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     gameEdition?: string | null
     igdbSlug?: string | null
@@ -90515,8 +89906,6 @@ export namespace Prisma {
     gameEngine?: string | null
     aggregatedRating?: number | null
     aggregatedRatingCount?: number | null
-    igdbCommunityRating?: number | null
-    igdbCommunityRatingCount?: number | null
     collectionName?: string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -90963,7 +90352,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    trailerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -90973,23 +90361,13 @@ export namespace Prisma {
     esrbRating?: NullableStringFieldUpdateOperationsInput | string | null
     metacritic?: NullableIntFieldUpdateOperationsInput | number | null
     playtime?: NullableIntFieldUpdateOperationsInput | number | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    redditUrl?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: GameUpdatetagsInput | string[]
-    website?: NullableStringFieldUpdateOperationsInput | string | null
     pegiRating?: NullableStringFieldUpdateOperationsInput | string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: NullableFloatFieldUpdateOperationsInput | number | null
     igdbId?: NullableIntFieldUpdateOperationsInput | number | null
     storyline?: NullableStringFieldUpdateOperationsInput | string | null
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    franchiseNames?: GameUpdatefranchiseNamesInput | string[]
-    dlcNames?: GameUpdatedlcNamesInput | string[]
-    similarGameNames?: GameUpdatesimilarGameNamesInput | string[]
-    igdbHypes?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
     igdbSlug?: NullableStringFieldUpdateOperationsInput | string | null
@@ -91004,8 +90382,6 @@ export namespace Prisma {
     gameEngine?: NullableStringFieldUpdateOperationsInput | string | null
     aggregatedRating?: NullableFloatFieldUpdateOperationsInput | number | null
     aggregatedRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbCommunityRating?: NullableFloatFieldUpdateOperationsInput | number | null
-    igdbCommunityRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
     collectionName?: NullableStringFieldUpdateOperationsInput | string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -91035,7 +90411,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    trailerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -91045,23 +90420,13 @@ export namespace Prisma {
     esrbRating?: NullableStringFieldUpdateOperationsInput | string | null
     metacritic?: NullableIntFieldUpdateOperationsInput | number | null
     playtime?: NullableIntFieldUpdateOperationsInput | number | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    redditUrl?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: GameUpdatetagsInput | string[]
-    website?: NullableStringFieldUpdateOperationsInput | string | null
     pegiRating?: NullableStringFieldUpdateOperationsInput | string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: NullableFloatFieldUpdateOperationsInput | number | null
     igdbId?: NullableIntFieldUpdateOperationsInput | number | null
     storyline?: NullableStringFieldUpdateOperationsInput | string | null
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    franchiseNames?: GameUpdatefranchiseNamesInput | string[]
-    dlcNames?: GameUpdatedlcNamesInput | string[]
-    similarGameNames?: GameUpdatesimilarGameNamesInput | string[]
-    igdbHypes?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     dlcOfId?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
@@ -91077,8 +90442,6 @@ export namespace Prisma {
     gameEngine?: NullableStringFieldUpdateOperationsInput | string | null
     aggregatedRating?: NullableFloatFieldUpdateOperationsInput | number | null
     aggregatedRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbCommunityRating?: NullableFloatFieldUpdateOperationsInput | number | null
-    igdbCommunityRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
     collectionName?: NullableStringFieldUpdateOperationsInput | string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -91517,7 +90880,6 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    trailerUrl?: string | null
     developer?: string | null
     publisher?: string | null
     releaseDate?: Date | string | null
@@ -91527,23 +90889,13 @@ export namespace Prisma {
     esrbRating?: string | null
     metacritic?: number | null
     playtime?: number | null
-    rating?: number | null
-    redditUrl?: string | null
     tags?: GameCreatetagsInput | string[]
-    website?: string | null
     pegiRating?: string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: number | null
     igdbId?: number | null
     storyline?: string | null
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    franchiseNames?: GameCreatefranchiseNamesInput | string[]
-    dlcNames?: GameCreatedlcNamesInput | string[]
-    similarGameNames?: GameCreatesimilarGameNamesInput | string[]
-    igdbHypes?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     gameEdition?: string | null
     igdbSlug?: string | null
@@ -91558,8 +90910,6 @@ export namespace Prisma {
     gameEngine?: string | null
     aggregatedRating?: number | null
     aggregatedRatingCount?: number | null
-    igdbCommunityRating?: number | null
-    igdbCommunityRatingCount?: number | null
     collectionName?: string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -91589,7 +90939,6 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    trailerUrl?: string | null
     developer?: string | null
     publisher?: string | null
     releaseDate?: Date | string | null
@@ -91599,23 +90948,13 @@ export namespace Prisma {
     esrbRating?: string | null
     metacritic?: number | null
     playtime?: number | null
-    rating?: number | null
-    redditUrl?: string | null
     tags?: GameCreatetagsInput | string[]
-    website?: string | null
     pegiRating?: string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: number | null
     igdbId?: number | null
     storyline?: string | null
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    franchiseNames?: GameCreatefranchiseNamesInput | string[]
-    dlcNames?: GameCreatedlcNamesInput | string[]
-    similarGameNames?: GameCreatesimilarGameNamesInput | string[]
-    igdbHypes?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     dlcOfId?: string | null
     gameEdition?: string | null
@@ -91631,8 +90970,6 @@ export namespace Prisma {
     gameEngine?: string | null
     aggregatedRating?: number | null
     aggregatedRatingCount?: number | null
-    igdbCommunityRating?: number | null
-    igdbCommunityRatingCount?: number | null
     collectionName?: string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -91856,7 +91193,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    trailerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -91866,23 +91202,13 @@ export namespace Prisma {
     esrbRating?: NullableStringFieldUpdateOperationsInput | string | null
     metacritic?: NullableIntFieldUpdateOperationsInput | number | null
     playtime?: NullableIntFieldUpdateOperationsInput | number | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    redditUrl?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: GameUpdatetagsInput | string[]
-    website?: NullableStringFieldUpdateOperationsInput | string | null
     pegiRating?: NullableStringFieldUpdateOperationsInput | string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: NullableFloatFieldUpdateOperationsInput | number | null
     igdbId?: NullableIntFieldUpdateOperationsInput | number | null
     storyline?: NullableStringFieldUpdateOperationsInput | string | null
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    franchiseNames?: GameUpdatefranchiseNamesInput | string[]
-    dlcNames?: GameUpdatedlcNamesInput | string[]
-    similarGameNames?: GameUpdatesimilarGameNamesInput | string[]
-    igdbHypes?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
     igdbSlug?: NullableStringFieldUpdateOperationsInput | string | null
@@ -91897,8 +91223,6 @@ export namespace Prisma {
     gameEngine?: NullableStringFieldUpdateOperationsInput | string | null
     aggregatedRating?: NullableFloatFieldUpdateOperationsInput | number | null
     aggregatedRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbCommunityRating?: NullableFloatFieldUpdateOperationsInput | number | null
-    igdbCommunityRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
     collectionName?: NullableStringFieldUpdateOperationsInput | string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -91928,7 +91252,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    trailerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -91938,23 +91261,13 @@ export namespace Prisma {
     esrbRating?: NullableStringFieldUpdateOperationsInput | string | null
     metacritic?: NullableIntFieldUpdateOperationsInput | number | null
     playtime?: NullableIntFieldUpdateOperationsInput | number | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    redditUrl?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: GameUpdatetagsInput | string[]
-    website?: NullableStringFieldUpdateOperationsInput | string | null
     pegiRating?: NullableStringFieldUpdateOperationsInput | string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: NullableFloatFieldUpdateOperationsInput | number | null
     igdbId?: NullableIntFieldUpdateOperationsInput | number | null
     storyline?: NullableStringFieldUpdateOperationsInput | string | null
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    franchiseNames?: GameUpdatefranchiseNamesInput | string[]
-    dlcNames?: GameUpdatedlcNamesInput | string[]
-    similarGameNames?: GameUpdatesimilarGameNamesInput | string[]
-    igdbHypes?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     dlcOfId?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
@@ -91970,8 +91283,6 @@ export namespace Prisma {
     gameEngine?: NullableStringFieldUpdateOperationsInput | string | null
     aggregatedRating?: NullableFloatFieldUpdateOperationsInput | number | null
     aggregatedRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbCommunityRating?: NullableFloatFieldUpdateOperationsInput | number | null
-    igdbCommunityRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
     collectionName?: NullableStringFieldUpdateOperationsInput | string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -92507,7 +91818,6 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    trailerUrl?: string | null
     developer?: string | null
     publisher?: string | null
     releaseDate?: Date | string | null
@@ -92517,23 +91827,13 @@ export namespace Prisma {
     esrbRating?: string | null
     metacritic?: number | null
     playtime?: number | null
-    rating?: number | null
-    redditUrl?: string | null
     tags?: GameCreatetagsInput | string[]
-    website?: string | null
     pegiRating?: string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: number | null
     igdbId?: number | null
     storyline?: string | null
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    franchiseNames?: GameCreatefranchiseNamesInput | string[]
-    dlcNames?: GameCreatedlcNamesInput | string[]
-    similarGameNames?: GameCreatesimilarGameNamesInput | string[]
-    igdbHypes?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     gameEdition?: string | null
     igdbSlug?: string | null
@@ -92548,8 +91848,6 @@ export namespace Prisma {
     gameEngine?: string | null
     aggregatedRating?: number | null
     aggregatedRatingCount?: number | null
-    igdbCommunityRating?: number | null
-    igdbCommunityRatingCount?: number | null
     collectionName?: string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -92579,7 +91877,6 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    trailerUrl?: string | null
     developer?: string | null
     publisher?: string | null
     releaseDate?: Date | string | null
@@ -92589,23 +91886,13 @@ export namespace Prisma {
     esrbRating?: string | null
     metacritic?: number | null
     playtime?: number | null
-    rating?: number | null
-    redditUrl?: string | null
     tags?: GameCreatetagsInput | string[]
-    website?: string | null
     pegiRating?: string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: number | null
     igdbId?: number | null
     storyline?: string | null
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    franchiseNames?: GameCreatefranchiseNamesInput | string[]
-    dlcNames?: GameCreatedlcNamesInput | string[]
-    similarGameNames?: GameCreatesimilarGameNamesInput | string[]
-    igdbHypes?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     dlcOfId?: string | null
     gameEdition?: string | null
@@ -92621,8 +91908,6 @@ export namespace Prisma {
     gameEngine?: string | null
     aggregatedRating?: number | null
     aggregatedRatingCount?: number | null
-    igdbCommunityRating?: number | null
-    igdbCommunityRatingCount?: number | null
     collectionName?: string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -92850,7 +92135,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    trailerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -92860,23 +92144,13 @@ export namespace Prisma {
     esrbRating?: NullableStringFieldUpdateOperationsInput | string | null
     metacritic?: NullableIntFieldUpdateOperationsInput | number | null
     playtime?: NullableIntFieldUpdateOperationsInput | number | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    redditUrl?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: GameUpdatetagsInput | string[]
-    website?: NullableStringFieldUpdateOperationsInput | string | null
     pegiRating?: NullableStringFieldUpdateOperationsInput | string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: NullableFloatFieldUpdateOperationsInput | number | null
     igdbId?: NullableIntFieldUpdateOperationsInput | number | null
     storyline?: NullableStringFieldUpdateOperationsInput | string | null
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    franchiseNames?: GameUpdatefranchiseNamesInput | string[]
-    dlcNames?: GameUpdatedlcNamesInput | string[]
-    similarGameNames?: GameUpdatesimilarGameNamesInput | string[]
-    igdbHypes?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
     igdbSlug?: NullableStringFieldUpdateOperationsInput | string | null
@@ -92891,8 +92165,6 @@ export namespace Prisma {
     gameEngine?: NullableStringFieldUpdateOperationsInput | string | null
     aggregatedRating?: NullableFloatFieldUpdateOperationsInput | number | null
     aggregatedRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbCommunityRating?: NullableFloatFieldUpdateOperationsInput | number | null
-    igdbCommunityRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
     collectionName?: NullableStringFieldUpdateOperationsInput | string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -92922,7 +92194,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    trailerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -92932,23 +92203,13 @@ export namespace Prisma {
     esrbRating?: NullableStringFieldUpdateOperationsInput | string | null
     metacritic?: NullableIntFieldUpdateOperationsInput | number | null
     playtime?: NullableIntFieldUpdateOperationsInput | number | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    redditUrl?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: GameUpdatetagsInput | string[]
-    website?: NullableStringFieldUpdateOperationsInput | string | null
     pegiRating?: NullableStringFieldUpdateOperationsInput | string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: NullableFloatFieldUpdateOperationsInput | number | null
     igdbId?: NullableIntFieldUpdateOperationsInput | number | null
     storyline?: NullableStringFieldUpdateOperationsInput | string | null
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    franchiseNames?: GameUpdatefranchiseNamesInput | string[]
-    dlcNames?: GameUpdatedlcNamesInput | string[]
-    similarGameNames?: GameUpdatesimilarGameNamesInput | string[]
-    igdbHypes?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     dlcOfId?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
@@ -92964,8 +92225,6 @@ export namespace Prisma {
     gameEngine?: NullableStringFieldUpdateOperationsInput | string | null
     aggregatedRating?: NullableFloatFieldUpdateOperationsInput | number | null
     aggregatedRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbCommunityRating?: NullableFloatFieldUpdateOperationsInput | number | null
-    igdbCommunityRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
     collectionName?: NullableStringFieldUpdateOperationsInput | string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -93810,7 +93069,6 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    trailerUrl?: string | null
     developer?: string | null
     publisher?: string | null
     releaseDate?: Date | string | null
@@ -93820,23 +93078,13 @@ export namespace Prisma {
     esrbRating?: string | null
     metacritic?: number | null
     playtime?: number | null
-    rating?: number | null
-    redditUrl?: string | null
     tags?: GameCreatetagsInput | string[]
-    website?: string | null
     pegiRating?: string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: number | null
     igdbId?: number | null
     storyline?: string | null
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    franchiseNames?: GameCreatefranchiseNamesInput | string[]
-    dlcNames?: GameCreatedlcNamesInput | string[]
-    similarGameNames?: GameCreatesimilarGameNamesInput | string[]
-    igdbHypes?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     gameEdition?: string | null
     igdbSlug?: string | null
@@ -93851,8 +93099,6 @@ export namespace Prisma {
     gameEngine?: string | null
     aggregatedRating?: number | null
     aggregatedRatingCount?: number | null
-    igdbCommunityRating?: number | null
-    igdbCommunityRatingCount?: number | null
     collectionName?: string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -93882,7 +93128,6 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    trailerUrl?: string | null
     developer?: string | null
     publisher?: string | null
     releaseDate?: Date | string | null
@@ -93892,23 +93137,13 @@ export namespace Prisma {
     esrbRating?: string | null
     metacritic?: number | null
     playtime?: number | null
-    rating?: number | null
-    redditUrl?: string | null
     tags?: GameCreatetagsInput | string[]
-    website?: string | null
     pegiRating?: string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: number | null
     igdbId?: number | null
     storyline?: string | null
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    franchiseNames?: GameCreatefranchiseNamesInput | string[]
-    dlcNames?: GameCreatedlcNamesInput | string[]
-    similarGameNames?: GameCreatesimilarGameNamesInput | string[]
-    igdbHypes?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     dlcOfId?: string | null
     gameEdition?: string | null
@@ -93924,8 +93159,6 @@ export namespace Prisma {
     gameEngine?: string | null
     aggregatedRating?: number | null
     aggregatedRatingCount?: number | null
-    igdbCommunityRating?: number | null
-    igdbCommunityRatingCount?: number | null
     collectionName?: string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -94293,7 +93526,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    trailerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -94303,23 +93535,13 @@ export namespace Prisma {
     esrbRating?: NullableStringFieldUpdateOperationsInput | string | null
     metacritic?: NullableIntFieldUpdateOperationsInput | number | null
     playtime?: NullableIntFieldUpdateOperationsInput | number | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    redditUrl?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: GameUpdatetagsInput | string[]
-    website?: NullableStringFieldUpdateOperationsInput | string | null
     pegiRating?: NullableStringFieldUpdateOperationsInput | string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: NullableFloatFieldUpdateOperationsInput | number | null
     igdbId?: NullableIntFieldUpdateOperationsInput | number | null
     storyline?: NullableStringFieldUpdateOperationsInput | string | null
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    franchiseNames?: GameUpdatefranchiseNamesInput | string[]
-    dlcNames?: GameUpdatedlcNamesInput | string[]
-    similarGameNames?: GameUpdatesimilarGameNamesInput | string[]
-    igdbHypes?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
     igdbSlug?: NullableStringFieldUpdateOperationsInput | string | null
@@ -94334,8 +93556,6 @@ export namespace Prisma {
     gameEngine?: NullableStringFieldUpdateOperationsInput | string | null
     aggregatedRating?: NullableFloatFieldUpdateOperationsInput | number | null
     aggregatedRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbCommunityRating?: NullableFloatFieldUpdateOperationsInput | number | null
-    igdbCommunityRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
     collectionName?: NullableStringFieldUpdateOperationsInput | string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -94365,7 +93585,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    trailerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -94375,23 +93594,13 @@ export namespace Prisma {
     esrbRating?: NullableStringFieldUpdateOperationsInput | string | null
     metacritic?: NullableIntFieldUpdateOperationsInput | number | null
     playtime?: NullableIntFieldUpdateOperationsInput | number | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    redditUrl?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: GameUpdatetagsInput | string[]
-    website?: NullableStringFieldUpdateOperationsInput | string | null
     pegiRating?: NullableStringFieldUpdateOperationsInput | string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: NullableFloatFieldUpdateOperationsInput | number | null
     igdbId?: NullableIntFieldUpdateOperationsInput | number | null
     storyline?: NullableStringFieldUpdateOperationsInput | string | null
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    franchiseNames?: GameUpdatefranchiseNamesInput | string[]
-    dlcNames?: GameUpdatedlcNamesInput | string[]
-    similarGameNames?: GameUpdatesimilarGameNamesInput | string[]
-    igdbHypes?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     dlcOfId?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
@@ -94407,8 +93616,6 @@ export namespace Prisma {
     gameEngine?: NullableStringFieldUpdateOperationsInput | string | null
     aggregatedRating?: NullableFloatFieldUpdateOperationsInput | number | null
     aggregatedRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbCommunityRating?: NullableFloatFieldUpdateOperationsInput | number | null
-    igdbCommunityRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
     collectionName?: NullableStringFieldUpdateOperationsInput | string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -99060,7 +98267,6 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    trailerUrl?: string | null
     developer?: string | null
     publisher?: string | null
     releaseDate?: Date | string | null
@@ -99070,23 +98276,13 @@ export namespace Prisma {
     esrbRating?: string | null
     metacritic?: number | null
     playtime?: number | null
-    rating?: number | null
-    redditUrl?: string | null
     tags?: GameCreatetagsInput | string[]
-    website?: string | null
     pegiRating?: string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: number | null
     igdbId?: number | null
     storyline?: string | null
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    franchiseNames?: GameCreatefranchiseNamesInput | string[]
-    dlcNames?: GameCreatedlcNamesInput | string[]
-    similarGameNames?: GameCreatesimilarGameNamesInput | string[]
-    igdbHypes?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     gameEdition?: string | null
     igdbSlug?: string | null
@@ -99101,8 +98297,6 @@ export namespace Prisma {
     gameEngine?: string | null
     aggregatedRating?: number | null
     aggregatedRatingCount?: number | null
-    igdbCommunityRating?: number | null
-    igdbCommunityRatingCount?: number | null
     collectionName?: string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -99132,7 +98326,6 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    trailerUrl?: string | null
     developer?: string | null
     publisher?: string | null
     releaseDate?: Date | string | null
@@ -99142,23 +98335,13 @@ export namespace Prisma {
     esrbRating?: string | null
     metacritic?: number | null
     playtime?: number | null
-    rating?: number | null
-    redditUrl?: string | null
     tags?: GameCreatetagsInput | string[]
-    website?: string | null
     pegiRating?: string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: number | null
     igdbId?: number | null
     storyline?: string | null
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    franchiseNames?: GameCreatefranchiseNamesInput | string[]
-    dlcNames?: GameCreatedlcNamesInput | string[]
-    similarGameNames?: GameCreatesimilarGameNamesInput | string[]
-    igdbHypes?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     dlcOfId?: string | null
     gameEdition?: string | null
@@ -99174,8 +98357,6 @@ export namespace Prisma {
     gameEngine?: string | null
     aggregatedRating?: number | null
     aggregatedRatingCount?: number | null
-    igdbCommunityRating?: number | null
-    igdbCommunityRatingCount?: number | null
     collectionName?: string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -99220,7 +98401,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    trailerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -99230,23 +98410,13 @@ export namespace Prisma {
     esrbRating?: NullableStringFieldUpdateOperationsInput | string | null
     metacritic?: NullableIntFieldUpdateOperationsInput | number | null
     playtime?: NullableIntFieldUpdateOperationsInput | number | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    redditUrl?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: GameUpdatetagsInput | string[]
-    website?: NullableStringFieldUpdateOperationsInput | string | null
     pegiRating?: NullableStringFieldUpdateOperationsInput | string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: NullableFloatFieldUpdateOperationsInput | number | null
     igdbId?: NullableIntFieldUpdateOperationsInput | number | null
     storyline?: NullableStringFieldUpdateOperationsInput | string | null
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    franchiseNames?: GameUpdatefranchiseNamesInput | string[]
-    dlcNames?: GameUpdatedlcNamesInput | string[]
-    similarGameNames?: GameUpdatesimilarGameNamesInput | string[]
-    igdbHypes?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
     igdbSlug?: NullableStringFieldUpdateOperationsInput | string | null
@@ -99261,8 +98431,6 @@ export namespace Prisma {
     gameEngine?: NullableStringFieldUpdateOperationsInput | string | null
     aggregatedRating?: NullableFloatFieldUpdateOperationsInput | number | null
     aggregatedRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbCommunityRating?: NullableFloatFieldUpdateOperationsInput | number | null
-    igdbCommunityRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
     collectionName?: NullableStringFieldUpdateOperationsInput | string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -99292,7 +98460,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    trailerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -99302,23 +98469,13 @@ export namespace Prisma {
     esrbRating?: NullableStringFieldUpdateOperationsInput | string | null
     metacritic?: NullableIntFieldUpdateOperationsInput | number | null
     playtime?: NullableIntFieldUpdateOperationsInput | number | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    redditUrl?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: GameUpdatetagsInput | string[]
-    website?: NullableStringFieldUpdateOperationsInput | string | null
     pegiRating?: NullableStringFieldUpdateOperationsInput | string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: NullableFloatFieldUpdateOperationsInput | number | null
     igdbId?: NullableIntFieldUpdateOperationsInput | number | null
     storyline?: NullableStringFieldUpdateOperationsInput | string | null
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    franchiseNames?: GameUpdatefranchiseNamesInput | string[]
-    dlcNames?: GameUpdatedlcNamesInput | string[]
-    similarGameNames?: GameUpdatesimilarGameNamesInput | string[]
-    igdbHypes?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     dlcOfId?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
@@ -99334,8 +98491,6 @@ export namespace Prisma {
     gameEngine?: NullableStringFieldUpdateOperationsInput | string | null
     aggregatedRating?: NullableFloatFieldUpdateOperationsInput | number | null
     aggregatedRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbCommunityRating?: NullableFloatFieldUpdateOperationsInput | number | null
-    igdbCommunityRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
     collectionName?: NullableStringFieldUpdateOperationsInput | string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -99364,7 +98519,6 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    trailerUrl?: string | null
     developer?: string | null
     publisher?: string | null
     releaseDate?: Date | string | null
@@ -99374,23 +98528,13 @@ export namespace Prisma {
     esrbRating?: string | null
     metacritic?: number | null
     playtime?: number | null
-    rating?: number | null
-    redditUrl?: string | null
     tags?: GameCreatetagsInput | string[]
-    website?: string | null
     pegiRating?: string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: number | null
     igdbId?: number | null
     storyline?: string | null
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    franchiseNames?: GameCreatefranchiseNamesInput | string[]
-    dlcNames?: GameCreatedlcNamesInput | string[]
-    similarGameNames?: GameCreatesimilarGameNamesInput | string[]
-    igdbHypes?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     gameEdition?: string | null
     igdbSlug?: string | null
@@ -99405,8 +98549,6 @@ export namespace Prisma {
     gameEngine?: string | null
     aggregatedRating?: number | null
     aggregatedRatingCount?: number | null
-    igdbCommunityRating?: number | null
-    igdbCommunityRatingCount?: number | null
     collectionName?: string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -99436,7 +98578,6 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    trailerUrl?: string | null
     developer?: string | null
     publisher?: string | null
     releaseDate?: Date | string | null
@@ -99446,23 +98587,13 @@ export namespace Prisma {
     esrbRating?: string | null
     metacritic?: number | null
     playtime?: number | null
-    rating?: number | null
-    redditUrl?: string | null
     tags?: GameCreatetagsInput | string[]
-    website?: string | null
     pegiRating?: string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: number | null
     igdbId?: number | null
     storyline?: string | null
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    franchiseNames?: GameCreatefranchiseNamesInput | string[]
-    dlcNames?: GameCreatedlcNamesInput | string[]
-    similarGameNames?: GameCreatesimilarGameNamesInput | string[]
-    igdbHypes?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     dlcOfId?: string | null
     gameEdition?: string | null
@@ -99478,8 +98609,6 @@ export namespace Prisma {
     gameEngine?: string | null
     aggregatedRating?: number | null
     aggregatedRatingCount?: number | null
-    igdbCommunityRating?: number | null
-    igdbCommunityRatingCount?: number | null
     collectionName?: string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -99693,7 +98822,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    trailerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -99703,23 +98831,13 @@ export namespace Prisma {
     esrbRating?: NullableStringFieldUpdateOperationsInput | string | null
     metacritic?: NullableIntFieldUpdateOperationsInput | number | null
     playtime?: NullableIntFieldUpdateOperationsInput | number | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    redditUrl?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: GameUpdatetagsInput | string[]
-    website?: NullableStringFieldUpdateOperationsInput | string | null
     pegiRating?: NullableStringFieldUpdateOperationsInput | string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: NullableFloatFieldUpdateOperationsInput | number | null
     igdbId?: NullableIntFieldUpdateOperationsInput | number | null
     storyline?: NullableStringFieldUpdateOperationsInput | string | null
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    franchiseNames?: GameUpdatefranchiseNamesInput | string[]
-    dlcNames?: GameUpdatedlcNamesInput | string[]
-    similarGameNames?: GameUpdatesimilarGameNamesInput | string[]
-    igdbHypes?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
     igdbSlug?: NullableStringFieldUpdateOperationsInput | string | null
@@ -99734,8 +98852,6 @@ export namespace Prisma {
     gameEngine?: NullableStringFieldUpdateOperationsInput | string | null
     aggregatedRating?: NullableFloatFieldUpdateOperationsInput | number | null
     aggregatedRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbCommunityRating?: NullableFloatFieldUpdateOperationsInput | number | null
-    igdbCommunityRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
     collectionName?: NullableStringFieldUpdateOperationsInput | string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -99765,7 +98881,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    trailerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -99775,23 +98890,13 @@ export namespace Prisma {
     esrbRating?: NullableStringFieldUpdateOperationsInput | string | null
     metacritic?: NullableIntFieldUpdateOperationsInput | number | null
     playtime?: NullableIntFieldUpdateOperationsInput | number | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    redditUrl?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: GameUpdatetagsInput | string[]
-    website?: NullableStringFieldUpdateOperationsInput | string | null
     pegiRating?: NullableStringFieldUpdateOperationsInput | string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: NullableFloatFieldUpdateOperationsInput | number | null
     igdbId?: NullableIntFieldUpdateOperationsInput | number | null
     storyline?: NullableStringFieldUpdateOperationsInput | string | null
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    franchiseNames?: GameUpdatefranchiseNamesInput | string[]
-    dlcNames?: GameUpdatedlcNamesInput | string[]
-    similarGameNames?: GameUpdatesimilarGameNamesInput | string[]
-    igdbHypes?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     dlcOfId?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
@@ -99807,8 +98912,6 @@ export namespace Prisma {
     gameEngine?: NullableStringFieldUpdateOperationsInput | string | null
     aggregatedRating?: NullableFloatFieldUpdateOperationsInput | number | null
     aggregatedRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbCommunityRating?: NullableFloatFieldUpdateOperationsInput | number | null
-    igdbCommunityRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
     collectionName?: NullableStringFieldUpdateOperationsInput | string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -100006,7 +99109,6 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    trailerUrl?: string | null
     developer?: string | null
     publisher?: string | null
     releaseDate?: Date | string | null
@@ -100016,23 +99118,13 @@ export namespace Prisma {
     esrbRating?: string | null
     metacritic?: number | null
     playtime?: number | null
-    rating?: number | null
-    redditUrl?: string | null
     tags?: GameCreatetagsInput | string[]
-    website?: string | null
     pegiRating?: string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: number | null
     igdbId?: number | null
     storyline?: string | null
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    franchiseNames?: GameCreatefranchiseNamesInput | string[]
-    dlcNames?: GameCreatedlcNamesInput | string[]
-    similarGameNames?: GameCreatesimilarGameNamesInput | string[]
-    igdbHypes?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     gameEdition?: string | null
     igdbSlug?: string | null
@@ -100047,8 +99139,6 @@ export namespace Prisma {
     gameEngine?: string | null
     aggregatedRating?: number | null
     aggregatedRatingCount?: number | null
-    igdbCommunityRating?: number | null
-    igdbCommunityRatingCount?: number | null
     collectionName?: string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -100078,7 +99168,6 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    trailerUrl?: string | null
     developer?: string | null
     publisher?: string | null
     releaseDate?: Date | string | null
@@ -100088,23 +99177,13 @@ export namespace Prisma {
     esrbRating?: string | null
     metacritic?: number | null
     playtime?: number | null
-    rating?: number | null
-    redditUrl?: string | null
     tags?: GameCreatetagsInput | string[]
-    website?: string | null
     pegiRating?: string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: number | null
     igdbId?: number | null
     storyline?: string | null
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    franchiseNames?: GameCreatefranchiseNamesInput | string[]
-    dlcNames?: GameCreatedlcNamesInput | string[]
-    similarGameNames?: GameCreatesimilarGameNamesInput | string[]
-    igdbHypes?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     dlcOfId?: string | null
     gameEdition?: string | null
@@ -100120,8 +99199,6 @@ export namespace Prisma {
     gameEngine?: string | null
     aggregatedRating?: number | null
     aggregatedRatingCount?: number | null
-    igdbCommunityRating?: number | null
-    igdbCommunityRatingCount?: number | null
     collectionName?: string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -100313,7 +99390,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    trailerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -100323,23 +99399,13 @@ export namespace Prisma {
     esrbRating?: NullableStringFieldUpdateOperationsInput | string | null
     metacritic?: NullableIntFieldUpdateOperationsInput | number | null
     playtime?: NullableIntFieldUpdateOperationsInput | number | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    redditUrl?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: GameUpdatetagsInput | string[]
-    website?: NullableStringFieldUpdateOperationsInput | string | null
     pegiRating?: NullableStringFieldUpdateOperationsInput | string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: NullableFloatFieldUpdateOperationsInput | number | null
     igdbId?: NullableIntFieldUpdateOperationsInput | number | null
     storyline?: NullableStringFieldUpdateOperationsInput | string | null
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    franchiseNames?: GameUpdatefranchiseNamesInput | string[]
-    dlcNames?: GameUpdatedlcNamesInput | string[]
-    similarGameNames?: GameUpdatesimilarGameNamesInput | string[]
-    igdbHypes?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
     igdbSlug?: NullableStringFieldUpdateOperationsInput | string | null
@@ -100354,8 +99420,6 @@ export namespace Prisma {
     gameEngine?: NullableStringFieldUpdateOperationsInput | string | null
     aggregatedRating?: NullableFloatFieldUpdateOperationsInput | number | null
     aggregatedRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbCommunityRating?: NullableFloatFieldUpdateOperationsInput | number | null
-    igdbCommunityRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
     collectionName?: NullableStringFieldUpdateOperationsInput | string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -100385,7 +99449,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    trailerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -100395,23 +99458,13 @@ export namespace Prisma {
     esrbRating?: NullableStringFieldUpdateOperationsInput | string | null
     metacritic?: NullableIntFieldUpdateOperationsInput | number | null
     playtime?: NullableIntFieldUpdateOperationsInput | number | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    redditUrl?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: GameUpdatetagsInput | string[]
-    website?: NullableStringFieldUpdateOperationsInput | string | null
     pegiRating?: NullableStringFieldUpdateOperationsInput | string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: NullableFloatFieldUpdateOperationsInput | number | null
     igdbId?: NullableIntFieldUpdateOperationsInput | number | null
     storyline?: NullableStringFieldUpdateOperationsInput | string | null
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    franchiseNames?: GameUpdatefranchiseNamesInput | string[]
-    dlcNames?: GameUpdatedlcNamesInput | string[]
-    similarGameNames?: GameUpdatesimilarGameNamesInput | string[]
-    igdbHypes?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     dlcOfId?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
@@ -100427,8 +99480,6 @@ export namespace Prisma {
     gameEngine?: NullableStringFieldUpdateOperationsInput | string | null
     aggregatedRating?: NullableFloatFieldUpdateOperationsInput | number | null
     aggregatedRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbCommunityRating?: NullableFloatFieldUpdateOperationsInput | number | null
-    igdbCommunityRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
     collectionName?: NullableStringFieldUpdateOperationsInput | string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -105986,7 +105037,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    trailerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -105996,23 +105046,13 @@ export namespace Prisma {
     esrbRating?: NullableStringFieldUpdateOperationsInput | string | null
     metacritic?: NullableIntFieldUpdateOperationsInput | number | null
     playtime?: NullableIntFieldUpdateOperationsInput | number | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    redditUrl?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: GameUpdatetagsInput | string[]
-    website?: NullableStringFieldUpdateOperationsInput | string | null
     pegiRating?: NullableStringFieldUpdateOperationsInput | string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: NullableFloatFieldUpdateOperationsInput | number | null
     igdbId?: NullableIntFieldUpdateOperationsInput | number | null
     storyline?: NullableStringFieldUpdateOperationsInput | string | null
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    franchiseNames?: GameUpdatefranchiseNamesInput | string[]
-    dlcNames?: GameUpdatedlcNamesInput | string[]
-    similarGameNames?: GameUpdatesimilarGameNamesInput | string[]
-    igdbHypes?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
     igdbSlug?: NullableStringFieldUpdateOperationsInput | string | null
@@ -106027,8 +105067,6 @@ export namespace Prisma {
     gameEngine?: NullableStringFieldUpdateOperationsInput | string | null
     aggregatedRating?: NullableFloatFieldUpdateOperationsInput | number | null
     aggregatedRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbCommunityRating?: NullableFloatFieldUpdateOperationsInput | number | null
-    igdbCommunityRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
     collectionName?: NullableStringFieldUpdateOperationsInput | string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -106058,7 +105096,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    trailerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -106068,23 +105105,13 @@ export namespace Prisma {
     esrbRating?: NullableStringFieldUpdateOperationsInput | string | null
     metacritic?: NullableIntFieldUpdateOperationsInput | number | null
     playtime?: NullableIntFieldUpdateOperationsInput | number | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    redditUrl?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: GameUpdatetagsInput | string[]
-    website?: NullableStringFieldUpdateOperationsInput | string | null
     pegiRating?: NullableStringFieldUpdateOperationsInput | string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: NullableFloatFieldUpdateOperationsInput | number | null
     igdbId?: NullableIntFieldUpdateOperationsInput | number | null
     storyline?: NullableStringFieldUpdateOperationsInput | string | null
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    franchiseNames?: GameUpdatefranchiseNamesInput | string[]
-    dlcNames?: GameUpdatedlcNamesInput | string[]
-    similarGameNames?: GameUpdatesimilarGameNamesInput | string[]
-    igdbHypes?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     dlcOfId?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
@@ -106100,8 +105127,6 @@ export namespace Prisma {
     gameEngine?: NullableStringFieldUpdateOperationsInput | string | null
     aggregatedRating?: NullableFloatFieldUpdateOperationsInput | number | null
     aggregatedRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbCommunityRating?: NullableFloatFieldUpdateOperationsInput | number | null
-    igdbCommunityRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
     collectionName?: NullableStringFieldUpdateOperationsInput | string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -106130,7 +105155,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    trailerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -106140,23 +105164,13 @@ export namespace Prisma {
     esrbRating?: NullableStringFieldUpdateOperationsInput | string | null
     metacritic?: NullableIntFieldUpdateOperationsInput | number | null
     playtime?: NullableIntFieldUpdateOperationsInput | number | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    redditUrl?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: GameUpdatetagsInput | string[]
-    website?: NullableStringFieldUpdateOperationsInput | string | null
     pegiRating?: NullableStringFieldUpdateOperationsInput | string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: NullableFloatFieldUpdateOperationsInput | number | null
     igdbId?: NullableIntFieldUpdateOperationsInput | number | null
     storyline?: NullableStringFieldUpdateOperationsInput | string | null
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    franchiseNames?: GameUpdatefranchiseNamesInput | string[]
-    dlcNames?: GameUpdatedlcNamesInput | string[]
-    similarGameNames?: GameUpdatesimilarGameNamesInput | string[]
-    igdbHypes?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     dlcOfId?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
@@ -106172,8 +105186,6 @@ export namespace Prisma {
     gameEngine?: NullableStringFieldUpdateOperationsInput | string | null
     aggregatedRating?: NullableFloatFieldUpdateOperationsInput | number | null
     aggregatedRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbCommunityRating?: NullableFloatFieldUpdateOperationsInput | number | null
-    igdbCommunityRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
     collectionName?: NullableStringFieldUpdateOperationsInput | string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -106499,7 +105511,6 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    trailerUrl?: string | null
     developer?: string | null
     publisher?: string | null
     releaseDate?: Date | string | null
@@ -106509,23 +105520,13 @@ export namespace Prisma {
     esrbRating?: string | null
     metacritic?: number | null
     playtime?: number | null
-    rating?: number | null
-    redditUrl?: string | null
     tags?: GameCreatetagsInput | string[]
-    website?: string | null
     pegiRating?: string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: number | null
     igdbId?: number | null
     storyline?: string | null
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    franchiseNames?: GameCreatefranchiseNamesInput | string[]
-    dlcNames?: GameCreatedlcNamesInput | string[]
-    similarGameNames?: GameCreatesimilarGameNamesInput | string[]
-    igdbHypes?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     gameEdition?: string | null
     igdbSlug?: string | null
@@ -106540,8 +105541,6 @@ export namespace Prisma {
     gameEngine?: string | null
     aggregatedRating?: number | null
     aggregatedRatingCount?: number | null
-    igdbCommunityRating?: number | null
-    igdbCommunityRatingCount?: number | null
     collectionName?: string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -106723,7 +105722,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    trailerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -106733,23 +105731,13 @@ export namespace Prisma {
     esrbRating?: NullableStringFieldUpdateOperationsInput | string | null
     metacritic?: NullableIntFieldUpdateOperationsInput | number | null
     playtime?: NullableIntFieldUpdateOperationsInput | number | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    redditUrl?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: GameUpdatetagsInput | string[]
-    website?: NullableStringFieldUpdateOperationsInput | string | null
     pegiRating?: NullableStringFieldUpdateOperationsInput | string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: NullableFloatFieldUpdateOperationsInput | number | null
     igdbId?: NullableIntFieldUpdateOperationsInput | number | null
     storyline?: NullableStringFieldUpdateOperationsInput | string | null
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    franchiseNames?: GameUpdatefranchiseNamesInput | string[]
-    dlcNames?: GameUpdatedlcNamesInput | string[]
-    similarGameNames?: GameUpdatesimilarGameNamesInput | string[]
-    igdbHypes?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
     igdbSlug?: NullableStringFieldUpdateOperationsInput | string | null
@@ -106764,8 +105752,6 @@ export namespace Prisma {
     gameEngine?: NullableStringFieldUpdateOperationsInput | string | null
     aggregatedRating?: NullableFloatFieldUpdateOperationsInput | number | null
     aggregatedRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbCommunityRating?: NullableFloatFieldUpdateOperationsInput | number | null
-    igdbCommunityRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
     collectionName?: NullableStringFieldUpdateOperationsInput | string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -106795,7 +105781,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    trailerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -106805,23 +105790,13 @@ export namespace Prisma {
     esrbRating?: NullableStringFieldUpdateOperationsInput | string | null
     metacritic?: NullableIntFieldUpdateOperationsInput | number | null
     playtime?: NullableIntFieldUpdateOperationsInput | number | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    redditUrl?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: GameUpdatetagsInput | string[]
-    website?: NullableStringFieldUpdateOperationsInput | string | null
     pegiRating?: NullableStringFieldUpdateOperationsInput | string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: NullableFloatFieldUpdateOperationsInput | number | null
     igdbId?: NullableIntFieldUpdateOperationsInput | number | null
     storyline?: NullableStringFieldUpdateOperationsInput | string | null
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    franchiseNames?: GameUpdatefranchiseNamesInput | string[]
-    dlcNames?: GameUpdatedlcNamesInput | string[]
-    similarGameNames?: GameUpdatesimilarGameNamesInput | string[]
-    igdbHypes?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
     igdbSlug?: NullableStringFieldUpdateOperationsInput | string | null
@@ -106836,8 +105811,6 @@ export namespace Prisma {
     gameEngine?: NullableStringFieldUpdateOperationsInput | string | null
     aggregatedRating?: NullableFloatFieldUpdateOperationsInput | number | null
     aggregatedRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbCommunityRating?: NullableFloatFieldUpdateOperationsInput | number | null
-    igdbCommunityRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
     collectionName?: NullableStringFieldUpdateOperationsInput | string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
@@ -106867,7 +105840,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    trailerUrl?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     publisher?: NullableStringFieldUpdateOperationsInput | string | null
     releaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -106877,23 +105849,13 @@ export namespace Prisma {
     esrbRating?: NullableStringFieldUpdateOperationsInput | string | null
     metacritic?: NullableIntFieldUpdateOperationsInput | number | null
     playtime?: NullableIntFieldUpdateOperationsInput | number | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    redditUrl?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: GameUpdatetagsInput | string[]
-    website?: NullableStringFieldUpdateOperationsInput | string | null
     pegiRating?: NullableStringFieldUpdateOperationsInput | string | null
-    regionalReleaseDates?: NullableJsonNullValueInput | InputJsonValue
-    avgUserScore?: NullableFloatFieldUpdateOperationsInput | number | null
     igdbId?: NullableIntFieldUpdateOperationsInput | number | null
     storyline?: NullableStringFieldUpdateOperationsInput | string | null
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    franchiseNames?: GameUpdatefranchiseNamesInput | string[]
-    dlcNames?: GameUpdatedlcNamesInput | string[]
-    similarGameNames?: GameUpdatesimilarGameNamesInput | string[]
-    igdbHypes?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
     igdbSlug?: NullableStringFieldUpdateOperationsInput | string | null
@@ -106908,8 +105870,6 @@ export namespace Prisma {
     gameEngine?: NullableStringFieldUpdateOperationsInput | string | null
     aggregatedRating?: NullableFloatFieldUpdateOperationsInput | number | null
     aggregatedRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbCommunityRating?: NullableFloatFieldUpdateOperationsInput | number | null
-    igdbCommunityRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
     collectionName?: NullableStringFieldUpdateOperationsInput | string | null
     dlcsJson?: NullableJsonNullValueInput | InputJsonValue
     expansionsJson?: NullableJsonNullValueInput | InputJsonValue
