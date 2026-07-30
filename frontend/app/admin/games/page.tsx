@@ -307,11 +307,9 @@ function SteamAppIdInput({
 interface GameState {
   title: string; description: string; coverImageUrl: string;
   backgroundImageUrl: string;
-  trailerUrl: string;
   developer: string; publisher: string; releaseDate: string;
   platforms: string; genres: string; tags: string;
   steamAppId: string;
-  website: string; redditUrl: string;
   metacritic: string; esrbRating: string; pegiRating: string;
   dlcOfId: string;
   gameEdition: string;
@@ -320,9 +318,9 @@ interface GameState {
 const emptyState: GameState = {
   title: '', description: '', coverImageUrl: '',
   backgroundImageUrl: '',
-  trailerUrl: '', developer: '', publisher: '', releaseDate: '',
+  developer: '', publisher: '', releaseDate: '',
   platforms: '', genres: '', tags: '', steamAppId: '',
-  website: '', redditUrl: '', metacritic: '', esrbRating: '', pegiRating: '',
+  metacritic: '', esrbRating: '', pegiRating: '',
   dlcOfId: '', gameEdition: 'STANDARD',
 };
 
@@ -423,8 +421,6 @@ export default function AdminGamesPage() {
       releaseDate: overwrite ? (igdb.releaseDate || prev.releaseDate) : (prev.releaseDate || igdb.releaseDate || ''),
       platforms: overwrite ? (igdb.platforms || prev.platforms) : (prev.platforms || igdb.platforms || ''),
       genres: overwrite ? (igdb.genres || prev.genres) : (prev.genres || igdb.genres || ''),
-      website: overwrite ? (igdb.websites?.official || prev.website) : (prev.website || igdb.websites?.official || ''),
-      redditUrl: overwrite ? (igdb.websites?.reddit || prev.redditUrl) : (prev.redditUrl || igdb.websites?.reddit || ''),
       metacritic: igdb.aggregatedRating != null
         ? (overwrite ? String(Math.round(igdb.aggregatedRating)) : (prev.metacritic || String(Math.round(igdb.aggregatedRating))))
         : prev.metacritic,
@@ -473,13 +469,13 @@ export default function AdminGamesPage() {
       title: g.title || '', description: g.description || '',
       coverImageUrl: g.coverImageUrl || '',
       backgroundImageUrl: g.backgroundImageUrl || '',
-      trailerUrl: g.trailerUrl || '', developer: g.developer || '', publisher: g.publisher || '',
+      developer: g.developer || '', publisher: g.publisher || '',
       releaseDate: g.releaseDate ? new Date(g.releaseDate).toISOString().split('T')[0] : '',
       platforms: Array.isArray(g.platforms) ? g.platforms.join(', ') : (g.platforms || ''),
       genres: Array.isArray(g.genres) ? g.genres.join(', ') : (g.genres || ''),
       tags: Array.isArray(g.tags) ? g.tags.join(', ') : (g.tags || ''),
       steamAppId: g.steamAppId || '',
-      website: g.website || '', redditUrl: g.redditUrl || '',
+
       metacritic: g.metacritic != null ? String(g.metacritic) : '',
       esrbRating: g.esrbRating || '',
       pegiRating: g.pegiRating || '',
@@ -540,14 +536,13 @@ export default function AdminGamesPage() {
       title: form.title, description: form.description || undefined,
       coverImageUrl: form.coverImageUrl || undefined,
       backgroundImageUrl: form.backgroundImageUrl || undefined,
-      trailerUrl: form.trailerUrl || undefined, developer: form.developer || undefined,
+      developer: form.developer || undefined,
       publisher: form.publisher || undefined,
       releaseDate: form.releaseDate ? new Date(form.releaseDate).toISOString() : undefined,
       platforms: form.platforms ? form.platforms.split(',').map(s => s.trim()).filter(Boolean) : undefined,
       genres: form.genres ? form.genres.split(',').map(s => s.trim()).filter(Boolean) : undefined,
       tags: form.tags ? form.tags.split(',').map(s => s.trim()).filter(Boolean) : undefined,
       steamAppId: form.steamAppId || undefined,
-      website: form.website || undefined, redditUrl: form.redditUrl || undefined,
       metacritic: form.metacritic ? Number(form.metacritic) : undefined,
       esrbRating: form.esrbRating || undefined,
       pegiRating: form.pegiRating || undefined,
@@ -704,11 +699,11 @@ export default function AdminGamesPage() {
       {/* -- Wide Modal -- */}
       <Modal isOpen={showModal} onClose={handleClose} title={editingId ? 'Edit Game' : 'Add Game'} size="full">
         {/* IGDB search bar — full width at top */}
-        <div className="mb-4 flex items-center gap-3">
-          <div className="flex-1">
+        <div className="mb-4 flex flex-col md:flex-row md:items-center gap-3">
+          <div className="flex-1 w-full">
             <IgdbSearch onSelectGame={handleIgdbSelect} />
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <span className="text-[10px] font-bold text-text-muted uppercase">OR FETCH ID:</span>
             <input
               type="number"
@@ -752,7 +747,7 @@ export default function AdminGamesPage() {
         </div>
 
         {/* -- 3-column grid -- */}
-        <div className="grid grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
 
           {/* ══ COL 1: Basic info + Metadata ══ */}
           <div className="space-y-4">
@@ -837,7 +832,7 @@ export default function AdminGamesPage() {
               </div>
             )}
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <Label>Game Edition</Label>
                 <select 
@@ -869,7 +864,7 @@ export default function AdminGamesPage() {
           <div className="space-y-4">
             <SectionTitle>Scores & Ratings</SectionTitle>
 
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
                 <Label>Critic Rating (IGDB) <span className="opacity-60">/100</span></Label>
                 <input type="number" value={form.metacritic} onChange={e => set('metacritic', e.target.value)} placeholder="85" min="0" max="100" className={inputCls} />
@@ -914,29 +909,6 @@ export default function AdminGamesPage() {
               </div>
             )}
 
-            <div className="pt-2">
-              <SectionTitle>External Links</SectionTitle>
-              <div className="space-y-2">
-                <div>
-                  <Label>Official Website</Label>
-                  <input value={form.website} onChange={e => set('website', e.target.value)} placeholder="https://www.example.com" className={inputCls} />
-                  {form.website && (
-                    <a href={form.website} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-xs text-accent mt-1 hover:underline">
-                      <ExternalLink className="w-3 h-3" /> Visit
-                    </a>
-                  )}
-                </div>
-                <div>
-                  <Label>Reddit URL</Label>
-                  <input value={form.redditUrl} onChange={e => set('redditUrl', e.target.value)} placeholder="https://reddit.com/r/..." className={inputCls} />
-                  {form.redditUrl && (
-                    <a href={form.redditUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-xs text-orange-400 mt-1 hover:underline">
-                      <ExternalLink className="w-3 h-3" /> Visit
-                    </a>
-                  )}
-                </div>
-              </div>
-            </div>
 
             <div>
               <Label>Store Links</Label>

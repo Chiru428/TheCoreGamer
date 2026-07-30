@@ -496,15 +496,9 @@ export default function GameForm({ mode, gameId }: GameFormProps) {
         releaseDate: data.releaseDate ? new Date(data.releaseDate).toISOString() : undefined,
         coverImageUrl: data.coverImageUrl || undefined,
         backgroundImageUrl: data.backgroundImageUrl || undefined,
-        trailerUrl: data.trailerUrl || undefined,
         metacritic: data.metacritic ? Number(data.metacritic) : undefined,
-        website: data.website || undefined,
-        redditUrl: data.redditUrl || undefined,
         esrbRating: data.esrbRating || undefined,
         pegiRating: data.pegiRating || undefined,
-        regionalReleaseDates: (data.regionalReleaseDateEU || data.regionalReleaseDateJP || data.regionalReleaseDateNA)
-          ? { eu: data.regionalReleaseDateEU, jp: data.regionalReleaseDateJP, na: data.regionalReleaseDateNA }
-          : undefined,
       };
 
       const response = await fetch(url, {
@@ -647,18 +641,6 @@ export default function GameForm({ mode, gameId }: GameFormProps) {
             <Field label="Release Date (Global/Primary)">
               <input type="date" {...register('releaseDate')} className={inputCls} />
             </Field>
-            <Field label="Regional Release (EU)">
-              <input type="date" {...register('regionalReleaseDateEU')} className={inputCls} />
-            </Field>
-            <Field label="Regional Release (Japan)">
-              <input type="date" {...register('regionalReleaseDateJP')} className={inputCls} />
-            </Field>
-            <Field label="Regional Release (NA)">
-              <input type="date" {...register('regionalReleaseDateNA')} className={inputCls} />
-            </Field>
-            <Field label="Trailer URL" hint="YouTube link">
-              <input {...register('trailerUrl')} className={inputCls} placeholder="https://youtube.com/watch?v=..." />
-            </Field>
             <SteamAppIdField
               value={watchedSteamAppId || ''}
               register={register}
@@ -757,25 +739,6 @@ export default function GameForm({ mode, gameId }: GameFormProps) {
 
         {/* -- Links -- */}
         <FormSection title="External Links" icon={<ExternalLink className="w-4 h-4 text-green-400" />}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Field label="Official Website">
-              <input {...register('website')} className={inputCls} placeholder="https://www.cyberpunk.net" />
-              {watchAll.website && (
-                <a href={watchAll.website} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-xs text-accent mt-1 hover:underline">
-                  <ExternalLink className="w-3 h-3" /> Visit site
-                </a>
-              )}
-            </Field>
-            <Field label="Reddit URL">
-              <input {...register('redditUrl')} className={inputCls} placeholder="https://reddit.com/r/..." />
-              {watchAll.redditUrl && (
-                <a href={watchAll.redditUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-xs text-orange-400 mt-1 hover:underline">
-                  <ExternalLink className="w-3 h-3" /> Visit reddit
-                </a>
-              )}
-            </Field>
-          </div>
-
           {/* Store links */}
           <div>
             <p className="text-xs font-semibold text-text-muted uppercase tracking-wide mb-2">Store Links</p>
