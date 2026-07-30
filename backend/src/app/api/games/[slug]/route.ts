@@ -107,8 +107,7 @@ export async function GET(request: Request, { params }: RouteParams) {
       prisma.game.findMany({
         where: {
           OR: [
-            { slug: { in: (game.similarGamesJson as any[] || []).map(g => g.slug) } },
-            { title: { in: game.similarGameNames || [] } }
+            { slug: { in: (game.similarGamesJson as any[] || []).map(g => g.slug) } }
           ],
           id: { not: game.id }
         },

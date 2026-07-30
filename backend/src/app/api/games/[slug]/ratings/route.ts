@@ -215,21 +215,6 @@ export async function POST(request: NextRequest, { params }: Params) {
     // is what was making "Post review" feel slow.
     after(async () => {
       try {
-        const agg = await prisma.userRating.aggregate({
-          where: { gameId: game.id },
-          _avg: { score: true },
-        });
-        if (agg._avg.score !== null) {
-          await prisma.game.update({
-            where: { id: game.id },
-            data: { avgUserScore: Number(agg._avg.score.toFixed(1)) },
-          });
-        }
-      } catch (err) {
-        captureError(err, { context: "ratings.avgUserScore", gameId: game.id });
-      }
-
-      try {
         await cacheDeletePattern(`game:${slug}:ratings:*`);
       } catch {
         /* intentionally empty */

@@ -145,12 +145,9 @@ function buildGameRecord(game: GameForAlgolia): AlgoliaGameRecord {
     themes: game.themes ? game.themes.split(/,\s*(?![^()]*\))/).map(s => s.trim()).filter(Boolean) : [],
     esrbRating: game.esrbRating,
     metacriticScore: game.metacritic,
-    avgUserScore: game.avgUserScore,
     editorialScore: game.GameReview[0] ? Number(game.GameReview[0].reviewScore) : null,
     tags: game.tags,
-    franchiseName: game.franchiseNames?.[0] ?? null,
     totalRating: game.totalRating,
-    igdbFollows: game.igdbFollows ?? 0,
     collectionName: game.collectionName ?? null,
   };
 }

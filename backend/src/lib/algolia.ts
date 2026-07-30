@@ -72,12 +72,9 @@ export interface AlgoliaGameRecord {
   themes: string[];
   esrbRating: string | null;
   metacriticScore: number | null;
-  avgUserScore: number | null;
   editorialScore: number | null;
   totalRating: number | null;
-  igdbFollows: number;
   tags: string[];
-  franchiseName: string | null;
   collectionName: string | null;
 }
 
@@ -171,7 +168,7 @@ export async function configureIndexes() {
   await algoliaClient.setSettings({
     indexName: GAMES_INDEX,
     indexSettings: {
-      searchableAttributes: ["title", "developer", "publisher", "franchiseName", "collectionName", "genres", "platforms"],
+      searchableAttributes: ["title", "developer", "publisher", "collectionName", "genres", "platforms"],
       attributesForFaceting: ["releaseStatus", "platforms", "genres", "esrbRating", "gameModes", "playerPerspectives", "themes", "releaseYear", "tags", "developer", "collectionName"],
       customRanking: ["desc(editorialScore)", "desc(metacriticScore)"],
       replicas: [GAMES_NEWEST, GAMES_TOP_RATED, GAMES_POPULAR, GAMES_ALPHABETICAL],
@@ -185,7 +182,7 @@ export async function configureIndexes() {
   });
   await algoliaClient.setSettings({
     indexName: GAMES_POPULAR,
-    indexSettings: { customRanking: ["desc(igdbFollows)"] },
+    indexSettings: { customRanking: ["desc(totalRating)"] },
   });
   await algoliaClient.setSettings({
     indexName: GAMES_TOP_RATED,

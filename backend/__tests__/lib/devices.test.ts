@@ -50,21 +50,20 @@ describe("anonymizeIp", () => {
 });
 
 describe("hashDevice", () => {
-  it("is stable for the same userAgent + anonymized IP", () => {
-    const a = hashDevice("Mozilla/5.0", "192.168.1.0/24");
-    const b = hashDevice("Mozilla/5.0", "192.168.1.0/24");
+  it("is stable for the same userAgent", () => {
+    const a = hashDevice("Mozilla/5.0");
+    const b = hashDevice("Mozilla/5.0");
     expect(a).toBe(b);
   });
 
-  it("matches a direct sha256 of userAgent + anonymizedIp", () => {
-    const expected = crypto.createHash("sha256").update("Mozilla/5.0192.168.1.0/24").digest("hex");
-    expect(hashDevice("Mozilla/5.0", "192.168.1.0/24")).toBe(expected);
+  it("matches a direct sha256 of userAgent", () => {
+    const expected = crypto.createHash("sha256").update("Mozilla/5.0").digest("hex");
+    expect(hashDevice("Mozilla/5.0")).toBe(expected);
   });
 
-  it("differs when the userAgent or IP changes", () => {
-    const base = hashDevice("Mozilla/5.0", "192.168.1.0/24");
-    expect(hashDevice("Chrome/120.0", "192.168.1.0/24")).not.toBe(base);
-    expect(hashDevice("Mozilla/5.0", "10.0.0.0/24")).not.toBe(base);
+  it("differs when the userAgent changes", () => {
+    const base = hashDevice("Mozilla/5.0");
+    expect(hashDevice("Chrome/120.0")).not.toBe(base);
   });
 });
 
@@ -183,7 +182,7 @@ describe("recordLoginDevice", () => {
 
     await recordLoginDevice(userId, makeRequest("Mozilla/5.0"));
 
-    const expectedHash = hashDevice("Mozilla/5.0", "203.0.113.0/24");
+    const expectedHash = hashDevice("Mozilla/5.0");
     const upsertArgs = mockUpsert.mock.calls[0][0];
     expect(upsertArgs.where).toEqual({ userId_deviceHash: { userId, deviceHash: expectedHash } });
     expect(upsertArgs.create).toMatchObject({
