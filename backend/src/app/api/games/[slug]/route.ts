@@ -11,6 +11,7 @@ import { logger } from "@/lib/logger";
 import { csrfProtection } from "@/middleware/csrfProtection";
 import { syncGameToAlgolia, deleteGameFromAlgolia } from "@/workers/algolia.worker";
 import { triggerFrontendRevalidation } from "@/lib/revalidate";
+import { processSteamImagesForGame } from "@/lib/steamImageInterceptor";
 
 interface RouteParams {
   params: Promise<{ slug: string }>;
@@ -185,6 +186,8 @@ export async function PUT(request: Request, { params }: RouteParams) {
         (data as any).releaseStatus = "Released";
       }
     }
+
+    await processSteamImagesForGame(data, game.id);
 
     const updated = await prisma.game.update({ where: { id: game.id }, data: data as any });
 

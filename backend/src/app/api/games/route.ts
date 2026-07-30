@@ -14,6 +14,7 @@ import { CACHE_TTL } from "@/lib/constants";
 import { csrfProtection } from "@/middleware/csrfProtection";
 import { syncGameToAlgolia, syncGame } from "@/workers/algolia.worker";
 import { triggerFrontendRevalidation } from "@/lib/revalidate";
+import { processSteamImagesForGame } from "@/lib/steamImageInterceptor";
 
 export async function GET(request: NextRequest) {
   try {
@@ -132,6 +133,19 @@ export async function POST(request: Request) {
         } as any,
       })
     );
+
+    const hasSteamImages = await processSteamImagesForGame(data, game.id);
+    if (hasSteamImages) {
+      await prisma.game.update({
+        where: { id: game.id },
+        data: {
+          coverImageUrl: data.coverImageUrl,
+          backgroundImageUrl: data.backgroundImageUrl,
+        }
+      });
+      (game as any).coverImageUrl = data.coverImageUrl;
+      (game as any).backgroundImageUrl = data.backgroundImageUrl;
+    }
 
     try {
       await cacheDeletePattern("games:list:*");
