@@ -25,7 +25,6 @@ const GAME_SELECT = {
   releaseDate: true,
   platforms: true,
   genres: true,
-  rating: true,
 } as const;
 
 interface RouteParams {

@@ -35,8 +35,6 @@ export async function GET(request: Request, { params }: RouteParams) {
             title: true,
             slug: true,
             coverImageUrl: true,
-            rating: true,
-            avgUserScore: true,
           }
         },
       },

@@ -17,7 +17,6 @@ const GAME_SELECT = {
   releaseDate: true,
   platforms: true,
   genres: true,
-  rating: true,
 } as const;
 
 export async function GET(
