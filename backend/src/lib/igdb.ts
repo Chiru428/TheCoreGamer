@@ -650,6 +650,8 @@ export interface IGDBFullGame {
   aggregatedRatingCount: number | undefined;
   totalRating: number | undefined;
   totalRatingCount: number | undefined;
+  igdbFollows: number | undefined;
+  igdbHypes: number | undefined;
   collectionName: string | undefined;
   dlcs: IGDBMediaEntry[];
   expansions: IGDBMediaEntry[];
@@ -739,6 +741,8 @@ export function mapIGDBToDb(igdb: IGDBGame): IGDBFullGame {
     aggregatedRatingCount: igdb.aggregated_rating_count,
     totalRating: igdb.total_rating,
     totalRatingCount: igdb.total_rating_count,
+    igdbFollows: igdb.follows,
+    igdbHypes: igdb.hypes,
     collectionName: igdb.collections?.[0]?.name,
     dlcs: dedupeMediaEntries(
       [
@@ -854,6 +858,7 @@ export type IGDBMappedGame = Pick<
   | "aggregatedRatingCount"
   | "totalRating"
   | "totalRatingCount"
+  | "igdbFollows"
   | "releaseStatus"
   | "steamAppId"
 > & {
@@ -903,6 +908,7 @@ export function mapIGDBGameToDb(igdb: IGDBGame): IGDBMappedGame {
     aggregatedRatingCount: full.aggregatedRatingCount ?? null,
     totalRating: full.totalRating ?? null,
     totalRatingCount: full.totalRatingCount ?? null,
+    igdbFollows: full.igdbFollows ?? null,
     releaseStatus: full.releaseStatus,
     steamAppId: full.steamAppId ?? null,
     allCompaniesJson: full.allCompanies as unknown as Prisma.InputJsonValue,
