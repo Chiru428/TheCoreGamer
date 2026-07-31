@@ -194,10 +194,11 @@ export default function GamesGridClient({ initialGames }: Props) {
                             </div>
                           )}
                           {formattedDate && (
-                            <div className="absolute bottom-0 w-full pt-6 pb-2 px-2 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex justify-center">
-                              <span className="text-[12px] font-extrabold tracking-wider text-[#4ade80]">
-                                {formattedDate}
-                              </span>
+                            <div 
+                              className="absolute bottom-2 left-0 right-0 text-center bg-[rgba(0,0,0,0.72)] backdrop-blur-[4px] text-[10px] font-bold tracking-[0.08em] py-[5px] px-[6px]"
+                              style={{ fontFamily: "'Rubik', sans-serif", color: "#00e5a0" }}
+                            >
+                              {formattedDate}
                             </div>
                           )}
                         </div>

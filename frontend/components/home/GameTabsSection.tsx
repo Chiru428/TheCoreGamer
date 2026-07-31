@@ -27,9 +27,9 @@ interface GameTabsSectionProps {
 }
 
 function formatReleaseDate(dateString?: string | null) {
-  if (!dateString) return null;
+  if (!dateString) return 'TBA';
   const d = new Date(dateString);
-  if (isNaN(d.getTime())) return null;
+  if (isNaN(d.getTime())) return 'TBA';
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).toUpperCase();
 }
 
@@ -82,7 +82,7 @@ export default function GameTabsSection({ newReleaseGames, topRatedGames, coming
                     <span>🎮</span>
                   </div>
                 )}
-                {isComingSoon && releaseDate && (
+                {releaseDate && (
                   <div className="game-tab-coming-badge">
                     {releaseDate}
                   </div>
