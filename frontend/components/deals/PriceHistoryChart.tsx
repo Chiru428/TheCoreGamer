@@ -94,11 +94,13 @@ export default function PriceHistoryChart({ gameId, gameTitle }: Props) {
   const cutoff = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - 4));
   const cutoffStr = cutoff.toISOString().substring(0, 10);
 
-  // Flatten into chart data points
-  const allDates = [...new Set(
-    Object.values(data.history as Record<string, {price:number;date:string}[]>)
-      .flat().map(p => p.date.substring(0, 10))
-  )].sort().filter(d => d >= cutoffStr);
+  // Force the chart to exactly span the 5 days (from cutoff to now)
+  // This prevents lines from stopping early if the scraper hasn't run today.
+  const allDates = [];
+  for (let i = 0; i <= 4; i++) {
+    const d = new Date(Date.UTC(cutoff.getUTCFullYear(), cutoff.getUTCMonth(), cutoff.getUTCDate() + i));
+    allDates.push(d.toISOString().substring(0, 10));
+  }
 
   const chartData = allDates.map(date => {
     const point: Record<string, any> = { date };
