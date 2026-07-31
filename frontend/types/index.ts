@@ -234,6 +234,7 @@ export interface AuthorArticleItem {
   excerpt: string | null;
   featuredImageUrl: string | null;
   contentType: ContentType;
+  guideType?: string | null;
   publishedAt: string | null;
   createdAt: string;
 }

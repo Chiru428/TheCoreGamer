@@ -113,7 +113,7 @@ export default function GuideFilters({ facets }: Props) {
           const displayItems = [...config.items];
           selectedValues.forEach(val => {
             if (!displayItems.find(f => f.value === val)) {
-              displayItems.push({ value: val, label: val });
+              displayItems.push({ value: val, label: val, count: 0 });
             }
           });
 
