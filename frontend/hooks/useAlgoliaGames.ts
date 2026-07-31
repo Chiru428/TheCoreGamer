@@ -59,15 +59,12 @@ export function useAlgoliaGames({ searchParams }: UseAlgoliaGamesProps) {
       applyFacetFilter('collection', 'collectionName');
 
       const numericFilters: string[] = [];
-      if (sort === 'newest') {
-        // Algolia stores releaseDate as Unix seconds
-        numericFilters.push(`releaseDate <= ${Math.floor(Date.now() / 1000)}`);
-      }
+      // Intentionally not filtering by date here to decouple sorting and filtering.
 
       let indexToSearch = GAMES_INDEX;
       if (sort === 'newest') indexToSearch = 'games_releaseDate_desc';
       else if (sort === 'top-rated') indexToSearch = 'games_totalRating_desc';
-      else if (sort === 'popular') indexToSearch = 'games_igdbFollows_desc';
+      else if (sort === 'popular') indexToSearch = 'games_totalRatingCount_desc';
       else if (sort === 'alphabetical') indexToSearch = 'games_title_asc';
 
       const request: Record<string, unknown> = {
