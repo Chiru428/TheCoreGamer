@@ -49,9 +49,10 @@ export async function GET(request: NextRequest) {
     if (genres) where.genres = { hasSome: genres.split(",") };
     if (publisher) where.publisher = publisher;
     if (collection) where.collectionName = { equals: collection, mode: "insensitive" };
-    // "Newest" means already-released games, ranked by release date — exclude
-    // games with a future/unannounced release date (e.g. scheduled, unreleased titles).
-    if (sort === "newest") where.releaseDate = { lte: new Date() };
+    // "Newest" means ranked by release date
+    if (sort === "newest") {
+      // Intentionally not filtering by date here to decouple sorting and filtering.
+    }
     // "Coming Soon" — filter by the explicit releaseStatus field (the same value
     // shown on the game detail page and set by the admin / IGDB import).
     if (sort === "coming-soon") where.releaseStatus = "Coming Soon";

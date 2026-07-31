@@ -166,6 +166,13 @@ export default function GamesGridClient({ initialGames }: Props) {
                   const slug = g.slug;
                   const coverImageUrl = g.coverImageUrl;
                   const publisher = g.publisher;
+                  
+                  let formattedDate = '';
+                  const rawDate = 'releaseDate' in g ? g.releaseDate : undefined;
+                  if (rawDate) {
+                    const dateObj = typeof rawDate === 'number' ? new Date(rawDate * 1000) : new Date(rawDate);
+                    formattedDate = dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+                  }
 
                   return (
                     <Fragment key={id}>
@@ -192,6 +199,11 @@ export default function GamesGridClient({ initialGames }: Props) {
                           {publisher && (
                             <p className="text-[13px] font-medium text-text-muted mt-1">
                               {publisher}
+                            </p>
+                          )}
+                          {formattedDate && (
+                            <p className="text-[12px] font-medium text-text-muted mt-0.5">
+                              {formattedDate}
                             </p>
                           )}
                         </div>
