@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Eye, Clock, Gamepad2 } from 'lucide-react';
-import { cn, formatDate, formatRelativeDate, readingTime, formatNumber } from '@/lib/utils';
+import { cn, formatDate, formatRelativeDate, readingTime, formatNumber, getGuideTypeColor } from '@/lib/utils';
 import { CONTENT_TYPE_LABELS, CONTENT_TYPE_COLORS } from '@/lib/constants';
 import ScoreBadge from '@/components/review/ScoreBadge';
 import ProfileLink from '@/components/ui/ProfileLink';
@@ -98,9 +98,15 @@ export default function PostCard({ article, variant = 'medium', className, aspec
         {(showBadge || sponsoredBadge || liveBadge) && (
           <div className="flex items-center gap-1.5">
             {showBadge && (
-              <span className="category-badge-bounce" style={{ display: 'inline-block', fontSize: '10px', fontWeight: 800, letterSpacing: '1px', textTransform: 'uppercase', color: tc.textColor || tc.bg }}>
-                {CONTENT_TYPE_LABELS[article.contentType] || article.contentType}
-              </span>
+              article.contentType === 'GUIDE' && article.guideType ? (
+                <span className="category-badge-bounce" style={{ display: 'inline-block', fontSize: '10px', fontWeight: 800, letterSpacing: '1px', textTransform: 'uppercase', color: getGuideTypeColor(article.guideType) }}>
+                  {article.guideType}
+                </span>
+              ) : (
+                <span className="category-badge-bounce" style={{ display: 'inline-block', fontSize: '10px', fontWeight: 800, letterSpacing: '1px', textTransform: 'uppercase', color: tc.textColor || tc.bg }}>
+                  {CONTENT_TYPE_LABELS[article.contentType] || article.contentType}
+                </span>
+              )
             )}
             {sponsoredBadge}
             {liveBadge}
@@ -157,9 +163,15 @@ export default function PostCard({ article, variant = 'medium', className, aspec
         </Link>
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] sm:text-xs" style={{ color: 'var(--text)' }}>
           {showBadge && (
-            <span className="category-badge-bounce shrink-0" style={{ display: 'inline-block', fontSize: '10px', fontWeight: 800, letterSpacing: '1px', textTransform: 'uppercase', color: tc.textColor || tc.bg }}>
-              {CONTENT_TYPE_LABELS[article.contentType] || article.contentType}
-            </span>
+            article.contentType === 'GUIDE' && article.guideType ? (
+              <span className="category-badge-bounce shrink-0" style={{ display: 'inline-block', fontSize: '10px', fontWeight: 800, letterSpacing: '1px', textTransform: 'uppercase', color: getGuideTypeColor(article.guideType) }}>
+                {article.guideType}
+              </span>
+            ) : (
+              <span className="category-badge-bounce shrink-0" style={{ display: 'inline-block', fontSize: '10px', fontWeight: 800, letterSpacing: '1px', textTransform: 'uppercase', color: tc.textColor || tc.bg }}>
+                {CONTENT_TYPE_LABELS[article.contentType] || article.contentType}
+              </span>
+            )
           )}
           {sponsoredBadge}
           {liveBadge}
@@ -203,9 +215,15 @@ export default function PostCard({ article, variant = 'medium', className, aspec
         {(showBadge || sponsoredBadge || liveBadge) && (
           <div className="absolute top-2 left-2 z-10 flex items-center gap-1.5">
             {showBadge && (
-              <span className="category-badge-bounce" style={{ display: 'inline-block', fontSize: '10px', fontWeight: 800, letterSpacing: '1px', textTransform: 'uppercase', color: tc.textColor || tc.bg }}>
-                {CONTENT_TYPE_LABELS[article.contentType] || article.contentType}
-              </span>
+              article.contentType === 'GUIDE' && article.guideType ? (
+                <span className="category-badge-bounce" style={{ display: 'inline-block', fontSize: '10px', fontWeight: 800, letterSpacing: '1px', textTransform: 'uppercase', color: getGuideTypeColor(article.guideType) }}>
+                  {article.guideType}
+                </span>
+              ) : (
+                <span className="category-badge-bounce" style={{ display: 'inline-block', fontSize: '10px', fontWeight: 800, letterSpacing: '1px', textTransform: 'uppercase', color: tc.textColor || tc.bg }}>
+                  {CONTENT_TYPE_LABELS[article.contentType] || article.contentType}
+                </span>
+              )
             )}
             {sponsoredBadge}
             {liveBadge}
@@ -263,9 +281,15 @@ export default function PostCard({ article, variant = 'medium', className, aspec
         {(showBadge || sponsoredBadge || liveBadge) && (
           <div className="mb-2 flex items-center gap-1.5 shrink-0">
             {showBadge && (
-              <span className="category-badge-bounce" style={{ display: 'inline-block', fontSize: '10px', fontWeight: 800, letterSpacing: '1px', textTransform: 'uppercase', color: tc.textColor || tc.bg }}>
-                {CONTENT_TYPE_LABELS[article.contentType] || article.contentType}
-              </span>
+              article.contentType === 'GUIDE' && article.guideType ? (
+                <span className="category-badge-bounce" style={{ display: 'inline-block', fontSize: '10px', fontWeight: 800, letterSpacing: '1px', textTransform: 'uppercase', color: getGuideTypeColor(article.guideType) }}>
+                  {article.guideType}
+                </span>
+              ) : (
+                <span className="category-badge-bounce" style={{ display: 'inline-block', fontSize: '10px', fontWeight: 800, letterSpacing: '1px', textTransform: 'uppercase', color: tc.textColor || tc.bg }}>
+                  {CONTENT_TYPE_LABELS[article.contentType] || article.contentType}
+                </span>
+              )
             )}
             {sponsoredBadge}
             {liveBadge}

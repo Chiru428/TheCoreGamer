@@ -1,0 +1,147 @@
+import { fetchPosts, fetchGuideFacets } from '@/lib/api';
+import Pagination from '@/components/ui/Pagination';
+import AdSlot from '@/components/monetization/AdSlot';
+import { buildMeta } from '@/lib/seo';
+import SharedListCard from '@/components/blog/SharedListCard';
+import HomeListCard from '@/components/blog/HomeListCard';
+import CategorySearch from '@/components/search/CategorySearch';
+import ContentTypeHeading from '@/components/ui/ContentTypeHeading';
+import GuideFilters from '@/components/search/GuideFilters';
+import GuideActiveFilters from '@/components/search/GuideActiveFilters';
+import type { Article } from '@/types';
+
+const adsEnabled = !!process.env.NEXT_PUBLIC_ADSENSE_ID;
+
+export const dynamic = 'force-dynamic';
+export const metadata = buildMeta({
+  title: 'Guides',
+  description: 'In-depth gaming guides, walkthroughs, and mod guides from theCoreGamer',
+  url: '/guides',
+});
+
+interface Props { searchParams: Promise<Record<string, string | undefined>> }
+
+export default async function GuidesPage({ searchParams }: Props) {
+  const params   = await searchParams;
+  const page     = Number(params.page) || 1;
+  const sort     = params.sort;
+  const type     = params.type;          // legacy ?type= still works
+  const guideType  = params.type;
+  const platform   = params.platform;
+  const genre      = params.genre;
+  const gameSlug   = params.game;
+  const tag        = params.tag;
+  const search     = params.q;
+
+  const fetchParams: any = {
+    page,
+    sort,
+    limit: 20,
+    contentType: 'GUIDE',
+    revalidate: 60,
+  };
+  if (guideType) fetchParams.guideType = guideType;
+  if (platform)  fetchParams.platform  = platform;
+  if (genre)     fetchParams.genre     = genre;
+  if (gameSlug)  fetchParams.gameSlug  = gameSlug;
+  if (tag)       fetchParams.tag       = tag;
+  if (search)    fetchParams.search    = search;
+
+  const [mainRes, popularRes, facetsRes] = await Promise.all([
+    fetchPosts(fetchParams),
+    fetchPosts({ page: 1, limit: 8, sort: 'popular', contentType: 'GUIDE', revalidate: 60 }),
+    fetchGuideFacets(300),
+  ]);
+
+  const articles        = mainRes.data        || [];
+  const popularArticles = popularRes.data     || [];
+
+  // Build a stable base path for pagination that preserves all active filters
+  const paginationParams = new URLSearchParams();
+  if (sort)      paginationParams.set('sort',     sort);
+  if (guideType) paginationParams.set('type',     guideType);
+  if (platform)  paginationParams.set('platform', platform);
+  if (genre)     paginationParams.set('genre',    genre);
+  if (gameSlug)  paginationParams.set('game',     gameSlug);
+  if (tag)       paginationParams.set('tag',      tag);
+  if (search)    paginationParams.set('q',        search);
+  const paginationBase = `/guides${paginationParams.toString() ? `?${paginationParams}` : ''}`;
+
+  return (
+    <>
+      {/* -- TOP AD SLOT -- */}
+      {adsEnabled && (
+        <div className="hidden sm:flex w-full bg-[#D0D0D0] dark:bg-[#0A0A10] py-5 justify-center border-b border-black/5 dark:border-white/5">
+          <div className="w-full max-w-[970px] min-h-[250px] flex items-center justify-center">
+            <AdSlot slot="ADS-01" className="w-full" />
+          </div>
+        </div>
+      )}
+
+      <div className="w-full max-w-[1280px] mx-auto px-4 lg:px-0 pt-6 md:pt-10 pb-8">
+        <ContentTypeHeading title={type ? `${type}s` : 'GUIDES'} />
+        <div className="mb-4 md:mb-8 flex flex-wrap items-center justify-between gap-4">
+          <CategorySearch contentType="GUIDE" placeholder="Search guides..." />
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] xl:grid-cols-[900px_1fr] gap-6 md:gap-8 items-start min-h-screen">
+          {/* -- Main guide list ------------------------------------------ */}
+          <div className="lg:border-r-2 lg:border-border lg:pr-8">
+            <GuideActiveFilters totalResults={mainRes.pagination?.total || 0} />
+
+            {articles.length === 0 ? (
+              <div className="text-center py-20 text-text-muted">No guides found. Check back soon!</div>
+            ) : (
+              articles.map((a: Article, i: number) => (
+                <div key={a.id}>
+                  <SharedListCard article={a} priority={i === 0} />
+                </div>
+              ))
+            )}
+
+            {mainRes.pagination && (
+              <Pagination
+                currentPage={page}
+                totalPages={mainRes.pagination.totalPages}
+                basePath={paginationBase}
+                className="mt-4"
+              />
+            )}
+          </div>
+
+          {/* -- Sidebar -------------------------------------------------- */}
+          <aside className="order-first lg:order-none flex flex-col gap-4 pb-0 md:pb-8 md:gap-6 md:w-full self-stretch">
+            {/* Filter panel */}
+            <GuideFilters facets={facetsRes?.data} />
+
+            {/* Popular guides */}
+            <div className="w-full flex flex-col gap-4 mt-2 md:mt-4">
+              <div className="flex items-center gap-3 mb-1">
+                <div className="flex-1 h-px bg-border" />
+                <span
+                  className="text-xs font-extrabold tracking-widest uppercase px-2 py-0.5 rounded text-white dark:text-black"
+                  style={{ background: 'var(--accent)' }}
+                >
+                  Popular Guides
+                </span>
+                <div className="flex-1 h-px bg-border" />
+              </div>
+              <div className="flex flex-col divide-y-2 divide-border">
+                {popularArticles.map((a: Article) => (
+                  <HomeListCard key={a.id} article={a} />
+                ))}
+              </div>
+            </div>
+
+            {/* Sticky bottom ad */}
+            {adsEnabled && (
+              <div className="hidden md:flex justify-center md:sticky md:top-[var(--sticky-offset)] mt-4">
+                <AdSlot slot="ADS-06" />
+              </div>
+            )}
+          </aside>
+        </div>
+      </div>
+    </>
+  );
+}

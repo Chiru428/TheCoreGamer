@@ -59,7 +59,8 @@ async function main() {
 
       status: ArticleStatus.PUBLISHED,
 
-      contentType: ContentType.MOD_GUIDE,
+      contentType: ContentType.GUIDE,
+      guideType: "Mod Guide",
 
       authorId: author.id,
 

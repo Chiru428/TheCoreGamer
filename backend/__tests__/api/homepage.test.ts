@@ -58,35 +58,34 @@ describe("GET /api/homepage", () => {
     const body = await res.json();
     expect(body.success).toBe(true);
 
-    const keys = ["featured", "breaking", "latest", "news", "walkthroughs", "modGuides", "reviews", "popular"];
+    const keys = ["featured", "breaking", "latest", "news", "guides", "reviews", "popular"];
     for (const key of keys) {
       expect(body.data).toHaveProperty(key);
       expect(Array.isArray(body.data[key])).toBe(true);
     }
   });
 
-  it("calls prisma 12 times for the 12 content sections", async () => {
+  it("calls prisma 11 times for the 11 content sections", async () => {
     await GET(makeGet());
-    expect(mockFindMany).toHaveBeenCalledTimes(12);
+    expect(mockFindMany).toHaveBeenCalledTimes(11);
   });
 
   it("queries each content type with correct filters", async () => {
     await GET(makeGet());
 
     const calls = mockFindMany.mock.calls;
-    // Order matches Promise.all in route: featured, breaking, latest, news, walkthroughs, modGuides, reviews, popular
+    // Order matches Promise.all in route: featured, breaking, latest, news, guides, reviews, popular
     expect(calls[0][0].where).toMatchObject({ status: "PUBLISHED", featured: true });
     expect(calls[1][0].where).toMatchObject({ status: "PUBLISHED", isBreaking: true });
     expect(calls[3][0].where).toMatchObject({ status: "PUBLISHED", contentType: "NEWS" });
-    expect(calls[4][0].where).toMatchObject({ status: "PUBLISHED", contentType: "WALKTHROUGH" });
-    expect(calls[5][0].where).toMatchObject({ status: "PUBLISHED", contentType: "MOD_GUIDE" });
-    expect(calls[6][0].where).toMatchObject({ status: "PUBLISHED", contentType: "REVIEW" });
+    expect(calls[4][0].where).toMatchObject({ status: "PUBLISHED", contentType: "GUIDE" });
+    expect(calls[5][0].where).toMatchObject({ status: "PUBLISHED", contentType: "REVIEW" });
   });
 
   it("uses Redis cache on second call and skips DB queries", async () => {
     const cachedPayload = {
       featured: [], breaking: [], latest: [], news: [],
-      walkthroughs: [], modGuides: [], reviews: [], popular: [],
+      guides: [], reviews: [], popular: [],
     };
 
     // First call: cache miss → DB runs

@@ -8,9 +8,10 @@ import { CONTENT_TYPE_LABELS, CONTENT_TYPE_COLORS, SITE_NAME, SITE_DESCRIPTION }
 import type { Article } from '@/types';
 import type { Metadata } from 'next';
 import HeroSection from '@/components/blog/HeroSection';
-import WalkthroughSlider from '@/components/home/WalkthroughSlider';
+
 import ScrollableArticleSection from '@/components/home/ScrollableArticleSection';
 import GameTabsSection from '@/components/home/GameTabsSection';
+import GuideTabsSection from '@/components/home/GuideTabsSection';
 import ReviewsGrid from '@/components/home/ReviewsGrid';
 import EditorialTabsSection from '@/components/home/EditorialTabsSection';
 import DealsSection from '@/components/home/DealsSection';
@@ -72,8 +73,7 @@ async function getData() {
    heroArticles,
    newsArticles: dedup(data.data?.news ?? []),
    reviewArticles: dedup(data.data?.reviews ?? []),
-   guideArticles: dedup(data.data?.walkthroughs ?? []),
-   modGuideArticles: dedup(data.data?.modGuides ?? []),
+   guideArticles: dedup(data.data?.guides ?? []),
    dealArticles: mainDealArticles,
    hotDeals,
    listicleArticles: dedup(data.data?.listicles ?? []),
@@ -158,7 +158,7 @@ function formatShortDate(dateString?: string | null) {
 }
 
 export default async function HomePage() {
- const { heroArticles, newsArticles, reviewArticles, guideArticles, modGuideArticles, dealArticles, hotDeals, listicleArticles, featureArticles, opinionArticles, popularArticles, homepagePollId, homepagePoll2Id, topRatedGames, newReleaseGames, comingSoonGames } = await getData();
+ const { heroArticles, newsArticles, reviewArticles, guideArticles, dealArticles, hotDeals, listicleArticles, featureArticles, opinionArticles, popularArticles, homepagePollId, homepagePoll2Id, topRatedGames, newReleaseGames, comingSoonGames } = await getData();
 
  return (
   <div className="home-page-root" style={{ background: 'var(--bg)', fontFamily: '"acumin-pro", sans-serif', fontSize: '15px' }}>
@@ -492,145 +492,11 @@ export default async function HomePage() {
     </div>
     )}
 
-    {/* WALKTHROUGHS */}
+    {/* GUIDES */}
     {guideArticles.length > 0 && (
      <section className="mb-10 md:mb-14 last:mb-0">
-      <SectionHead title="Walkthroughs" />
-      {/* Mobile/Small Tablet Layout */}
-      <div className="flex flex-col gap-4 p-4 lg:hidden shadow-lg border-0 mb-6" style={{ background: 'linear-gradient(to bottom, #050505 0%, #151515 40%, #c59b27 100%)' }}>
-       {/* Top: Big Hero Slider */}
-       {guideArticles.length > 0 && (
-        <div className="w-full aspect-[16/9] shrink-0 overflow-hidden border border-black/50 shadow-md">
-         <WalkthroughSlider articles={guideArticles.slice(0, 3)} />
-        </div>
-       )}
-       {/* Bottom: 3 Vertical Small Cards */}
-       <div className="flex flex-col gap-4">
-        {guideArticles.slice(3, 6).map((article) => (
-         <Link
-          key={article.id}
-          href={`/${contentTypePath(article.contentType)}/${article.slug}`}
-          className="group flex gap-3 overflow-hidden items-center bg-black/40 hover:bg-black/60 border border-white/5 transition-all p-3 h-[100px] sm:h-[126px]"
-         >
-          <div className="flex flex-col justify-center flex-1 min-w-0 pl-1">
-           <h3 className="post-card-title font-bold text-white !text-[14px] sm:!text-[16px] leading-snug group-hover:underline mb-1.5 line-clamp-2" style={{ fontFamily: "'Rubik', sans-serif" }}>
-            {article.title}
-           </h3>
-           <div className="flex items-center gap-1.5 text-[13px] text-gray-300 font-medium">
-            {article.author?.displayName && (
-             <span className="font-bold truncate max-w-[100px]" style={{ color: '#00e5a0' }}>{article.author.displayName}</span>
-            )}
-            <span className="shrink-0">{formatDate(article.publishedAt || article.createdAt)}</span>
-           </div>
-          </div>
-          <div className="relative w-[130px] sm:w-[180px] shrink-0 h-full overflow-hidden shadow-sm">
-           {article.featuredImageUrl ? (
-            <Image src={article.featuredImageUrl} alt={article.title} fill className="object-cover" sizes="(max-width: 640px) 130px, 180px" />
-           ) : (
-            <div className="w-full h-full flex items-center justify-center bg-[#0d0d1a] opacity-30 text-xl">🎮</div>
-           )}
-          </div>
-         </Link>
-        ))}
-       </div>
-      </div>
-
-      {/* Desktop Layout */}
-      <div className="hidden lg:flex gap-6 h-[460px] p-5 shadow-lg border-0" style={{ background: 'linear-gradient(to right, #050505 0%, #151515 40%, #c59b27 100%)' }}>
-       {/* Left: Big Hero Card */}
-       {guideArticles.length > 0 && (
-        <div className="w-[670px] shrink-0 h-full overflow-hidden border border-black/50 shadow-md">
-         <WalkthroughSlider articles={guideArticles.slice(0, 3)} />
-        </div>
-       )}
-       {/* Right: 3 Vertical Small Cards */}
-       <div className="flex flex-col gap-4 justify-between h-full flex-1 min-w-0">
-        {guideArticles.slice(3, 6).map((article) => (
-         <Link
-          key={article.id}
-          href={`/${contentTypePath(article.contentType)}/${article.slug}`}
-          className="group flex gap-4 overflow-hidden items-center bg-black/40 hover:bg-black/60 border border-white/5 transition-all p-3 h-[126px]"
-         >
-          <div className="flex flex-col justify-center flex-1 min-w-0 pl-2">
-           <h3 className="post-card-title font-bold text-white !text-[16px] leading-snug group-hover:underline mb-2 line-clamp-2" style={{ fontFamily: "'Rubik', sans-serif" }}>
-            {article.title}
-           </h3>
-           <div className="flex items-center gap-1.5 text-[13px] text-gray-300 font-medium">
-            {article.author?.displayName && (
-             <span className="font-bold truncate max-w-[120px]" style={{ color: '#00e5a0' }}>{article.author.displayName}</span>
-            )}
-            <span className="shrink-0">{formatDate(article.publishedAt || article.createdAt)}</span>
-           </div>
-          </div>
-          <div className="relative w-[180px] shrink-0 h-full overflow-hidden shadow-sm">
-           {article.featuredImageUrl ? (
-            <Image src={article.featuredImageUrl} alt={article.title} fill className="object-cover" sizes="180px" />
-           ) : (
-            <div className="w-full h-full flex items-center justify-center bg-[#0d0d1a] opacity-30 text-2xl">🎮</div>
-           )}
-          </div>
-         </Link>
-        ))}
-       </div>
-      </div>
-      <SeeMoreBtn href="/walkthroughs" label="Walkthroughs" />
-     </section>
-    )}
-
-    {/* MOD GUIDES */}
-    {modGuideArticles.length > 0 && (
-     <section className="mb-10 md:mb-14 last:mb-0">
-      <SectionHead title="Mod Guides" />
-      
-      <div className="flex flex-col gap-6">
-        {/* Row 1: 3 cards */}
-        {modGuideArticles.length >= 1 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
-            {modGuideArticles.slice(0, 3).map((article, index) => (
-              <HomePostCard 
-                key={article.id} 
-                article={article} 
-                mobileHorizontal={index !== 0}
-                titleClassName={index === 0 ? "!text-[18px] rubik-title" : "!text-[15px] sm:!text-[18px] rubik-title"} 
-                titleStyle={{ fontFamily: "'Rubik', sans-serif" }}
-                showExcerpt={true} 
-                showExcerptOnMobile={index === 0}
-                showBackground={false} 
-                noBorderRadius={true}
-                showBadge={false}
-                showAuthor={true}
-                truncateTitle={false} 
-                showViewArticle={false} 
-              />
-            ))}
-          </div>
-        )}
-        
-        {/* Row 2: 4 cards */}
-        {modGuideArticles.length > 3 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6">
-            {modGuideArticles.slice(3, 7).map((article) => (
-              <HomePostCard 
-                key={article.id} 
-                article={article} 
-                mobileHorizontal={true}
-                titleClassName="!text-[15px] sm:!text-[18px] rubik-title" 
-                titleStyle={{ fontFamily: "'Rubik', sans-serif" }}
-                showExcerpt={true} 
-                showExcerptOnMobile={false}
-                showBackground={false} 
-                noBorderRadius={true}
-                showBadge={false}
-                showAuthor={true}
-                truncateTitle={false} 
-                showViewArticle={false} 
-              />
-            ))}
-          </div>
-        )}
-      </div>
-
-      <SeeMoreBtn href="/mod-guides" label="Mod Guides" />
+      <SectionHead title="Guides" />
+      <GuideTabsSection guides={guideArticles} />
      </section>
     )}
 

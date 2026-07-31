@@ -71,12 +71,11 @@ export function buildMeta({ title, description, image, url, type = 'website', no
  */
 export function contentTypePath(contentType: string | undefined | null): string {
   if (contentType === 'REVIEW') return 'reviews';
-  if (contentType === 'MOD_GUIDE') return 'mod-guides';
+  if (contentType === 'GUIDE') return 'guides';
   if (contentType === 'NEWS') return 'news';
   if (contentType === 'DEAL') return 'deals';
   if (contentType === 'FEATURE') return 'features';
   if (contentType === 'OPINION') return 'opinions';
-  if (contentType === 'WALKTHROUGH') return 'walkthroughs';
   if (contentType === 'LISTICLE') return 'lists';
   return 'articles'; // fallback
 }

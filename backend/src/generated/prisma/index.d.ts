@@ -291,8 +291,7 @@ export type UserScreenshotStatus = (typeof UserScreenshotStatus)[keyof typeof Us
 export const ContentType: {
   NEWS: 'NEWS',
   REVIEW: 'REVIEW',
-  MOD_GUIDE: 'MOD_GUIDE',
-  WALKTHROUGH: 'WALKTHROUGH',
+  GUIDE: 'GUIDE',
   OPINION: 'OPINION',
   DEAL: 'DEAL',
   FEATURE: 'FEATURE',
@@ -8463,6 +8462,7 @@ export namespace Prisma {
     featuredImageCredit: string | null
     status: $Enums.ArticleStatus | null
     contentType: $Enums.ContentType | null
+    guideType: string | null
     authorId: string | null
     editorId: string | null
     seoTitle: string | null
@@ -8499,6 +8499,7 @@ export namespace Prisma {
     featuredImageCredit: string | null
     status: $Enums.ArticleStatus | null
     contentType: $Enums.ContentType | null
+    guideType: string | null
     authorId: string | null
     editorId: string | null
     seoTitle: string | null
@@ -8536,6 +8537,7 @@ export namespace Prisma {
     featuredImageCredit: number
     status: number
     contentType: number
+    guideType: number
     authorId: number
     editorId: number
     seoTitle: number
@@ -8583,6 +8585,7 @@ export namespace Prisma {
     featuredImageCredit?: true
     status?: true
     contentType?: true
+    guideType?: true
     authorId?: true
     editorId?: true
     seoTitle?: true
@@ -8619,6 +8622,7 @@ export namespace Prisma {
     featuredImageCredit?: true
     status?: true
     contentType?: true
+    guideType?: true
     authorId?: true
     editorId?: true
     seoTitle?: true
@@ -8656,6 +8660,7 @@ export namespace Prisma {
     featuredImageCredit?: true
     status?: true
     contentType?: true
+    guideType?: true
     authorId?: true
     editorId?: true
     seoTitle?: true
@@ -8781,6 +8786,7 @@ export namespace Prisma {
     featuredImageCredit: string | null
     status: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType: string | null
     authorId: string
     editorId: string | null
     seoTitle: string | null
@@ -8838,6 +8844,7 @@ export namespace Prisma {
     featuredImageCredit?: boolean
     status?: boolean
     contentType?: boolean
+    guideType?: boolean
     authorId?: boolean
     editorId?: boolean
     seoTitle?: boolean
@@ -8898,6 +8905,7 @@ export namespace Prisma {
     featuredImageCredit?: boolean
     status?: boolean
     contentType?: boolean
+    guideType?: boolean
     authorId?: boolean
     editorId?: boolean
     seoTitle?: boolean
@@ -8939,6 +8947,7 @@ export namespace Prisma {
     featuredImageCredit?: boolean
     status?: boolean
     contentType?: boolean
+    guideType?: boolean
     authorId?: boolean
     editorId?: boolean
     seoTitle?: boolean
@@ -8980,6 +8989,7 @@ export namespace Prisma {
     featuredImageCredit?: boolean
     status?: boolean
     contentType?: boolean
+    guideType?: boolean
     authorId?: boolean
     editorId?: boolean
     seoTitle?: boolean
@@ -9008,7 +9018,7 @@ export namespace Prisma {
     deletionRequestedById?: boolean
   }
 
-  export type ArticleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "slug" | "content" | "excerpt" | "featuredImageUrl" | "featuredImageCredit" | "status" | "contentType" | "authorId" | "editorId" | "seoTitle" | "seoDescription" | "publishedAt" | "scheduledAt" | "viewCount" | "featured" | "isBreaking" | "rejectionReason" | "createdAt" | "updatedAt" | "autosaveContent" | "autosavedAt" | "focusKeyword" | "embargoUntil" | "isSponsored" | "sponsorName" | "originallyPublishedAt" | "lastMajorUpdateAt" | "lastMajorUpdateNote" | "isLiveBlog" | "liveBlogEndedAt" | "deletionRequestReason" | "deletionRequestedAt" | "deletionRequestedById", ExtArgs["result"]["article"]>
+  export type ArticleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "slug" | "content" | "excerpt" | "featuredImageUrl" | "featuredImageCredit" | "status" | "contentType" | "guideType" | "authorId" | "editorId" | "seoTitle" | "seoDescription" | "publishedAt" | "scheduledAt" | "viewCount" | "featured" | "isBreaking" | "rejectionReason" | "createdAt" | "updatedAt" | "autosaveContent" | "autosavedAt" | "focusKeyword" | "embargoUntil" | "isSponsored" | "sponsorName" | "originallyPublishedAt" | "lastMajorUpdateAt" | "lastMajorUpdateNote" | "isLiveBlog" | "liveBlogEndedAt" | "deletionRequestReason" | "deletionRequestedAt" | "deletionRequestedById", ExtArgs["result"]["article"]>
   export type ArticleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     AffiliateClick?: boolean | Article$AffiliateClickArgs<ExtArgs>
     User_Article_authorIdToUser?: boolean | UserDefaultArgs<ExtArgs>
@@ -9079,6 +9089,7 @@ export namespace Prisma {
       featuredImageCredit: string | null
       status: $Enums.ArticleStatus
       contentType: $Enums.ContentType
+      guideType: string | null
       authorId: string
       editorId: string | null
       seoTitle: string | null
@@ -9558,6 +9569,7 @@ export namespace Prisma {
     readonly featuredImageCredit: FieldRef<"Article", 'String'>
     readonly status: FieldRef<"Article", 'ArticleStatus'>
     readonly contentType: FieldRef<"Article", 'ContentType'>
+    readonly guideType: FieldRef<"Article", 'String'>
     readonly authorId: FieldRef<"Article", 'String'>
     readonly editorId: FieldRef<"Article", 'String'>
     readonly seoTitle: FieldRef<"Article", 'String'>
@@ -63432,6 +63444,7 @@ export namespace Prisma {
     featuredImageCredit: 'featuredImageCredit',
     status: 'status',
     contentType: 'contentType',
+    guideType: 'guideType',
     authorId: 'authorId',
     editorId: 'editorId',
     seoTitle: 'seoTitle',
@@ -64564,6 +64577,7 @@ export namespace Prisma {
     featuredImageCredit?: StringNullableFilter<"Article"> | string | null
     status?: EnumArticleStatusFilter<"Article"> | $Enums.ArticleStatus
     contentType?: EnumContentTypeFilter<"Article"> | $Enums.ContentType
+    guideType?: StringNullableFilter<"Article"> | string | null
     authorId?: StringFilter<"Article"> | string
     editorId?: StringNullableFilter<"Article"> | string | null
     seoTitle?: StringNullableFilter<"Article"> | string | null
@@ -64623,6 +64637,7 @@ export namespace Prisma {
     featuredImageCredit?: SortOrderInput | SortOrder
     status?: SortOrder
     contentType?: SortOrder
+    guideType?: SortOrderInput | SortOrder
     authorId?: SortOrder
     editorId?: SortOrderInput | SortOrder
     seoTitle?: SortOrderInput | SortOrder
@@ -64685,6 +64700,7 @@ export namespace Prisma {
     featuredImageCredit?: StringNullableFilter<"Article"> | string | null
     status?: EnumArticleStatusFilter<"Article"> | $Enums.ArticleStatus
     contentType?: EnumContentTypeFilter<"Article"> | $Enums.ContentType
+    guideType?: StringNullableFilter<"Article"> | string | null
     authorId?: StringFilter<"Article"> | string
     editorId?: StringNullableFilter<"Article"> | string | null
     seoTitle?: StringNullableFilter<"Article"> | string | null
@@ -64744,6 +64760,7 @@ export namespace Prisma {
     featuredImageCredit?: SortOrderInput | SortOrder
     status?: SortOrder
     contentType?: SortOrder
+    guideType?: SortOrderInput | SortOrder
     authorId?: SortOrder
     editorId?: SortOrderInput | SortOrder
     seoTitle?: SortOrderInput | SortOrder
@@ -64790,6 +64807,7 @@ export namespace Prisma {
     featuredImageCredit?: StringNullableWithAggregatesFilter<"Article"> | string | null
     status?: EnumArticleStatusWithAggregatesFilter<"Article"> | $Enums.ArticleStatus
     contentType?: EnumContentTypeWithAggregatesFilter<"Article"> | $Enums.ContentType
+    guideType?: StringNullableWithAggregatesFilter<"Article"> | string | null
     authorId?: StringWithAggregatesFilter<"Article"> | string
     editorId?: StringNullableWithAggregatesFilter<"Article"> | string | null
     seoTitle?: StringNullableWithAggregatesFilter<"Article"> | string | null
@@ -68732,6 +68750,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     seoTitle?: string | null
     seoDescription?: string | null
     publishedAt?: Date | string | null
@@ -68788,6 +68807,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     authorId: string
     editorId?: string | null
     seoTitle?: string | null
@@ -68844,6 +68864,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
     seoDescription?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -68900,6 +68921,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     authorId?: StringFieldUpdateOperationsInput | string
     editorId?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -68956,6 +68978,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     authorId: string
     editorId?: string | null
     seoTitle?: string | null
@@ -68994,6 +69017,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
     seoDescription?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -69029,6 +69053,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     authorId?: StringFieldUpdateOperationsInput | string
     editorId?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -73507,6 +73532,7 @@ export namespace Prisma {
     featuredImageCredit?: SortOrder
     status?: SortOrder
     contentType?: SortOrder
+    guideType?: SortOrder
     authorId?: SortOrder
     editorId?: SortOrder
     seoTitle?: SortOrder
@@ -73548,6 +73574,7 @@ export namespace Prisma {
     featuredImageCredit?: SortOrder
     status?: SortOrder
     contentType?: SortOrder
+    guideType?: SortOrder
     authorId?: SortOrder
     editorId?: SortOrder
     seoTitle?: SortOrder
@@ -73584,6 +73611,7 @@ export namespace Prisma {
     featuredImageCredit?: SortOrder
     status?: SortOrder
     contentType?: SortOrder
+    guideType?: SortOrder
     authorId?: SortOrder
     editorId?: SortOrder
     seoTitle?: SortOrder
@@ -81293,6 +81321,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     seoTitle?: string | null
     seoDescription?: string | null
     publishedAt?: Date | string | null
@@ -81348,6 +81377,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     authorId: string
     editorId?: string | null
     seoTitle?: string | null
@@ -81689,6 +81719,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
     seoDescription?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -81744,6 +81775,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     authorId?: StringFieldUpdateOperationsInput | string
     editorId?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -84430,6 +84462,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     seoTitle?: string | null
     seoDescription?: string | null
     publishedAt?: Date | string | null
@@ -84485,6 +84518,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     authorId: string
     editorId?: string | null
     seoTitle?: string | null
@@ -84703,6 +84737,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
     seoDescription?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -84758,6 +84793,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     authorId?: StringFieldUpdateOperationsInput | string
     editorId?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -84966,6 +85002,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     seoTitle?: string | null
     seoDescription?: string | null
     publishedAt?: Date | string | null
@@ -85021,6 +85058,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     authorId: string
     editorId?: string | null
     seoTitle?: string | null
@@ -85239,6 +85277,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
     seoDescription?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -85294,6 +85333,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     authorId?: StringFieldUpdateOperationsInput | string
     editorId?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -85502,6 +85542,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     seoTitle?: string | null
     seoDescription?: string | null
     publishedAt?: Date | string | null
@@ -85557,6 +85598,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     authorId: string
     editorId?: string | null
     seoTitle?: string | null
@@ -85649,6 +85691,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
     seoDescription?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -85704,6 +85747,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     authorId?: StringFieldUpdateOperationsInput | string
     editorId?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -85786,6 +85830,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     seoTitle?: string | null
     seoDescription?: string | null
     publishedAt?: Date | string | null
@@ -85841,6 +85886,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     authorId: string
     editorId?: string | null
     seoTitle?: string | null
@@ -86059,6 +86105,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
     seoDescription?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -86114,6 +86161,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     authorId?: StringFieldUpdateOperationsInput | string
     editorId?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -86322,6 +86370,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     seoTitle?: string | null
     seoDescription?: string | null
     publishedAt?: Date | string | null
@@ -86377,6 +86426,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     authorId: string
     editorId?: string | null
     seoTitle?: string | null
@@ -86595,6 +86645,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
     seoDescription?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -86650,6 +86701,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     authorId?: StringFieldUpdateOperationsInput | string
     editorId?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -87200,6 +87252,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     seoTitle?: string | null
     seoDescription?: string | null
     publishedAt?: Date | string | null
@@ -87255,6 +87308,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     authorId: string
     editorId?: string | null
     seoTitle?: string | null
@@ -87476,6 +87530,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
     seoDescription?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -87531,6 +87586,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     authorId?: StringFieldUpdateOperationsInput | string
     editorId?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -87748,6 +87804,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     seoTitle?: string | null
     seoDescription?: string | null
     publishedAt?: Date | string | null
@@ -87803,6 +87860,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     authorId: string
     editorId?: string | null
     seoTitle?: string | null
@@ -88307,6 +88365,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
     seoDescription?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -88362,6 +88421,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     authorId?: StringFieldUpdateOperationsInput | string
     editorId?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -90181,6 +90241,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     seoTitle?: string | null
     seoDescription?: string | null
     publishedAt?: Date | string | null
@@ -90236,6 +90297,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     authorId: string
     editorId?: string | null
     seoTitle?: string | null
@@ -90697,6 +90759,7 @@ export namespace Prisma {
     featuredImageCredit?: StringNullableFilter<"Article"> | string | null
     status?: EnumArticleStatusFilter<"Article"> | $Enums.ArticleStatus
     contentType?: EnumContentTypeFilter<"Article"> | $Enums.ContentType
+    guideType?: StringNullableFilter<"Article"> | string | null
     authorId?: StringFilter<"Article"> | string
     editorId?: StringNullableFilter<"Article"> | string | null
     seoTitle?: StringNullableFilter<"Article"> | string | null
@@ -91705,6 +91768,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     seoTitle?: string | null
     seoDescription?: string | null
     publishedAt?: Date | string | null
@@ -91760,6 +91824,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     authorId: string
     editorId?: string | null
     seoTitle?: string | null
@@ -92016,6 +92081,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
     seoDescription?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -92071,6 +92137,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     authorId?: StringFieldUpdateOperationsInput | string
     editorId?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -92956,6 +93023,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     seoTitle?: string | null
     seoDescription?: string | null
     publishedAt?: Date | string | null
@@ -93011,6 +93079,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     authorId: string
     editorId?: string | null
     seoTitle?: string | null
@@ -93407,6 +93476,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
     seoDescription?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -93462,6 +93532,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     authorId?: StringFieldUpdateOperationsInput | string
     editorId?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -93827,6 +93898,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     seoTitle?: string | null
     seoDescription?: string | null
     publishedAt?: Date | string | null
@@ -93882,6 +93954,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     authorId: string
     editorId?: string | null
     seoTitle?: string | null
@@ -94100,6 +94173,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
     seoDescription?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -94155,6 +94229,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     authorId?: StringFieldUpdateOperationsInput | string
     editorId?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -94363,6 +94438,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     seoTitle?: string | null
     seoDescription?: string | null
     publishedAt?: Date | string | null
@@ -94418,6 +94494,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     authorId: string
     editorId?: string | null
     seoTitle?: string | null
@@ -94636,6 +94713,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
     seoDescription?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -94691,6 +94769,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     authorId?: StringFieldUpdateOperationsInput | string
     editorId?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -94899,6 +94978,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     seoTitle?: string | null
     seoDescription?: string | null
     publishedAt?: Date | string | null
@@ -94954,6 +95034,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     authorId: string
     editorId?: string | null
     seoTitle?: string | null
@@ -95025,6 +95106,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
     seoDescription?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -95080,6 +95162,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     authorId?: StringFieldUpdateOperationsInput | string
     editorId?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -95809,6 +95892,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     seoTitle?: string | null
     seoDescription?: string | null
     publishedAt?: Date | string | null
@@ -95864,6 +95948,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     editorId?: string | null
     seoTitle?: string | null
     seoDescription?: string | null
@@ -95929,6 +96014,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     seoTitle?: string | null
     seoDescription?: string | null
     publishedAt?: Date | string | null
@@ -95984,6 +96070,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     authorId: string
     editorId?: string | null
     seoTitle?: string | null
@@ -96049,6 +96136,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     seoTitle?: string | null
     seoDescription?: string | null
     publishedAt?: Date | string | null
@@ -96104,6 +96192,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     authorId: string
     seoTitle?: string | null
     seoDescription?: string | null
@@ -96862,6 +96951,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     seoTitle?: string | null
     seoDescription?: string | null
     publishedAt?: Date | string | null
@@ -96917,6 +97007,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     authorId: string
     editorId?: string | null
     seoTitle?: string | null
@@ -97700,6 +97791,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
     seoDescription?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -97755,6 +97847,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     authorId?: StringFieldUpdateOperationsInput | string
     editorId?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -100023,6 +100116,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     seoTitle?: string | null
     seoDescription?: string | null
     publishedAt?: Date | string | null
@@ -100078,6 +100172,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     authorId: string
     editorId?: string | null
     seoTitle?: string | null
@@ -100350,6 +100445,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
     seoDescription?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -100405,6 +100501,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     authorId?: StringFieldUpdateOperationsInput | string
     editorId?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -102204,6 +102301,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     seoTitle?: string | null
     seoDescription?: string | null
     publishedAt?: Date | string | null
@@ -102259,6 +102357,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     authorId: string
     editorId?: string | null
     seoTitle?: string | null
@@ -102477,6 +102576,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
     seoDescription?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -102532,6 +102632,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     authorId?: StringFieldUpdateOperationsInput | string
     editorId?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -103991,6 +104092,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     seoTitle?: string | null
     seoDescription?: string | null
     publishedAt?: Date | string | null
@@ -104046,6 +104148,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     authorId: string
     editorId?: string | null
     seoTitle?: string | null
@@ -104146,6 +104249,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
     seoDescription?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -104201,6 +104305,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     authorId?: StringFieldUpdateOperationsInput | string
     editorId?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -106147,6 +106252,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
     seoDescription?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -106202,6 +106308,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     authorId?: StringFieldUpdateOperationsInput | string
     editorId?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -106257,6 +106364,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     authorId?: StringFieldUpdateOperationsInput | string
     editorId?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -106510,6 +106618,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     editorId?: string | null
     seoTitle?: string | null
     seoDescription?: string | null
@@ -106547,6 +106656,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     authorId: string
     editorId?: string | null
     seoTitle?: string | null
@@ -106584,6 +106694,7 @@ export namespace Prisma {
     featuredImageCredit?: string | null
     status?: $Enums.ArticleStatus
     contentType: $Enums.ContentType
+    guideType?: string | null
     authorId: string
     seoTitle?: string | null
     seoDescription?: string | null
@@ -106935,6 +107046,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
     seoDescription?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -106990,6 +107102,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     editorId?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
     seoDescription?: NullableStringFieldUpdateOperationsInput | string | null
@@ -107045,6 +107158,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     editorId?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
     seoDescription?: NullableStringFieldUpdateOperationsInput | string | null
@@ -107082,6 +107196,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
     seoDescription?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -107137,6 +107252,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     authorId?: StringFieldUpdateOperationsInput | string
     editorId?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -107192,6 +107308,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     authorId?: StringFieldUpdateOperationsInput | string
     editorId?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -107229,6 +107346,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
     seoDescription?: NullableStringFieldUpdateOperationsInput | string | null
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -107284,6 +107402,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     authorId?: StringFieldUpdateOperationsInput | string
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
     seoDescription?: NullableStringFieldUpdateOperationsInput | string | null
@@ -107339,6 +107458,7 @@ export namespace Prisma {
     featuredImageCredit?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumArticleStatusFieldUpdateOperationsInput | $Enums.ArticleStatus
     contentType?: EnumContentTypeFieldUpdateOperationsInput | $Enums.ContentType
+    guideType?: NullableStringFieldUpdateOperationsInput | string | null
     authorId?: StringFieldUpdateOperationsInput | string
     seoTitle?: NullableStringFieldUpdateOperationsInput | string | null
     seoDescription?: NullableStringFieldUpdateOperationsInput | string | null

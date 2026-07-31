@@ -55,6 +55,7 @@ export async function GET(request: NextRequest) {
                 title: true,
                 slug: true,
                 contentType: true,
+                guideType: true,
                 featuredImageUrl: true,
               },
             },

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { Gamepad2 } from 'lucide-react';
 import { CONTENT_TYPE_LABELS, CONTENT_TYPE_COLORS } from '@/lib/constants';
 import { contentTypePath } from '@/lib/seo';
+import { getGuideTypeColor } from '@/lib/utils';
 import type { Article } from '@/types';
 import HomePostCard from '@/components/blog/HomePostCard';
 
@@ -160,9 +161,15 @@ export default function HeroSection({
                         <span className="shrink-0" style={{ width: '36px', fontSize: '10px', fontWeight: 700, letterSpacing: '0.04em', color: 'var(--muted2)', lineHeight: 1, whiteSpace: 'nowrap' }}>
                           {formatShortDate(article.publishedAt)}
                         </span>
-                        <span style={{ fontSize: '10px', fontWeight: 600, letterSpacing: '0.25em', textTransform: 'uppercase', color: tc.textColor || tc.bg, lineHeight: 1 }}>
-                          {CONTENT_TYPE_LABELS[article.contentType] || article.contentType}
-                        </span>
+                        {article.contentType === 'GUIDE' && article.guideType ? (
+                          <span style={{ fontSize: '10px', fontWeight: 600, letterSpacing: '0.25em', textTransform: 'uppercase', color: getGuideTypeColor(article.guideType), lineHeight: 1 }}>
+                            {article.guideType}
+                          </span>
+                        ) : (
+                          <span style={{ fontSize: '10px', fontWeight: 600, letterSpacing: '0.25em', textTransform: 'uppercase', color: tc.textColor || tc.bg, lineHeight: 1 }}>
+                            {CONTENT_TYPE_LABELS[article.contentType] || article.contentType}
+                          </span>
+                        )}
                       </div>
                       {/* Bottom row: connector line under the date column, title under the badge column. Line extends past this row's own height, through the mb-7 gap, to meet the next item's date row */}
                       <div className="flex gap-2 mt-1.5 pb-1 flex-1">
@@ -266,9 +273,15 @@ export default function HeroSection({
                       <span className="shrink-0" style={{ width: '46px', fontSize: '10px', fontWeight: 700, letterSpacing: '0.04em', color: 'var(--muted2)', lineHeight: 1, whiteSpace: 'nowrap' }}>
                         {formatShortDate(article.publishedAt)}
                       </span>
-                      <span style={{ fontSize: '10px', fontWeight: 600, letterSpacing: '0.25em', textTransform: 'uppercase', color: tc.textColor || tc.bg, lineHeight: 1 }}>
-                        {CONTENT_TYPE_LABELS[article.contentType] || article.contentType}
-                      </span>
+                      {article.contentType === 'GUIDE' && article.guideType ? (
+                        <span style={{ fontSize: '10px', fontWeight: 600, letterSpacing: '0.25em', textTransform: 'uppercase', color: getGuideTypeColor(article.guideType), lineHeight: 1 }}>
+                          {article.guideType}
+                        </span>
+                      ) : (
+                        <span style={{ fontSize: '10px', fontWeight: 600, letterSpacing: '0.25em', textTransform: 'uppercase', color: tc.textColor || tc.bg, lineHeight: 1 }}>
+                          {CONTENT_TYPE_LABELS[article.contentType] || article.contentType}
+                        </span>
+                      )}
                     </div>
                     {/* Bottom row: connector line under the date column, title under the badge column. Line is absolutely positioned so it can extend past this row's own height, through the mb-7 gap, to meet the next item's date row */}
                     <div className="flex gap-3 mt-1.5 flex-1">

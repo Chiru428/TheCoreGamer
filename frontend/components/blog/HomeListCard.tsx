@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Gamepad2 } from 'lucide-react';
-import { formatDate } from '@/lib/utils';
+import { formatDate, getGuideTypeColor } from '@/lib/utils';
 import type { Article } from '@/types';
 import { CONTENT_TYPE_LABELS, CONTENT_TYPE_COLORS } from '@/lib/constants';
 import { contentTypePath } from '@/lib/seo';
@@ -23,12 +23,21 @@ export default function HomeListCard({ article, titleClassName }: HomeListCardPr
       className="group flex items-center justify-between gap-3 py-4 first:pt-0 last:pb-0"
     >
       <div className="flex-1 min-w-0">
-        <span
-          className="mb-1 inline-block"
-          style={{ fontSize: '10px', fontWeight: 800, letterSpacing: '1px', textTransform: 'uppercase', color: tc.textColor || tc.bg }}
-        >
-          {CONTENT_TYPE_LABELS[article.contentType] || article.contentType}
-        </span>
+        {article.contentType === 'GUIDE' && article.guideType ? (
+          <span
+            className="mb-1 inline-block"
+            style={{ fontSize: '10px', fontWeight: 800, letterSpacing: '1px', textTransform: 'uppercase', color: getGuideTypeColor(article.guideType) }}
+          >
+            {article.guideType}
+          </span>
+        ) : (
+          <span
+            className="mb-1 inline-block"
+            style={{ fontSize: '10px', fontWeight: 800, letterSpacing: '1px', textTransform: 'uppercase', color: tc.textColor || tc.bg }}
+          >
+            {CONTENT_TYPE_LABELS[article.contentType] || article.contentType}
+          </span>
+        )}
         <h3
           className={`post-card-title font-bold text-gray-900 dark:text-white uppercase leading-[1.2] transition-colors group-hover:underline ${titleClassName || '!text-[16px]'}`}
           style={{ fontFamily: "'Rubik', sans-serif" }}

@@ -80,7 +80,7 @@ export async function GET(
         orderBy: { publishedAt: 'desc' },
         take: 8,
         select: {
-          id: true, slug: true, title: true, contentType: true,
+          id: true, slug: true, title: true, contentType: true, guideType: true,
           featuredImageUrl: true, publishedAt: true,
           User_Article_authorIdToUser: { select: { displayName: true } },
         },

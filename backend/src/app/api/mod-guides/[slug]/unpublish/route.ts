@@ -20,7 +20,7 @@ export async function POST(request: Request, { params }: RouteParams) {
     const roleCheck = await requireRole(["ADMIN"], request);
     if (roleCheck) return roleCheck;
     const { slug } = await params;
-    const article = await prisma.article.findUnique({ where: { slug, contentType: "MOD_GUIDE" } });
+    const article = await prisma.article.findUnique({ where: { slug, contentType: "GUIDE", guideType: "Mod Guide" } });
     if (!article) return NextResponse.json(errorResponse("Mod guide not found"), { status: 404 });
     await prisma.article.update({ where: { id: article.id }, data: { status: "DRAFT" } });
     try {
@@ -28,8 +28,8 @@ export async function POST(request: Request, { params }: RouteParams) {
     } catch {
       /* intentionally empty */
     }
-    await purgeArticle(article.slug, "MOD_GUIDE");
-    await revalidateArticlePaths(article.slug, "MOD_GUIDE");
+    await purgeArticle(article.slug, "GUIDE");
+    await revalidateArticlePaths(article.slug, "GUIDE");
     return NextResponse.json(successResponse(null, "Mod guide unpublished"));
   } catch (err) {
     captureError(err);

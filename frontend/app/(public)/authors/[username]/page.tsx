@@ -12,7 +12,7 @@ import Skeleton from '@/components/ui/Skeleton';
 import { fetchUserSummary, fetchAuthorArticles } from '@/lib/api';
 import { CONTENT_TYPE_LABELS, CONTENT_TYPE_COLORS } from '@/lib/constants';
 import { contentTypePath } from '@/lib/seo';
-import { formatRelativeDate, getInitials, formatNumber } from '@/lib/utils';
+import { formatRelativeDate, getInitials, formatNumber, getGuideTypeColor } from '@/lib/utils';
 import type { ApiResponse, AuthorArticleItem } from '@/types';
 import { notFound } from 'next/navigation';
 
@@ -46,12 +46,21 @@ function ArticleListItem({ article, authorName }: { article: AuthorArticleItem; 
       <div className="flex-1 min-w-0 py-0 sm:py-1">
         {/* Row 1: content type + date */}
         <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-3">
-          <span
-            className="shrink-0 text-[10px] sm:text-[12px] font-bold uppercase tracking-widest"
-            style={{ color: tc.textColor || tc.bg }}
-          >
-            {CONTENT_TYPE_LABELS[article.contentType] || article.contentType}
-          </span>
+          {article.contentType === 'GUIDE' && article.guideType ? (
+            <span
+              className="shrink-0 text-[10px] sm:text-[12px] font-bold uppercase tracking-widest"
+              style={{ color: getGuideTypeColor(article.guideType) }}
+            >
+              {article.guideType}
+            </span>
+          ) : (
+            <span
+              className="shrink-0 text-[10px] sm:text-[12px] font-bold uppercase tracking-widest"
+              style={{ color: tc.textColor || tc.bg }}
+            >
+              {CONTENT_TYPE_LABELS[article.contentType] || article.contentType}
+            </span>
+          )}
           <span className="text-text-dim text-[11px] sm:text-[13px]">·</span>
           <span className="text-text-dim text-[11px] sm:text-[13px] font-medium truncate">{formatRelativeDate(article.publishedAt || article.createdAt)}</span>
         </div>

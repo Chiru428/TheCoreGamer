@@ -122,9 +122,8 @@ export default function WorkflowActions({ articleSlug, contentType, currentStatu
     if (res.success) {
       addToast({ message: 'Draft deleted', type: 'success' });
       const redirectMap: Record<string, string> = {
-        MOD_GUIDE: '/admin/mod-guides',
+        GUIDE: '/admin/guides',
         REVIEW: '/admin/reviews',
-        WALKTHROUGH: '/admin/walkthroughs',
         NEWS: '/admin/news',
         DEAL: '/admin/deals',
         FEATURE: '/admin/features',
@@ -175,9 +174,8 @@ export default function WorkflowActions({ articleSlug, contentType, currentStatu
     if (res.success) {
       addToast({ message: 'Article deleted', type: 'success' });
       const redirectMap: Record<string, string> = {
-        MOD_GUIDE: '/admin/mod-guides',
+        GUIDE: '/admin/guides',
         REVIEW: '/admin/reviews',
-        WALKTHROUGH: '/admin/walkthroughs',
         NEWS: '/admin/news',
         DEAL: '/admin/deals',
         FEATURE: '/admin/features',

@@ -198,6 +198,7 @@ export { apiMutate }; // Exported for custom mutations
 
 // REVIEWS
 export const fetchReviewFacets = (revalidate = 60) => apiFetch<{ platforms: any[], genres: any[], years: any[], tags: any[] }>('/api/reviews/facets?v=2', { revalidate });
+export const fetchGuideFacets = (revalidate = 300) => apiFetch<{ guideTypes: any[], platforms: any[], genres: any[], games: any[], tags: any[] }>('/api/guides/facets', { revalidate });
 
 export async function fetchReviews(params?: Record<string, unknown>) {
   const sp = new URLSearchParams();
@@ -493,11 +494,13 @@ export const restoreArticleVersion = (slug: string, vId: string) => apiMutate<Ar
 export const fetchAnalytics = () => apiFetch<AnalyticsData>('/api/analytics/overview', { cache: 'no-store' });
 export const fetchAdSenseReport = () => apiFetch<AdSenseReport>('/api/analytics/adsense', { cache: 'no-store' });
 /** BUG-11: Previously unwired analytics endpoints now exported */
-export const fetchAnalyticsTraffic = (params?: { range?: string; from?: string; to?: string }) => {
+export const fetchAnalyticsTraffic = (params?: { range?: string; from?: string; to?: string; tag?: string; guideType?: string }) => {
   const sp = new URLSearchParams();
   if (params?.range) sp.set('range', params.range);
   if (params?.from) sp.set('from', params.from);
   if (params?.to) sp.set('to', params.to);
+  if (params?.tag) sp.set('tag', params.tag);
+  if (params?.guideType) sp.set('guideType', params.guideType);
   return apiFetch<AnalyticsTrafficData>(`/api/analytics/traffic${sp.toString() ? `?${sp}` : ''}`, { cache: 'no-store' });
 };
 export const fetchRealtimeAnalytics = () => apiFetch<RealtimeAnalytics>('/api/admin/analytics/realtime', { cache: 'no-store' });
@@ -773,6 +776,7 @@ export interface SeriesArticleEntry {
     publishedAt: string | null;
     contentType: string;
     status?: string;
+    guideType?: string;
   } | null;
 }
 

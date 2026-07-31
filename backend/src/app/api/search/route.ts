@@ -388,6 +388,7 @@ export async function GET(request: NextRequest) {
                 slug: true,
                 excerpt: true,
                 contentType: true,
+                guideType: true,
                 featuredImageUrl: true,
                 publishedAt: true,
                 content: true,

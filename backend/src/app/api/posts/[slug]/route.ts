@@ -249,6 +249,7 @@ export async function PUT(request: Request, { params }: RouteParams) {
           featuredImageUrl: data.featuredImageUrl,
           featuredImageCredit: data.featuredImageCredit,
           contentType: data.contentType,
+          guideType: data.guideType,
           seoTitle: data.seoTitle,
           seoDescription: data.seoDescription,
           focusKeyword: data.focusKeyword,

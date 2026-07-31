@@ -23,7 +23,7 @@ import PollWidget from '@/components/blog/PollWidget';
 import MuxPlayerEmbed from '@/components/ui/MuxPlayerEmbed';
 import JsonLd from '@/components/seo/JsonLd';
 import Badge from '@/components/ui/Badge';
-import { Clock, Zap, Newspaper, Tag, Lightbulb, List, LayoutGrid, Gamepad2 } from 'lucide-react';
+import { Clock, Zap, Newspaper, Tag, Lightbulb, List, LayoutGrid, Gamepad2, BookOpen } from 'lucide-react';
 import { SITE_URL } from '@/lib/constants';
 
 import SaveToListDropdown from '@/components/public/lists/SaveToListDropdown';
@@ -87,7 +87,7 @@ export default async function GenericArticlePage({ params, expectedPath }: { par
         { name: 'Home', url: '/' },
         ...(article.contentType === 'NEWS' ? [{ name: 'News', url: '/news' }] : 
            article.contentType === 'DEAL' ? [{ name: 'Deals', url: '/deals' }] :
-           article.contentType === 'WALKTHROUGH' ? [{ name: 'Walkthrough', url: '/walkthroughs' }] :
+           article.contentType === 'GUIDE' ? [{ name: 'Guides', url: '/guides' }] :
            article.contentType === 'OPINION' ? [{ name: 'Opinion', url: '/opinions' }] :
            article.contentType === 'FEATURE' ? [{ name: 'Features', url: '/features' }] :
            article.contentType === 'LISTICLE' ? [{ name: 'Lists', url: '/lists' }] :
@@ -152,14 +152,14 @@ export default async function GenericArticlePage({ params, expectedPath }: { par
                     <BreadcrumbNav crumbs={[
                       { label: article.contentType === 'NEWS' ? 'News' : 
                                article.contentType === 'DEAL' ? 'Deals' :
-                               article.contentType === 'WALKTHROUGH' ? 'Walkthroughs' :
+                               article.contentType === 'GUIDE' ? 'Guides' :
                                article.contentType === 'OPINION' ? 'Opinions' :
                                article.contentType === 'FEATURE' ? 'Features' :
                                article.contentType === 'LISTICLE' ? 'Lists' : 'Articles',
                         href: `/${expectedPath}`,
                         icon: article.contentType === 'NEWS' ? <Newspaper className="w-4.5 h-4.5" /> : 
                               article.contentType === 'DEAL' ? <Tag className="w-4.5 h-4.5" /> :
-                              article.contentType === 'WALKTHROUGH' ? <Gamepad2 className="w-4.5 h-4.5" /> :
+                              article.contentType === 'GUIDE' ? <BookOpen className="w-4.5 h-4.5" /> :
                               article.contentType === 'OPINION' ? <Lightbulb className="w-4.5 h-4.5" /> :
                               article.contentType === 'FEATURE' ? <LayoutGrid className="w-4.5 h-4.5" /> :
                               article.contentType === 'LISTICLE' ? <List className="w-4.5 h-4.5" /> : <LayoutGrid className="w-4.5 h-4.5" /> }
@@ -231,7 +231,7 @@ export default async function GenericArticlePage({ params, expectedPath }: { par
               <ReadingManager slug={slug} wordCount={wc} />
               <div className="-mx-5 md:mx-0">
                 <ArticleBody
-                  content={article.contentType === 'MOD_GUIDE' ? (article.modGuide?.sections || []) : article.content}
+                  content={(article.contentType === 'GUIDE' && article.guideType === 'Mod Guide') ? (article.modGuide?.sections || []) : article.content}
                   slug={slug}
                 />
               </div>

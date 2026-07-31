@@ -19,8 +19,7 @@ type Params = { params: Promise<{ slug: string }> };
 const CONTENT_TYPES = [
   "NEWS",
   "REVIEW",
-  "MOD_GUIDE",
-  "WALKTHROUGH",
+  "GUIDE",
   "OPINION",
   "DEAL",
   "FEATURE",
@@ -87,6 +86,7 @@ export async function GET(request: NextRequest, { params }: Params) {
             excerpt: true,
             featuredImageUrl: true,
             contentType: true,
+            guideType: true,
             publishedAt: true,
             isBreaking: true,
             isSponsored: true,

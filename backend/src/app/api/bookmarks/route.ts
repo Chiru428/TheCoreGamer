@@ -28,6 +28,8 @@ export async function GET() {
                 select: { id: true, username: true, displayName: true, avatarUrl: true },
               },
               ArticleTag: { include: { Tag: true } },
+              contentType: true,
+              guideType: true,
               _count: {
                 select: {
                   Comment: { where: { status: "APPROVED" } },

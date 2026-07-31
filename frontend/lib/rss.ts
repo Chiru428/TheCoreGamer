@@ -14,8 +14,8 @@ export function articleUrl(article: Article): string {
   const base =
     article.contentType === "REVIEW"
       ? "/reviews"
-      : article.contentType === "MOD_GUIDE"
-      ? "/mod-guides"
+      : article.contentType === "GUIDE"
+      ? "/guides"
       : "/articles";
   return `${SITE_URL}${base}/${article.slug}`;
 }
@@ -24,8 +24,7 @@ export function contentTypeLabel(ct: string): string {
   const map: Record<string, string> = {
     NEWS: "News",
     REVIEW: "Review",
-    MOD_GUIDE: "Mod Guide",
-    WALKTHROUGH: "Walkthrough",
+    GUIDE: "Guide",
     OPINION: "Opinion",
     DEAL: "Deal",
     FEATURE: "Feature",

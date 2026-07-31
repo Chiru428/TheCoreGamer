@@ -1,6 +1,8 @@
 'use client';
 
-import { useState } from 'react';import { Spinner } from '@/components/ui/Spinner';
+import { useState, Suspense } from 'react';import { Spinner } from '@/components/ui/Spinner';
+import { useSearchParams } from 'next/navigation';
+import Pagination from '@/components/ui/Pagination';
 
 import Link from 'next/link';
 import useSWR from 'swr';
@@ -15,7 +17,7 @@ import { revalidatePublicPages } from '../actions';
 import { useAuthStore } from '@/store/authStore';
 import { useUIStore } from '@/store/uiStore';
 
-export default function AdminDealsPage() {
+function AdminDealsList() {
   const { addToast } = useUIStore();
   const { user } = useAuthStore();
   const isAuthorRole = user?.role === 'AUTHOR';
@@ -23,7 +25,9 @@ export default function AdminDealsPage() {
   const [statusFilter, setStatusFilter] = useState('');
   const [search, setSearch] = useState('');
   const [deletingSlug, setDeletingSlug] = useState<string | null>(null);
-  const { data, mutate, isLoading } = useSWR(['admin-reviews', statusFilter, search, isAuthorRole], ([_, status, q, mine]) => fetchAdminPosts({ contentType: 'DEAL', status: status || undefined, search: q || undefined, sort: 'updated', mine }));
+  const searchParams = useSearchParams();
+  const page = Number(searchParams.get('page')) || 1;
+  const { data, mutate, isLoading } = useSWR(['admin-reviews', statusFilter, search, isAuthorRole, page], ([_, status, q, mine, p]) => fetchAdminPosts({ contentType: 'DEAL', status: status || undefined, search: q || undefined, sort: 'updated', mine, page: Number(p), limit: 50 }));
   const articles = data?.data || [];
 
   const handleDelete = async (slug: string) => {
@@ -137,7 +141,18 @@ export default function AdminDealsPage() {
           </div>
         )}
         {!isLoading && articles.length === 0 && <div className="p-8 text-center text-text-muted">No deals found</div>}
+        <Pagination currentPage={page} totalPages={data?.pagination?.totalPages || 1} basePath="/admin/deals" className="mt-6 mb-8" />
+
       </div>
     </div>
+  );
+}
+
+
+export default function AdminDealsPage() {
+  return (
+    <Suspense fallback={<div className="flex justify-center p-8"><Spinner /></div>}>
+      <AdminDealsList />
+    </Suspense>
   );
 }

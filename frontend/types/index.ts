@@ -22,8 +22,7 @@ export enum ArticleStatus {
 export enum ContentType {
   NEWS = 'NEWS',
   REVIEW = 'REVIEW',
-  MOD_GUIDE = 'MOD_GUIDE',
-  WALKTHROUGH = 'WALKTHROUGH',
+  GUIDE = 'GUIDE',
   OPINION = 'OPINION',
   DEAL = 'DEAL',
   FEATURE = 'FEATURE',
@@ -246,9 +245,10 @@ export interface Article {
   content: unknown; // TipTap JSON
   excerpt: string | null;
   featuredImageUrl: string | null;
-  featuredImageCredit: string | null;
+  featuredImageCredit?: string | null;
   status: ArticleStatus;
   contentType: ContentType;
+  guideType?: string | null;
   authorId: string;
   editorId: string | null;
   seoTitle: string | null;
@@ -1109,8 +1109,7 @@ export interface HomepageData {
   latest: Article[];
   recentlyUpdated: Article[];
   news: Article[];
-  walkthroughs: Article[];
-  modGuides: Article[];
+  guides: Article[];
   reviews: Article[];
   popular: Article[];
   deals: Article[];

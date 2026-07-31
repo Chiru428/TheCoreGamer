@@ -14,6 +14,7 @@ const articleCardSelect = {
   excerpt: true,
   featuredImageUrl: true,
   contentType: true,
+  guideType: true,
   isSponsored: true,
   isLiveBlog: true,
   liveBlogEndedAt: true,

@@ -70,8 +70,8 @@ export const articleWorker = new Worker(
         await Promise.all(articlesToPublish.map((a) => purgeArticle(a.slug, a.contentType)));
 
         // Trigger frontend ISR revalidation for each published article —
-        // uses the shared, content-type-aware helper so e.g. a WALKTHROUGH
-        // correctly revalidates /walkthroughs, not just /articles.
+        // uses the shared, content-type-aware helper so e.g. a GUIDE
+        // correctly revalidates /guides, not just /articles.
         await Promise.all(
           articlesToPublish.map((a) => revalidateArticlePaths(a.slug, a.contentType))
         );

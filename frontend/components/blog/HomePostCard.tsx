@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import TripleChevron from '@/components/ui/TripleChevron';
 import Image from 'next/image';
-import { formatDate } from '@/lib/utils';
+import { formatDate, getGuideTypeColor } from '@/lib/utils';
 import { contentTypePath } from '@/lib/seo';
 import type { Article } from '@/types';
 import ScoreBadge from '@/components/review/ScoreBadge';
@@ -66,21 +66,30 @@ export default function HomePostCard({ article, isCompact, showBadge = false, ba
         )}
 
         {showBadge && (
-          <span
-            className="absolute bottom-2 left-2 z-10 sm:hidden"
-            style={{
-              padding: '2px 6px',
-              borderRadius: '4px',
-              fontSize: '10px',
-              fontWeight: 700,
-              textTransform: 'uppercase',
-              letterSpacing: '0.5px',
-              backgroundColor: tc.bg,
-              color: tc.color,
-            }}
-          >
-            {CONTENT_TYPE_LABELS[article.contentType] || article.contentType}
-          </span>
+          article.contentType === 'GUIDE' && article.guideType ? (
+              <span
+                className="absolute bottom-2 left-2 z-10 sm:hidden"
+                style={{ padding: '2px 6px', borderRadius: '4px', fontSize: '10px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', backgroundColor: getGuideTypeColor(article.guideType), color: '#fff' }}
+              >
+                {article.guideType}
+              </span>
+            ) : (
+              <span
+                className="absolute bottom-2 left-2 z-10 sm:hidden"
+                style={{
+                  padding: '2px 6px',
+                  borderRadius: '4px',
+                  fontSize: '10px',
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px',
+                  backgroundColor: tc.bg,
+                  color: tc.color,
+                }}
+              >
+                {CONTENT_TYPE_LABELS[article.contentType] || article.contentType}
+              </span>
+            )
         )}
       </div>
 
@@ -95,9 +104,15 @@ export default function HomePostCard({ article, isCompact, showBadge = false, ba
           )}
           <span>{formatDate(article.publishedAt || article.createdAt)}</span>
           {showBadge && (
-            <span className={`${mobileHorizontal ? 'hidden sm:inline-block' : 'inline-block'} ${badgeClassName ?? (isCompact ? 'text-[10px] sm:text-[12px]' : 'text-[13px]')}`} style={{ marginLeft: '6px', fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase', color: tc.textColor || tc.bg }}>
-              {CONTENT_TYPE_LABELS[article.contentType] || article.contentType}
-            </span>
+            article.contentType === 'GUIDE' && article.guideType ? (
+              <span className={`${mobileHorizontal ? 'hidden sm:inline-block' : 'inline-block'} ${badgeClassName ?? (isCompact ? 'text-[10px] sm:text-[12px]' : 'text-[13px]')}`} style={{ marginLeft: '6px', fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase', color: getGuideTypeColor(article.guideType) }}>
+                {article.guideType}
+              </span>
+            ) : (
+              <span className={`${mobileHorizontal ? 'hidden sm:inline-block' : 'inline-block'} ${badgeClassName ?? (isCompact ? 'text-[10px] sm:text-[12px]' : 'text-[13px]')}`} style={{ marginLeft: '6px', fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase', color: tc.textColor || tc.bg }}>
+                {CONTENT_TYPE_LABELS[article.contentType] || article.contentType}
+              </span>
+            )
           )}
         </div>
 

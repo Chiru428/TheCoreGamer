@@ -39,7 +39,7 @@ export async function GET(_request: Request, { params }: RouteParams) {
                   featuredImageUrl: true,
                   publishedAt: true,
                   contentType: true,
-                  content: true,
+                  guideType: true,
                   status: true,
                 },
               },

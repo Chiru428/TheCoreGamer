@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { formatDate, readingTime } from '@/lib/utils';
+import { formatDate, readingTime, getGuideTypeColor } from '@/lib/utils';
 import type { Article } from '@/types';
 import { CONTENT_TYPE_LABELS, CONTENT_TYPE_COLORS } from '@/lib/constants';
 import ScoreBadge from '@/components/review/ScoreBadge';
@@ -58,9 +58,15 @@ export default function SharedListCard({ article, priority = false }: SharedList
               <span className="text-[#00e5a0] font-bold mr-2">{article.author.displayName}</span>
             )}
             <span>{formatDate(article.publishedAt || article.createdAt)}</span>
-            <span style={{ display: 'inline-block', marginLeft: '6px', fontSize: '13px', fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase', color: tc.textColor || tc.bg }}>
-              {CONTENT_TYPE_LABELS[article.contentType] || article.contentType}
-            </span>
+            {article.contentType === 'GUIDE' && article.guideType ? (
+              <span style={{ display: 'inline-block', marginLeft: '6px', fontSize: '13px', fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase', color: getGuideTypeColor(article.guideType) }}>
+                {article.guideType}
+              </span>
+            ) : (
+              <span style={{ display: 'inline-block', marginLeft: '6px', fontSize: '13px', fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase', color: tc.textColor || tc.bg }}>
+                {CONTENT_TYPE_LABELS[article.contentType] || article.contentType}
+              </span>
+            )}
           </div>
 
           {/* Title */}

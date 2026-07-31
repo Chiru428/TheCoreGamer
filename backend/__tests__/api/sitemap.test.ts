@@ -18,7 +18,7 @@ import { GET as getNewsSitemap } from "@/app/api/news-sitemap.xml/route";
 const mockArticles = [
   { slug: "review-1", title: "Game Review", publishedAt: new Date("2026-06-11T12:00:00Z"), updatedAt: new Date("2026-06-11T12:00:00Z"), contentType: "REVIEW" },
   { slug: "news-1", title: "Game News", publishedAt: new Date("2026-06-11T10:00:00Z"), updatedAt: new Date("2026-06-11T10:00:00Z"), contentType: "NEWS" },
-  { slug: "guide-1", title: "Game Guide", publishedAt: new Date("2026-06-10T10:00:00Z"), updatedAt: new Date("2026-06-10T10:00:00Z"), contentType: "MOD_GUIDE" },
+  { slug: "guide-1", title: "Game Guide", publishedAt: new Date("2026-06-10T10:00:00Z"), updatedAt: new Date("2026-06-10T10:00:00Z"), contentType: "GUIDE" },
 ];
 
 describe("Sitemaps", () => {

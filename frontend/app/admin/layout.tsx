@@ -33,8 +33,7 @@ const links = [
   { href: '/admin/opinions', label: 'Opinions', icon: MessageCircle, group: 'Posts' },
   { href: '/admin/listicles', label: 'Listicles', icon: List, group: 'Posts' },
   { href: '/admin/reviews', label: 'Reviews', icon: Star, group: 'Posts' },
-  { href: '/admin/mod-guides', label: 'Mod Guides', icon: Wrench, group: 'Posts' },
-  { href: '/admin/walkthroughs', label: 'Walkthroughs', icon: BookOpen, group: 'Posts' },
+  { href: '/admin/guides', label: 'Guides', icon: BookOpen, group: 'Posts' },
   // -- Management ---------------------------------------------------
   { href: '/admin/tags', label: 'Tags', icon: Tags, group: 'Management', roles: ['EDITOR', 'ADMIN'] },
   { href: '/admin/comments', label: 'Comments', icon: MessageSquare, group: 'Management', roles: ['EDITOR', 'ADMIN'] },

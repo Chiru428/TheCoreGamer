@@ -35,8 +35,7 @@ export async function GET(request: Request) {
     let totalSubscribers = 0;
     let newsArticles = 0;
     let reviewArticles = 0;
-    let modGuideArticles = 0;
-    let walkthroughArticles = 0;
+    let guideArticles = 0;
     let dealArticles = 0;
     let opinionArticles = 0;
     let featureArticles = 0;
@@ -60,8 +59,7 @@ export async function GET(request: Request) {
         totalSubscribersRes,
         newsArticlesRes,
         reviewArticlesRes,
-        modGuideArticlesRes,
-        walkthroughArticlesRes,
+        guideArticlesRes,
         dealArticlesRes,
         opinionArticlesRes,
         featureArticlesRes,
@@ -81,8 +79,7 @@ export async function GET(request: Request) {
         prisma.newsletterSubscriber.count({ where: { confirmed: true } }),
         prisma.article.count({ where: { contentType: "NEWS" } }),
         prisma.article.count({ where: { contentType: "REVIEW" } }),
-        prisma.article.count({ where: { contentType: "MOD_GUIDE" } }),
-        prisma.article.count({ where: { contentType: "WALKTHROUGH" } }),
+        prisma.article.count({ where: { contentType: "GUIDE" } }),
         prisma.article.count({ where: { contentType: "DEAL" } }),
         prisma.article.count({ where: { contentType: "OPINION" } }),
         prisma.article.count({ where: { contentType: "FEATURE" } }),
@@ -134,8 +131,7 @@ export async function GET(request: Request) {
       totalSubscribers = totalSubscribersRes;
       newsArticles = newsArticlesRes;
       reviewArticles = reviewArticlesRes;
-      modGuideArticles = modGuideArticlesRes;
-      walkthroughArticles = walkthroughArticlesRes;
+      guideArticles = guideArticlesRes;
       dealArticles = dealArticlesRes;
       opinionArticles = opinionArticlesRes;
       featureArticles = featureArticlesRes;
@@ -183,8 +179,7 @@ export async function GET(request: Request) {
         byType: {
           news: newsArticles,
           review: reviewArticles,
-          modGuide: modGuideArticles,
-          walkthrough: walkthroughArticles,
+          guide: guideArticles,
           deal: dealArticles,
           opinion: opinionArticles,
           feature: featureArticles,

@@ -6,6 +6,13 @@ export function cn(...inputs: ClassValue[]): string {
   return twMerge(clsx(inputs));
 }
 
+export function getGuideTypeColor(str: string | null | undefined): string {
+  if (!str) return 'var(--guide-color-0)';
+  const hash = str.split('').reduce((acc, char) => char.charCodeAt(0) + ((acc << 5) - acc), 0);
+  const index = Math.abs(hash) % 10;
+  return `var(--guide-color-${index})`;
+}
+
 /** Format a date string to a readable format */
 export function formatDate(dateStr: string | null | undefined): string {
   if (!dateStr) return '';

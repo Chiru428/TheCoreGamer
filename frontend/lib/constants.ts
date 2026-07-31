@@ -16,15 +16,7 @@ export const NAV_LINKS: readonly NavLink[] = [
   { label: "Games", href: "/games", exact: true },
   { label: "News", href: "/news", exact: true },
   { label: "Reviews", href: "/reviews", exact: true },
-  {
-    label: "Guides",
-    href: "#",
-    unclickable: true,
-    children: [
-      { label: "Walkthroughs", href: "/walkthroughs" },
-      { label: "Mod Guides", href: "/mod-guides" },
-    ]
-  },
+  { label: "Guides", href: "/guides", exact: true },
   {
     label: "Editorial",
     href: "#",
@@ -46,8 +38,7 @@ export const FOOTER_LINKS = {
     { label: "Opinions", href: "/opinions", exact: true },
     { label: "Features", href: "/features", exact: true },
     { label: "Lists", href: "/lists", exact: true },
-    { label: "Mod Guides", href: "/mod-guides", exact: true },
-    { label: "Walkthroughs", href: "/walkthroughs", exact: true },
+    { label: "Guides", href: "/guides", exact: true },
     { label: "Deals", href: "/deals", exact: true },
     { label: 'About', href: '/about' },
     { label: 'Contact', href: '/contact' },
@@ -83,8 +74,7 @@ export const AD_ZONES: Record<string, { name: string; format: string; width: num
 export const CONTENT_TYPE_LABELS: Record<string, string> = {
   NEWS: 'News',
   REVIEW: 'Review',
-  MOD_GUIDE: 'Mod Guide',
-  WALKTHROUGH: 'Walkthrough',
+  GUIDE: 'Guide',
   OPINION: 'Opinion',
   DEAL: 'Deal',
   FEATURE: 'Feature',
@@ -94,8 +84,7 @@ export const CONTENT_TYPE_LABELS: Record<string, string> = {
 export const CONTENT_TYPE_COLORS: Record<string, { bg: string; color: string; textColor?: string }> = {
   NEWS:       { bg: '#be123c', color: '#fff', textColor: 'var(--badge-news)' },
   REVIEW:     { bg: '#6d28d9', color: '#fff', textColor: 'var(--badge-review)' },
-  MOD_GUIDE:  { bg: '#1d4ed8', color: '#fff', textColor: 'var(--badge-mod-guide)' },
-  WALKTHROUGH:{ bg: '#b45309', color: '#fff', textColor: 'var(--badge-walkthrough)' },
+  GUIDE:      { bg: '#3b82f6', color: '#fff', textColor: 'var(--badge-guide)' },
   OPINION:    { bg: '#9d174d', color: '#fff', textColor: 'var(--badge-opinion)' },
   DEAL:       { bg: '#0e7490', color: '#fff', textColor: 'var(--badge-deal)' },
   FEATURE:    { bg: '#065f46', color: '#fff', textColor: 'var(--badge-feature)' },

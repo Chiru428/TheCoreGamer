@@ -15,6 +15,7 @@ const ARTICLE_SELECT = {
   excerpt: true,
   featuredImageUrl: true,
   contentType: true,
+  guideType: true,
   status: true,
   featured: true,
   isBreaking: true,
@@ -74,7 +75,7 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    const [featured, breaking, latest, news, walkthroughs, modGuides, reviews, popular, deals, listicles, features, opinions, homepagePoll1, homepagePoll2] =
+    const [featured, breaking, latest, news, guides, reviews, popular, deals, listicles, features, opinions, homepagePoll1, homepagePoll2] =
       await withRetry(() =>
         Promise.all([
           prisma.article.findMany({
@@ -102,16 +103,10 @@ export async function GET(request: NextRequest) {
             take: 15,
           }),
           prisma.article.findMany({
-            where: { status: "PUBLISHED", contentType: "WALKTHROUGH" },
+            where: { status: "PUBLISHED", contentType: "GUIDE" },
             select: ARTICLE_SELECT,
             orderBy: { publishedAt: { sort: "desc", nulls: "last" } },
-            take: 10,
-          }),
-          prisma.article.findMany({
-            where: { status: "PUBLISHED", contentType: "MOD_GUIDE" },
-            select: ARTICLE_SELECT,
-            orderBy: { publishedAt: { sort: "desc", nulls: "last" } },
-            take: 10,
+            take: 20,
           }),
           prisma.article.findMany({
             where: { status: "PUBLISHED", contentType: "REVIEW" },
@@ -165,8 +160,7 @@ export async function GET(request: NextRequest) {
       breaking: breaking.map(serializeArticle),
       latest: latest.map(serializeArticle),
       news: news.map(serializeArticle),
-      walkthroughs: walkthroughs.map(serializeArticle),
-      modGuides: modGuides.map(serializeArticle),
+      guides: guides.map(serializeArticle),
       reviews: reviews.map(serializeArticle),
       popular: popular.map(serializeArticle),
       deals: deals.map(serializeArticle),

@@ -66,6 +66,9 @@ export async function GET(request: NextRequest) {
     const contentType = searchParams.get("contentType");
     if (contentType) where.contentType = contentType as ContentType;
 
+    const guideType = searchParams.get("guideType");
+    if (guideType) where.guideType = guideType;
+
     const excludeContentType = searchParams.get("excludeContentType");
     if (excludeContentType && !contentType) {
       where.contentType = { not: excludeContentType as ContentType };
@@ -153,6 +156,7 @@ export async function GET(request: NextRequest) {
           excerpt: true,
           featuredImageUrl: true,
           contentType: true,
+          guideType: true,
           status: true,
           featured: true,
           isBreaking: true,
@@ -279,6 +283,7 @@ export async function POST(request: Request) {
           featuredImageUrl: data.featuredImageUrl,
           featuredImageCredit: data.featuredImageCredit,
           contentType: data.contentType,
+          guideType: data.guideType,
           authorId: session!.user.id,
           seoTitle: data.seoTitle,
           seoDescription: data.seoDescription,

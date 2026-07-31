@@ -59,6 +59,7 @@ model Article {
   featuredImageCredit                      String?
   status                                   ArticleStatus            @default(DRAFT)
   contentType                              ContentType
+  guideType                                String?                  @db.VarChar(50)
   authorId                                 String
   editorId                                 String?
   seoTitle                                 String?                  @db.VarChar(90)
@@ -969,8 +970,7 @@ enum UserScreenshotStatus {
 enum ContentType {
   NEWS
   REVIEW
-  MOD_GUIDE
-  WALKTHROUGH
+  GUIDE
   OPINION
   DEAL
   FEATURE

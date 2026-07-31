@@ -10,7 +10,7 @@
  */
 export function contentTypePath(contentType: string): string {
   if (contentType === "REVIEW") return "reviews";
-  if (contentType === "MOD_GUIDE") return "mod-guides";
+  if (contentType === "GUIDE") return "guides";
   return "articles";
 }
 
@@ -29,8 +29,7 @@ export function contentTypePath(contentType: string): string {
 export function contentTypeListingPath(contentType: string): string {
   switch (contentType) {
     case "REVIEW": return "reviews";
-    case "MOD_GUIDE": return "mod-guides";
-    case "WALKTHROUGH": return "walkthroughs";
+    case "GUIDE": return "guides";
     case "OPINION": return "opinions";
     case "FEATURE": return "features";
     case "DEAL": return "deals";

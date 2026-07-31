@@ -177,11 +177,11 @@ export async function PUT(request: Request, { params }: RouteParams) {
     } catch {}
 
     if (updated.status === "PUBLISHED") {
-      await purgeArticle(updated.slug, "MOD_GUIDE");
-      await revalidateArticlePaths(updated.slug, "MOD_GUIDE");
+      await purgeArticle(updated.slug, "GUIDE");
+      await revalidateArticlePaths(updated.slug, "GUIDE");
       if (updatedSlug !== article.slug) {
-        await purgeArticle(article.slug, "MOD_GUIDE");
-        await revalidateArticlePaths(article.slug, "MOD_GUIDE");
+        await purgeArticle(article.slug, "GUIDE");
+        await revalidateArticlePaths(article.slug, "GUIDE");
       }
       // Keep Algolia (recommendations, search) and the Postgres search vector
       // in sync — without this, edits to a published guide's title/slug leave
@@ -190,8 +190,8 @@ export async function PUT(request: Request, { params }: RouteParams) {
     } else if (article.status === "PUBLISHED") {
       // Was published, now isn't (e.g. unpublished/archived) — drop it from the index.
       await addSearchIndexJob({ articleId: updated.id, action: "remove" });
-      await purgeArticle(article.slug, "MOD_GUIDE");
-      await revalidateArticlePaths(article.slug, "MOD_GUIDE");
+      await purgeArticle(article.slug, "GUIDE");
+      await revalidateArticlePaths(article.slug, "GUIDE");
     }
 
     return NextResponse.json(successResponse(null, "Guide updated"));

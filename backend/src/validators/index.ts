@@ -100,7 +100,8 @@ export const createArticleSchema = z.object({
   excerpt: z.string().max(300).optional(),
   featuredImageUrl: z.string().url().optional(),
   featuredImageCredit: z.string().max(200).optional(),
-  contentType: z.enum(["NEWS", "REVIEW", "MOD_GUIDE", "WALKTHROUGH", "OPINION", "DEAL", "FEATURE", "LISTICLE"]),
+  contentType: z.enum(["NEWS", "REVIEW", "GUIDE", "OPINION", "DEAL", "FEATURE", "LISTICLE"]),
+  guideType: z.string().optional(),
   tagIds: z.array(z.string().min(1)).optional(),
   seoTitle: z.string().max(90).optional(),
   seoDescription: z.string().max(250).optional(),
@@ -453,7 +454,7 @@ export const searchSchema = z.object({
   limit: z.coerce.number().int().min(1).max(100).optional().default(20),
   category: z.string().optional(),
   contentType: z
-    .enum(["NEWS", "REVIEW", "MOD_GUIDE", "WALKTHROUGH", "OPINION", "DEAL", "FEATURE", "LISTICLE"])
+    .enum(["NEWS", "REVIEW", "GUIDE", "OPINION", "DEAL", "FEATURE", "LISTICLE"])
     .optional(),
   dateFrom: z.string().datetime().optional(),
   dateTo: z.string().datetime().optional(),

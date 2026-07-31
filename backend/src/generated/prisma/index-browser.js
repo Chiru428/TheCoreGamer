@@ -157,6 +157,7 @@ exports.Prisma.ArticleScalarFieldEnum = {
   featuredImageCredit: 'featuredImageCredit',
   status: 'status',
   contentType: 'contentType',
+  guideType: 'guideType',
   authorId: 'authorId',
   editorId: 'editorId',
   seoTitle: 'seoTitle',
@@ -771,8 +772,7 @@ exports.ArticleStatus = exports.$Enums.ArticleStatus = {
 exports.ContentType = exports.$Enums.ContentType = {
   NEWS: 'NEWS',
   REVIEW: 'REVIEW',
-  MOD_GUIDE: 'MOD_GUIDE',
-  WALKTHROUGH: 'WALKTHROUGH',
+  GUIDE: 'GUIDE',
   OPINION: 'OPINION',
   DEAL: 'DEAL',
   FEATURE: 'FEATURE',

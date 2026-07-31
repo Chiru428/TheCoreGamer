@@ -16,7 +16,7 @@ export async function POST(request: Request, { params }: RouteParams) {
     const roleCheck = await requireRole(["AUTHOR", "EDITOR", "ADMIN"], request);
     if (roleCheck) return roleCheck;
     const { slug } = await params;
-    const article = await prisma.article.findUnique({ where: { slug, contentType: "MOD_GUIDE" } });
+    const article = await prisma.article.findUnique({ where: { slug, contentType: "GUIDE", guideType: "Mod Guide" } });
     if (!article) return NextResponse.json(errorResponse("Mod guide not found"), { status: 404 });
     if (article.status !== "DRAFT") {
       return NextResponse.json(errorResponse("Only drafts can be submitted for review"), {

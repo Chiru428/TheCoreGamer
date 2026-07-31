@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
     const { page, limit, skip } = parsePagination(searchParams);
 
-    const where: Prisma.ArticleWhereInput = { status: "PUBLISHED", contentType: "MOD_GUIDE" };
+    const where: Prisma.ArticleWhereInput = { status: "PUBLISHED", contentType: "GUIDE", guideType: "Mod Guide" };
     const game = searchParams.get("game");
     if (game) where.ModGuide = { Game: { slug: game } };
     const difficulty = searchParams.get("difficulty");
@@ -104,7 +104,8 @@ export async function POST(request: Request) {
           excerpt: data.excerpt,
           featuredImageUrl: data.featuredImageUrl,
           featuredImageCredit: data.featuredImageCredit,
-          contentType: "MOD_GUIDE",
+          contentType: "GUIDE",
+          guideType: "Mod Guide",
           authorId: session!.user.id,
           status: data.status || "DRAFT",
           featured: data.featured,

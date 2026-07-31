@@ -59,8 +59,7 @@ const CONTENT_FILTERS = [
   { label: 'All', value: '' },
   { label: 'News', value: 'NEWS' },
   { label: 'Reviews', value: 'REVIEW' },
-  { label: 'Mod Guides', value: 'MOD_GUIDE' },
-  { label: 'Walkthrough', value: 'WALKTHROUGH' },
+  { label: 'Guides', value: 'GUIDE' },
   { label: 'Deals', value: 'DEAL' },
   { label: 'Games', value: 'GAME' },
 ];
@@ -75,8 +74,7 @@ const SORT_OPTIONS = [
 const TAG_COLORS: Record<string, string> = {
   NEWS: '#0d9e6a',
   REVIEW: '#7b5cfa',
-  MOD_GUIDE: '#3b82f6',
-  WALKTHROUGH: '#f59e0b',
+  GUIDE: '#3b82f6',
   OPINION: '#d4386e',
   DEAL: '#10b981',
 };

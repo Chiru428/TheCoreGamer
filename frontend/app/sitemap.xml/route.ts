@@ -26,8 +26,7 @@ function getArticlePrefix(contentType: string) {
   switch (contentType) {
     case 'NEWS': return '/news';
     case 'REVIEW': return '/reviews';
-    case 'MOD_GUIDE': return '/mod-guides';
-    case 'WALKTHROUGH': return '/walkthroughs';
+    case 'GUIDE': return '/guides';
     case 'OPINION': return '/opinions';
     case 'DEAL': return '/deals';
     case 'FEATURE': return '/features';

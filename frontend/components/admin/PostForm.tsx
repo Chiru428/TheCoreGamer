@@ -51,6 +51,7 @@ import BylineManager from "./BylineManager";
 import VersionHistory from "./VersionHistory";
 import EmbargoCountdown from "./EmbargoCountdown";
 import AiAssistantSidebar from "./editor/AiAssistantSidebar";
+import GuideTypeCombobox from "./GuideTypeCombobox";
 
 const RichTextEditor = dynamic(() => import("@/components/admin/RichTextEditor"), {
   ssr: false,
@@ -63,6 +64,7 @@ const schema = z.object({
   excerpt: z.string().max(300).optional(),
 
   contentType: z.string().default("NEWS"),
+  guideType: z.string().optional(),
   seoTitle: z.string().max(90).optional(),
   seoDescription: z.string().max(250).optional(),
   focusKeyword: z.string().optional(),
@@ -110,7 +112,7 @@ const schema = z.object({
   dealPlatform: z.string().optional(),
   dealScore: z.coerce.number().min(0).max(10).optional(),
 }).superRefine((data, ctx) => {
-  if (data.contentType === "MOD_GUIDE") {
+  if (data.contentType === "GUIDE" && data.guideType === "Mod Guide") {
     if (!data.gameName?.trim()) {
       ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["gameName"], message: "Required for Mod Guides" });
     }
@@ -145,7 +147,7 @@ export default function PostForm({
   const initialContent = useMemo(() => {
     const modSections = (initialData?.modGuide as any)?.sections;
     const isModGuide =
-      initialData?.contentType === "MOD_GUIDE" || type === "MOD_GUIDE";
+      (initialData?.contentType === "GUIDE" && initialData?.guideType === "Mod Guide") || (type === "GUIDE" && initialData?.guideType === "Mod Guide");
 
     if (isModGuide) {
       if (modSections && modSections.length > 0) return modSections;
@@ -309,7 +311,7 @@ export default function PostForm({
 
   // Pre-select the "walkthrough"/"guide" tags when starting a new walkthrough
   useEffect(() => {
-    if (mode !== "create" || type !== "WALKTHROUGH" || !tags || tags.length === 0) return;
+    if (mode !== "create" || type !== "GUIDE" || !tags || tags.length === 0) return;
     const preselectNames = ["walkthrough", "guide"];
     const matches = tags
       .filter((t) => preselectNames.includes(t.name.toLowerCase()))
@@ -346,6 +348,7 @@ export default function PostForm({
       excerpt: (initialData?.excerpt as string) || "",
 
       contentType: (initialData?.contentType as string) || type || "NEWS",
+      guideType: (initialData?.guideType as string) || "",
       seoTitle: (initialData?.seoTitle as string) || "",
       seoDescription: (initialData?.seoDescription as string) || "",
       gameName: (initialData?.modGuide as any)?.gameName || "",
@@ -457,7 +460,7 @@ export default function PostForm({
 
     // Walkthroughs persist Chapter / Boss Count as "Chapter: X" / "Bosses: N" tags
     let walkthroughTagIds: string[] = [];
-    if (currentType === "WALKTHROUGH") {
+    if (currentType === "GUIDE" && data.guideType === "Walkthrough") {
       const tagNames: string[] = [];
       if (data.chapter?.trim()) tagNames.push(`Chapter: ${data.chapter.trim()}`);
       if (data.bossCount !== undefined && data.bossCount !== null && !Number.isNaN(data.bossCount)) {
@@ -472,13 +475,13 @@ export default function PostForm({
       ...data,
       slug: data.slug?.trim() || undefined,
       content:
-        currentType === "MOD_GUIDE" ? { type: "doc", content: [] } : content,
+        (currentType === "GUIDE" && data.guideType === "Mod Guide") ? { type: "doc", content: [] } : content,
       sections:
-        currentType === "MOD_GUIDE"
+        (currentType === "GUIDE" && data.guideType === "Mod Guide")
           ? (content as any[])?.map(({ id: _id, ...s }: any) => s)
           : undefined,
       prerequisiteList:
-        currentType === "MOD_GUIDE"
+        (currentType === "GUIDE" && data.guideType === "Mod Guide")
           ? prereqs
               .filter((p) => p.name.trim())
               .map((p) => ({
@@ -549,7 +552,7 @@ export default function PostForm({
     }
 
     let res;
-    if (data.contentType === "MOD_GUIDE") {
+    if (data.contentType === "GUIDE" && data.guideType === "Mod Guide") {
       res =
         mode === "edit" && slug
           ? await updateModGuide(slug, payload)
@@ -618,9 +621,8 @@ export default function PostForm({
       });
       await revalidatePublicPages(slug, data.contentType);
       const redirectMap: Record<string, string> = {
-        MOD_GUIDE: "/admin/mod-guides",
+        GUIDE: "/admin/posts?contentType=GUIDE",
         REVIEW: "/admin/reviews",
-        WALKTHROUGH: "/admin/walkthroughs",
         NEWS: "/admin/news",
         DEAL: "/admin/deals",
         FEATURE: "/admin/features",
@@ -763,7 +765,7 @@ export default function PostForm({
                 <RichTextEditor
                   content={content as Record<string, unknown>}
                   onChange={setContent}
-                  multiSection={currentType === "MOD_GUIDE"}
+                  multiSection={currentType === "GUIDE" && watch("guideType") === "Mod Guide"}
                   postTitle={watch("title")}
                   slug={slug}
                   pendingDraftId={pendingDraftId}
@@ -798,7 +800,7 @@ export default function PostForm({
           {/* Dynamic extra sections — MOD_GUIDE only */}
           {/* Extra sections UI removed in favor of internal editor tabs */}
 
-          {currentType === "MOD_GUIDE" && (
+          {currentType === "GUIDE" && watch("guideType") === "Mod Guide" && (
             <div className="space-y-4 rounded-xl border border-border p-5 bg-bg-surface mt-6">
               <h3 className="font-bold text-lg text-text-primary">
                 Mod Guide Details
@@ -1349,6 +1351,17 @@ export default function PostForm({
                 ))}
               </select>
             </div>
+            {currentType === "GUIDE" && (
+              <div>
+                <label className="text-xs font-medium text-text-muted mb-1 block">
+                  Guide Type
+                </label>
+                <GuideTypeCombobox
+                  value={watch("guideType") || ""}
+                  onChange={(val) => setValue("guideType", val, { shouldDirty: true })}
+                />
+              </div>
+            )}
 
             {currentType !== "DEAL" && (
               <div>
@@ -1548,7 +1561,7 @@ export default function PostForm({
             )}
             {/* Live blog is a rolling-updates news format — Reviews/Mod Guides are static
                 content and neither their schemas nor their public pages support it. */}
-            {currentType !== "REVIEW" && currentType !== "MOD_GUIDE" && (
+            {currentType !== "REVIEW" && !(currentType === "GUIDE" && watch("guideType") === "Mod Guide") && (
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   {...register("isLiveBlog")}

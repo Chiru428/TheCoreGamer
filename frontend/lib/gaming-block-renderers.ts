@@ -1272,7 +1272,7 @@ export function renderRelatedArticles(attrs: RelatedArticlesAttrs): string {
 
   const contentTypeToPath: Record<string, string> = {
     REVIEW: 'reviews',
-    MOD_GUIDE: 'mod-guides',
+    GUIDE: 'guides',
   };
 
   const rows = articles.slice(0, 20).map(article => {

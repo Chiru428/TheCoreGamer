@@ -47,6 +47,14 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'xboxwire.thesourcemediaassets.com', pathname: '/**' },
     ],
   },
+  async redirects() {
+    return [
+      { source: '/walkthroughs', destination: '/guides?type=Walkthrough', permanent: true },
+      { source: '/walkthroughs/:slug', destination: '/guides/:slug', permanent: true },
+      { source: '/mod-guides', destination: '/guides?type=Mod Guide', permanent: true },
+      { source: '/mod-guides/:slug', destination: '/guides/:slug', permanent: true },
+    ];
+  },
   async rewrites() {
     const apiUrl = process.env.BACKEND_URL || 'http://localhost:3001';
     return {
@@ -238,7 +246,7 @@ const nextConfig: NextConfig = {
         headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
       },
       {
-        source: '/(articles|reviews|news|mod-guides|walkthroughs|opinions|features|deals|lists|games|platforms|genres)/:path*',
+        source: '/(articles|reviews|news|guides|opinions|features|deals|lists|games|platforms|genres)/:path*',
         headers: [
           { key: 'Cache-Control', value: 'public, s-maxage=300, stale-while-revalidate=60' },
           { key: 'Surrogate-Control', value: 'max-age=300' },
