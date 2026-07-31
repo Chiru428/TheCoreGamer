@@ -59,6 +59,7 @@ async function apiFetch<T>(url: string, options?: RequestInit & { revalidate?: n
         // Always include credentials so session cookies are sent on both
         // client-side requests and server-side RSC/SSR calls.
         credentials: 'include',
+        signal: fetchOptions.signal ?? AbortSignal.timeout(15000),
         headers: { 'Content-Type': 'application/json', ...fetchOptions?.headers },
         ...(revalidate !== undefined ? { next: { revalidate } } : {}),
       });
