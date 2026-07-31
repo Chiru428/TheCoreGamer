@@ -171,7 +171,9 @@ export default function GamesGridClient({ initialGames }: Props) {
                   const rawDate = 'releaseDate' in g ? g.releaseDate : undefined;
                   if (rawDate) {
                     const dateObj = typeof rawDate === 'number' ? new Date(rawDate * 1000) : new Date(rawDate);
-                    formattedDate = dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+                    formattedDate = dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }).toUpperCase();
+                  } else {
+                    formattedDate = 'TBA';
                   }
 
                   return (
@@ -191,6 +193,13 @@ export default function GamesGridClient({ initialGames }: Props) {
                               <span className="text-3xl opacity-20">🎮</span>
                             </div>
                           )}
+                          {formattedDate && (
+                            <div className="absolute bottom-0 w-full pt-6 pb-2 px-2 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex justify-center">
+                              <span className="text-[12px] font-extrabold tracking-wider text-[#4ade80]">
+                                {formattedDate}
+                              </span>
+                            </div>
+                          )}
                         </div>
                         <div className="pt-3">
                           <p className="text-[16px] font-bold text-text leading-tight group-hover:underline">
@@ -199,11 +208,6 @@ export default function GamesGridClient({ initialGames }: Props) {
                           {publisher && (
                             <p className="text-[13px] font-medium text-text-muted mt-1">
                               {publisher}
-                            </p>
-                          )}
-                          {formattedDate && (
-                            <p className="text-[12px] font-medium text-text-muted mt-0.5">
-                              {formattedDate}
                             </p>
                           )}
                         </div>
