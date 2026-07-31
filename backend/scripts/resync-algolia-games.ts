@@ -70,7 +70,7 @@ async function main() {
           tags: game.tags,
           totalRating: game.totalRating,
           totalRatingCount: game.totalRatingCount,
-          igdbFollows: game.igdbFollows,
+
         };
         await upsertRecord(GAMES_INDEX, record);
         synced++;

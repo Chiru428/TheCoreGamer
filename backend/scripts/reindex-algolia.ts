@@ -149,7 +149,7 @@ function buildGameRecord(game: GameForAlgolia): AlgoliaGameRecord {
     tags: game.tags,
     totalRating: game.totalRating,
     totalRatingCount: game.totalRatingCount,
-    igdbFollows: game.igdbFollows,
+
     collectionName: game.collectionName ?? null,
   };
 }

@@ -294,30 +294,30 @@ model CommentVote {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model Game {
-  id                         String            @id @default(cuid())
-  title                      String            @unique
-  slug                       String            @unique
-  coverImageUrl              String?
-  description                String?
-  createdAt                  DateTime          @default(now())
-  updatedAt                  DateTime          @updatedAt
-  developer                  String?
-  publisher                  String?
-  releaseDate                DateTime?
-  platforms                  String[]
-  genres                     String[]
-  steamAppId                 String?
-  esrbRating                 String?
-  metacritic                 Int?
-  playtime                   Int?
-  tags                       String[]
-  pegiRating                 String?
-  igdbId                     Int?              @unique
-  storyline                  String?
-  igdbUrl                    String?
-  totalRating                Float?
-  totalRatingCount           Int?
-  igdbFollows                Int?              @default(0)
+  id               String    @id @default(cuid())
+  title            String    @unique
+  slug             String    @unique
+  coverImageUrl    String?
+  description      String?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  developer        String?
+  publisher        String?
+  releaseDate      DateTime?
+  platforms        String[]
+  genres           String[]
+  steamAppId       String?
+  esrbRating       String?
+  metacritic       Int?
+  playtime         Int?
+  tags             String[]
+  pegiRating       String?
+  igdbId           Int?      @unique
+  storyline        String?
+  igdbUrl          String?
+  totalRating      Float?
+  totalRatingCount Int?
+
   releaseStatus              String?           @default("Released")
   dlcOfId                    String?
   gameEdition                String?           @default("STANDARD")

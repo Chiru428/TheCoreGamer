@@ -60,7 +60,7 @@ export async function GET(request: NextRequest) {
     if (sort === "newest") orderBy = { releaseDate: { sort: "desc", nulls: "last" } };
     if (sort === "oldest") orderBy = { releaseDate: { sort: "asc", nulls: "last" } };
     if (sort === "top-rated") orderBy = { totalRating: { sort: "desc", nulls: "last" } };
-    if (sort === "popular") orderBy = { igdbFollows: { sort: "desc", nulls: "last" } };
+    if (sort === "popular") orderBy = { totalRatingCount: { sort: "desc", nulls: "last" } };
     if (sort === "coming-soon") orderBy = { releaseDate: { sort: "asc", nulls: "last" } };
 
     const cacheKey = `games:list:p${page}:l${limit}:q${search || ""}:g${genres || ""}:s${sort || ""}:pub${publisher || ""}:col${collection || ""}:f${fields || ""}`;

@@ -21867,7 +21867,6 @@ export namespace Prisma {
     igdbId: number | null
     totalRating: number | null
     totalRatingCount: number | null
-    igdbFollows: number | null
     aggregatedRating: number | null
     aggregatedRatingCount: number | null
   }
@@ -21878,7 +21877,6 @@ export namespace Prisma {
     igdbId: number | null
     totalRating: number | null
     totalRatingCount: number | null
-    igdbFollows: number | null
     aggregatedRating: number | null
     aggregatedRatingCount: number | null
   }
@@ -21904,7 +21902,6 @@ export namespace Prisma {
     igdbUrl: string | null
     totalRating: number | null
     totalRatingCount: number | null
-    igdbFollows: number | null
     releaseStatus: string | null
     dlcOfId: string | null
     gameEdition: string | null
@@ -21939,7 +21936,6 @@ export namespace Prisma {
     igdbUrl: string | null
     totalRating: number | null
     totalRatingCount: number | null
-    igdbFollows: number | null
     releaseStatus: string | null
     dlcOfId: string | null
     gameEdition: string | null
@@ -21977,7 +21973,6 @@ export namespace Prisma {
     igdbUrl: number
     totalRating: number
     totalRatingCount: number
-    igdbFollows: number
     releaseStatus: number
     dlcOfId: number
     gameEdition: number
@@ -22012,7 +22007,6 @@ export namespace Prisma {
     igdbId?: true
     totalRating?: true
     totalRatingCount?: true
-    igdbFollows?: true
     aggregatedRating?: true
     aggregatedRatingCount?: true
   }
@@ -22023,7 +22017,6 @@ export namespace Prisma {
     igdbId?: true
     totalRating?: true
     totalRatingCount?: true
-    igdbFollows?: true
     aggregatedRating?: true
     aggregatedRatingCount?: true
   }
@@ -22049,7 +22042,6 @@ export namespace Prisma {
     igdbUrl?: true
     totalRating?: true
     totalRatingCount?: true
-    igdbFollows?: true
     releaseStatus?: true
     dlcOfId?: true
     gameEdition?: true
@@ -22084,7 +22076,6 @@ export namespace Prisma {
     igdbUrl?: true
     totalRating?: true
     totalRatingCount?: true
-    igdbFollows?: true
     releaseStatus?: true
     dlcOfId?: true
     gameEdition?: true
@@ -22122,7 +22113,6 @@ export namespace Prisma {
     igdbUrl?: true
     totalRating?: true
     totalRatingCount?: true
-    igdbFollows?: true
     releaseStatus?: true
     dlcOfId?: true
     gameEdition?: true
@@ -22260,7 +22250,6 @@ export namespace Prisma {
     igdbUrl: string | null
     totalRating: number | null
     totalRatingCount: number | null
-    igdbFollows: number | null
     releaseStatus: string | null
     dlcOfId: string | null
     gameEdition: string | null
@@ -22330,7 +22319,6 @@ export namespace Prisma {
     igdbUrl?: boolean
     totalRating?: boolean
     totalRatingCount?: boolean
-    igdbFollows?: boolean
     releaseStatus?: boolean
     dlcOfId?: boolean
     gameEdition?: boolean
@@ -22393,7 +22381,6 @@ export namespace Prisma {
     igdbUrl?: boolean
     totalRating?: boolean
     totalRatingCount?: boolean
-    igdbFollows?: boolean
     releaseStatus?: boolean
     dlcOfId?: boolean
     gameEdition?: boolean
@@ -22445,7 +22432,6 @@ export namespace Prisma {
     igdbUrl?: boolean
     totalRating?: boolean
     totalRatingCount?: boolean
-    igdbFollows?: boolean
     releaseStatus?: boolean
     dlcOfId?: boolean
     gameEdition?: boolean
@@ -22497,7 +22483,6 @@ export namespace Prisma {
     igdbUrl?: boolean
     totalRating?: boolean
     totalRatingCount?: boolean
-    igdbFollows?: boolean
     releaseStatus?: boolean
     dlcOfId?: boolean
     gameEdition?: boolean
@@ -22524,7 +22509,7 @@ export namespace Prisma {
     backgroundImageUrl?: boolean
   }
 
-  export type GameOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "slug" | "coverImageUrl" | "description" | "createdAt" | "updatedAt" | "developer" | "publisher" | "releaseDate" | "platforms" | "genres" | "steamAppId" | "esrbRating" | "metacritic" | "playtime" | "tags" | "pegiRating" | "igdbId" | "storyline" | "igdbUrl" | "totalRating" | "totalRatingCount" | "igdbFollows" | "releaseStatus" | "dlcOfId" | "gameEdition" | "igdbSlug" | "screenshotUrls" | "artworkUrls" | "allCompaniesJson" | "releaseDatesByPlatformJson" | "themes" | "keywords" | "gameModes" | "playerPerspectives" | "gameEngine" | "aggregatedRating" | "aggregatedRatingCount" | "collectionName" | "dlcsJson" | "expansionsJson" | "similarGamesJson" | "videosJson" | "websitesJson" | "multiplayerModesJson" | "languageSupportsJson" | "backgroundImageUrl", ExtArgs["result"]["game"]>
+  export type GameOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "slug" | "coverImageUrl" | "description" | "createdAt" | "updatedAt" | "developer" | "publisher" | "releaseDate" | "platforms" | "genres" | "steamAppId" | "esrbRating" | "metacritic" | "playtime" | "tags" | "pegiRating" | "igdbId" | "storyline" | "igdbUrl" | "totalRating" | "totalRatingCount" | "releaseStatus" | "dlcOfId" | "gameEdition" | "igdbSlug" | "screenshotUrls" | "artworkUrls" | "allCompaniesJson" | "releaseDatesByPlatformJson" | "themes" | "keywords" | "gameModes" | "playerPerspectives" | "gameEngine" | "aggregatedRating" | "aggregatedRatingCount" | "collectionName" | "dlcsJson" | "expansionsJson" | "similarGamesJson" | "videosJson" | "websitesJson" | "multiplayerModesJson" | "languageSupportsJson" | "backgroundImageUrl", ExtArgs["result"]["game"]>
   export type GameInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     AffiliateClick?: boolean | Game$AffiliateClickArgs<ExtArgs>
     Award?: boolean | Game$AwardArgs<ExtArgs>
@@ -22585,7 +22570,6 @@ export namespace Prisma {
       igdbUrl: string | null
       totalRating: number | null
       totalRatingCount: number | null
-      igdbFollows: number | null
       releaseStatus: string | null
       dlcOfId: string | null
       gameEdition: string | null
@@ -23067,7 +23051,6 @@ export namespace Prisma {
     readonly igdbUrl: FieldRef<"Game", 'String'>
     readonly totalRating: FieldRef<"Game", 'Float'>
     readonly totalRatingCount: FieldRef<"Game", 'Int'>
-    readonly igdbFollows: FieldRef<"Game", 'Int'>
     readonly releaseStatus: FieldRef<"Game", 'String'>
     readonly dlcOfId: FieldRef<"Game", 'String'>
     readonly gameEdition: FieldRef<"Game", 'String'>
@@ -63635,7 +63618,6 @@ export namespace Prisma {
     igdbUrl: 'igdbUrl',
     totalRating: 'totalRating',
     totalRatingCount: 'totalRatingCount',
-    igdbFollows: 'igdbFollows',
     releaseStatus: 'releaseStatus',
     dlcOfId: 'dlcOfId',
     gameEdition: 'gameEdition',
@@ -65587,7 +65569,6 @@ export namespace Prisma {
     igdbUrl?: StringNullableFilter<"Game"> | string | null
     totalRating?: FloatNullableFilter<"Game"> | number | null
     totalRatingCount?: IntNullableFilter<"Game"> | number | null
-    igdbFollows?: IntNullableFilter<"Game"> | number | null
     releaseStatus?: StringNullableFilter<"Game"> | string | null
     dlcOfId?: StringNullableFilter<"Game"> | string | null
     gameEdition?: StringNullableFilter<"Game"> | string | null
@@ -65649,7 +65630,6 @@ export namespace Prisma {
     igdbUrl?: SortOrderInput | SortOrder
     totalRating?: SortOrderInput | SortOrder
     totalRatingCount?: SortOrderInput | SortOrder
-    igdbFollows?: SortOrderInput | SortOrder
     releaseStatus?: SortOrderInput | SortOrder
     dlcOfId?: SortOrderInput | SortOrder
     gameEdition?: SortOrderInput | SortOrder
@@ -65714,7 +65694,6 @@ export namespace Prisma {
     igdbUrl?: StringNullableFilter<"Game"> | string | null
     totalRating?: FloatNullableFilter<"Game"> | number | null
     totalRatingCount?: IntNullableFilter<"Game"> | number | null
-    igdbFollows?: IntNullableFilter<"Game"> | number | null
     releaseStatus?: StringNullableFilter<"Game"> | string | null
     dlcOfId?: StringNullableFilter<"Game"> | string | null
     gameEdition?: StringNullableFilter<"Game"> | string | null
@@ -65776,7 +65755,6 @@ export namespace Prisma {
     igdbUrl?: SortOrderInput | SortOrder
     totalRating?: SortOrderInput | SortOrder
     totalRatingCount?: SortOrderInput | SortOrder
-    igdbFollows?: SortOrderInput | SortOrder
     releaseStatus?: SortOrderInput | SortOrder
     dlcOfId?: SortOrderInput | SortOrder
     gameEdition?: SortOrderInput | SortOrder
@@ -65835,7 +65813,6 @@ export namespace Prisma {
     igdbUrl?: StringNullableWithAggregatesFilter<"Game"> | string | null
     totalRating?: FloatNullableWithAggregatesFilter<"Game"> | number | null
     totalRatingCount?: IntNullableWithAggregatesFilter<"Game"> | number | null
-    igdbFollows?: IntNullableWithAggregatesFilter<"Game"> | number | null
     releaseStatus?: StringNullableWithAggregatesFilter<"Game"> | string | null
     dlcOfId?: StringNullableWithAggregatesFilter<"Game"> | string | null
     gameEdition?: StringNullableWithAggregatesFilter<"Game"> | string | null
@@ -69810,7 +69787,6 @@ export namespace Prisma {
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     gameEdition?: string | null
     igdbSlug?: string | null
@@ -69871,7 +69847,6 @@ export namespace Prisma {
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     dlcOfId?: string | null
     gameEdition?: string | null
@@ -69932,7 +69907,6 @@ export namespace Prisma {
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
     igdbSlug?: NullableStringFieldUpdateOperationsInput | string | null
@@ -69993,7 +69967,6 @@ export namespace Prisma {
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     dlcOfId?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
@@ -70054,7 +70027,6 @@ export namespace Prisma {
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     dlcOfId?: string | null
     gameEdition?: string | null
@@ -70105,7 +70077,6 @@ export namespace Prisma {
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
     igdbSlug?: NullableStringFieldUpdateOperationsInput | string | null
@@ -70155,7 +70126,6 @@ export namespace Prisma {
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     dlcOfId?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
@@ -74374,7 +74344,6 @@ export namespace Prisma {
     igdbUrl?: SortOrder
     totalRating?: SortOrder
     totalRatingCount?: SortOrder
-    igdbFollows?: SortOrder
     releaseStatus?: SortOrder
     dlcOfId?: SortOrder
     gameEdition?: SortOrder
@@ -74407,7 +74376,6 @@ export namespace Prisma {
     igdbId?: SortOrder
     totalRating?: SortOrder
     totalRatingCount?: SortOrder
-    igdbFollows?: SortOrder
     aggregatedRating?: SortOrder
     aggregatedRatingCount?: SortOrder
   }
@@ -74433,7 +74401,6 @@ export namespace Prisma {
     igdbUrl?: SortOrder
     totalRating?: SortOrder
     totalRatingCount?: SortOrder
-    igdbFollows?: SortOrder
     releaseStatus?: SortOrder
     dlcOfId?: SortOrder
     gameEdition?: SortOrder
@@ -74468,7 +74435,6 @@ export namespace Prisma {
     igdbUrl?: SortOrder
     totalRating?: SortOrder
     totalRatingCount?: SortOrder
-    igdbFollows?: SortOrder
     releaseStatus?: SortOrder
     dlcOfId?: SortOrder
     gameEdition?: SortOrder
@@ -74488,7 +74454,6 @@ export namespace Prisma {
     igdbId?: SortOrder
     totalRating?: SortOrder
     totalRatingCount?: SortOrder
-    igdbFollows?: SortOrder
     aggregatedRating?: SortOrder
     aggregatedRatingCount?: SortOrder
   }
@@ -81457,7 +81422,6 @@ export namespace Prisma {
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     gameEdition?: string | null
     igdbSlug?: string | null
@@ -81517,7 +81481,6 @@ export namespace Prisma {
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     dlcOfId?: string | null
     gameEdition?: string | null
@@ -81861,7 +81824,6 @@ export namespace Prisma {
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
     igdbSlug?: NullableStringFieldUpdateOperationsInput | string | null
@@ -81921,7 +81883,6 @@ export namespace Prisma {
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     dlcOfId?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
@@ -83248,7 +83209,6 @@ export namespace Prisma {
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     gameEdition?: string | null
     igdbSlug?: string | null
@@ -83308,7 +83268,6 @@ export namespace Prisma {
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     dlcOfId?: string | null
     gameEdition?: string | null
@@ -84435,7 +84394,6 @@ export namespace Prisma {
     igdbUrl?: StringNullableFilter<"Game"> | string | null
     totalRating?: FloatNullableFilter<"Game"> | number | null
     totalRatingCount?: IntNullableFilter<"Game"> | number | null
-    igdbFollows?: IntNullableFilter<"Game"> | number | null
     releaseStatus?: StringNullableFilter<"Game"> | string | null
     dlcOfId?: StringNullableFilter<"Game"> | string | null
     gameEdition?: StringNullableFilter<"Game"> | string | null
@@ -87371,7 +87329,6 @@ export namespace Prisma {
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     gameEdition?: string | null
     igdbSlug?: string | null
@@ -87431,7 +87388,6 @@ export namespace Prisma {
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     dlcOfId?: string | null
     gameEdition?: string | null
@@ -87655,7 +87611,6 @@ export namespace Prisma {
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
     igdbSlug?: NullableStringFieldUpdateOperationsInput | string | null
@@ -87715,7 +87670,6 @@ export namespace Prisma {
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     dlcOfId?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
@@ -89756,7 +89710,6 @@ export namespace Prisma {
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     gameEdition?: string | null
     igdbSlug?: string | null
@@ -89816,7 +89769,6 @@ export namespace Prisma {
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     dlcOfId?: string | null
     gameEdition?: string | null
@@ -89881,7 +89833,6 @@ export namespace Prisma {
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     gameEdition?: string | null
     igdbSlug?: string | null
@@ -89941,7 +89892,6 @@ export namespace Prisma {
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     gameEdition?: string | null
     igdbSlug?: string | null
@@ -90418,7 +90368,6 @@ export namespace Prisma {
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
     igdbSlug?: NullableStringFieldUpdateOperationsInput | string | null
@@ -90478,7 +90427,6 @@ export namespace Prisma {
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     dlcOfId?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
@@ -90948,7 +90896,6 @@ export namespace Prisma {
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     gameEdition?: string | null
     igdbSlug?: string | null
@@ -91008,7 +90955,6 @@ export namespace Prisma {
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     dlcOfId?: string | null
     gameEdition?: string | null
@@ -91263,7 +91209,6 @@ export namespace Prisma {
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
     igdbSlug?: NullableStringFieldUpdateOperationsInput | string | null
@@ -91323,7 +91268,6 @@ export namespace Prisma {
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     dlcOfId?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
@@ -91890,7 +91834,6 @@ export namespace Prisma {
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     gameEdition?: string | null
     igdbSlug?: string | null
@@ -91950,7 +91893,6 @@ export namespace Prisma {
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     dlcOfId?: string | null
     gameEdition?: string | null
@@ -92209,7 +92151,6 @@ export namespace Prisma {
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
     igdbSlug?: NullableStringFieldUpdateOperationsInput | string | null
@@ -92269,7 +92210,6 @@ export namespace Prisma {
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     dlcOfId?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
@@ -93145,7 +93085,6 @@ export namespace Prisma {
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     gameEdition?: string | null
     igdbSlug?: string | null
@@ -93205,7 +93144,6 @@ export namespace Prisma {
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     dlcOfId?: string | null
     gameEdition?: string | null
@@ -93604,7 +93542,6 @@ export namespace Prisma {
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
     igdbSlug?: NullableStringFieldUpdateOperationsInput | string | null
@@ -93664,7 +93601,6 @@ export namespace Prisma {
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     dlcOfId?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
@@ -98347,7 +98283,6 @@ export namespace Prisma {
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     gameEdition?: string | null
     igdbSlug?: string | null
@@ -98407,7 +98342,6 @@ export namespace Prisma {
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     dlcOfId?: string | null
     gameEdition?: string | null
@@ -98483,7 +98417,6 @@ export namespace Prisma {
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
     igdbSlug?: NullableStringFieldUpdateOperationsInput | string | null
@@ -98543,7 +98476,6 @@ export namespace Prisma {
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     dlcOfId?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
@@ -98603,7 +98535,6 @@ export namespace Prisma {
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     gameEdition?: string | null
     igdbSlug?: string | null
@@ -98663,7 +98594,6 @@ export namespace Prisma {
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     dlcOfId?: string | null
     gameEdition?: string | null
@@ -98908,7 +98838,6 @@ export namespace Prisma {
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
     igdbSlug?: NullableStringFieldUpdateOperationsInput | string | null
@@ -98968,7 +98897,6 @@ export namespace Prisma {
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     dlcOfId?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
@@ -99197,7 +99125,6 @@ export namespace Prisma {
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     gameEdition?: string | null
     igdbSlug?: string | null
@@ -99257,7 +99184,6 @@ export namespace Prisma {
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     dlcOfId?: string | null
     gameEdition?: string | null
@@ -99480,7 +99406,6 @@ export namespace Prisma {
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
     igdbSlug?: NullableStringFieldUpdateOperationsInput | string | null
@@ -99540,7 +99465,6 @@ export namespace Prisma {
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     dlcOfId?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
@@ -105129,7 +105053,6 @@ export namespace Prisma {
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
     igdbSlug?: NullableStringFieldUpdateOperationsInput | string | null
@@ -105189,7 +105112,6 @@ export namespace Prisma {
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     dlcOfId?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
@@ -105249,7 +105171,6 @@ export namespace Prisma {
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     dlcOfId?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
@@ -105606,7 +105527,6 @@ export namespace Prisma {
     igdbUrl?: string | null
     totalRating?: number | null
     totalRatingCount?: number | null
-    igdbFollows?: number | null
     releaseStatus?: string | null
     gameEdition?: string | null
     igdbSlug?: string | null
@@ -105818,7 +105738,6 @@ export namespace Prisma {
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
     igdbSlug?: NullableStringFieldUpdateOperationsInput | string | null
@@ -105878,7 +105797,6 @@ export namespace Prisma {
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
     igdbSlug?: NullableStringFieldUpdateOperationsInput | string | null
@@ -105938,7 +105856,6 @@ export namespace Prisma {
     igdbUrl?: NullableStringFieldUpdateOperationsInput | string | null
     totalRating?: NullableFloatFieldUpdateOperationsInput | number | null
     totalRatingCount?: NullableIntFieldUpdateOperationsInput | number | null
-    igdbFollows?: NullableIntFieldUpdateOperationsInput | number | null
     releaseStatus?: NullableStringFieldUpdateOperationsInput | string | null
     gameEdition?: NullableStringFieldUpdateOperationsInput | string | null
     igdbSlug?: NullableStringFieldUpdateOperationsInput | string | null

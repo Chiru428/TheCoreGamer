@@ -310,7 +310,6 @@ exports.Prisma.GameScalarFieldEnum = {
   igdbUrl: 'igdbUrl',
   totalRating: 'totalRating',
   totalRatingCount: 'totalRatingCount',
-  igdbFollows: 'igdbFollows',
   releaseStatus: 'releaseStatus',
   dlcOfId: 'dlcOfId',
   gameEdition: 'gameEdition',

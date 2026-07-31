@@ -22,7 +22,7 @@ export const ARTICLES_POPULAR = "articles_viewCount_desc";
 export const ARTICLES_TOP_RATED = "articles_reviewScore_desc";
 
 export const GAMES_NEWEST = "games_releaseDate_desc";
-export const GAMES_POPULAR = "games_igdbFollows_desc";
+export const GAMES_POPULAR = "games_totalRatingCount_desc";
 export const GAMES_TOP_RATED = "games_totalRating_desc";
 export const GAMES_ALPHABETICAL = "games_title_asc";
 
@@ -75,7 +75,7 @@ export interface AlgoliaGameRecord {
   editorialScore: number | null;
   totalRating: number | null;
   totalRatingCount: number | null;
-  igdbFollows: number | null;
+
   tags: string[];
   collectionName: string | null;
 }
