@@ -4,6 +4,7 @@ import { ReactNodeViewRenderer, NodeViewWrapper, NodeViewProps } from '@tiptap/r
 import React, { useState, useEffect, useRef } from 'react';
 import { AlertCircle, Check, Info, ShieldCheck } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { uploadImage } from '@/lib/api';
 
 // --- Image Node View Component ------------------------------------------------
 
@@ -35,6 +36,25 @@ const ImageNodeView = (props: NodeViewProps) => {
 
   const stopProp = (e: React.MouseEvent | React.FocusEvent) => {
     e.stopPropagation();
+  };
+
+  const handleReplace = async () => {
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+    fileInput.onchange = async (e: any) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      try {
+        const res = await uploadImage(file);
+        if (res.data?.url) {
+          updateAttributes({ src: res.data.url });
+        }
+      } catch (err) {
+        console.error('Failed to upload replacement image', err);
+      }
+    };
+    fileInput.click();
   };
 
   const hasFixedSize = !!(node.attrs.width && node.attrs.height);
@@ -85,6 +105,13 @@ const ImageNodeView = (props: NodeViewProps) => {
               <span className="text-[10px] font-bold uppercase tracking-wider">Image Settings</span>
             </div>
             <div className="flex items-center gap-2">
+              <button 
+                type="button"
+                onClick={handleReplace}
+                className="flex items-center gap-1.5 px-2 py-1 rounded text-[9px] font-bold transition-all bg-blue-500/20 border border-blue-500/50 text-blue-400 hover:bg-blue-500/30"
+              >
+                REPLACE
+              </button>
               <button 
                 type="button"
                 onClick={() => props.deleteNode()}

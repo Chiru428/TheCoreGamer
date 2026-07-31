@@ -106,11 +106,13 @@ const ImageGalleryComponent = (props: any) => {
             />
             <div className="absolute top-1 right-1 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
               <button
+                type="button"
                 onClick={(e) => { e.stopPropagation(); handleUpload(index); }}
                 className="w-6 h-6 bg-blue-600/90 hover:bg-blue-500 text-white rounded flex items-center justify-center text-xs"
                 title="Replace image"
               >📁</button>
               <button
+                type="button"
                 onClick={(e) => {
                   e.stopPropagation();
                   removeImage(index);
@@ -166,8 +168,8 @@ const ImageGalleryComponent = (props: any) => {
             className="w-full bg-slate-800 border border-slate-700 rounded px-2 py-1 text-[10px] text-white focus:outline-none focus:border-cyan-500/30"
           />
           <div className="flex w-full gap-1">
-            <button onClick={() => handleUrlSubmit(index)} className="flex-1 bg-cyan-600 text-white text-[10px] py-1 rounded">Add</button>
-            <button onClick={() => setEditingSlot(null)} className="flex-1 bg-slate-700 text-white text-[10px] py-1 rounded">Cancel</button>
+            <button type="button" onClick={() => handleUrlSubmit(index)} className="flex-1 bg-cyan-600 text-white text-[10px] py-1 rounded">Add</button>
+            <button type="button" onClick={() => setEditingSlot(null)} className="flex-1 bg-slate-700 text-white text-[10px] py-1 rounded">Cancel</button>
           </div>
         </div>
       )
