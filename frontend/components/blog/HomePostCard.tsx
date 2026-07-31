@@ -27,9 +27,10 @@ interface HomePostCardProps {
   showViewArticle?: boolean;
   noTopLeftRadius?: boolean;
   noBorderRadius?: boolean;
+  forceDarkTheme?: boolean;
 }
 
-export default function HomePostCard({ article, isCompact, showBadge = false, badgeClassName, titleClassName, titleStyle, mobileHorizontal = false, showExcerptOnMobile = false, showExcerpt = true, contentClassName, showBackground = false, imageClassName, showAuthor = true, truncateTitle = true, showViewArticle = true, noTopLeftRadius = false, noBorderRadius = false }: HomePostCardProps) {
+export default function HomePostCard({ article, isCompact, showBadge = false, badgeClassName, titleClassName, titleStyle, mobileHorizontal = false, showExcerptOnMobile = false, showExcerpt = true, contentClassName, showBackground = false, imageClassName, showAuthor = true, truncateTitle = true, showViewArticle = true, noTopLeftRadius = false, noBorderRadius = false, forceDarkTheme = false }: HomePostCardProps) {
   const tc = CONTENT_TYPE_COLORS[article.contentType] || { bg: 'var(--accent)', color: '#fff' };
 
   const href = `/${contentTypePath(article.contentType)}/${article.slug}`;
@@ -37,7 +38,7 @@ export default function HomePostCard({ article, isCompact, showBadge = false, ba
   return (
     <Link 
       href={href}
-      className={`group flex ${mobileHorizontal ? 'flex-row sm:flex-col items-start sm:items-stretch sm:h-full gap-3 sm:gap-0' : 'flex-col h-full'} ${showBackground ? 'bg-white dark:bg-[#333333]' : 'bg-transparent'} relative overflow-hidden`}
+      className={`group flex ${mobileHorizontal ? 'flex-row sm:flex-col items-center sm:items-stretch sm:h-full gap-3 sm:gap-0' : 'flex-col h-full'} ${showBackground ? 'bg-white dark:bg-[#333333]' : 'bg-transparent'} relative overflow-hidden`}
       style={{
         borderTopLeftRadius: noBorderRadius ? '0px' : (noTopLeftRadius ? '0px' : '4px'),
         borderTopRightRadius: noBorderRadius ? '0px' : '0px',
@@ -46,7 +47,7 @@ export default function HomePostCard({ article, isCompact, showBadge = false, ba
       }}
     >
       {/* Top Image Area */}
-      <div className={`block ${mobileHorizontal ? 'h-[90px] w-auto sm:h-auto sm:w-full' : 'w-full'} ${imageClassName || 'aspect-[16/9]'} relative overflow-hidden bg-[var(--deep,#0d0d1a)] shrink-0`}>
+      <div className={`block ${mobileHorizontal ? 'h-[90px] w-auto sm:h-auto sm:w-full my-auto sm:my-0' : 'w-full'} ${imageClassName || 'aspect-[16/9]'} relative overflow-hidden bg-[var(--deep,#0d0d1a)] shrink-0`} style={{ flexBasis: mobileHorizontal ? 'auto' : undefined }}>
         {article.featuredImageUrl ? (
           <Image 
             src={article.featuredImageUrl} 
@@ -94,9 +95,9 @@ export default function HomePostCard({ article, isCompact, showBadge = false, ba
       </div>
 
       {/* Content Area */}
-      <div className={`flex-1 flex flex-col ${mobileHorizontal ? 'justify-start' : 'justify-center'} ${!showBackground ? (mobileHorizontal ? 'p-0' : 'p-0 pt-2') : mobileHorizontal ? 'p-3 sm:p-5' : (isCompact ? 'p-3' : 'p-5 sm:p-6')} ${contentClassName || ''}`}>
+      <div className={`flex-1 flex flex-col justify-center ${!showBackground ? (mobileHorizontal ? 'p-0' : 'p-0 pt-2') : mobileHorizontal ? 'p-3 sm:p-5' : (isCompact ? 'p-3' : 'p-5 sm:p-6')} ${contentClassName || ''}`}>
         {/* Meta info */}
-        <div className={`flex items-center gap-1.5 text-sm text-text-muted font-medium ${mobileHorizontal ? 'mb-0.5' : (isCompact ? 'mb-1' : 'mb-2')}`}>
+        <div className={`flex items-center gap-1.5 text-sm ${forceDarkTheme ? 'text-gray-300' : 'text-text-muted'} font-medium ${mobileHorizontal ? 'mb-0.5' : (isCompact ? 'mb-1' : 'mb-2')}`}>
           {showAuthor && !isCompact && article.author?.displayName && (
             <>
               <span className="text-[#00e5a0] font-bold mr-2">{article.author.displayName}</span>
@@ -117,9 +118,9 @@ export default function HomePostCard({ article, isCompact, showBadge = false, ba
         </div>
 
         {/* Title */}
-        <div className={`no-underline ${mobileHorizontal ? 'mt-0.5 sm:mt-1.5' : 'mt-1 sm:mt-1.5'}${!showBackground ? ' mb-3' : ''}`}>
+        <div className={`no-underline ${mobileHorizontal ? 'mt-0.5 sm:mt-1.5' : 'mt-1 sm:mt-1.5'}${!showBackground && showExcerpt ? ' mb-3' : ''}`}>
           <h3
-            className={`post-card-title font-bold text-gray-900 dark:text-white uppercase leading-[1.1] transition-colors group-hover:underline ${truncateTitle ? 'line-clamp-2 ' : ''}${titleClassName ? titleClassName : (mobileHorizontal ? 'mb-1 sm:mb-2 text-[15px] sm:text-[18px] lg:text-[20px]' : 'mb-2 text-[18px] lg:text-[20px]')}`}
+            className={`post-card-title font-bold ${forceDarkTheme ? 'text-white' : 'text-gray-900 dark:text-white'} uppercase leading-[1.1] transition-colors group-hover:underline ${truncateTitle ? 'line-clamp-2 ' : ''}${titleClassName ? titleClassName : (mobileHorizontal ? 'mb-1 sm:mb-2 text-[15px] sm:text-[18px] lg:text-[20px]' : 'mb-2 text-[18px] lg:text-[20px]')}`}
             style={titleStyle ?? { fontFamily: "'Rubik', sans-serif" }}
           >
             {article.title}
@@ -130,7 +131,7 @@ export default function HomePostCard({ article, isCompact, showBadge = false, ba
         {showExcerpt && !isCompact && article.excerpt && (
           <div className={showExcerptOnMobile ? "block" : "hidden sm:block"}>
             <p 
-              className="leading-relaxed line-clamp-3 mb-[20px] text-gray-600 dark:text-[#C4C4C4]"
+              className={`leading-relaxed line-clamp-3 mb-[20px] ${forceDarkTheme ? 'text-[#C4C4C4]' : 'text-gray-600 dark:text-[#C4C4C4]'}`}
               style={{ fontSize: '16px' }}
             >
               {article.excerpt}
