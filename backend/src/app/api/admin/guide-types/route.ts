@@ -21,7 +21,7 @@ export async function GET(request: Request) {
     const articles = await prisma.article.findMany({
       where: { 
         contentType: "GUIDE",
-        guideType: { not: null, not: "" }
+        guideType: { not: null }
       },
       select: { guideType: true },
       distinct: ['guideType'],
