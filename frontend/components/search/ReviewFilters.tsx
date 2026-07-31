@@ -18,12 +18,7 @@ const scoreLabels = [
 ];
 
 interface Props {
-  facets?: {
-    platforms: { value: string; count: number }[];
-    genres: { value: string; count: number }[];
-    years: { value: string; count: number }[];
-    tags: { value: string; count: number }[];
-  };
+  facets?: Record<string, { value: string; count: number }[]>;
 }
 
 export default function ReviewFilters({ facets }: Props) {
@@ -65,7 +60,7 @@ export default function ReviewFilters({ facets }: Props) {
     { id: 'genre', label: 'Genres', items: (facets?.genres || []).map(f => ({ value: f.value, label: f.value, count: f.count })) },
     { id: 'tag', label: 'Tags', items: (facets?.tags || []).map(f => ({ value: f.value, label: f.value, count: f.count })) },
     { id: 'score', label: 'Review Score', hideSearch: true, items: scoreLabels },
-    { id: 'year', label: 'Release year', items: (facets?.years || []).map(f => ({ value: String(f.value), label: String(f.value), count: f.count })) },
+    { id: 'year', label: 'Release year', items: (facets?.releaseYear || facets?.years || []).map(f => ({ value: String(f.value), label: String(f.value), count: f.count })) },
   ];
 
   const hasAnyFilter = FILTER_CONFIG.some(config => getSelected(config.id).length > 0);

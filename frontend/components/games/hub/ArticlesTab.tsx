@@ -79,7 +79,7 @@ export default function ArticlesTab({ game, slug }: { game: GameHubData; slug: s
         <>
           <div className="max-w-[900px]">
             {articles.map((article, i) => (
-              <SharedListCard key={article.id} article={article} priority={i === 0} />
+              <SharedListCard key={article.id} article={article} priority={i === 0} isLast={i === articles.length - 1} />
             ))}
           </div>
 

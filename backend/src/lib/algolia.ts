@@ -52,6 +52,8 @@ export interface AlgoliaArticleRecord {
   isBreaking: boolean;
   isFeatured: boolean;
   isSponsored: boolean;
+  releaseYear: number | null;
+  guideType: string | null;
 }
 
 export interface AlgoliaGameRecord {
@@ -141,9 +143,12 @@ export async function configureIndexes() {
         "platforms",
         "genres",
         "tags",
+        "releaseYear",
+        "guideType",
+        "gameName",
         "isBreaking",
         "isFeatured",
-        "filterOnly(gameSlug)",
+        "gameSlug",
       ],
       customRanking: ["desc(viewCount)", "desc(publishedAt)"],
       typoTolerance: true,
@@ -152,7 +157,7 @@ export async function configureIndexes() {
   });
 
   const replicaFaceting = {
-    attributesForFaceting: ["contentType", "platforms", "genres", "tags", "isBreaking", "isFeatured"],
+    attributesForFaceting: ["contentType", "platforms", "genres", "tags", "releaseYear", "guideType", "gameName", "gameSlug", "isBreaking", "isFeatured"],
   };
   await algoliaClient.setSettings({
     indexName: ARTICLES_NEWEST,

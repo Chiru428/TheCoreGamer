@@ -8,6 +8,7 @@ import CategorySearch from '@/components/search/CategorySearch';
 import ContentTypeHeading from '@/components/ui/ContentTypeHeading';
 import GuideFilters from '@/components/search/GuideFilters';
 import GuideActiveFilters from '@/components/search/GuideActiveFilters';
+import GuidesListClient from '@/components/guides/GuidesListClient';
 import type { Article } from '@/types';
 
 const adsEnabled = !!process.env.NEXT_PUBLIC_ADSENSE_ID;
@@ -84,63 +85,39 @@ export default async function GuidesPage({ searchParams }: Props) {
           <CategorySearch contentType="GUIDE" placeholder="Search guides..." />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] xl:grid-cols-[900px_1fr] gap-6 md:gap-8 items-start min-h-screen">
-          {/* -- Main guide list ------------------------------------------ */}
-          <div className="lg:border-r-2 lg:border-border lg:pr-8">
-            <GuideActiveFilters totalResults={mainRes.pagination?.total || 0} />
-
-            {articles.length === 0 ? (
-              <div className="text-center py-20 text-text-muted">No guides found. Check back soon!</div>
-            ) : (
-              articles.map((a: Article, i: number) => (
-                <div key={a.id}>
-                  <SharedListCard article={a} priority={i === 0} />
+        <GuidesListClient
+          initialGuides={articles}
+          totalPages={mainRes.pagination?.totalPages || 1}
+          sidebarChildren={
+            <>
+              {/* Popular guides */}
+              <div className="w-full flex flex-col gap-4 mt-0 md:mt-4">
+                <div className="flex items-center gap-3 mb-1">
+                  <div className="flex-1 h-[2px] bg-border" />
+                  <span
+                    className="text-xs font-extrabold tracking-widest uppercase px-2 py-0.5 rounded text-white"
+                    style={{ background: 'var(--accent)' }}
+                  >
+                    Popular Guides
+                  </span>
+                  <div className="flex-1 h-[2px] bg-border" />
                 </div>
-              ))
-            )}
-
-            {mainRes.pagination && (
-              <Pagination
-                currentPage={page}
-                totalPages={mainRes.pagination.totalPages}
-                basePath={paginationBase}
-                className="mt-4"
-              />
-            )}
-          </div>
-
-          {/* -- Sidebar -------------------------------------------------- */}
-          <aside className="order-first lg:order-none flex flex-col gap-4 pb-0 md:pb-8 md:gap-6 md:w-full self-stretch">
-            {/* Filter panel */}
-            <GuideFilters facets={facetsRes?.data} />
-
-            {/* Popular guides */}
-            <div className="w-full flex flex-col gap-4 mt-2 md:mt-4">
-              <div className="flex items-center gap-3 mb-1">
-                <div className="flex-1 h-px bg-border" />
-                <span
-                  className="text-xs font-extrabold tracking-widest uppercase px-2 py-0.5 rounded text-white dark:text-black"
-                  style={{ background: 'var(--accent)' }}
-                >
-                  Popular Guides
-                </span>
-                <div className="flex-1 h-px bg-border" />
+                <div className="flex flex-col divide-y-2 divide-border">
+                  {popularArticles.map((a: Article) => (
+                    <HomeListCard key={a.id} article={a} />
+                  ))}
+                </div>
               </div>
-              <div className="flex flex-col divide-y-2 divide-border">
-                {popularArticles.map((a: Article) => (
-                  <HomeListCard key={a.id} article={a} />
-                ))}
-              </div>
-            </div>
 
-            {/* Sticky bottom ad */}
-            {adsEnabled && (
-              <div className="hidden md:flex justify-center md:sticky md:top-[var(--sticky-offset)] mt-4">
-                <AdSlot slot="ADS-06" />
-              </div>
-            )}
-          </aside>
-        </div>
+              {/* Sticky bottom ad */}
+              {adsEnabled && (
+                <div className="hidden md:flex justify-center md:sticky md:top-[var(--sticky-offset)] mt-4">
+                  <AdSlot slot="ADS-06" />
+                </div>
+              )}
+            </>
+          }
+        />
       </div>
     </>
   );

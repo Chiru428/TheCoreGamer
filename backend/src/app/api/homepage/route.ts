@@ -75,7 +75,7 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    const [featured, breaking, latest, news, guides, reviews, popular, deals, listicles, features, opinions, homepagePoll1, homepagePoll2] =
+    const [featured, breaking, latest, news, guides, reviews, popular, deals, listicles, opinions, homepagePoll1, homepagePoll2] =
       await withRetry(() =>
         Promise.all([
           prisma.article.findMany({
@@ -133,12 +133,6 @@ export async function GET(request: NextRequest) {
             take: 10,
           }),
           prisma.article.findMany({
-            where: { status: "PUBLISHED", contentType: "FEATURE" },
-            select: ARTICLE_SELECT,
-            orderBy: { publishedAt: { sort: "desc", nulls: "last" } },
-            take: 10,
-          }),
-          prisma.article.findMany({
             where: { status: "PUBLISHED", contentType: "OPINION" },
             select: ARTICLE_SELECT,
             orderBy: { publishedAt: { sort: "desc", nulls: "last" } },
@@ -165,7 +159,6 @@ export async function GET(request: NextRequest) {
       popular: popular.map(serializeArticle),
       deals: deals.map(serializeArticle),
       listicles: listicles.map(serializeArticle),
-      features: features.map(serializeArticle),
       opinions: opinions.map(serializeArticle),
       homepagePollId: homepagePoll1?.id ?? null,
       homepagePoll2Id: homepagePoll2?.id ?? null,

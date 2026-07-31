@@ -140,10 +140,10 @@ const articleInclude = {
   GameReview: {
     select: {
       reviewScore: true,
-      Game: { select: { title: true, slug: true, platforms: true, genres: true } },
+      Game: { select: { title: true, slug: true, platforms: true, genres: true, releaseDate: true } },
     },
   },
-  Game: { select: { title: true, slug: true, platforms: true, genres: true }, take: 1 },
+  Game: { select: { title: true, slug: true, platforms: true, genres: true, releaseDate: true }, take: 1 },
   _count: { select: { Comment: { where: { status: "APPROVED" as const } } } },
 } as const;
 
@@ -176,7 +176,9 @@ function buildArticleRecord(article: ArticleForAlgolia): AlgoliaArticleRecord {
     gameSlug: game?.slug ?? null,
     platforms: game?.platforms ?? [],
     genres: game?.genres ?? [],
+    releaseYear: game?.releaseDate ? new Date(game.releaseDate).getFullYear() : null,
     tags: article.ArticleTag.map((at) => at.Tag.slug),
+    guideType: article.guideType,
     isBreaking: article.isBreaking,
     isFeatured: article.featured,
     isSponsored: article.isSponsored,

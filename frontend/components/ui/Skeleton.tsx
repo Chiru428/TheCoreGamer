@@ -136,16 +136,40 @@ export function SidebarPanelSkeleton({ title }: { title: string }) {
     <div className="w-full flex flex-col gap-4">
       {/* Header with accent lines */}
       <div className="flex items-center gap-3 mb-1">
-        <div className="flex-1 h-px bg-border" />
-        <span className="text-xs font-extrabold tracking-widest uppercase px-2 py-0.5 text-text-dim">
-          {title}
-        </span>
-        <div className="flex-1 h-px bg-border" />
+        <div className="flex-1 h-[2px] bg-border" />
+        <Skeleton className="h-5 w-32 rounded" />
+        <div className="flex-1 h-[2px] bg-border" />
       </div>
 
       <div className="flex flex-col gap-2">
         {Array.from({ length: 4 }).map((_, i) => (
           <SidebarItemSkeleton key={i} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export function FilterBoxSkeleton() {
+  return (
+    <div className="w-full bg-transparent border-2 border-border overflow-hidden">
+      <div className="w-full flex items-center gap-2 p-4">
+        <Skeleton className="w-4 h-4 rounded" />
+        <Skeleton className="h-4 w-20 rounded" />
+      </div>
+      <div className="border-t-2 border-border px-4 py-2 flex flex-col">
+        {Array.from({ length: 4 }).map((_, i) => (
+          <div key={i} className="py-4 border-b border-border/30 last:border-b-0">
+            <Skeleton className="h-3 w-24 mb-4 rounded" />
+            <div className="flex flex-col gap-3">
+              {Array.from({ length: 3 }).map((_, j) => (
+                <div key={j} className="flex items-center gap-3">
+                  <Skeleton className="w-4 h-4 rounded-sm" />
+                  <Skeleton className="h-3 w-32 rounded" />
+                </div>
+              ))}
+            </div>
+          </div>
         ))}
       </div>
     </div>

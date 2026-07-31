@@ -775,7 +775,6 @@ exports.ContentType = exports.$Enums.ContentType = {
   GUIDE: 'GUIDE',
   OPINION: 'OPINION',
   DEAL: 'DEAL',
-  FEATURE: 'FEATURE',
   LISTICLE: 'LISTICLE'
 };
 

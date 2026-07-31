@@ -9,8 +9,8 @@ import {
 } from '@/lib/api';
 
 const staticPages = [
-  '', '/articles', '/reviews', '/mod-guides', '/walkthroughs', '/games',
-  '/news', '/deals', '/opinions', '/features', '/lists', '/about', '/contact',
+  '', '/articles', '/reviews', '/guides', '/games',
+  '/news', '/deals', '/opinions', '/lists', '/about', '/contact',
   '/advertise', '/privacy', '/terms', '/dmca', '/affiliate-disclosure', '/search',
   '/review-policy', '/corrections', '/videos',
   '/platforms', '/genres', '/series',
@@ -19,7 +19,7 @@ const staticPages = [
 ];
 
 const rssFeeds = [
-  '/rss.xml', '/rss/reviews.xml', '/rss/news.xml', '/rss/deals.xml', '/rss/guides.xml', '/rss/features.xml',
+  '/rss.xml', '/rss/reviews.xml', '/rss/news.xml', '/rss/deals.xml', '/rss/guides.xml',
 ];
 
 function getArticlePrefix(contentType: string) {
@@ -29,7 +29,6 @@ function getArticlePrefix(contentType: string) {
     case 'GUIDE': return '/guides';
     case 'OPINION': return '/opinions';
     case 'DEAL': return '/deals';
-    case 'FEATURE': return '/features';
     case 'LISTICLE': return '/lists';
     default: return '/articles';
   }

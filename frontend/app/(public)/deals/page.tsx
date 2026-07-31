@@ -55,7 +55,7 @@ export default async function DealsListingPage({ searchParams }: Props) {
           ) : (
             articles.map((a, i) => (
               <div key={a.id}>
-                <SharedListCard article={a} priority={i === 0} />
+                <SharedListCard article={a} priority={i === 0} isLast={i === articles.length - 1} />
                 {/* TODO: In-feed ad every 5 posts — add <AdSlot slot="ADS-01"> here once monetized */}
               </div>
             ))
@@ -78,14 +78,14 @@ export default async function DealsListingPage({ searchParams }: Props) {
           <div className="w-full flex flex-col gap-4">
             {/* "POPULAR" header with accent lines */}
             <div className="flex items-center gap-3 mb-1">
-              <div className="flex-1 h-px bg-border" />
+              <div className="flex-1 h-[2px] bg-border" />
               <span
-                className="text-xs font-extrabold tracking-widest uppercase px-2 py-0.5 rounded text-white dark:text-black"
+                className="text-xs font-extrabold tracking-widest uppercase px-2 py-0.5 rounded text-white"
                 style={{ background: 'var(--accent)' }}
               >
-                Popular
+                Popular Deals
               </span>
-              <div className="flex-1 h-px bg-border" />
+              <div className="flex-1 h-[2px] bg-border" />
             </div>
 
             {/* Display full list with no scroll container on mobile */}

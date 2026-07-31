@@ -17,16 +17,8 @@ export const NAV_LINKS: readonly NavLink[] = [
   { label: "News", href: "/news", exact: true },
   { label: "Reviews", href: "/reviews", exact: true },
   { label: "Guides", href: "/guides", exact: true },
-  {
-    label: "Editorial",
-    href: "#",
-    unclickable: true,
-    children: [
-      { label: "Features", href: "/features" },
-      { label: "Opinions", href: "/opinions" },
-      { label: "Core Picks", href: "/lists" },
-    ]
-  },
+  { label: "Opinions", href: "/opinions", exact: true },
+  { label: "Core Picks", href: "/lists", exact: true },
   { label: "Deals", href: "/deals", exact: true },
 ] as const;
 
@@ -36,7 +28,6 @@ export const FOOTER_LINKS = {
     { label: "Reviews", href: "/reviews", exact: true },
     { label: "News", href: "/news", exact: true },
     { label: "Opinions", href: "/opinions", exact: true },
-    { label: "Features", href: "/features", exact: true },
     { label: "Lists", href: "/lists", exact: true },
     { label: "Guides", href: "/guides", exact: true },
     { label: "Deals", href: "/deals", exact: true },
@@ -77,7 +68,6 @@ export const CONTENT_TYPE_LABELS: Record<string, string> = {
   GUIDE: 'Guide',
   OPINION: 'Opinion',
   DEAL: 'Deal',
-  FEATURE: 'Feature',
   LISTICLE: 'List',
 };
 
@@ -87,7 +77,6 @@ export const CONTENT_TYPE_COLORS: Record<string, { bg: string; color: string; te
   GUIDE:      { bg: '#3b82f6', color: '#fff', textColor: 'var(--badge-guide)' },
   OPINION:    { bg: '#9d174d', color: '#fff', textColor: 'var(--badge-opinion)' },
   DEAL:       { bg: '#0e7490', color: '#fff', textColor: 'var(--badge-deal)' },
-  FEATURE:    { bg: '#065f46', color: '#fff', textColor: 'var(--badge-feature)' },
   LISTICLE:   { bg: '#78350f', color: '#fff', textColor: 'var(--badge-listicle)' },
 };
 

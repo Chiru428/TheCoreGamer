@@ -27,7 +27,6 @@ export function contentTypeLabel(ct: string): string {
     GUIDE: "Guide",
     OPINION: "Opinion",
     DEAL: "Deal",
-    FEATURE: "Feature",
     LISTICLE: "List",
   };
   return map[ct] ?? ct;

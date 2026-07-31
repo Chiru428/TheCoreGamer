@@ -38,7 +38,6 @@ export async function GET(request: Request) {
     let guideArticles = 0;
     let dealArticles = 0;
     let opinionArticles = 0;
-    let featureArticles = 0;
     let listicleArticles = 0;
     
     let topAuthorGroups: any;
@@ -62,7 +61,6 @@ export async function GET(request: Request) {
         guideArticlesRes,
         dealArticlesRes,
         opinionArticlesRes,
-        featureArticlesRes,
         listicleArticlesRes,
         topAuthorGroupsRaw,
         topDealGroupsRaw,
@@ -82,7 +80,6 @@ export async function GET(request: Request) {
         prisma.article.count({ where: { contentType: "GUIDE" } }),
         prisma.article.count({ where: { contentType: "DEAL" } }),
         prisma.article.count({ where: { contentType: "OPINION" } }),
-        prisma.article.count({ where: { contentType: "FEATURE" } }),
         prisma.article.count({ where: { contentType: "LISTICLE" } }),
         prisma.article.groupBy({
           by: ['authorId'],
@@ -134,7 +131,6 @@ export async function GET(request: Request) {
       guideArticles = guideArticlesRes;
       dealArticles = dealArticlesRes;
       opinionArticles = opinionArticlesRes;
-      featureArticles = featureArticlesRes;
       listicleArticles = listicleArticlesRes;
 
       topAuthorGroups = topAuthorGroupsRaw.slice(0, 5);
@@ -182,7 +178,6 @@ export async function GET(request: Request) {
           guide: guideArticles,
           deal: dealArticles,
           opinion: opinionArticles,
-          feature: featureArticles,
           listicle: listicleArticles,
         },
       },

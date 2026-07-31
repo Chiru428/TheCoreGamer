@@ -54,7 +54,7 @@ export default async function ListsPage({ searchParams }: Props) {
             ) : (
               articles.map((a, i) => (
                 <div key={a.id}>
-                  <SharedListCard article={a} priority={i === 0} />
+                  <SharedListCard article={a} priority={i === 0} isLast={i === articles.length - 1} />
                   {/* TODO: In-feed ad every 5 posts — add <AdSlot slot="ADS-01"> here once monetized */}
                 </div>
               ))
@@ -72,15 +72,15 @@ export default async function ListsPage({ searchParams }: Props) {
           <aside className="order-first lg:order-none flex flex-col gap-4 pb-0 md:pb-8 md:gap-6 md:w-full self-stretch">
             <div className="w-full flex flex-col gap-4">
               <div className="flex items-center gap-3 mb-1">
-                <div className="flex-1 h-px bg-border" />
-                <span
-                  className="text-xs font-extrabold tracking-widest uppercase px-2 py-0.5 rounded text-white dark:text-black"
-                  style={{ background: 'var(--accent)' }}
-                >
-                  Popular
-                </span>
-                <div className="flex-1 h-px bg-border" />
-              </div>
+              <div className="flex-1 h-[2px] bg-border" />
+              <span
+                className="text-xs font-extrabold tracking-widest uppercase px-2 py-0.5 rounded text-white"
+                style={{ background: 'var(--accent)' }}
+              >
+                Popular Lists
+              </span>
+              <div className="flex-1 h-[2px] bg-border" />
+            </div>
               <div className="flex flex-col divide-y-2 divide-border">
                 {popularArticles.map((a) => (
                   <HomeListCard key={a.id} article={a} />

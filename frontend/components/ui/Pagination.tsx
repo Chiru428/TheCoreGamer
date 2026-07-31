@@ -23,56 +23,77 @@ export default function Pagination({ currentPage, totalPages, basePath, classNam
   }
 
   const pages: (number | '...')[] = [];
-  if (totalPages <= 7) {
+  if (totalPages <= 11) {
     for (let i = 1; i <= totalPages; i++) pages.push(i);
   } else {
     pages.push(1);
-    if (currentPage > 3) pages.push('...');
-    for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) pages.push(i);
-    if (currentPage < totalPages - 2) pages.push('...');
+    if (currentPage > 5) pages.push('...');
+    const start = Math.max(2, currentPage - 4);
+    const end = Math.min(totalPages - 1, currentPage + 4);
+    for (let i = start; i <= end; i++) pages.push(i);
+    if (currentPage < totalPages - 4) pages.push('...');
     pages.push(totalPages);
   }
 
+  const jumpLinks: number[] = [];
+  for (let i = 10; i <= totalPages; i += 10) {
+    jumpLinks.push(i);
+  }
+
+  const btnClass = "w-9 h-9 flex items-center justify-center rounded-lg text-sm transition-colors border border-black/60 dark:border-white/60 text-text hover:border-[var(--brand-green)] hover:text-[var(--brand-green)] hover:bg-bg-elevated font-medium";
+  const activeClass = "bg-[var(--brand-green)] text-black border-[var(--brand-green)] shadow-md hover:bg-[var(--brand-green-hover)] hover:border-[var(--brand-green-hover)] font-bold";
+  const disabledClass = "opacity-40 pointer-events-none";
+
   return (
-    <nav className={cn('flex items-center justify-center gap-1', className)} aria-label="Pagination">
-      <Link
-        href={currentPage > 1 ? buildUrl(currentPage - 1) : '#'}
-        className={cn(
-          'p-2 rounded-lg transition-colors',
-          currentPage > 1 ? 'hover:bg-bg-elevated text-text-muted hover:text-text-primary' : 'opacity-40 pointer-events-none'
+    <div className={cn('flex flex-col items-center gap-6', className)}>
+      <nav className="flex flex-wrap items-center justify-center gap-1.5" aria-label="Pagination">
+        <Link
+          href={currentPage > 1 ? buildUrl(currentPage - 1) : '#'}
+          className={cn(btnClass, currentPage <= 1 && disabledClass)}
+          aria-label="Previous page"
+        >
+          <ChevronLeft className="w-4 h-4" />
+        </Link>
+        
+        {pages.map((page, i) =>
+          page === '...' ? (
+            <span key={`dots-${i}`} className={cn(btnClass, 'pointer-events-none opacity-70')}>…</span>
+          ) : (
+            <Link
+              key={page}
+              href={buildUrl(page)}
+              className={cn(btnClass, page === currentPage && activeClass)}
+            >
+              {page}
+            </Link>
+          )
         )}
-        aria-label="Previous page"
-      >
-        <ChevronLeft className="w-5 h-5" />
-      </Link>
-      {pages.map((page, i) =>
-        page === '...' ? (
-          <span key={`dots-${i}`} className="px-2 text-text-dim">…</span>
-        ) : (
-          <Link
-            key={page}
-            href={buildUrl(page)}
-            className={cn(
-              'w-10 h-10 flex items-center justify-center rounded-lg text-sm font-medium transition-colors',
-              page === currentPage
-                ? 'bg-accent text-white shadow-lg shadow-accent/20'
-                : 'text-text-muted hover:bg-bg-elevated hover:text-text-primary'
-            )}
-          >
-            {page}
-          </Link>
-        )
+        
+        <Link
+          href={currentPage < totalPages ? buildUrl(currentPage + 1) : '#'}
+          className={cn(btnClass, currentPage >= totalPages && disabledClass)}
+          aria-label="Next page"
+        >
+          <ChevronRight className="w-4 h-4" />
+        </Link>
+      </nav>
+
+      {jumpLinks.length > 0 && (
+        <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 max-w-[500px]">
+          {jumpLinks.map((link) => (
+            <Link
+              key={`jump-${link}`}
+              href={buildUrl(link)}
+              className={cn(
+                "text-[15px] font-bold transition-colors hover:underline",
+                currentPage === link ? "text-white underline" : "text-[#FF2A6D] hover:text-[#ff4d85]"
+              )}
+            >
+              {link}
+            </Link>
+          ))}
+        </div>
       )}
-      <Link
-        href={currentPage < totalPages ? buildUrl(currentPage + 1) : '#'}
-        className={cn(
-          'p-2 rounded-lg transition-colors',
-          currentPage < totalPages ? 'hover:bg-bg-elevated text-text-muted hover:text-text-primary' : 'opacity-40 pointer-events-none'
-        )}
-        aria-label="Next page"
-      >
-        <ChevronRight className="w-5 h-5" />
-      </Link>
-    </nav>
+    </div>
   );
 }

@@ -5,13 +5,7 @@ import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { Filter, ChevronDown, ChevronUp, Search } from 'lucide-react';
 
 interface Props {
-  facets?: {
-    guideTypes: { value: string; count: number }[];
-    platforms:  { value: string; count: number }[];
-    genres:     { value: string; count: number }[];
-    games:      { value: string; slug: string; count: number }[];
-    tags:       { value: string; count: number }[];
-  };
+  facets?: any;
 }
 
 export default function GuideFilters({ facets }: Props) {
@@ -41,10 +35,14 @@ export default function GuideFilters({ facets }: Props) {
   const getSelected = (paramKey: string) =>
     (searchParams.get(paramKey) || '').split(',').filter(Boolean);
 
-  // Games need a special mapping: label = game title, paramKey = "game" but value = slug
-  const gameItems = (facets?.games || []).map(g => ({
-    value: g.slug,
-    label: g.value,
+  // Format slug to readable name if gameName facet isn't available
+  const formatSlugToName = (slug: string) => {
+    return slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  };
+
+  const gameItems = (facets?.games || facets?.gameSlug || []).map((g: any) => ({
+    value: g.slug || String(g.value),
+    label: g.slug ? g.value : formatSlugToName(String(g.value)),
     count: g.count,
   }));
 
@@ -53,18 +51,18 @@ export default function GuideFilters({ facets }: Props) {
       id: 'type',
       label: 'Guide Type',
       hideSearch: true,
-      items: (facets?.guideTypes || []).map(f => ({ value: f.value, label: f.value, count: f.count })),
+      items: (facets?.guideTypes || facets?.guideType || []).map((f: any) => ({ value: String(f.value), label: String(f.value), count: f.count })),
     },
     {
       id: 'platform',
       label: 'Platforms',
       hideSearch: true,
-      items: (facets?.platforms || []).map(f => ({ value: f.value, label: f.value, count: f.count })),
+      items: (facets?.platforms || []).map((f: any) => ({ value: String(f.value), label: String(f.value), count: f.count })),
     },
     {
       id: 'genre',
       label: 'Genres',
-      items: (facets?.genres || []).map(f => ({ value: f.value, label: f.value, count: f.count })),
+      items: (facets?.genres || []).map((f: any) => ({ value: String(f.value), label: String(f.value), count: f.count })),
     },
     {
       id: 'game',
@@ -74,7 +72,7 @@ export default function GuideFilters({ facets }: Props) {
     {
       id: 'tag',
       label: 'Tags',
-      items: (facets?.tags || []).map(f => ({ value: f.value, label: f.value, count: f.count })),
+      items: (facets?.tags || []).map((f: any) => ({ value: String(f.value), label: String(f.value), count: f.count })),
     },
   ];
 

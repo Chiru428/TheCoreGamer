@@ -31,7 +31,7 @@ export function contentTypeListingPath(contentType: string): string {
     case "REVIEW": return "reviews";
     case "GUIDE": return "guides";
     case "OPINION": return "opinions";
-    case "FEATURE": return "features";
+
     case "DEAL": return "deals";
     case "LISTICLE": return "lists";
     case "NEWS":

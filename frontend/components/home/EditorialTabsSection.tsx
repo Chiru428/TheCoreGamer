@@ -9,7 +9,6 @@ import { formatDate } from '@/lib/utils';
 
 interface EditorialTabsSectionProps {
   corePicks: Article[];
-  features: Article[];
   opinions: Article[];
 }
 
@@ -20,10 +19,9 @@ type Tab = {
   articles: Article[];
 };
 
-export default function EditorialTabsSection({ corePicks, features, opinions }: EditorialTabsSectionProps) {
+export default function EditorialTabsSection({ corePicks, opinions }: EditorialTabsSectionProps) {
   const tabs: Tab[] = [
     { key: 'core_picks', label: 'Core Picks', href: '/lists', articles: corePicks },
-    { key: 'features', label: 'Features', href: '/features', articles: features },
     { key: 'opinions', label: 'Opinions', href: '/opinions', articles: opinions },
   ].filter((t) => t.articles.length > 0);
 

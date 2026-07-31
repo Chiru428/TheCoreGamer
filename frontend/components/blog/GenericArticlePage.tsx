@@ -89,7 +89,6 @@ export default async function GenericArticlePage({ params, expectedPath }: { par
            article.contentType === 'DEAL' ? [{ name: 'Deals', url: '/deals' }] :
            article.contentType === 'GUIDE' ? [{ name: 'Guides', url: '/guides' }] :
            article.contentType === 'OPINION' ? [{ name: 'Opinion', url: '/opinions' }] :
-           article.contentType === 'FEATURE' ? [{ name: 'Features', url: '/features' }] :
            article.contentType === 'LISTICLE' ? [{ name: 'Lists', url: '/lists' }] :
            article.tags?.[0] ? [{ name: article.tags[0].tag.name, url: `/tags/${article.tags[0].tag.slug}` }] : []),
         { name: article.title, url: `/${expectedPath}/${slug}` },
@@ -154,14 +153,12 @@ export default async function GenericArticlePage({ params, expectedPath }: { par
                                article.contentType === 'DEAL' ? 'Deals' :
                                article.contentType === 'GUIDE' ? 'Guides' :
                                article.contentType === 'OPINION' ? 'Opinions' :
-                               article.contentType === 'FEATURE' ? 'Features' :
                                article.contentType === 'LISTICLE' ? 'Lists' : 'Articles',
                         href: `/${expectedPath}`,
                         icon: article.contentType === 'NEWS' ? <Newspaper className="w-4.5 h-4.5" /> : 
                               article.contentType === 'DEAL' ? <Tag className="w-4.5 h-4.5" /> :
                               article.contentType === 'GUIDE' ? <BookOpen className="w-4.5 h-4.5" /> :
                               article.contentType === 'OPINION' ? <Lightbulb className="w-4.5 h-4.5" /> :
-                              article.contentType === 'FEATURE' ? <LayoutGrid className="w-4.5 h-4.5" /> :
                               article.contentType === 'LISTICLE' ? <List className="w-4.5 h-4.5" /> : <LayoutGrid className="w-4.5 h-4.5" /> }
                     ]} />
                   </div>

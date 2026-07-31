@@ -32,6 +32,7 @@ export async function GET(request: NextRequest) {
     // Filter by collection name (series) — exact match, case-insensitive.
     // Used when clicking a collection tag on the game detail page.
     const collection = searchParams.get("collection");
+    const maxReleaseDate = searchParams.get("maxReleaseDate");
     // "card" is the lean projection used by public listing/selector UIs (game
     // grids, homepage rows, the article-editor game picker) — none of them
     // render the dozens of IGDB metadata/JSON columns on the full Game row.
@@ -49,6 +50,12 @@ export async function GET(request: NextRequest) {
     if (genres) where.genres = { hasSome: genres.split(",") };
     if (publisher) where.publisher = publisher;
     if (collection) where.collectionName = { equals: collection, mode: "insensitive" };
+    if (maxReleaseDate) {
+      const parsedDate = new Date(maxReleaseDate);
+      if (!isNaN(parsedDate.getTime())) {
+        where.releaseDate = { lte: parsedDate };
+      }
+    }
     // "Newest" means ranked by release date
     if (sort === "newest") {
       // Intentionally not filtering by date here to decouple sorting and filtering.
@@ -64,7 +71,7 @@ export async function GET(request: NextRequest) {
     if (sort === "popular") orderBy = { totalRatingCount: { sort: "desc", nulls: "last" } };
     if (sort === "coming-soon") orderBy = { releaseDate: { sort: "asc", nulls: "last" } };
 
-    const cacheKey = `games:list:p${page}:l${limit}:q${search || ""}:g${genres || ""}:s${sort || ""}:pub${publisher || ""}:col${collection || ""}:f${fields || ""}`;
+    const cacheKey = `games:list:p${page}:l${limit}:q${search || ""}:g${genres || ""}:s${sort || ""}:pub${publisher || ""}:col${collection || ""}:f${fields || ""}:maxd${maxReleaseDate || ""}`;
 
     try {
       const cached = await cacheGet<{ data: unknown[]; total: number }>(cacheKey);

@@ -25,7 +25,6 @@ export enum ContentType {
   GUIDE = 'GUIDE',
   OPINION = 'OPINION',
   DEAL = 'DEAL',
-  FEATURE = 'FEATURE',
   LISTICLE = 'LISTICLE',
 }
 
@@ -737,7 +736,6 @@ export interface AdminStats {
       walkthrough: number;
       deal: number;
       opinion: number;
-      feature: number;
       listicle: number;
     };
   };
@@ -854,6 +852,8 @@ export interface AlgoliaArticleHit {
   platforms: string[];
   genres: string[];
   tags: string[];
+  releaseYear: number | null;
+  guideType: string | null;
   isBreaking: boolean;
   isFeatured: boolean;
   isSponsored: boolean;
@@ -1115,7 +1115,6 @@ export interface HomepageData {
   popular: Article[];
   deals: Article[];
   listicles: Article[];
-  features: Article[];
   opinions: Article[];
   homepagePollId: string | null;
   homepagePoll2Id: string | null;

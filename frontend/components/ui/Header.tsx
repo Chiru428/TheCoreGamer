@@ -375,28 +375,11 @@ export default function Header({ tickerArticles = [] }: { tickerArticles?: Artic
               </Link>
             );
           })}
-          {isAuthenticated && user && STAFF_ROLES.includes(user.role) && (
-            <Link
-              href="/admin"
-              className="relative px-4 py-2 rounded-lg text-[13px] font-bold tracking-wider uppercase whitespace-nowrap transition-all duration-300 group ml-2"
-            >
-              <span className="relative z-10 transition-colors duration-300 flex items-center gap-1.5 hover:opacity-100" style={{ color: isActive({href: '/admin'}) ? 'var(--nav-link-active)' : 'var(--nav-link)', opacity: isActive({href: '/admin'}) ? 1 : 0.8 }}>
-                <Shield className="w-3.5 h-3.5" />
-                {user.role}
-              </span>
-              {isActive({href: '/admin'}) && (
-                <div
-                  className="absolute bottom-1 left-4 right-4 h-0.5 rounded-full"
-                  style={{ background: 'var(--nav-link-underline)' }}
-                />
-              )}
-              <div className="absolute inset-0 rounded-lg bg-accent-dim opacity-0 group-hover:opacity-100 transition-all duration-300 scale-90 group-hover:scale-100 pointer-events-none" />
-            </Link>
-          )}
+
         </nav>
 
         {/* Right side: search, theme toggle, account, mobile hamburger */}
-        <div className="ml-auto md:ml-0 flex items-center gap-2">
+        <div className="ml-auto md:ml-0 flex items-center gap-2 md:gap-3">
           <button
             ref={searchBtnRef}
             onClick={() => setSearchOverlayOpen(true)}
@@ -453,18 +436,10 @@ export default function Header({ tickerArticles = [] }: { tickerArticles?: Artic
                   onClick={() => setAccountMenuOpen((v) => !v)}
                   aria-haspopup="true"
                   aria-expanded={accountMenuOpen}
-                  className="text-[16px] font-bold leading-none hover:underline peer-hover/avatar:underline transition-all"
+                  className="text-[17px] font-bold leading-none hover:underline peer-hover/avatar:underline transition-all"
                   style={{ color: 'var(--nav-link)' }}
                 >
                   {user.displayName}
-                </button>
-
-                <button
-                  type="button"
-                  onClick={async () => { clearSession(); await signOut({ callbackUrl: '/' }); }}
-                  className="flex items-center gap-1 text-[11px] font-medium leading-none whitespace-nowrap transition-all duration-300 text-white/70 hover:text-white hover:underline active:scale-95"
-                >
-                  Sign out
                 </button>
               </div>
 
@@ -474,6 +449,21 @@ export default function Header({ tickerArticles = [] }: { tickerArticles?: Artic
                   style={{ background: 'var(--nav-bg)', border: '1px solid var(--border)', boxShadow: '0 16px 32px rgba(0,0,0,0.35)' }}
                   role="menu"
                 >
+                  {isAuthenticated && user && STAFF_ROLES.includes(user.role) && (
+                    <Link
+                      href="/admin"
+                      role="menuitem"
+                      onClick={() => setAccountMenuOpen(false)}
+                      className="flex items-center gap-2 px-4 py-2.5 text-[13px] font-bold uppercase tracking-wide transition-colors hover:text-white group"
+                      style={{ color: 'var(--nav-link)' }}
+                    >
+                      <Shield className="w-4 h-4 shrink-0 text-accent" /> 
+                      <span className="relative inline-block text-accent">
+                        Admin Dashboard
+                        <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 transition-all duration-700 ease-in-out rounded-full group-hover:w-full opacity-0 group-hover:opacity-100" style={{ background: 'var(--accent)' }} />
+                      </span>
+                    </Link>
+                  )}
                   <Link
                     href="/settings/profile"
                     role="menuitem"
@@ -500,6 +490,20 @@ export default function Header({ tickerArticles = [] }: { tickerArticles?: Artic
                       <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 transition-all duration-700 ease-in-out rounded-full group-hover:w-full opacity-0 group-hover:opacity-100" style={{ background: '#ffffff' }} />
                     </span>
                   </Link>
+                  <div className="h-px bg-white/10 my-1 mx-4" />
+                  <button
+                    type="button"
+                    onClick={async () => { setAccountMenuOpen(false); clearSession(); await signOut({ callbackUrl: '/' }); }}
+                    className="flex w-full items-center gap-2 px-4 py-2.5 text-[13px] font-bold uppercase tracking-wide transition-colors hover:text-red-400 group text-left"
+                    style={{ color: 'var(--nav-link)' }}
+                    role="menuitem"
+                  >
+                    <LogOut className="w-4 h-4 shrink-0" />
+                    <span className="relative inline-block">
+                      Sign out
+                      <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 transition-all duration-700 ease-in-out rounded-full group-hover:w-full opacity-0 group-hover:opacity-100" style={{ background: '#f87171' }} />
+                    </span>
+                  </button>
                 </div>
               )}
             </div>

@@ -15,7 +15,7 @@ export default function OpinionsLoading() {
             ))}
           </div>
           <aside className="flex flex-col gap-6 w-full lg:w-[280px]">
-            <SidebarPanelSkeleton title="Popular" />
+            <SidebarPanelSkeleton title="Popular Opinions" />
             <div className="flex justify-center my-4">
               <Skeleton className="w-[300px] h-[250px] rounded-lg" />
             </div>

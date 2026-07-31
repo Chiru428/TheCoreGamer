@@ -294,7 +294,6 @@ export const ContentType: {
   GUIDE: 'GUIDE',
   OPINION: 'OPINION',
   DEAL: 'DEAL',
-  FEATURE: 'FEATURE',
   LISTICLE: 'LISTICLE'
 };
 

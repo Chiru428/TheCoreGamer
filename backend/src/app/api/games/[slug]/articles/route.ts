@@ -22,7 +22,6 @@ const CONTENT_TYPES = [
   "GUIDE",
   "OPINION",
   "DEAL",
-  "FEATURE",
   "LISTICLE",
 ] as const;
 

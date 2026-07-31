@@ -973,7 +973,6 @@ enum ContentType {
   GUIDE
   OPINION
   DEAL
-  FEATURE
   LISTICLE
 }
 

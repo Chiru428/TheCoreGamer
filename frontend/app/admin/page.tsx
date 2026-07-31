@@ -373,10 +373,9 @@ export default function AdminDashboard() {
                     { key: 'walkthrough', color: 'bg-purple-400' },
                     { key: 'deal', color: 'bg-rose-400' },
                     { key: 'opinion', color: 'bg-teal-400' },
-                    { key: 'feature', color: 'bg-indigo-400' },
                     { key: 'listicle', color: 'bg-pink-400' }
                   ].map(ct => {
-                     const count = stats?.articles?.byType?.[ct.key as 'news' | 'review' | 'modGuide' | 'walkthrough' | 'deal' | 'opinion' | 'feature' | 'listicle'] || 0;
+                     const count = stats?.articles?.byType?.[ct.key as 'news' | 'review' | 'modGuide' | 'walkthrough' | 'deal' | 'opinion' | 'listicle'] || 0;
                      if (count === 0) return null;
                      const percent = Math.max(2, (count / Math.max(1, stats?.articles?.published || 1)) * 100);
                      return <div key={ct.key} className={`h-full ${ct.color}`} style={{ width: `${percent}%` }} title={`${count}`} />
@@ -391,10 +390,9 @@ export default function AdminDashboard() {
                     { key: 'walkthrough', label: 'Walkthroughs', color: 'bg-purple-400' },
                     { key: 'deal', label: 'Deals', color: 'bg-rose-400' },
                     { key: 'opinion', label: 'Opinions', color: 'bg-teal-400' },
-                    { key: 'feature', label: 'Features', color: 'bg-indigo-400' },
                     { key: 'listicle', label: 'Listicles', color: 'bg-pink-400' }
                   ].map(ct => {
-                    const count = stats?.articles?.byType?.[ct.key as 'news' | 'review' | 'modGuide' | 'walkthrough' | 'deal' | 'opinion' | 'feature' | 'listicle'] || 0;
+                    const count = stats?.articles?.byType?.[ct.key as 'news' | 'review' | 'modGuide' | 'walkthrough' | 'deal' | 'opinion' | 'listicle'] || 0;
                     if (count === 0) return null;
                     return (
                       <div key={ct.key} className="flex items-center justify-between">

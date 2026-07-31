@@ -74,7 +74,6 @@ export function contentTypePath(contentType: string | undefined | null): string 
   if (contentType === 'GUIDE') return 'guides';
   if (contentType === 'NEWS') return 'news';
   if (contentType === 'DEAL') return 'deals';
-  if (contentType === 'FEATURE') return 'features';
   if (contentType === 'OPINION') return 'opinions';
   if (contentType === 'LISTICLE') return 'lists';
   return 'articles'; // fallback

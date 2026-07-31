@@ -6,7 +6,7 @@ import { prisma } from "@/lib/prisma";
  *
  * Spec: https://developers.google.com/search/docs/crawling-indexing/sitemaps/news-sitemap
  *
- * Covers NEWS and FEATURE articles published within the last 48 hours.
+ * Covers NEWS articles published within the last 48 hours.
  * Google News only indexes articles published within the past 2 days.
  *
  * Path mapping MUST stay in sync with:
@@ -35,7 +35,7 @@ export async function GET() {
   const articles = await prisma.article.findMany({
     where: {
       status: "PUBLISHED",
-      contentType: { in: ["NEWS", "FEATURE"] },
+      contentType: "NEWS",
       publishedAt: { gte: cutoff },
     },
     select: { slug: true, title: true, publishedAt: true, contentType: true },

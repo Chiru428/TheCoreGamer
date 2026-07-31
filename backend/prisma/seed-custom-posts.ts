@@ -63,7 +63,7 @@ async function main() {
   const categories = [
     { type: ContentType.OPINION, prefix: "Opinion" },
     { type: ContentType.LISTICLE, prefix: "Top 10" },
-    { type: ContentType.FEATURE, prefix: "Feature" },
+
     { type: ContentType.DEAL, prefix: "Deal Alert" },
   ];
 

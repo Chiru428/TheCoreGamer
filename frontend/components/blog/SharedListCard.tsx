@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { formatDate, readingTime, getGuideTypeColor } from '@/lib/utils';
+import { formatDate, readingTime, getGuideTypeColor, cn } from '@/lib/utils';
 import type { Article } from '@/types';
 import { CONTENT_TYPE_LABELS, CONTENT_TYPE_COLORS } from '@/lib/constants';
 import ScoreBadge from '@/components/review/ScoreBadge';
@@ -12,9 +12,10 @@ import { contentTypePath } from '@/lib/seo';
 interface SharedListCardProps {
   article: any;
   priority?: boolean;
+  isLast?: boolean;
 }
 
-export default function SharedListCard({ article, priority = false }: SharedListCardProps) {
+export default function SharedListCard({ article, priority = false, isLast = false }: SharedListCardProps) {
   const tc = CONTENT_TYPE_COLORS[article.contentType] || { bg: 'var(--accent)', color: '#fff' };
   const rt = readingTime(article.modGuide?.sections || article.walkthrough?.sections || article.content);
   
@@ -24,7 +25,10 @@ export default function SharedListCard({ article, priority = false }: SharedList
   return (
     <Link 
       href={href}
-      className="group flex flex-col sm:flex-row w-full bg-transparent relative overflow-hidden pb-3 sm:pb-4 mb-6 sm:mb-8 border-b-2 border-border h-auto sm:min-h-[135px] lg:min-h-[180px]"
+      className={cn(
+        "group flex flex-col sm:flex-row w-full bg-transparent relative overflow-hidden pb-3 sm:pb-4 mb-6 sm:mb-8 h-auto sm:min-h-[135px] lg:min-h-[180px]",
+        !isLast && "border-b-2 border-border"
+      )}
     >
       <article className="flex flex-col sm:flex-row sm:items-center w-full">
         {/* Image Area */}

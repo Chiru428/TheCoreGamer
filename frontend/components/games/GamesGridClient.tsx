@@ -7,7 +7,7 @@ import { useMemo, useState, Fragment } from 'react';
 import type { Game } from '@/types';
 import { useAlgoliaGames } from '@/hooks/useAlgoliaGames';
 import GamesFilterSidebar from './GamesFilterSidebar';
-import Skeleton from '@/components/ui/Skeleton';
+import Skeleton, { FilterBoxSkeleton } from '@/components/ui/Skeleton';
 import SortDropdown from '@/components/ui/SortDropdown';
 
 const GAME_SORT_OPTIONS = [
@@ -124,13 +124,21 @@ export default function GamesGridClient({ initialGames }: Props) {
 
       {/* Mobile Filters (Collapsible) */}
       <div className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden -mt-4 ${isMobileFiltersOpen ? 'max-h-[2000px] opacity-100 mb-6' : 'max-h-0 opacity-0'}`}>
-        <GamesFilterSidebar facets={facets} />
+        {isLoading && hits.length === 0 ? (
+          <FilterBoxSkeleton />
+        ) : (
+          <GamesFilterSidebar facets={facets} />
+        )}
       </div>
 
       <div className="flex flex-col md:flex-row gap-8">
         {/* Sidebar - Hidden on small screens, can add a mobile drawer later if needed */}
         <aside className="hidden md:block w-[250px] shrink-0 sticky top-32 max-h-[calc(100vh-8rem)] overflow-y-auto no-scrollbar pb-6 pr-2">
-          <GamesFilterSidebar facets={facets} />
+          {isLoading && hits.length === 0 ? (
+            <FilterBoxSkeleton />
+          ) : (
+            <GamesFilterSidebar facets={facets} />
+          )}
         </aside>
 
         {/* Main Grid */}

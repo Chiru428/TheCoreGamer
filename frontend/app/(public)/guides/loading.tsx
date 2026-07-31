@@ -1,6 +1,6 @@
-import Skeleton, { RowCardSkeleton, SidebarPanelSkeleton, PageHeaderSkeleton } from '@/components/ui/Skeleton';
+import Skeleton, { RowCardSkeleton, SidebarPanelSkeleton, PageHeaderSkeleton, FilterBoxSkeleton } from '@/components/ui/Skeleton';
 
-export default function NewsLoading() {
+export default function GuidesLoading() {
   return (
     <>
       <PageHeaderSkeleton />
@@ -10,17 +10,18 @@ export default function NewsLoading() {
         </div>
 
         {/* Two-column layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8 items-start min-h-screen">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] xl:grid-cols-[900px_1fr] gap-8 items-start content-start min-h-screen">
           {/* Main list */}
-          <div>
+          <div className="lg:border-r-2 lg:border-border lg:pr-8">
             {Array.from({ length: 5 }).map((_, i) => (
               <RowCardSkeleton key={i} />
             ))}
           </div>
 
           {/* Sidebar */}
-          <aside className="flex flex-col gap-6 w-full lg:w-[280px]">
-            <SidebarPanelSkeleton title="Popular News" />
+          <aside className="order-first lg:order-none flex flex-col gap-4 pb-0 md:pb-8 md:gap-6 w-full self-stretch">
+            <FilterBoxSkeleton />
+            <SidebarPanelSkeleton title="Popular Guides" />
             <div className="flex justify-center my-4">
               <Skeleton className="w-[300px] h-[250px] rounded-lg" />
             </div>

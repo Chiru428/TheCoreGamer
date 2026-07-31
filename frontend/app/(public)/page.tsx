@@ -11,7 +11,7 @@ import HeroSection from '@/components/blog/HeroSection';
 
 import ScrollableArticleSection from '@/components/home/ScrollableArticleSection';
 import GameTabsSection from '@/components/home/GameTabsSection';
-import GuideTabsSection from '@/components/home/GuideTabsSection';
+import GuidesSection from '@/components/home/GuidesSection';
 import ReviewsGrid from '@/components/home/ReviewsGrid';
 import EditorialTabsSection from '@/components/home/EditorialTabsSection';
 import DealsSection from '@/components/home/DealsSection';
@@ -33,7 +33,7 @@ async function getData() {
  const [data, topRatedGamesRes, newReleaseGamesRes, comingSoonGamesRes] = await Promise.all([
   fetchHomepage(),
   fetchGames({ fields: 'card', sort: 'top-rated', limit: 6 }),
-  fetchGames({ fields: 'card', sort: 'newest', limit: 6 }),
+  fetchGames({ fields: 'card', sort: 'newest', limit: 6, maxReleaseDate: new Date().toISOString() }),
   fetchGames({ fields: 'card', sort: 'coming-soon', limit: 6 }),
  ]);
 
@@ -77,7 +77,6 @@ async function getData() {
    dealArticles: mainDealArticles,
    hotDeals,
    listicleArticles: dedup(data.data?.listicles ?? []),
-  featureArticles: dedup(data.data?.features ?? []),
   opinionArticles: dedup(data.data?.opinions ?? []),
   popularArticles: data.data?.popular ?? [],
   homepagePollId: data.data?.homepagePollId ?? null,
@@ -158,7 +157,7 @@ function formatShortDate(dateString?: string | null) {
 }
 
 export default async function HomePage() {
- const { heroArticles, newsArticles, reviewArticles, guideArticles, dealArticles, hotDeals, listicleArticles, featureArticles, opinionArticles, popularArticles, homepagePollId, homepagePoll2Id, topRatedGames, newReleaseGames, comingSoonGames } = await getData();
+ const { heroArticles, newsArticles, reviewArticles, guideArticles, dealArticles, hotDeals, listicleArticles, opinionArticles, popularArticles, homepagePollId, homepagePoll2Id, topRatedGames, newReleaseGames, comingSoonGames } = await getData();
 
  return (
   <div className="home-page-root" style={{ background: 'var(--bg)', fontFamily: '"acumin-pro", sans-serif', fontSize: '15px' }}>
@@ -496,13 +495,13 @@ export default async function HomePage() {
     {guideArticles.length > 0 && (
      <section className="mb-10 md:mb-14 last:mb-0">
       <SectionHead title="Guides" />
-      <GuideTabsSection guides={guideArticles} />
+      <GuidesSection guides={guideArticles} />
      </section>
     )}
 
 
     {/* EDITORIAL */}
-    {(listicleArticles.length > 0 || featureArticles.length > 0 || opinionArticles.length > 0) && (
+    {(listicleArticles.length > 0 || opinionArticles.length > 0) && (
      <section className="mb-10 md:mb-14 last:mb-0">
       {/* Mobile Poll (Above Section Head) */}
       <div className="lg:hidden mb-14 flex flex-col gap-8">
@@ -517,7 +516,6 @@ export default async function HomePage() {
        <div className="flex flex-col gap-6 w-full max-w-[800px]">
         <EditorialTabsSection 
           corePicks={listicleArticles} 
-          features={featureArticles} 
           opinions={opinionArticles} 
         />
        </div>
