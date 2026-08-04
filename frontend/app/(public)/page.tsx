@@ -434,7 +434,7 @@ export default async function HomePage() {
         
         {adsEnabled && (
          <div className="hidden lg:flex justify-start">
-          <AdSlot adSlot="home_sidebar_2" width={300} height={250} className="w-full flex justify-center" />
+          <AdSlot slot="ADS-06" className="w-full flex justify-center" />
          </div>
         )}
        </div>
