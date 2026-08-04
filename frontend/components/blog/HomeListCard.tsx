@@ -39,8 +39,8 @@ export default function HomeListCard({ article, titleClassName }: HomeListCardPr
           </span>
         )}
         <h3
-          className={`post-card-title font-bold text-gray-900 dark:text-white uppercase leading-[1.2] transition-colors group-hover:underline ${titleClassName || '!text-[16px]'}`}
-          style={{ fontFamily: "'Rubik', sans-serif" }}
+          className={`post-card-title font-bold text-gray-900 dark:text-white leading-[1.2] transition-colors group-hover:underline ${titleClassName || '!text-[16px]'}`}
+          style={{ fontFamily: "'Gibson', sans-serif" }}
         >
           {article.title}
         </h3>

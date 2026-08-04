@@ -148,7 +148,7 @@ export default function AccountSettingsPage() {
 
   if (isProfileLoading) {
     return (
-      <div className="space-y-8 w-full animate-pulse" style={{ fontFamily: "'Rubik', sans-serif" }}>
+      <div className="space-y-8 w-full animate-pulse" style={{ fontFamily: "'Gibson', sans-serif" }}>
         <section className="bg-bg-surface dark:bg-[#3A3F4A] border border-border rounded-2xl p-6">
           <div className="flex items-center justify-between mb-6">
             <div className="w-24 h-6 bg-gray-200 dark:bg-gray-700/50 rounded-md"></div>
@@ -196,7 +196,7 @@ export default function AccountSettingsPage() {
   }
 
   return (
-    <div className="space-y-8 w-full" style={{ fontFamily: "'Rubik', sans-serif" }}>
+    <div className="space-y-8 w-full" style={{ fontFamily: "'Gibson', sans-serif" }}>
 
 
       {/* Profile card + edit form */}

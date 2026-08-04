@@ -26,13 +26,13 @@ export default function PageHeader({ title, description, titleFontFamily }: Page
         {/* Content */}
         <h1 
           className="text-3xl md:text-5xl lg:text-[56px] text-white mt-1 md:mt-2 mb-2 md:mb-4 uppercase drop-shadow-md"
-          style={{ fontFamily: titleFontFamily || "'Rubik', sans-serif", fontWeight: 900, letterSpacing: '2px', lineHeight: 1 }}
+          style={{ fontFamily: titleFontFamily || "'Gibson', sans-serif", fontWeight: 900, letterSpacing: '2px', lineHeight: 1 }}
         >
           {title}
         </h1>
         
         {description && (
-          <p className="text-gray-300 text-sm md:text-[15px] font-medium max-w-2xl mx-auto drop-shadow-sm" style={{ fontFamily: "'Rubik', sans-serif" }}>
+          <p className="text-gray-300 text-sm md:text-[15px] font-medium max-w-2xl mx-auto drop-shadow-sm" style={{ fontFamily: "'Gibson', sans-serif" }}>
             {description}
           </p>
         )}

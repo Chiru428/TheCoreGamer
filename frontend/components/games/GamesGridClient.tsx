@@ -204,7 +204,7 @@ export default function GamesGridClient({ initialGames }: Props) {
                           {formattedDate && (
                             <div 
                               className="absolute bottom-2 left-0 right-0 text-center bg-[rgba(0,0,0,0.72)] backdrop-blur-[4px] text-[10px] font-bold tracking-[0.08em] py-[5px] px-[6px]"
-                              style={{ fontFamily: "'Rubik', sans-serif", color: "#00e5a0" }}
+                              style={{ fontFamily: "'Gibson', sans-serif", color: "#00e5a0" }}
                             >
                               {formattedDate}
                             </div>

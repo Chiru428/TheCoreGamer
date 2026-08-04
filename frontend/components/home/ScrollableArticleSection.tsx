@@ -32,7 +32,7 @@ export default function ScrollableArticleSection({ title, articles, seeMoreHref,
   return (
     <section className="mb-10 md:mb-14 last:mb-0">
       <div className="flex items-center justify-between mb-6">
-        <div className="section-title-bar">{title}</div>
+        <div className="section-title-bar font-bold text-[var(--text)]">{title}</div>
         <div className="hidden md:flex items-center gap-3">
           <button 
             onClick={() => scroll('left')} 

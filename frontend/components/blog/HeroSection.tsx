@@ -115,8 +115,8 @@ export default function HeroSection({
                 <div key={a.id} style={{ width: '293px' }} className="shrink-0 h-full flex flex-col">
                   <HomePostCard
                     article={a}
-                    titleClassName="!text-[18px] rubik-title"
-                    titleStyle={{ fontFamily: "'Rubik', sans-serif" }}
+                    titleClassName="!text-[18px] gibson-title"
+                    titleStyle={{ fontFamily: "'Gibson', sans-serif" }}
                     showExcerpt={true}
                     contentClassName="flex-1 overflow-visible !justify-start"
                     showBackground={false}
@@ -139,7 +139,7 @@ export default function HeroSection({
             <div className="flex items-center w-full gap-4 mb-6 shrink-0">
               <div className="flex-1 h-[2px] bg-[#00866B] dark:bg-[#00e5a0]/40"></div>
               <div
-                className="rubik-label whitespace-nowrap text-[#00866B] dark:text-[#00e5a0]"
+                className="gibson-label whitespace-nowrap text-[#00866B] dark:text-[#00e5a0]"
                 style={{ fontSize: '20px', fontWeight: 800, letterSpacing: '1.8px', textTransform: 'uppercase' }}
               >
                 Top Stories
@@ -182,7 +182,7 @@ export default function HeroSection({
                             <div className="absolute top-0 -bottom-6 w-[2px] bg-[var(--muted3)] -translate-x-1/2" style={{ left: '50%' }} />
                           )}
                         </div>
-                        <h2 className="flex-1 min-w-0 post-card-title popular-title-acumin transition-colors group-hover:text-accent group-hover:underline !text-[16px]" style={{ fontWeight: 700, lineHeight: 1.35, color: 'var(--text-strong)', fontFamily: "'Rubik', sans-serif" }}>
+                        <h2 className="flex-1 min-w-0 post-card-title popular-title-acumin transition-colors group-hover:text-accent group-hover:underline !text-[16px]" style={{ fontWeight: 700, lineHeight: 1.35, color: 'var(--text-strong)', fontFamily: "'Gibson', sans-serif" }}>
                           {article.title}
                         </h2>
                       </div>
@@ -241,8 +241,8 @@ export default function HeroSection({
               <HomePostCard
                 key={a.id}
                 article={a}
-                titleClassName="!text-[18px] mb-1 rubik-title"
-                titleStyle={{ fontFamily: "'Rubik', sans-serif" }}
+                titleClassName="!text-[18px] mb-1 gibson-title"
+                titleStyle={{ fontFamily: "'Gibson', sans-serif" }}
                 showExcerpt={false}
                 showBackground={false}
                 showBadge
@@ -260,7 +260,7 @@ export default function HeroSection({
         <div className="px-4 pt-6 pb-2">
           <div className="flex items-center w-full gap-4 mb-6">
             <div className="flex-1 h-[2px] bg-[#00866B] dark:bg-[#00e5a0]/40"></div>
-            <div className="rubik-label whitespace-nowrap text-[#00866B] dark:text-[#00e5a0]" style={{ fontSize: '20px', fontWeight: 800, letterSpacing: '1.8px', textTransform: 'uppercase' }}>
+            <div className="gibson-label whitespace-nowrap text-[#00866B] dark:text-[#00e5a0]" style={{ fontSize: '20px', fontWeight: 800, letterSpacing: '1.8px', textTransform: 'uppercase' }}>
               Top Stories
             </div>
             <div className="flex-1 h-[2px] bg-[#00866B] dark:bg-[#00e5a0]/40"></div>
@@ -298,7 +298,7 @@ export default function HeroSection({
                           <div className="absolute top-0 -bottom-6 w-[2px] bg-[var(--muted3)] -translate-x-1/2" style={{ left: '50%' }} />
                         )}
                       </div>
-                      <h2 className="flex-1 min-w-0 post-card-title popular-title-acumin transition-colors group-hover:text-accent group-hover:underline !text-[16px]" style={{ fontWeight: 700, lineHeight: 1.35, color: 'var(--text-strong)', fontFamily: "'Rubik', sans-serif" }}>
+                      <h2 className="flex-1 min-w-0 post-card-title popular-title-acumin transition-colors group-hover:text-accent group-hover:underline !text-[16px]" style={{ fontWeight: 700, lineHeight: 1.35, color: 'var(--text-strong)', fontFamily: "'Gibson', sans-serif" }}>
                         {article.title}
                       </h2>
                     </div>

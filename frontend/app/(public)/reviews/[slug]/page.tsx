@@ -290,7 +290,7 @@ export default async function ReviewDetailPage({ params }: Props) {
                         >
                           {Number(review.reviewScore).toFixed(1)}
                         </div>
-                        <div className="font-rubik font-extrabold text-[20px] text-text-strong uppercase tracking-wider">{getScoreLabel(Number(review.reviewScore))}</div>
+                        <div className="font-gibson font-extrabold text-[20px] text-text-strong uppercase tracking-wider">{getScoreLabel(Number(review.reviewScore))}</div>
                       </div>
                     )}
                   </div>
@@ -309,7 +309,7 @@ export default async function ReviewDetailPage({ params }: Props) {
                         >
                           {Number(review.reviewScore).toFixed(1)}
                         </div>
-                        <div className="font-rubik font-extrabold text-[1.4rem] text-text-strong mt-3 tracking-wide">{getScoreLabel(Number(review.reviewScore))}</div>
+                        <div className="font-gibson font-extrabold text-[1.4rem] text-text-strong mt-3 tracking-wide">{getScoreLabel(Number(review.reviewScore))}</div>
                       </>
                     )}
                   </div>

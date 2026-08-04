@@ -18,11 +18,11 @@ export default function GuidesSection({ guides }: GuidesSectionProps) {
   return (
     <div className="w-full">
       {/* Desktop Layout */}
-      <div className="hidden lg:flex flex-col gap-6 p-5 shadow-lg border-0 mb-6 bg-white dark:bg-[#111111]">
+      <div className="hidden lg:flex flex-col gap-6 mb-6">
         
         {/* Top Part: Slider + 3 Side Articles */}
-        <div className="flex gap-6 h-[460px]">
-          <div className="w-[670px] shrink-0 h-full overflow-hidden border border-black/50 shadow-md">
+        <div className="flex gap-6 h-[450px]">
+          <div className="h-full shrink-0 aspect-[16/9] overflow-hidden border border-black/50 shadow-md">
             <WalkthroughSlider articles={guides.slice(0, 3)} />
           </div>
           <div className="flex flex-col gap-4 justify-between h-full flex-1 min-w-0">
@@ -30,10 +30,10 @@ export default function GuidesSection({ guides }: GuidesSectionProps) {
               <Link
                 key={article.id}
                 href={`/${contentTypePath(article.contentType)}/${article.slug}`}
-                className="group flex gap-4 overflow-hidden items-center bg-gray-200 dark:bg-black/60 border border-black/5 dark:border-white/5 transition-all p-3 h-[126px]"
+                className="group flex gap-4 overflow-hidden items-center transition-all py-1 h-[126px]"
               >
                 <div className="flex flex-col justify-center flex-1 min-w-0 pl-2">
-                  <h3 className="post-card-title font-bold text-gray-900 dark:text-white !text-[16px] leading-snug group-hover:underline mb-2 line-clamp-2" style={{ fontFamily: "'Rubik', sans-serif" }}>
+                  <h3 className="post-card-title font-bold text-gray-900 dark:text-white !text-[17px] leading-snug group-hover:underline mb-2" style={{ fontFamily: "'Gibson', sans-serif" }}>
                     {article.title}
                   </h3>
                   <div className="flex items-center gap-1.5 text-[13px] text-gray-600 dark:text-gray-300 font-medium">
@@ -43,9 +43,9 @@ export default function GuidesSection({ guides }: GuidesSectionProps) {
                     <span className="shrink-0">{formatDate(article.publishedAt || article.createdAt)}</span>
                   </div>
                 </div>
-                <div className="relative w-[180px] shrink-0 h-full overflow-hidden shadow-sm">
+                <div className="relative aspect-[16/9] shrink-0 h-full overflow-hidden shadow-sm">
                   {article.featuredImageUrl ? (
-                    <Image src={article.featuredImageUrl} alt={article.title} fill className="object-cover" sizes="180px" />
+                    <Image src={article.featuredImageUrl} alt={article.title} fill className="object-cover" sizes="224px" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center bg-[#0d0d1a] opacity-30 text-2xl">🎮</div>
                   )}
@@ -63,8 +63,8 @@ export default function GuidesSection({ guides }: GuidesSectionProps) {
                 key={article.id} 
                 article={article} 
                 mobileHorizontal={true}
-                titleClassName="!text-[18px] rubik-title" 
-                titleStyle={{ fontFamily: "'Rubik', sans-serif" }}
+                titleClassName="!text-[18px] gibson-title" 
+                titleStyle={{ fontFamily: "'Gibson', sans-serif" }}
                 showExcerpt={true} 
                 showExcerptOnMobile={false}
                 showBackground={false} 
@@ -80,7 +80,7 @@ export default function GuidesSection({ guides }: GuidesSectionProps) {
       </div>
 
       {/* Mobile/Small Tablet Layout */}
-      <div className="flex lg:hidden flex-col gap-4 p-4 shadow-lg border-0 mb-6 bg-white dark:bg-[#111111]">
+      <div className="flex lg:hidden flex-col gap-4 mb-6">
         <div className="w-full aspect-[16/9] shrink-0 overflow-hidden border border-black/50 shadow-md">
           <WalkthroughSlider articles={guides.slice(0, 3)} />
         </div>
@@ -90,10 +90,10 @@ export default function GuidesSection({ guides }: GuidesSectionProps) {
             <Link
               key={article.id}
               href={`/${contentTypePath(article.contentType)}/${article.slug}`}
-              className="group flex gap-3 overflow-hidden items-center bg-gray-200 dark:bg-black/60 border border-black/5 dark:border-white/5 transition-all p-3 h-[100px] sm:h-[126px]"
+              className="group flex gap-3 overflow-hidden items-center transition-all py-1 h-[100px] sm:h-[126px]"
             >
               <div className="flex flex-col justify-center flex-1 min-w-0 pl-1">
-                <h3 className="post-card-title font-bold text-gray-900 dark:text-white !text-[14px] sm:!text-[16px] leading-snug group-hover:underline mb-1.5 line-clamp-2" style={{ fontFamily: "'Rubik', sans-serif" }}>
+                <h3 className="post-card-title font-bold text-gray-900 dark:text-white !text-[15px] sm:!text-[17px] leading-snug group-hover:underline mb-1.5" style={{ fontFamily: "'Gibson', sans-serif" }}>
                   {article.title}
                 </h3>
                 <div className="flex items-center gap-1.5 text-[13px] text-gray-600 dark:text-gray-300 font-medium">
@@ -103,9 +103,9 @@ export default function GuidesSection({ guides }: GuidesSectionProps) {
                   <span className="shrink-0">{formatDate(article.publishedAt || article.createdAt)}</span>
                 </div>
               </div>
-              <div className="relative w-[130px] sm:w-[180px] shrink-0 h-full overflow-hidden shadow-sm">
+              <div className="relative aspect-[16/9] shrink-0 h-full overflow-hidden shadow-sm">
                 {article.featuredImageUrl ? (
-                  <Image src={article.featuredImageUrl} alt={article.title} fill className="object-cover" sizes="(max-width: 640px) 130px, 180px" />
+                  <Image src={article.featuredImageUrl} alt={article.title} fill className="object-cover" sizes="(max-width: 640px) 177px, 224px" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-[#0d0d1a] opacity-30 text-xl">🎮</div>
                 )}
@@ -122,8 +122,8 @@ export default function GuidesSection({ guides }: GuidesSectionProps) {
                 key={article.id} 
                 article={article} 
                 mobileHorizontal={false}
-                titleClassName="!text-[15px] sm:!text-[18px] rubik-title" 
-                titleStyle={{ fontFamily: "'Rubik', sans-serif" }}
+                titleClassName="!text-[18px] gibson-title" 
+                titleStyle={{ fontFamily: "'Gibson', sans-serif" }}
                 showExcerpt={true} 
                 showExcerptOnMobile={false}
                 showBackground={false} 

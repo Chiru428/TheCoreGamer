@@ -108,7 +108,7 @@ export default function SettingsListsPage() {
   };
 
   return (
-    <div className="w-full py-8" style={{ fontFamily: "'Rubik', sans-serif" }}>
+    <div className="w-full py-8" style={{ fontFamily: "'Gibson', sans-serif" }}>
       <div className="flex items-center justify-between gap-3 mb-2">
         <h1 className="text-[24px] font-bold text-text-primary">Reading Lists</h1>
         <Button size="sm" icon={<Plus className="w-4 h-4" />} onClick={openCreateModal}>New List</Button>

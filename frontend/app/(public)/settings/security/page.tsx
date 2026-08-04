@@ -210,7 +210,7 @@ export default function SecuritySettingsPage() {
   const inputCls = 'w-full bg-gray-50 dark:bg-[#222222] border border-gray-200 dark:border-white/[0.06] focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 text-black dark:text-white rounded-xl pl-4 pr-4 py-3 text-[15px] outline-none transition-all placeholder:text-gray-400 dark:placeholder:text-[#555]';
 
   return (
-    <div className="space-y-8 w-full" style={{ fontFamily: "'Rubik', sans-serif" }}>
+    <div className="space-y-8 w-full" style={{ fontFamily: "'Gibson', sans-serif" }}>
 
 
       {/* Account Standing */}

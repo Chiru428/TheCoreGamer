@@ -130,7 +130,7 @@ export default function PriceHistoryChart({ gameId, gameTitle }: Props) {
   const currentLowestPrice = currentPrices.length > 0 ? Math.min(...currentPrices) : null;
 
   return (
-    <div className="w-full bg-[#cbd5e1] dark:bg-[#1e1e24] border border-gray-300 dark:border-white/5 rounded-lg p-4 mt-2 shadow-sm dark:shadow-none">
+    <div className="w-full bg-[#cbd5e1] dark:bg-[#1e1e24] border border-gray-300 dark:border-white/5 rounded-none p-4 mt-2 shadow-sm dark:shadow-none">
       <style>{`
         /* Define axis font sizes */
         :root {

@@ -68,7 +68,7 @@ export default function SettingsLayout({ children }: { children: React.ReactNode
                       ? 'text-text-primary dark:text-white font-semibold'
                       : 'text-text-muted hover:text-text-primary dark:hover:text-white'
                   )}
-                  style={{ fontFamily: "'Rubik', sans-serif", fontSize: '18px' }}
+                  style={{ fontFamily: "'Gibson', sans-serif", fontSize: '18px' }}
                 >
                   <span className="relative flex items-center gap-3 w-max">
                     <Icon className="w-4 h-4 relative z-10" />

@@ -235,7 +235,7 @@ export default function ReviewsGrid({ articles }: ReviewsGridProps) {
         }
 
         h3.rg-hero-title, h3.rg-small-title {
-          font-family: 'Rubik', sans-serif !important;
+          font-family: 'Gibson', sans-serif !important;
           font-weight: 700 !important;
           color: #fff !important;
           margin: 0 !important;

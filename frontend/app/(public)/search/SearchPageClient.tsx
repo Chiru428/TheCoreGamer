@@ -582,7 +582,7 @@ function ArticlesResults({ hits, onHitClick }: { hits: AlgoliaArticleHit[] } & H
        </span>
        <h3
         className="text-[16px] font-bold uppercase text-text-strong leading-snug group-hover:underline"
-        style={{ fontFamily: '"Rubik", sans-serif' }}
+        style={{ fontFamily: '"Gibson", sans-serif' }}
         dangerouslySetInnerHTML={{ __html: titleHtml }}
        />
        <div className="flex items-center gap-2 text-[13px] text-text-muted mt-1.5">
@@ -739,7 +739,7 @@ function VideosResults({ hits, onHitClick }: { hits: AlgoliaVideoHit[] } & HitCl
       <div className="p-2.5">
        <p
         className="text-sm font-bold text-text-strong truncate group-hover:underline group-hover:underline transition-colors"
-        style={{ fontFamily: '"Rubik", sans-serif' }}
+        style={{ fontFamily: '"Gibson", sans-serif' }}
         dangerouslySetInnerHTML={{ __html: titleHtml }}
        />
        {hit.gameName && <p className="text-xs text-text-muted mt-1">{hit.gameName}</p>}

@@ -127,7 +127,7 @@ export default function NotificationsSettingsPage() {
   const hasAny = notifications.length > 0;
 
   return (
-    <div className="space-y-8 w-full" style={{ fontFamily: "'Rubik', sans-serif" }}>
+    <div className="space-y-8 w-full" style={{ fontFamily: "'Gibson', sans-serif" }}>
 
 
       {/* Preferences Section */}

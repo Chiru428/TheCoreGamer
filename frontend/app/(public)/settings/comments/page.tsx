@@ -24,7 +24,7 @@ export default function CommentsSettingsPage() {
   if (!isAuthenticated) return null;
 
   return (
-    <div className="space-y-8 w-full" style={{ fontFamily: "'Rubik', sans-serif" }}>
+    <div className="space-y-8 w-full" style={{ fontFamily: "'Gibson', sans-serif" }}>
 
       
       {isSWRLoading ? (

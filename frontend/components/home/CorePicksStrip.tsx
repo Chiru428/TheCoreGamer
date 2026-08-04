@@ -62,7 +62,7 @@ export default function CorePicksStrip({ articles }: { articles: Article[] }) {
               {/* Title */}
               <h3 
                 className="text-white font-bold text-[15px] sm:text-[16px] leading-[1.3] mb-4 group-hover:underline line-clamp-4"
-                style={{ fontFamily: '"Rubik", sans-serif' }}
+                style={{ fontFamily: '"Gibson", sans-serif' }}
               >
                 {article.title}
               </h3>

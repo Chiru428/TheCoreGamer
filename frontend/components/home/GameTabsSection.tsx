@@ -114,7 +114,7 @@ export default function GameTabsSection({ newReleaseGames, topRatedGames, coming
           background: none;
           border: none;
           cursor: pointer;
-          font-family: 'Rubik', sans-serif;
+          font-family: 'Gibson', sans-serif;
           font-size: 12px;
           font-weight: 700;
           letter-spacing: 0.12em;
@@ -195,7 +195,7 @@ export default function GameTabsSection({ newReleaseGames, topRatedGames, coming
           background: rgba(0,0,0,0.72);
           backdrop-filter: blur(4px);
           color: #00e5a0;
-          font-family: 'Rubik', sans-serif;
+          font-family: 'Gibson', sans-serif;
           font-size: 10px;
           font-weight: 700;
           letter-spacing: 0.08em;
@@ -205,7 +205,7 @@ export default function GameTabsSection({ newReleaseGames, topRatedGames, coming
           padding-top: 10px;
         }
         .game-tab-title {
-          font-family: 'Rubik', sans-serif;
+          font-family: 'Gibson', sans-serif;
           font-weight: 700;
           font-size: 15px;
           color: var(--text-strong, #fff);

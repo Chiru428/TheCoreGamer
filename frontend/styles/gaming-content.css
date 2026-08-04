@@ -5240,7 +5240,7 @@ tr:last-child .gc-loot-td {
   padding: 0 14px;
   line-height: 1;
   background: var(--gc-bg);
-  font-family: "Rubik", sans-serif;
+  font-family: "Gibson", sans-serif;
   font-size: 14px;
   font-weight: 700;
   text-transform: uppercase;
@@ -5301,7 +5301,7 @@ tr:last-child .gc-loot-td {
 }
 
 .gc-related-articles .gc-ra-row .gc-ra-row-title {
-  font-family: "Rubik", sans-serif;
+  font-family: "Gibson", sans-serif;
   font-size: 20px;
   font-weight: 700;
   color: var(--gc-text);

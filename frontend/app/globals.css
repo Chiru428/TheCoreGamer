@@ -218,8 +218,8 @@
     overflow-x: clip;
   }
 
-  .rubik-label {
-    font-family: "Rubik", sans-serif !important;
+  .gibson-label {
+    font-family: "Gibson", sans-serif !important;
   }
 
   /* ── Genre pills (games page) — !important needed to beat @layer utilities ── */
@@ -411,8 +411,8 @@
   animation: blink 2s step-end infinite;
 }
 
-.rubik-title {
-  font-family: "Rubik", sans-serif !important;
+.gibson-title {
+  font-family: "Gibson", sans-serif !important;
 }
 
 @layer components {
@@ -425,7 +425,7 @@
     font-family: "acumin-pro-condensed", sans-serif;
     font-size: 20px;
     font-weight: 700;
-    text-transform: uppercase;
+    text-transform: none;
     color: var(--text-strong);
   }
 

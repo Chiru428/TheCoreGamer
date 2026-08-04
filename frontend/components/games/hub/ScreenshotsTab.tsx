@@ -84,7 +84,7 @@ export default function ScreenshotsTab({ slug, game }: { slug: string; game: Gam
                 key={v.videoId}
                 type="button"
                 onClick={() => setActiveVideo(i)}
-                className="relative aspect-video rounded-lg overflow-hidden border border-border group"
+                className="relative aspect-video rounded-none overflow-hidden border border-border group"
               >
                 <Image
                   src={`https://img.youtube.com/vi/${v.videoId}/hqdefault.jpg`}
@@ -378,7 +378,7 @@ export default function ScreenshotsTab({ slug, game }: { slug: string; game: Gam
                   key={v.videoId || i}
                   ref={i === activeVideo ? activeVideoThumbRef : undefined}
                   onClick={() => setActiveVideo(i)}
-                  className={`relative shrink-0 w-32 md:w-40 aspect-video rounded-lg overflow-hidden border-2 transition-all ${
+                  className={`relative shrink-0 w-32 md:w-40 aspect-video rounded-none overflow-hidden border-2 transition-all ${
                     i === activeVideo ? 'border-accent scale-105 opacity-100 z-10' : 'border-transparent opacity-40 hover:opacity-100'
                   }`}
                   aria-label={`Play ${v.name || 'Video'}`}

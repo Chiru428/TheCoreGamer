@@ -43,7 +43,7 @@ export default function PublisherGames({ publisher, excludeSlug }: { publisher: 
   return (
     <section className="mt-16 mb-12 max-w-[1280px] mx-auto">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-[18px] md:text-[20px] font-bold rubik-label uppercase flex items-center gap-2 before:content-[''] before:w-[3px] before:h-[1em] before:bg-[#3b82f6] before:rounded-[2px]" style={{ color: 'var(--text)' }}>
+        <h2 className="text-[18px] md:text-[20px] font-bold gibson-label flex items-center gap-2 before:content-[''] before:w-[3px] before:h-[1em] before:bg-[#3b82f6] before:rounded-[2px]" style={{ color: 'var(--text)' }}>
           More from {publisher}
         </h2>
 
@@ -51,14 +51,14 @@ export default function PublisherGames({ publisher, excludeSlug }: { publisher: 
           <div className="flex md:hidden items-center gap-2">
             <button
               onClick={() => scroll('left')}
-              className="w-8 h-8 flex items-center justify-center rounded-full border border-white/20 text-white/70 hover:bg-[var(--brand-green)] hover:text-white hover:border-[var(--brand-green)] transition-all"
+              className="w-8 h-8 flex items-center justify-center rounded-full border border-black/20 dark:border-white/20 text-black/70 dark:text-white/70 hover:bg-[var(--brand-green)] hover:text-white hover:border-[var(--brand-green)] transition-all"
               aria-label="Scroll left"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
             <button
               onClick={() => scroll('right')}
-              className="w-8 h-8 flex items-center justify-center rounded-full border border-white/20 text-white/70 hover:bg-[var(--brand-green)] hover:text-white hover:border-[var(--brand-green)] transition-all"
+              className="w-8 h-8 flex items-center justify-center rounded-full border border-black/20 dark:border-white/20 text-black/70 dark:text-white/70 hover:bg-[var(--brand-green)] hover:text-white hover:border-[var(--brand-green)] transition-all"
               aria-label="Scroll right"
             >
               <ChevronRight className="w-5 h-5" />

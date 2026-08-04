@@ -76,8 +76,8 @@ export default function SharedListCard({ article, priority = false, isLast = fal
           {/* Title */}
           <div className="no-underline mt-1.5 sm:mt-2">
             <h2
-              className="post-card-title font-bold text-gray-900 dark:text-white uppercase leading-[1.15] mb-2 sm:mb-3 text-[18px] sm:text-[20px] transition-colors group-hover:underline"
-              style={{ fontFamily: "'Rubik', sans-serif" }}
+              className="post-card-title font-bold text-gray-900 dark:text-white leading-[1.15] mb-2 sm:mb-3 text-[18px] sm:text-[20px] transition-colors group-hover:underline"
+              style={{ fontFamily: "'Gibson', sans-serif" }}
             >
               {article.title}
             </h2>

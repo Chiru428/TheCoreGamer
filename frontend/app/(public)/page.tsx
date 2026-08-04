@@ -11,10 +11,8 @@ import HeroSection from '@/components/blog/HeroSection';
 
 import ScrollableArticleSection from '@/components/home/ScrollableArticleSection';
 import GameTabsSection from '@/components/home/GameTabsSection';
-import GuidesSection from '@/components/home/GuidesSection';
 import ReviewsGrid from '@/components/home/ReviewsGrid';
-import EditorialTabsSection from '@/components/home/EditorialTabsSection';
-import DealsSection from '@/components/home/DealsSection';
+import DiscoveryTabsSection from '@/components/home/DiscoveryTabsSection';
 import PollWidget from '@/components/blog/PollWidget';
 import { contentTypePath } from '@/lib/seo';
 import AdSlot from '@/components/monetization/AdSlot';
@@ -69,8 +67,11 @@ async function getData() {
   const hotDealIds = new Set(hotDeals.map(d => d.id));
   const mainDealArticles = dealArticles.filter(d => !hotDealIds.has(d.id));
 
+  const filteredLatest = rawLatest.filter((a: Article) => a.contentType !== 'NEWS' && a.contentType !== 'REVIEW');
+
   return {
    heroArticles,
+   latestArticles: dedup(filteredLatest),
    newsArticles: dedup(data.data?.news ?? []),
    reviewArticles: dedup(data.data?.reviews ?? []),
    guideArticles: dedup(data.data?.guides ?? []),
@@ -91,7 +92,7 @@ async function getData() {
 function SectionHead({ title, className }: { title: string; className?: string }) {
  return (
   <div className={`flex items-center justify-between ${className ?? 'mb-4'}`}>
-   <div className="section-title-bar">
+   <div className="section-title-bar font-bold text-[var(--text)]">
     {title}
    </div>
   </div>
@@ -115,7 +116,7 @@ function SeeMoreBtn({ href, label }: { href: string; label: string }) {
 /* -- Sub-section header (e.g. "New Releases" / "Top Rated" under "Games") -- */
 function SubHead({ title }: { title: string }) {
  return (
-  <div className="rubik-label flex items-center gap-2 mb-4" style={{ fontSize: '18px', fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-strong)' }}>
+  <div className="gibson-label flex items-center gap-2 mb-4" style={{ fontSize: '18px', fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-strong)' }}>
    <span style={{ width: '3px', height: '1em', background: 'var(--accent)', borderRadius: '2px', display: 'inline-block' }} />
    {title}
   </div>
@@ -157,7 +158,7 @@ function formatShortDate(dateString?: string | null) {
 }
 
 export default async function HomePage() {
- const { heroArticles, newsArticles, reviewArticles, guideArticles, dealArticles, hotDeals, listicleArticles, opinionArticles, popularArticles, homepagePollId, homepagePoll2Id, topRatedGames, newReleaseGames, comingSoonGames } = await getData();
+ const { heroArticles, latestArticles, newsArticles, reviewArticles, guideArticles, dealArticles, hotDeals, listicleArticles, opinionArticles, popularArticles, homepagePollId, homepagePoll2Id, topRatedGames, newReleaseGames, comingSoonGames } = await getData();
 
  return (
   <div className="home-page-root" style={{ background: 'var(--bg)', fontFamily: '"acumin-pro", sans-serif', fontSize: '15px' }}>
@@ -172,17 +173,17 @@ export default async function HomePage() {
     .home-page-root .auth-submit-btn,
     .home-page-root .post-card-title,
     .home-page-root .post-card-title *,
-    .home-page-root .rubik-label {
-     font-family: "Rubik", sans-serif !important;
+    .home-page-root .gibson-label {
+     font-family: "Gibson", sans-serif !important;
     }
     .home-page-root .hero-main-title.post-card-title {
      font-family: "acumin-pro", sans-serif !important;
     }
-    /* Popular This Week list titles use Rubik (falls through to the
-      .post-card-title Rubik rule above). */
-    .home-page-root .rubik-title.post-card-title,
-    .home-page-root .rubik-title.post-card-title * {
-     font-family: "Rubik", sans-serif !important;
+    /* Popular This Week list titles use Gibson (falls through to the
+      .post-card-title Gibson rule above). */
+    .home-page-root .gibson-title.post-card-title,
+    .home-page-root .gibson-title.post-card-title * {
+     font-family: "Gibson", sans-serif !important;
     }
     .home-page-root h2 {
      font-size: 16px !important;
@@ -201,7 +202,7 @@ export default async function HomePage() {
       font-size: 36px !important;
      }
     }
-    .home-page-root h3, .home-page-root h4, .home-page-root h5, .home-page-root h6 {
+    .home-page-root h4, .home-page-root h5, .home-page-root h6 {
      font-size: 18px !important;
      line-height: 1.4 !important;
     }
@@ -223,14 +224,14 @@ export default async function HomePage() {
      line-height: 1.35 !important;
     }
     .home-page-root .section-title-bar {
-     font-family: "Rubik", sans-serif !important;
-     font-size: 24px !important;
+     font-family: "Gibson", sans-serif !important;
+     font-size: 28px !important;
      line-height: 1.2 !important;
-     color: #3b82f6 !important;
+     font-weight: 700 !important;
     }
     @media (min-width: 768px) {
      .home-page-root .section-title-bar {
-      font-size: 28px !important;
+      font-size: 32px !important;
      }
     }
     .home-page-root .section-title-bar::before {
@@ -294,7 +295,7 @@ export default async function HomePage() {
      <section className="mb-14 md:mb-20 last:mb-0">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-5 mb-4">
        <div className="md:col-span-3 flex items-center">
-        <SectionHead title="News & Updates" className="mb-0" />
+        <SectionHead title="Latest News" className="mb-0" />
        </div>
 
       </div>
@@ -408,73 +409,39 @@ export default async function HomePage() {
     )}
 
 
-    {/* DEALS */}
-    {dealArticles.length > 0 && (
-     <section className="mb-10 md:mb-14 last:mb-0">
-      <SectionHead title="Deals" />
+    {/* DISCOVERY — tabbed feed (845px) + Poll sidebar */}
+    <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 lg:items-start mb-0 md:mb-14">
 
-      <DealsSection articles={dealArticles.slice(0, 4)} sideArticles={hotDeals} />
+     {/* Left: IGN-style tabbed section — capped at 845px */}
+     <div className="w-full" style={{ maxWidth: '845px' }}>
+      <DiscoveryTabsSection
+       latestArticles={latestArticles}
+       guideArticles={guideArticles}
+       listicleArticles={listicleArticles}
+       opinionArticles={opinionArticles}
+       dealArticles={dealArticles}
+       hotDeals={hotDeals}
+      />
+     </div>
 
-      <SeeMoreBtn href="/deals" label="Deals" />
-     </section>
-    )}
-
-    {/* AD SLOT BETWEEN DEALS & WALKTHROUGHS */}
-    {adsEnabled && (
-    <div className="mb-10 md:mb-14 flex justify-center w-full">
-      <div className="hidden sm:flex w-full bg-[var(--bg2)] py-5 items-center justify-center border border-[var(--border)]">
-        <div className="w-full max-w-[970px] min-h-[250px] flex items-center justify-center px-4">
-          <AdSlot slot="ADS-02" className="w-full" />
-        </div>
-      </div>
-      <div className="flex sm:hidden w-[100vw] relative left-[50%] -translate-x-1/2 bg-[var(--bg2)] py-5 items-center justify-center border-y border-[var(--border)]">
-        <div className="w-full min-h-[250px] flex items-center justify-center px-4">
-          <AdSlot slot="ADS-02" className="w-full" />
-        </div>
-      </div>
-    </div>
-    )}
-
-    {/* GUIDES */}
-    {guideArticles.length > 0 && (
-     <section className="mb-10 md:mb-14 last:mb-0">
-      <SectionHead title="Guides" />
-      <GuidesSection guides={guideArticles} />
-     </section>
-    )}
-
-
-    {/* EDITORIAL */}
-    {(listicleArticles.length > 0 || opinionArticles.length > 0) && (
-     <section className="mb-10 md:mb-14 last:mb-0">
-      {/* Mobile Poll (Above Section Head) */}
-      <div className="lg:hidden mb-14 flex flex-col gap-8">
-       {homepagePoll2Id && (
+     {/* Right: Poll widget — fills remaining space, sticky on desktop */}
+     {homepagePoll2Id && (
+      <div className="flex-1 w-full min-w-0 mt-2 lg:mt-[145px]">
+       <div className="lg:sticky lg:top-24">
+        <div className="mb-0 lg:mb-10">
          <PollWidget pollId={homepagePoll2Id} />
-       )}
-      </div>
-
-      <SectionHead title="Editorial" />
-      
-      <div className="flex flex-col lg:flex-row gap-10 lg:items-stretch">
-       <div className="flex flex-col gap-6 w-full max-w-[800px]">
-        <EditorialTabsSection 
-          corePicks={listicleArticles} 
-          opinions={opinionArticles} 
-        />
-       </div>
-
-       {/* Desktop Sidebar (Poll) */}
-       <div className="hidden lg:block flex-1 w-full">
-        {homepagePoll2Id && (
-         <div className="w-full sticky top-24 pb-10">
-           <PollWidget pollId={homepagePoll2Id} />
+        </div>
+        
+        {adsEnabled && (
+         <div className="hidden lg:flex justify-start">
+          <AdSlot adSlot="home_sidebar_2" width={300} height={250} className="w-full flex justify-center" />
          </div>
         )}
        </div>
       </div>
-     </section>
-    )}
+     )}
+
+    </div>
 
    </div>
 

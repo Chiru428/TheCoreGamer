@@ -113,7 +113,7 @@ export default function PostCard({ article, variant = 'medium', className, aspec
           </div>
         )}
         <Link href={href} className="group-hover:underline">
-          <h3 className="line-clamp-2 text-[var(--text-strong)]" style={{ fontFamily: '"Rubik", sans-serif', fontSize: '20px', fontWeight: 700, lineHeight: 1.15 }}>{article.title}</h3>
+          <h3 className="line-clamp-2 text-[var(--text-strong)]" style={{ fontFamily: '"Gibson", sans-serif', fontSize: '20px', fontWeight: 700, lineHeight: 1.15 }}>{article.title}</h3>
         </Link>
         {article.excerpt && <p className="line-clamp-2" style={{ fontSize: '16px', color: 'var(--text)', lineHeight: 1.55 }}>{article.excerpt}</p>}
         <div className="flex items-center gap-2.5 mt-1 text-sm" style={{ color: 'var(--text)' }}>
@@ -159,7 +159,7 @@ export default function PostCard({ article, variant = 'medium', className, aspec
       </Link>
       <div className="flex-1 min-w-0 pl-3 sm:pl-[14px]">
         <Link href={href} className="group-hover:underline">
-          <p className="text-[var(--text-strong)] text-[13px] sm:text-[20px]" style={{ fontFamily: '"Rubik", sans-serif', fontWeight: 700, lineHeight: 1.3, marginBottom: '4px' }}>{article.title}</p>
+          <p className="text-[var(--text-strong)] text-[13px] sm:text-[20px]" style={{ fontFamily: '"Gibson", sans-serif', fontWeight: 700, lineHeight: 1.3, marginBottom: '4px' }}>{article.title}</p>
         </Link>
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] sm:text-xs" style={{ color: 'var(--text)' }}>
           {showBadge && (
@@ -237,7 +237,7 @@ export default function PostCard({ article, variant = 'medium', className, aspec
       </Link>
       <div className="flex flex-col flex-1 px-1">
         <Link href={href} className="group-hover:underline">
-          <h3 className="text-[20px] font-bold text-text-primary leading-snug line-clamp-2 mb-2" style={{ fontFamily: '"Rubik", sans-serif' }}>
+          <h3 className="text-[20px] font-bold text-text-primary leading-snug line-clamp-2 mb-2" style={{ fontFamily: '"Gibson", sans-serif' }}>
             {article.title}
           </h3>
         </Link>
@@ -302,7 +302,7 @@ export default function PostCard({ article, variant = 'medium', className, aspec
               'text-[var(--text-strong)]'
             )}
             style={{
-              fontFamily: '"Rubik", sans-serif',
+              fontFamily: '"Gibson", sans-serif',
               fontWeight: 700,
               lineHeight: 1.35,
               fontSize: fullTitle ? 'clamp(16px, 2.5vw, 18px)' : '20px',

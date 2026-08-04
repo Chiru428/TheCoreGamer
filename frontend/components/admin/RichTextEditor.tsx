@@ -257,7 +257,7 @@ const GOOGLE_FONTS_URL =
   '&family=Barlow+Condensed:wght@400;500;600;700' +
   '&family=Michroma' +
   '&family=Kanit:wght@400;500;600;700' +
-  '&family=Rubik:wght@400;500;600;700' +
+  '&family=Gibson:wght@400;500;600;700' +
   '&family=Archivo+Black' +
   '&family=Montserrat:wght@400;500;600;700' +
   '&family=Anton' +
@@ -334,7 +334,7 @@ const FONT_GROUPS = [
     fonts: [
       { label: 'Acumin Pro', value: '"acumin-pro", system-ui, sans-serif' },
       { label: 'Acumin Pro Condensed', value: '"acumin-pro-condensed", sans-serif' },
-      { label: 'Rubik', value: '"Rubik", sans-serif' },
+      { label: 'Gibson', value: '"Gibson", sans-serif' },
       { label: 'Inter (DM Sans)', value: '"Inter", "DM Sans", sans-serif' },
       { label: 'Manrope (Outfit)', value: '"Manrope", "Outfit", sans-serif' },
       { label: 'IBM Plex Sans (Source Sans 3)', value: '"IBM Plex Sans", "Source Sans 3", sans-serif' },
@@ -811,7 +811,7 @@ const FONT_OPTIONS = [
   { label: 'Modern Clean Body & UI Stacks', isGroup: true },
   { label: 'Acumin Pro', value: '"acumin-pro", system-ui, sans-serif' },
   { label: 'Acumin Pro Condensed', value: '"acumin-pro-condensed", sans-serif' },
-  { label: 'Rubik', value: '"Rubik", sans-serif' },
+  { label: 'Gibson', value: '"Gibson", sans-serif' },
   { label: 'Inter (DM Sans)', value: '"Inter", "DM Sans", sans-serif' },
   { label: 'Manrope (Outfit)', value: '"Manrope", "Outfit", sans-serif' },
   { label: 'IBM Plex Sans (Source Sans 3)', value: '"IBM Plex Sans", "Source Sans 3", sans-serif' },

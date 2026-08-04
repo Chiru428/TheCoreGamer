@@ -162,7 +162,7 @@ export default function PricesTab({ game, slug }: { game: GameHubData; slug: str
   }, [game.id]);
 
   if (prices.length === 0 && !loading) {
-    return <div className="text-center py-12 text-gray-400 bg-[#1a1a1a] border border-dashed border-white/10 rounded-xl">No price data tracked yet for {game.title}.</div>;
+    return <div className="text-center py-12 text-gray-400 bg-[#1a1a1a] border border-dashed border-white/10 rounded-none">No price data tracked yet for {game.title}.</div>;
   }
 
   return (
@@ -178,7 +178,7 @@ export default function PricesTab({ game, slug }: { game: GameHubData; slug: str
         <p className="text-xs text-amber-400 mb-3 px-1">{error}</p>
       )}
 
-      <div className="w-full bg-[#E0E0E0] dark:bg-[#1e1e24] rounded-lg overflow-hidden border border-gray-200 dark:border-white/5 shadow-sm dark:shadow-none">
+      <div className="w-full bg-[#E0E0E0] dark:bg-[#1e1e24] rounded-none overflow-hidden border border-gray-200 dark:border-white/5 shadow-sm dark:shadow-none">
         {/* Header */}
         <div className="hidden md:grid grid-cols-[3fr_2fr_3fr_4fr] gap-4 p-3 bg-[#2453A4] border-b border-[#183973] text-xs font-bold text-white uppercase tracking-wider">
           <div>Store</div>

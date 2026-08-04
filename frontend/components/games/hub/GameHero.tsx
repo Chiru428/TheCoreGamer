@@ -65,10 +65,10 @@ export default function GameHero({ game, slug, trailerUrl, youtubeId, youtubeSea
   const mainPlatform = game.platforms && game.platforms.length > 0 ? game.platforms[0] : 'Unknown';
 
   return (
-    <section className="relative w-full flex flex-col mt-[-90px]">
+    <section className="relative w-full flex flex-col">
 
       {/* Backdrop Image — desktop only */}
-      <div className="relative w-full h-[300px] sm:h-[400px] overflow-hidden hidden md:block">
+      <div className="relative w-full h-[400px] overflow-hidden hidden md:block">
         {(game.backgroundImageUrl || game.coverImageUrl) && (
           <div
             className="absolute inset-0 bg-cover bg-top"
@@ -86,7 +86,7 @@ export default function GameHero({ game, slug, trailerUrl, youtubeId, youtubeSea
         <div className="absolute top-0 inset-x-0 h-8 bg-gradient-to-b from-black/20 to-transparent pointer-events-none hidden md:block" />
 
         {/* -- MOBILE layout --------------------------------------------- */}
-        <div className="md:hidden pt-[100px] pb-6 flex flex-col">
+        <div className="md:hidden pt-6 pb-6 flex flex-col">
           {/* Large Cover Art — centered at top */}
           <div className="flex justify-center px-6">
             <div className="w-[300px] bg-[#1c3e8a] p-2 border-2 border-white/40 shadow-xl">

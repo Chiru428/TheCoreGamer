@@ -131,7 +131,7 @@ function RatingCard({
         <>
           <p
             className={`leading-relaxed ${isLong ? 'mb-1' : !isOwn ? 'mb-3' : ''} ${isLong && !isExpanded ? 'line-clamp-3' : ''}`}
-            style={{ color: 'var(--muted)', fontSize: 14, fontFamily: '"Rubik", sans-serif' }}
+            style={{ color: 'var(--muted)', fontSize: 14, fontFamily: '"Gibson", sans-serif' }}
           >
             {rating.body}
           </p>
@@ -340,7 +340,7 @@ export default function ReviewsTab({ game, slug }: { game: GameHubData; slug: st
         />
       )}
       {!viewerId && (
-        <p className="text-sm mb-6 p-4 rounded-xl border border-border" style={{ color: 'var(--muted)', background: 'var(--bg3)' }}>
+        <p className="text-sm mb-6 p-4 rounded-none border border-border" style={{ color: 'var(--muted)', background: 'var(--bg3)' }}>
           <a href="/auth/login" style={{ color: 'var(--accent)' }} className="underline hover:no-underline font-bold">Sign in</a> to leave a community review.
         </p>
       )}

@@ -44,7 +44,7 @@ export default function Footer() {
 
 
   return (
-    <div className="relative w-full pb-0" style={{ background: 'var(--bg)', fontFamily: "'Rubik', sans-serif" }}>
+    <div className="relative w-full pb-0" style={{ background: 'var(--bg)', fontFamily: "'Gibson', sans-serif" }}>
       {/* -- WEEKLY DIGEST FLOATING BANNER -- */}
       {isHomePage && (
         <div className="w-full px-4 lg:px-8 relative z-20 -mb-20 md:-mb-28 mt-8 md:mt-12">

@@ -42,12 +42,6 @@ export default function HomePostCard({ article, isCompact, showBadge = false, sh
     <Link 
       href={href}
       className={`group flex ${mobileHorizontal ? 'flex-row sm:flex-col items-center sm:items-stretch sm:h-full gap-3 sm:gap-0' : 'flex-col h-full'} ${showBackground ? 'bg-white dark:bg-[#333333]' : 'bg-transparent'} relative overflow-hidden`}
-      style={{
-        borderTopLeftRadius: noBorderRadius ? '0px' : (noTopLeftRadius ? '0px' : '4px'),
-        borderTopRightRadius: noBorderRadius ? '0px' : '0px',
-        borderBottomLeftRadius: noBorderRadius ? '0px' : '4px',
-        borderBottomRightRadius: noBorderRadius ? '0px' : '32px',
-      }}
     >
       {/* Top Image Area */}
       <div className={`block ${mobileHorizontal ? 'h-[90px] w-auto sm:h-auto sm:w-full my-auto sm:my-0' : 'w-full'} ${imageClassName || 'aspect-[16/9]'} relative overflow-hidden bg-[var(--deep,#0d0d1a)] shrink-0`} style={{ flexBasis: mobileHorizontal ? 'auto' : undefined }}>
@@ -123,8 +117,8 @@ export default function HomePostCard({ article, isCompact, showBadge = false, sh
         {/* Title */}
         <div className={`no-underline ${mobileHorizontal ? 'mt-0.5 sm:mt-1.5' : 'mt-1 sm:mt-1.5'}${!showBackground && showExcerpt ? ' mb-3' : ''}`}>
           <h3
-            className={`post-card-title font-bold ${forceDarkTheme ? 'text-white' : 'text-gray-900 dark:text-white'} uppercase leading-[1.1] transition-colors group-hover:underline ${truncateTitle ? 'line-clamp-2 ' : ''}${titleClassName ? titleClassName : (mobileHorizontal ? 'mb-1 sm:mb-2 text-[15px] sm:text-[18px] lg:text-[20px]' : 'mb-2 text-[18px] lg:text-[20px]')}`}
-            style={titleStyle ?? { fontFamily: "'Rubik', sans-serif" }}
+            className={`post-card-title font-bold ${forceDarkTheme ? 'text-white' : 'text-gray-900 dark:text-white'} leading-[1.1] transition-colors group-hover:underline ${truncateTitle ? 'line-clamp-2 ' : ''}${titleClassName ? titleClassName : (mobileHorizontal ? 'mb-1 sm:mb-2 text-[15px] sm:text-[18px] lg:text-[20px]' : 'mb-2 text-[18px] lg:text-[20px]')}`}
+            style={titleStyle ?? { fontFamily: "'Gibson', sans-serif" }}
           >
             {article.title}
           </h3>

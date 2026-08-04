@@ -286,7 +286,7 @@ export default function Header({ tickerArticles = [] }: { tickerArticles?: Artic
     <header
       ref={headerRef}
       className={cn("sticky top-0 z-50 transition-shadow duration-300", isScrolled ? "shadow-lg" : "")}
-      style={{ background: 'var(--nav-bg)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', fontFamily: "'Rubik', sans-serif" }}
+      style={{ background: 'var(--nav-bg)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', fontFamily: "'Gibson', sans-serif" }}
     >
       {/* Row 1 — trending ticker */}
       <AnimatePresence initial={false}>
@@ -555,7 +555,7 @@ export default function Header({ tickerArticles = [] }: { tickerArticles?: Artic
                 position: 'fixed', top: 0, left: 0, bottom: 0, right: 0, width: '100%',
                 zIndex: 9999,
                 overflowY: 'auto', display: 'flex', flexDirection: 'column',
-                fontFamily: "'Rubik', sans-serif",
+                fontFamily: "'Gibson', sans-serif",
               }}
             >
               {/* Header row — Profile left, Close right */}

@@ -34,7 +34,7 @@ export default function MyPerformancePage() {
 
   if (isSWRLoading || !data) {
     return (
-      <div className="space-y-8 w-full" style={{ fontFamily: "'Rubik', sans-serif" }}>
+      <div className="space-y-8 w-full" style={{ fontFamily: "'Gibson', sans-serif" }}>
         <Skeleton className="h-8 w-48 rounded-lg" />
 
         {/* Stat Cards Grid */}
@@ -81,7 +81,7 @@ export default function MyPerformancePage() {
   };
 
   return (
-    <div className="space-y-8 w-full" style={{ fontFamily: "'Rubik', sans-serif" }}>
+    <div className="space-y-8 w-full" style={{ fontFamily: "'Gibson', sans-serif" }}>
 
 
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">

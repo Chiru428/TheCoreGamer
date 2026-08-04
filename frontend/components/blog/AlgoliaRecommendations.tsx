@@ -106,7 +106,7 @@ export default function AlgoliaRecommendations({
       <section className={cn('mt-12', className)}>
         <h3
         className={cn('section-title-bar', showDivider ? 'mb-3' : 'mb-6', titleClassName)}
-        style={layout === 'sidebar' ? { fontFamily: "'Rubik', sans-serif" } : undefined}
+        style={layout === 'sidebar' ? { fontFamily: "'Gibson', sans-serif" } : undefined}
       >
         {title}
       </h3>
@@ -134,7 +134,7 @@ export default function AlgoliaRecommendations({
     <section className={cn('mt-12', className)}>
       <h3
         className={cn('section-title-bar', showDivider ? 'mb-3' : 'mb-6', titleClassName)}
-        style={layout === 'sidebar' ? { fontFamily: "'Rubik', sans-serif" } : undefined}
+        style={layout === 'sidebar' ? { fontFamily: "'Gibson', sans-serif" } : undefined}
       >
         {title}
       </h3>
@@ -173,7 +173,7 @@ export default function AlgoliaRecommendations({
                       {(hit.contentType === 'GUIDE' && hit.guideType) ? hit.guideType : (CONTENT_TYPE_LABELS[hit.contentType] || hit.contentType)}
                     </span>
                   )}
-                  <p className="text-[16px] md:text-[18px] font-bold text-text-strong line-clamp-2" style={{ fontFamily: '"Rubik", sans-serif' }}>
+                  <p className="text-[16px] md:text-[18px] font-bold text-text-strong line-clamp-2" style={{ fontFamily: '"Gibson", sans-serif' }}>
                     {hit.title}
                   </p>
                   {indexName !== 'games' && hit.publishedAtISO && (
@@ -202,7 +202,7 @@ export default function AlgoliaRecommendations({
                       {(hit.contentType === 'GUIDE' && hit.guideType) ? hit.guideType : (CONTENT_TYPE_LABELS[hit.contentType] || hit.contentType)}
                     </span>
                   )}
-                  <p className="text-[16px] font-bold text-text-strong group-hover:underline" style={{ fontFamily: '"Rubik", sans-serif' }}>
+                  <p className="text-[16px] font-bold text-text-strong group-hover:underline" style={{ fontFamily: '"Gibson", sans-serif' }}>
                     {hit.title}
                   </p>
                   {(hit.authorName || hit.publishedAtISO) && (
@@ -246,7 +246,7 @@ export default function AlgoliaRecommendations({
                     </div>
                   )}
                 </div>
-                <p className="flex-1 min-w-0 text-sm font-bold text-text-strong line-clamp-2 group-hover:underline" style={{ fontFamily: '"Rubik", sans-serif' }}>
+                <p className="flex-1 min-w-0 text-sm font-bold text-text-strong line-clamp-2 group-hover:underline" style={{ fontFamily: '"Gibson", sans-serif' }}>
                   {hit.title}
                 </p>
                 {score != null && <ScoreBadge score={Number(score)} size="sm" />}
@@ -278,7 +278,7 @@ export default function AlgoliaRecommendations({
                 )}
               </div>
               <div className="p-2.5">
-                <p className="text-sm font-bold text-text-strong line-clamp-2 group-hover:text-accent group-hover:underline transition-colors" style={{ fontFamily: '"Rubik", sans-serif' }}>
+                <p className="text-sm font-bold text-text-strong line-clamp-2 group-hover:text-accent group-hover:underline transition-colors" style={{ fontFamily: '"Gibson", sans-serif' }}>
                   {hit.title}
                 </p>
               </div>
@@ -316,7 +316,7 @@ export default function AlgoliaRecommendations({
                       {(hit.contentType === 'GUIDE' && hit.guideType) ? hit.guideType : (CONTENT_TYPE_LABELS[hit.contentType] || hit.contentType)}
                     </span>
                   )}
-                  <p className="text-sm font-bold text-text-strong line-clamp-2 group-hover:text-accent group-hover:underline transition-colors" style={{ fontFamily: '"Rubik", sans-serif' }}>
+                  <p className="text-sm font-bold text-text-strong line-clamp-2 group-hover:text-accent group-hover:underline transition-colors" style={{ fontFamily: '"Gibson", sans-serif' }}>
                     {hit.title}
                   </p>
                   {hit.publishedAtISO && (
