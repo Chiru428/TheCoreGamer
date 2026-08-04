@@ -105,8 +105,35 @@ export default async function GenericArticlePage({ params, expectedPath }: { par
         }} />
       )}
 
-      <article className="max-w-[1280px] mx-auto px-4 lg:px-0 py-6 relative">
-        <div className="max-w-[945.6px]">
+      <article className="max-w-[1280px] mx-auto px-4 lg:px-0 pt-0 pb-6 md:py-6 relative">
+        {article.featuredImageUrl && (
+          <div className="w-full">
+            <FeaturedImage 
+              src={article.featuredImageUrl} 
+              alt={`Featured image for ${article.title}`} 
+              credit={article.featuredImageCredit} 
+              priority={true} 
+            />
+          </div>
+        )}
+
+        <div className="max-w-[945.6px] lg:pl-[68px] relative">
+
+          {/* Sticky left-gap action bar — hidden on mobile, only renders at lg+ */}
+          <div className="hidden lg:flex flex-col absolute left-0 top-0 bottom-[1000px] w-[44px] pt-4">
+            <div className="sticky top-24 flex flex-col bg-black/10 dark:bg-white/10 gap-[1px]">
+              <ArticleLikeButton articleId={article.id} initialCount={article._count?.reactions ?? 0} hideCount={true} variant="sidebar" />
+              <a
+                href="#comments"
+                className="flex items-center justify-center w-[44px] h-[44px] transition-colors text-text-muted bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 hover:text-text-primary"
+                aria-label="Jump to comments"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </a>
+              <BookmarkButton articleId={article.id} variant="sidebar" />
+            </div>
+          </div>
+
         <div className="flex flex-col xl:flex-row gap-8 xl:gap-12">
           {/* Main Content Column */}
           <div className="flex-1 min-w-0">
@@ -147,7 +174,7 @@ export default async function GenericArticlePage({ params, expectedPath }: { par
                       <Badge variant="danger" className="text-[10px] md:text-xs"><Zap className="w-3 h-3 mr-1" />Breaking</Badge>
                     </div>
                   )}
-                  <div className="mb-4">
+                  <div className="mb-2">
                     <BreadcrumbNav crumbs={[
                       { label: article.contentType === 'NEWS' ? 'News' : 
                                article.contentType === 'DEAL' ? 'Deals' :
@@ -163,19 +190,11 @@ export default async function GenericArticlePage({ params, expectedPath }: { par
                     ]} />
                   </div>
                   <h1
-                    className="font-sans text-[26px] md:text-[48px] font-bold text-text-primary mb-3 leading-tight text-left underline"
+                    className="font-sans text-[26px] md:text-[36px] font-bold text-text-primary mb-3 leading-tight text-left"
                   >
                     {article.title}
                   </h1>
 
-                  {article.featuredImageUrl && (
-                    <FeaturedImage 
-                      src={article.featuredImageUrl} 
-                      alt={`Featured image for ${article.title}`} 
-                      credit={article.featuredImageCredit} 
-                      priority={true} 
-                    />
-                  )}
                 </div>
 
 
@@ -258,7 +277,7 @@ export default async function GenericArticlePage({ params, expectedPath }: { par
               )}
 
               {/* Actions */}
-              <div className="flex flex-row flex-wrap items-center justify-start md:justify-between gap-4 mt-6 pt-6 border-t border-border mb-6">
+              <div className="flex flex-row flex-wrap items-center justify-start md:justify-between gap-4 mt-10">
                 <ShareButtons title={article.title} url={`/${expectedPath}/${slug}`} />
                 <div className="flex items-center gap-4 md:gap-2">
                   <ArticleLikeButton articleId={article.id} initialCount={article._count?.reactions ?? 0} />
@@ -277,7 +296,7 @@ export default async function GenericArticlePage({ params, expectedPath }: { par
                   parentContentType={article.contentType}
                 />
               )}
-              <div className="w-full flex justify-center mt-8 mb-8">
+              <div className="w-full flex justify-center">
                 <AdSlot slot="ADS-02" className="w-full max-w-[728px]" />
               </div>
               <CommentSection articleId={article.id} />

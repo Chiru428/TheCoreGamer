@@ -13,6 +13,8 @@ interface HomePostCardProps {
   article: Article;
   isCompact?: boolean;
   showBadge?: boolean;
+  /** Controls the badge overlaid on the image. Defaults to showBadge. Set false to hide image badge while keeping the date-row label. */
+  showImageBadge?: boolean;
   badgeClassName?: string;
   titleClassName?: string;
   mobileHorizontal?: boolean;
@@ -30,7 +32,8 @@ interface HomePostCardProps {
   forceDarkTheme?: boolean;
 }
 
-export default function HomePostCard({ article, isCompact, showBadge = false, badgeClassName, titleClassName, titleStyle, mobileHorizontal = false, showExcerptOnMobile = false, showExcerpt = true, contentClassName, showBackground = false, imageClassName, showAuthor = true, truncateTitle = true, showViewArticle = true, noTopLeftRadius = false, noBorderRadius = false, forceDarkTheme = false }: HomePostCardProps) {
+export default function HomePostCard({ article, isCompact, showBadge = false, showImageBadge, badgeClassName, titleClassName, titleStyle, mobileHorizontal = false, showExcerptOnMobile = false, showExcerpt = true, contentClassName, showBackground = false, imageClassName, showAuthor = true, truncateTitle = true, showViewArticle = true, noTopLeftRadius = false, noBorderRadius = false, forceDarkTheme = false }: HomePostCardProps) {
+  const imageBadge = showImageBadge ?? showBadge;
   const tc = CONTENT_TYPE_COLORS[article.contentType] || { bg: 'var(--accent)', color: '#fff' };
 
   const href = `/${contentTypePath(article.contentType)}/${article.slug}`;
@@ -66,7 +69,7 @@ export default function HomePostCard({ article, isCompact, showBadge = false, ba
           </div>
         )}
 
-        {showBadge && (
+        {imageBadge && (
           article.contentType === 'GUIDE' && article.guideType ? (
               <span
                 className="absolute bottom-2 left-2 z-10 sm:hidden"

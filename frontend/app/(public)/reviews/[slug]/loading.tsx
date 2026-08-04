@@ -1,5 +1,5 @@
-import { DetailSkeleton } from '@/components/ui/Skeleton';
+import { ReviewDetailSkeleton } from '@/components/ui/Skeleton';
 
 export default function ReviewDetailLoading() {
-  return <DetailSkeleton />;
+  return <ReviewDetailSkeleton />;
 }

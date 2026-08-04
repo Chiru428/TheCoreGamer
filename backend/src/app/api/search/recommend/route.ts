@@ -12,6 +12,7 @@ const ATTRIBUTES_TO_RETRIEVE = [
   "title",
   "slug",
   "contentType",
+  "guideType",
   "featuredImageUrl",
   "coverImageUrl",
   "reviewScore",
@@ -84,7 +85,7 @@ export async function GET(request: NextRequest) {
     const model = searchParams.get("model") || "related-products";
     const max = Math.max(1, parseInt(searchParams.get("max") || "6"));
 
-    const cacheKey = `algolia:recommend:${index}:${objectID}`;
+    const cacheKey = `algolia:recommend:v2:${index}:${objectID}`;
     try {
       const cached = await cacheGet(cacheKey);
       if (cached) return NextResponse.json(successResponse(cached));

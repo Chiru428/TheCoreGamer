@@ -171,7 +171,8 @@ export default async function HomePage() {
     .home-page-root .signup-btn,
     .home-page-root .auth-submit-btn,
     .home-page-root .post-card-title,
-    .home-page-root .post-card-title * {
+    .home-page-root .post-card-title *,
+    .home-page-root .rubik-label {
      font-family: "Rubik", sans-serif !important;
     }
     .home-page-root .hero-main-title.post-card-title {
@@ -297,68 +298,11 @@ export default async function HomePage() {
        </div>
 
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-5 lg:gap-[10px]">
-       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        <HomePostCard article={newsArticles[0]} titleClassName="!text-[18px]" showExcerptOnMobile={true} showBackground={false} truncateTitle={false} showViewArticle={false} />
-        {newsArticles.slice(1, 3).map((a) => (
-         <HomePostCard key={a.id} article={a} mobileHorizontal={true} titleClassName="!text-[15px] sm:!text-[18px]" showBackground={false} truncateTitle={false} showViewArticle={false} />
-        ))}
-       </div>
-
-       {/* LATEST NEWS — same connector-line timeline as "Popular This Week" / Reviews' Latest list.
-         Wrapped in absolute inset-0 so this column's content never inflates the grid row height —
-         the row height is driven purely by the 3 news cards, and this list stretches+clips to match. */}
-       {newsArticles.slice(3, 11).length > 0 && (
-        <div className="mt-4 lg:mt-0 lg:relative lg:overflow-hidden">
-         <div className="flex flex-col overflow-hidden lg:absolute lg:inset-0">
-
-          <div className="flex flex-col pr-1 lg:overflow-y-auto lg:no-scrollbar lg:flex-1 lg:min-h-0">
-           {newsArticles.slice(3, 11).map((article, idx, arr) => {
-            const tc = CONTENT_TYPE_COLORS[article.contentType] || { bg: 'var(--accent)', color: '#fff' };
-            const isLast = idx === arr.length - 1;
-            return (
-             <Link
-              key={article.id}
-              href={`/${contentTypePath(article.contentType)}/${article.slug}`}
-              className={`group relative flex items-stretch gap-2${!isLast ? ' mb-7' : ''}`}
-             >
-              <div className="flex-1 min-w-0 flex flex-col">
-               {/* Top row: date and badge share the same row */}
-               <div className="flex items-center gap-2 shrink-0">
-                <span className="shrink-0" style={{ width: '36px', fontSize: '10px', fontWeight: 700, letterSpacing: '0.04em', color: 'var(--muted2)', lineHeight: 1, whiteSpace: 'nowrap' }}>
-                 {formatShortDate(article.publishedAt)}
-                </span>
-                <span style={{ fontSize: '10px', fontWeight: 600, letterSpacing: '0.25em', textTransform: 'uppercase', color: tc.textColor || tc.bg, lineHeight: 1 }}>
-                 {CONTENT_TYPE_LABELS[article.contentType] || article.contentType}
-                </span>
-               </div>
-               {/* Bottom row: connector line under the date column, title under the badge column */}
-               <div className="flex gap-2 mt-1.5 flex-1">
-                <div className="shrink-0 relative" style={{ width: '36px' }}>
-                 {!isLast && (
-                  <div className="absolute top-0 -bottom-6 w-[2px] bg-[var(--muted3)] -translate-x-1/2" style={{ left: '50%' }} />
-                 )}
-                </div>
-                <h3 className="flex-1 min-w-0 post-card-title popular-title-acumin transition-colors group-hover:underline group-hover:underline text-[16px]" style={{ fontWeight: 700, lineHeight: 1.35, color: 'var(--text-strong)', fontFamily: "'Rubik', sans-serif" }}>
-                 {article.title}
-                </h3>
-               </div>
-              </div>
-              {/* Small cover image, vertically centered */}
-              <div className="relative w-[130px] h-[73px] sm:w-[114px] sm:h-[64px] shrink-0 overflow-hidden bg-[var(--deep,#0d0d1a)] self-center">
-               {article.featuredImageUrl ? (
-                <Image src={article.featuredImageUrl} alt={article.title} fill className="object-cover" sizes="130px" />
-               ) : (
-                <div className="w-full h-full flex items-center justify-center"><Gamepad2 className="w-4 h-4 opacity-30" /></div>
-               )}
-              </div>
-             </Link>
-            );
-           })}
-          </div>
-         </div>
-        </div>
-       )}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+       <HomePostCard article={newsArticles[0]} titleClassName="!text-[18px]" showExcerptOnMobile={true} showBackground={false} truncateTitle={false} showViewArticle={false} />
+       {newsArticles.slice(1, 4).map((a) => (
+        <HomePostCard key={a.id} article={a} titleClassName="!text-[18px]" showExcerptOnMobile={true} showBackground={false} truncateTitle={false} showViewArticle={false} />
+       ))}
       </div>
       <SeeMoreBtn href="/news" label="News" />
      </section>

@@ -7,16 +7,16 @@ import Image from 'next/image';
 import { Gamepad2 } from 'lucide-react';
 import { CONTENT_TYPE_LABELS, CONTENT_TYPE_COLORS } from '@/lib/constants';
 import { contentTypePath } from '@/lib/seo';
-import { formatDate } from '@/lib/utils';
+import { formatDate, getGuideTypeColor, cn } from '@/lib/utils';
 import { getAlgoliaUserToken, sendAlgoliaEvent } from '@/lib/algolia';
 import ScoreBadge from '@/components/review/ScoreBadge';
-import { cn } from '@/lib/utils';
 
 interface RecommendationHit {
   objectID: string;
   title: string;
   slug: string;
   contentType?: string;
+  guideType?: string;
   featuredImageUrl?: string | null;
   coverImageUrl?: string | null;
   reviewScore?: number | null;
@@ -169,8 +169,8 @@ export default function AlgoliaRecommendations({
                 </div>
                 <div className="p-2.5 flex flex-col gap-1.5">
                   {indexName !== 'games' && hit.contentType && (
-                    <span className={cn(!staticBadges && 'category-badge-bounce')} style={{ display: 'inline-block', fontSize: '10px', fontWeight: 800, letterSpacing: '1px', textTransform: 'uppercase', color: tc.textColor || tc.bg }}>
-                      {CONTENT_TYPE_LABELS[hit.contentType] || hit.contentType}
+                    <span className={cn(!staticBadges && 'category-badge-bounce')} style={{ display: 'inline-block', fontSize: '10px', fontWeight: 800, letterSpacing: '1px', textTransform: 'uppercase', color: (hit.contentType === 'GUIDE' && hit.guideType) ? getGuideTypeColor(hit.guideType) : (tc.textColor || tc.bg) }}>
+                      {(hit.contentType === 'GUIDE' && hit.guideType) ? hit.guideType : (CONTENT_TYPE_LABELS[hit.contentType] || hit.contentType)}
                     </span>
                   )}
                   <p className="text-[16px] md:text-[18px] font-bold text-text-strong line-clamp-2" style={{ fontFamily: '"Rubik", sans-serif' }}>
@@ -198,8 +198,8 @@ export default function AlgoliaRecommendations({
               >
                 <div className="flex-1 min-w-0">
                   {hit.contentType && (
-                    <span className={cn(!staticBadges && 'category-badge-bounce', 'mb-1')} style={{ display: 'inline-block', fontSize: '10px', fontWeight: 800, letterSpacing: '1px', textTransform: 'uppercase', color: tc.textColor || tc.bg }}>
-                      {CONTENT_TYPE_LABELS[hit.contentType] || hit.contentType}
+                    <span className={cn(!staticBadges && 'category-badge-bounce', 'mb-1')} style={{ display: 'inline-block', fontSize: '10px', fontWeight: 800, letterSpacing: '1px', textTransform: 'uppercase', color: (hit.contentType === 'GUIDE' && hit.guideType) ? getGuideTypeColor(hit.guideType) : (tc.textColor || tc.bg) }}>
+                      {(hit.contentType === 'GUIDE' && hit.guideType) ? hit.guideType : (CONTENT_TYPE_LABELS[hit.contentType] || hit.contentType)}
                     </span>
                   )}
                   <p className="text-[16px] font-bold text-text-strong group-hover:underline" style={{ fontFamily: '"Rubik", sans-serif' }}>
@@ -312,8 +312,8 @@ export default function AlgoliaRecommendations({
                 </div>
                 <div className="p-2.5 flex flex-col gap-1.5">
                   {hit.contentType && (
-                    <span className={cn(!staticBadges && 'category-badge-bounce')} style={{ display: 'inline-block', fontSize: '10px', fontWeight: 800, letterSpacing: '1px', textTransform: 'uppercase', color: tc.textColor || tc.bg }}>
-                      {CONTENT_TYPE_LABELS[hit.contentType] || hit.contentType}
+                    <span className={cn(!staticBadges && 'category-badge-bounce')} style={{ display: 'inline-block', fontSize: '10px', fontWeight: 800, letterSpacing: '1px', textTransform: 'uppercase', color: (hit.contentType === 'GUIDE' && hit.guideType) ? getGuideTypeColor(hit.guideType) : (tc.textColor || tc.bg) }}>
+                      {(hit.contentType === 'GUIDE' && hit.guideType) ? hit.guideType : (CONTENT_TYPE_LABELS[hit.contentType] || hit.contentType)}
                     </span>
                   )}
                   <p className="text-sm font-bold text-text-strong line-clamp-2 group-hover:text-accent group-hover:underline transition-colors" style={{ fontFamily: '"Rubik", sans-serif' }}>

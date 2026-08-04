@@ -6,9 +6,13 @@ import { toggleReaction } from '@/lib/api';
 export default function ArticleLikeButton({
   articleId,
   initialCount = 0,
+  hideCount = false,
+  variant = 'default',
 }: {
   articleId: string;
   initialCount?: number;
+  hideCount?: boolean;
+  variant?: 'default' | 'sidebar';
 }) {
   const storageKey = `liked_article_${articleId}`;
   const [liked, setLiked] = useState(false);
@@ -25,18 +29,39 @@ export default function ArticleLikeButton({
         setCount(initialCount);
       }
     } catch {}
-  }, [storageKey, initialCount]);
+
+    const handleSync = (e: CustomEvent) => {
+      if (e.detail.articleId === articleId) {
+        setLiked(e.detail.liked);
+        setCount(e.detail.count);
+      }
+    };
+    
+    window.addEventListener('article_like_sync', handleSync as EventListener);
+    return () => window.removeEventListener('article_like_sync', handleSync as EventListener);
+  }, [storageKey, initialCount, articleId]);
 
   async function toggle(e: React.MouseEvent) {
     e.preventDefault();
     e.stopPropagation();
-    const next = !liked;
-    setLiked(next);
-    setCount((c) => (next ? c + 1 : Math.max(0, c - 1)));
+    const nextLiked = !liked;
+    const nextCount = nextLiked ? count + 1 : Math.max(0, count - 1);
+    
+    setLiked(nextLiked);
+    setCount(nextCount);
+    
+    // Dispatch custom event to sync other like buttons on the same page
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(
+        new CustomEvent('article_like_sync', {
+          detail: { articleId, liked: nextLiked, count: nextCount }
+        })
+      );
+    }
     
     // Optimistic UI update for local storage
     try {
-      if (next) localStorage.setItem(storageKey, '1');
+      if (nextLiked) localStorage.setItem(storageKey, '1');
       else localStorage.removeItem(storageKey);
     } catch {}
 
@@ -52,15 +77,23 @@ export default function ArticleLikeButton({
     <div className="flex items-center gap-1.5">
       <button
         onClick={toggle}
-        className="flex items-center justify-center w-8 h-8 rounded-full text-white transition-transform hover:scale-105"
-        style={{ backgroundColor: liked ? '#ef4444' : '#6b7280' }}
+        className={
+          variant === 'sidebar'
+            ? `flex items-center justify-center w-[44px] h-[44px] transition-colors ${
+                liked
+                  ? 'text-[#ef4444] bg-black/10 dark:bg-white/10'
+                  : 'text-text-muted bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 hover:text-text-primary'
+              }`
+            : 'flex items-center justify-center w-8 h-8 rounded-full text-white transition-transform hover:scale-105'
+        }
+        style={variant === 'default' ? { backgroundColor: liked ? '#ef4444' : '#6b7280' } : undefined}
         aria-label={liked ? 'Unlike' : 'Like'}
         aria-pressed={liked}
         title={liked ? 'Unlike' : 'Like'}
       >
         <svg
-          width="16"
-          height="16"
+          width="20"
+          height="20"
           viewBox="0 0 24 24"
           fill={liked ? 'currentColor' : 'none'}
           stroke="currentColor"
@@ -71,7 +104,7 @@ export default function ArticleLikeButton({
           <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
         </svg>
       </button>
-      {count > 0 && (
+      {!hideCount && count > 0 && (
         <span style={{ fontFamily: '"acumin-pro-condensed", sans-serif', fontSize: '14px', color: 'var(--text-muted)' }}>{count}</span>
       )}
     </div>

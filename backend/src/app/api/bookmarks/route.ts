@@ -12,9 +12,9 @@ export const runtime = "nodejs";
 
 const toggleSchema = z.object({ articleId: z.string().min(1) });
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
-    const { session, error } = await requireAuth();
+    const { session, error } = await requireAuth(request);
     if (error) return error;
 
     const bookmarks = await withRetry(() =>
@@ -28,8 +28,6 @@ export async function GET() {
                 select: { id: true, username: true, displayName: true, avatarUrl: true },
               },
               ArticleTag: { include: { Tag: true } },
-              contentType: true,
-              guideType: true,
               _count: {
                 select: {
                   Comment: { where: { status: "APPROVED" } },
@@ -62,7 +60,7 @@ export async function POST(request: Request) {
     const csrf = csrfProtection(request);
     if (csrf) return csrf;
 
-    const { session, error } = await requireAuth();
+    const { session, error } = await requireAuth(request);
     if (error) return error;
 
     const { data, error: validationError } = await validateBody(request, toggleSchema);

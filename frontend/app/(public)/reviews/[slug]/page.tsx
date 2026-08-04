@@ -61,7 +61,7 @@ export default async function ReviewDetailPage({ params }: Props) {
       <ReadingProgress slug={slug} />
       <ViewTracker slug={slug} />
       <AlgoliaEventTracker objectID={article.id} indexName="articles" />
-      <article className="max-w-[1280px] mx-auto px-4 lg:px-0 pt-3 pb-6 relative">
+      <article className="max-w-[1280px] mx-auto px-4 lg:px-0 pt-0 pb-6 md:pt-3 relative">
         <div className="max-w-[945.6px]">
         <JsonLd type="BreadcrumbList" data={{ items: [
           { name: 'Home', url: '/' },
@@ -95,6 +95,53 @@ export default async function ReviewDetailPage({ params }: Props) {
             embedUrl: `${SITE_URL}/reviews/${slug}`,
           }} />
         )}
+        </div>
+
+        {/* Full-width featured image — lives here at the max-w-[1280px] article level so it
+            naturally spans the full 1280px without any bleed tricks */}
+        {article.featuredImageUrl && (
+          <div className="w-full">
+            <FeaturedImage
+              src={article.featuredImageUrl}
+              alt={`Featured image for ${article.title}`}
+              credit={null}
+              priority={true}
+            />
+            {/* Credit + Reviewed-on row */}
+            {(article.featuredImageCredit || (review && (review.platformsTested?.length ?? 0) > 0) || (review?.copyProvidedByPublisher)) && (
+              <div className="flex items-center justify-between gap-4 mt-1 mb-[6px] px-4 lg:px-0">
+                <p className="text-[11px] text-text-dim">
+                  {article.featuredImageCredit ? `© ${article.featuredImageCredit}` : ''}
+                </p>
+                <p className="text-[11px] text-text-dim text-right">
+                  {review && (review.platformsTested?.length ?? 0) > 0 && (
+                    <span>Reviewed on: {review.platformsTested!.join(', ')}.</span>
+                  )}
+                  {review?.copyProvidedByPublisher && (
+                    <span className="ml-1">Review copy provided by publisher.</span>
+                  )}
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+
+        <div className="max-w-[945.6px] lg:pl-[68px] relative">
+
+          {/* Sticky left-gap action bar — hidden on mobile, only renders at lg+ */}
+          <div className="hidden lg:flex flex-col absolute left-0 top-0 bottom-[1000px] w-[44px] pt-4">
+            <div className="sticky top-24 flex flex-col bg-black/10 dark:bg-white/10 gap-[1px]">
+              <ArticleLikeButton articleId={article.id} initialCount={article._count?.reactions ?? 0} hideCount={true} variant="sidebar" />
+              <a
+                href="#comments"
+                className="flex items-center justify-center w-[44px] h-[44px] transition-colors text-text-muted bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 hover:text-text-primary"
+                aria-label="Jump to comments"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </a>
+              <BookmarkButton articleId={article.id} variant="sidebar" />
+            </div>
+          </div>
 
         <div className="flex flex-col xl:flex-row gap-8 xl:gap-12">
           {/* Main Content Column */}
@@ -136,47 +183,22 @@ export default async function ReviewDetailPage({ params }: Props) {
                       <Badge variant="danger" className="text-[10px] md:text-xs"><Zap className="w-3 h-3 mr-1" />Breaking</Badge>
                     </div>
                   )}
-                  <div className="mb-4">
+                  <div className="mb-2">
                     <BreadcrumbNav crumbs={[
                       { label: 'Reviews', href: '/reviews', icon: <Star className="w-4.5 h-4.5" /> }
                     ]} />
                   </div>
                   <h1
-                    className="font-sans text-[26px] md:text-[48px] font-bold text-text-primary mb-3 leading-tight text-left underline"
+                    className="font-sans text-[26px] md:text-[36px] font-bold text-text-primary mb-3 leading-tight text-left"
                   >
                     {article.title}
                   </h1>
 
-                  {article.featuredImageUrl && (
-                    <>
-                      <FeaturedImage 
-                        src={article.featuredImageUrl} 
-                        alt={`Featured image for ${article.title}`} 
-                        credit={null}
-                        priority={true} 
-                      />
-                      {/* Credit + Reviewed-on row */}
-                      {(article.featuredImageCredit || (review && (review.platformsTested?.length ?? 0) > 0) || (review?.copyProvidedByPublisher)) && (
-                        <div className="flex items-center justify-between gap-4 mt-1 mb-4 md:mb-6 px-4 md:px-0">
-                          <p className="text-[11px] text-text-dim">
-                            {article.featuredImageCredit ? `© ${article.featuredImageCredit}` : ''}
-                          </p>
-                          <p className="text-[11px] text-text-dim text-right">
-                            {review && (review.platformsTested?.length ?? 0) > 0 && (
-                              <span>Reviewed on: {review.platformsTested!.join(', ')}.</span>
-                            )}
-                            {review?.copyProvidedByPublisher && (
-                              <span className="ml-1">Review copy provided by publisher.</span>
-                            )}
-                          </p>
-                        </div>
-                      )}
-                    </>
-                  )}
+
                 </div>
 
               {/* Byline — no bottom border on reviews */}
-              <div className="[&>div]:border-b-0 [&>div]:pb-0 [&>div]:mb-4">
+              <div className="[&>div]:border-b-0 [&>div]:pb-0 [&>div]:mb-2 md:[&>div]:mb-4">
                 <ArticleByline
                   authorName={article.author?.displayName || 'Unknown'}
                   authorUsername={article.author?.username}
@@ -190,7 +212,7 @@ export default async function ReviewDetailPage({ params }: Props) {
 
               {/* Game Info Details Card — plain bordered box, no bg */}
               {review && (
-                <div className="w-full px-5 py-3 md:px-6 md:py-4 border border-black dark:border-white mb-8" style={{ borderWidth: '1px' }}>
+                <div className="w-full px-5 py-3 md:px-6 md:py-4 border border-black dark:border-white mb-4 md:mb-8" style={{ borderWidth: '1px' }}>
 
                 <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-center md:items-start">
 
@@ -365,7 +387,7 @@ export default async function ReviewDetailPage({ params }: Props) {
                 </div>
               )}
 
-              <div className="flex flex-row flex-wrap items-center justify-start md:justify-between gap-4 mt-6 pt-6 border-t border-border">
+              <div className="flex flex-row flex-wrap items-center justify-start md:justify-between gap-4 mt-10">
                 <ShareButtons title={article.title} url={`/reviews/${slug}`} />
                 <div className="flex items-center gap-4 md:gap-2">
                   <ArticleLikeButton articleId={article.id} initialCount={article._count?.reactions ?? 0} />
@@ -374,7 +396,7 @@ export default async function ReviewDetailPage({ params }: Props) {
                 </div>
               </div>
 
-              <div className="w-full flex justify-center mt-8 mb-8">
+              <div className="w-full flex justify-center">
                 <AdSlot slot="ADS-02" className="w-full max-w-[728px]" />
               </div>
               <CommentSection articleId={article.id} />

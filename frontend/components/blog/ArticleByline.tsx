@@ -51,7 +51,29 @@ export default function ArticleByline({ authorName, authorUsername, publishedAt,
   const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   const { data: bookmarksData, mutate: mutateBookmarks } = useSWR(isAuthenticated ? 'bookmarks' : null, fetchBookmarks);
-  const bookmarked = bookmarksData?.data?.some((b) => b.articleId === articleId) || false;
+  const [localBookmarked, setLocalBookmarked] = useState<boolean>(false);
+
+  useEffect(() => {
+    try {
+      const cached = JSON.parse(localStorage.getItem('local_bookmarks') || '{}');
+      if (cached[articleId]) setLocalBookmarked(true);
+    } catch {}
+  }, [articleId]);
+
+  useEffect(() => {
+    if (bookmarksData && bookmarksData.success && Array.isArray(bookmarksData.data)) {
+      try {
+        const newCache: Record<string, boolean> = {};
+        bookmarksData.data.forEach((b: any) => {
+          newCache[b.articleId] = true;
+        });
+        localStorage.setItem('local_bookmarks', JSON.stringify(newCache));
+        setLocalBookmarked(!!newCache[articleId]);
+      } catch {}
+    }
+  }, [bookmarksData, articleId]);
+
+  const bookmarked = bookmarksData ? (bookmarksData.data?.some((b: any) => b.articleId === articleId) || false) : localBookmarked;
 
   useEffect(() => {
     setFullUrl(`${window.location.origin}${url}`);
@@ -79,6 +101,17 @@ export default function ArticleByline({ authorName, authorUsername, publishedAt,
     }
 
     const isCurrentlyBookmarked = bookmarked;
+
+    try {
+      const cached = JSON.parse(localStorage.getItem('local_bookmarks') || '{}');
+      if (isCurrentlyBookmarked) {
+        delete cached[articleId];
+      } else {
+        cached[articleId] = true;
+      }
+      localStorage.setItem('local_bookmarks', JSON.stringify(cached));
+      setLocalBookmarked(!isCurrentlyBookmarked);
+    } catch {}
 
     mutateBookmarks(
       {
@@ -124,7 +157,7 @@ export default function ArticleByline({ authorName, authorUsername, publishedAt,
   );
 
   return (
-    <div className="mb-6 pb-4 border-b border-border">
+    <div className="mb-2 pb-2 md:mb-6 md:pb-4 border-b border-border">
       {/* Desktop / tablet layout */}
       <div className="hidden md:flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap items-center gap-2 text-text-muted">

@@ -177,55 +177,64 @@ export function FilterBoxSkeleton() {
 }
 
 
-
-export function DetailSkeleton() {
+export function ReviewDetailSkeleton() {
   return (
-    <article className="max-w-[1280px] mx-auto px-4 lg:px-0 py-6 relative">
-      <div className="max-w-[945.6px]">
+    <article className="max-w-[1280px] mx-auto px-4 lg:px-0 py-4 md:py-6 relative min-h-screen">
+      {/* Featured image at the top */}
+      <div className="w-full">
+        <Skeleton className="w-full aspect-video rounded-none mt-4 md:mt-6 mb-2 border-0" />
+        <div className="flex items-center justify-between gap-4 mt-1 mb-2 px-4 lg:px-0">
+          <Skeleton className="h-3 w-32" />
+          <Skeleton className="h-3 w-48 hidden md:block" />
+        </div>
+      </div>
+
+      <div className="max-w-[945.6px] lg:pl-[68px] relative">
+        {/* Sticky left-gap action bar */}
+        <div className="hidden lg:flex flex-col absolute left-0 top-0 bottom-[1000px] w-[44px] pt-4">
+          <div className="sticky top-24 flex flex-col gap-4 items-center">
+            <Skeleton className="h-8 w-8 rounded-full" />
+            <Skeleton className="h-8 w-8 rounded-full" />
+            <Skeleton className="h-8 w-8 rounded-full" />
+          </div>
+        </div>
+
         <div className="flex flex-col xl:flex-row gap-8 xl:gap-12">
           {/* Main Content Column */}
           <div className="flex-1 min-w-0">
-            {/* Hero */}
-            <div className="mt-1 md:mt-2 mb-3 md:mb-6">
-              {/* Content-type divider bar */}
-              <Skeleton className="h-4 w-40 mb-5" />
-
-              {/* Title (centered on desktop, matching the real page) */}
-              <div className="space-y-3 mb-6">
-                <Skeleton className="h-8 md:h-12 w-full md:w-4/5 md:mx-auto" />
-                <Skeleton className="h-8 md:h-12 w-2/3 md:mx-auto" />
-              </div>
-
-              {/* Featured image */}
-              <Skeleton className="w-full aspect-video rounded-none md:rounded-lg mb-6" />
-            </div>
-
-            {/* Body + sidebar two-column layout */}
-            <div className="flex flex-col lg:flex-row gap-8">
-              {/* Left: article body */}
+            <div
+              className="flex flex-col lg:flex-row gap-8"
+              style={{ width: 'calc(100% + max(0px, min(100vw, 1280px) - 945.6px))' }}
+            >
               <div className="w-full lg:w-[849.6px] lg:shrink-0 lg:border-r lg:border-border lg:pr-8">
-                {/* Byline: avatar + author/meta */}
-                <div className="flex items-center gap-3 mb-6">
-                  <Skeleton variant="avatar" className="h-11 w-11" />
-                  <div className="space-y-2">
+                {/* Hero */}
+                <div className="mt-1 md:mt-2 mb-3 md:mb-6">
+                  <div className="mb-2">
                     <Skeleton className="h-4 w-32" />
-                    <Skeleton className="h-3 w-40" />
+                  </div>
+                  <Skeleton className="h-9 md:h-10 w-3/4 mb-3" />
+                  
+                  {/* Author / Date line */}
+                  <div className="flex items-center gap-3 mb-6">
+                    <Skeleton className="h-4 w-64" />
                   </div>
                 </div>
 
+                {/* Score Box (Desktop) */}
+                <Skeleton className="hidden lg:block h-64 w-full rounded-lg mb-8" />
+
                 {/* Paragraphs */}
                 <div className="space-y-6">
-                  {Array.from({ length: 5 }).map((_, p) => (
+                  {Array.from({ length: 6 }).map((_, p) => (
                     <Skeleton key={p} className="h-24 w-full rounded-lg" />
                   ))}
                 </div>
               </div>
 
-              {/* Right: sidebar (ad + related posts), desktop only like the real page */}
-              <aside className="w-full lg:flex-1 hidden lg:flex flex-col gap-8">
+              {/* Right Sidebar */}
+              <aside className="w-full lg:flex-1 flex flex-col gap-8 hidden lg:flex">
                 <Skeleton className="w-full h-[250px] rounded-lg" />
-                <div className="space-y-2">
-                  <Skeleton className="h-5 w-40 mx-auto mb-4" />
+                <div className="space-y-4">
                   {Array.from({ length: 4 }).map((_, i) => (
                     <SidebarItemSkeleton key={i} />
                   ))}
@@ -236,6 +245,12 @@ export function DetailSkeleton() {
         </div>
       </div>
     </article>
+  );
+}
+
+export function DetailSkeleton() {
+  return (
+    <ReviewDetailSkeleton />
   );
 }
 

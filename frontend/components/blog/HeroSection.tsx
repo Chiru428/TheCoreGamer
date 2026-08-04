@@ -136,11 +136,15 @@ export default function HeroSection({
             Inner content is absolute inset-0 so it fills exactly that height, overflow-hidden clips the list. */}
         <div className="relative overflow-hidden h-[900px]">
           <div className="flex flex-col overflow-hidden h-full">
-            <div
-              className="rubik-label flex items-center justify-center gap-2 mb-6 shrink-0"
-              style={{ fontSize: '16px', fontWeight: 700, letterSpacing: '1.8px', textTransform: 'uppercase', color: '#ef4444' }}
-            >
-              Popular This Week
+            <div className="flex items-center w-full gap-4 mb-6 shrink-0">
+              <div className="flex-1 h-[2px] bg-[#00866B] dark:bg-[#00e5a0]/40"></div>
+              <div
+                className="rubik-label whitespace-nowrap text-[#00866B] dark:text-[#00e5a0]"
+                style={{ fontSize: '20px', fontWeight: 800, letterSpacing: '1.8px', textTransform: 'uppercase' }}
+              >
+                Top Stories
+              </div>
+              <div className="flex-1 h-[2px] bg-[#00866B] dark:bg-[#00e5a0]/40"></div>
             </div>
 
             {/* Fixed mb-7 gap between items (not flex-1 equal slots) so spacing stays constant regardless of title length */}
@@ -237,14 +241,14 @@ export default function HeroSection({
               <HomePostCard
                 key={a.id}
                 article={a}
-                titleClassName="!text-[15px] mb-1 rubik-title"
+                titleClassName="!text-[18px] mb-1 rubik-title"
                 titleStyle={{ fontFamily: "'Rubik', sans-serif" }}
                 showExcerpt={false}
                 showBackground={false}
                 showBadge
+                showImageBadge={false}
                 badgeClassName="text-[12px]"
                 showAuthor={false}
-                mobileHorizontal
                 truncateTitle={false}
                 showViewArticle={false}
               />
@@ -254,8 +258,12 @@ export default function HeroSection({
 
         {/* Mobile Popular This Week */}
         <div className="px-4 pt-6 pb-2">
-          <div className="flex items-center justify-center gap-2 mb-6" style={{ fontSize: '16px', fontFamily: "'Rubik', sans-serif", fontWeight: 700, letterSpacing: '1.8px', textTransform: 'uppercase', color: '#ef4444' }}>
-            Popular This Week
+          <div className="flex items-center w-full gap-4 mb-6">
+            <div className="flex-1 h-[2px] bg-[#00866B] dark:bg-[#00e5a0]/40"></div>
+            <div className="rubik-label whitespace-nowrap text-[#00866B] dark:text-[#00e5a0]" style={{ fontSize: '20px', fontWeight: 800, letterSpacing: '1.8px', textTransform: 'uppercase' }}>
+              Top Stories
+            </div>
+            <div className="flex-1 h-[2px] bg-[#00866B] dark:bg-[#00e5a0]/40"></div>
           </div>
           <div className="flex flex-col">
             {sideItems.map((article, idx) => {
