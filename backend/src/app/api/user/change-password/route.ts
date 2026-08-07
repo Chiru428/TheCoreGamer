@@ -1,23 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getSession } from "@/lib/auth";
-import { captureError, errorResponse, successResponse, validateBody } from "@/lib/utils";
+import { requireAuth } from "@/middleware/requireRole";
+import { validateBody } from "@/middleware/validateBody";
 import { changePasswordSchema } from "@/validators";
 import bcrypt from "bcrypt";
-import { rateLimitAuth } from "@/lib/redis";
+import { rateLimit } from "@/middleware/rateLimit";
+import { captureError } from "@/lib/sentry";
+import { successResponse, errorResponse } from "@/types";
 
 export async function POST(request: NextRequest) {
   try {
-    const ip = request.headers.get("x-forwarded-for") || "127.0.0.1";
-    const rateLimitError = await rateLimitAuth(ip);
-    if (rateLimitError) {
-      return NextResponse.json(errorResponse("Too many attempts. Try again later."), {
-        status: 429,
-      });
-    }
+    const rateLimitResponse = await rateLimit(request, "CHANGE_PASSWORD");
+    if (rateLimitResponse) return rateLimitResponse;
 
-    const session = await getSession(request);
-    if (!session?.user) {
+    const { session, error: authError } = await requireAuth();
+    if (authError || !session?.user) {
       return NextResponse.json(errorResponse("Unauthorized"), { status: 401 });
     }
 
