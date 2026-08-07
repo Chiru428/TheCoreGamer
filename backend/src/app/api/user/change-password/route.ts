@@ -10,7 +10,7 @@ import { successResponse, errorResponse } from "@/types";
 
 export async function POST(request: NextRequest) {
   try {
-    const rateLimitResponse = await rateLimit(request, "CHANGE_PASSWORD");
+    const rateLimitResponse = await rateLimit(request, "AUTH");
     if (rateLimitResponse) return rateLimitResponse;
 
     const { session, error: authError } = await requireAuth();
@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
     }
 
     const { data, error } = await validateBody(request, changePasswordSchema);
-    if (error) return NextResponse.json(errorResponse(error), { status: 400 });
+    if (error) return error;
 
     const user = await prisma.user.findUnique({
       where: { id: session.user.id },
