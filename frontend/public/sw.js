@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tcg-v2';
+const CACHE_NAME = 'tcg-v3';
 const STATIC_ASSETS = ['/', '/offline', '/manifest.json'];
 const STATIC_ASSET_RE = /\.(jpg|jpeg|png|webp|avif|gif|svg|woff2?)$/;
 const ARTICLE_PATH_RE = /^\/(articles|reviews|mod-guides)\//;
@@ -99,9 +99,9 @@ self.addEventListener('fetch', (event) => {
           return response;
         })
         .catch(async () => {
-          const offline = await caches.match('/offline');
           const cached = await caches.match(event.request);
-          return offline || cached || Response.error();
+          const offline = await caches.match('/offline');
+          return cached || offline || Response.error();
         })
     );
     return;
