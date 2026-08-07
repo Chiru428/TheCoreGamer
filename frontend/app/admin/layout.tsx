@@ -28,7 +28,6 @@ const links = [
   { href: '/admin/polls', label: 'Polls', icon: PieChart, group: 'Content', roles: ['EDITOR', 'ADMIN'] },
   // -- Posts --------------------------------------------------------
   { href: '/admin/news', label: 'News', icon: Newspaper, group: 'Posts' },
-  { href: '/admin/features', label: 'Features', icon: Sparkles, group: 'Posts' },
   { href: '/admin/deals', label: 'Deals', icon: Tag, group: 'Posts' },
   { href: '/admin/opinions', label: 'Opinions', icon: MessageCircle, group: 'Posts' },
   { href: '/admin/listicles', label: 'Listicles', icon: List, group: 'Posts' },

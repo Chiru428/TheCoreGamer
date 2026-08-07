@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import useSWR from 'swr';
 import { Reorder } from 'framer-motion';
-import { ArrowLeft, GripVertical, X, Loader2, Globe, Lock } from 'lucide-react';
+import { ChevronLeft, GripVertical, X, Loader2, Globe, Lock } from 'lucide-react';
 import { fetchUserList, removeItemFromList, reorderListItems } from '@/lib/api';
 import { useAuthStore } from '@/store/authStore';
 import { useUIStore } from '@/store/uiStore';
@@ -79,9 +79,9 @@ export default function ListDetailPage() {
   }
 
   return (
-    <div className="w-full px-4 py-8">
-      <Link href="/settings/lists" className="inline-flex items-center gap-1.5 text-sm text-text-muted hover:text-text-primary transition-colors mb-4">
-        <ArrowLeft className="w-4 h-4" /> Back to lists
+    <div className="w-full px-4 pt-0 pb-8">
+      <Link href="/settings/lists" className="inline-flex items-center gap-1.5 text-text-muted hover:text-text-primary transition-colors mb-6 font-medium">
+        <ChevronLeft className="w-5 h-5 -ml-1" /> Back to lists
       </Link>
 
       <div className="flex items-center gap-2 mb-1">
@@ -102,7 +102,7 @@ export default function ListDetailPage() {
                 <GripVertical className="w-4 h-4 text-text-muted cursor-grab shrink-0" />
                 <div className="flex-1 min-w-0">
                   {item.article ? (
-                    <PostCard article={item.article} variant="small" showBadge={false} />
+                    <PostCard article={item.article} variant="small" showBadge={true} />
                   ) : item.game ? (
                     <ReadingListGameCard game={item.game} />
                   ) : null}

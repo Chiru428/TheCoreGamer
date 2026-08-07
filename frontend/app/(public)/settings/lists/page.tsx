@@ -107,35 +107,50 @@ export default function SettingsListsPage() {
     }
   };
 
+  // Shared row class
+  const rowCls = 'flex items-center gap-4 px-5 py-4 border-b border-border dark:border-white/[0.07] last:border-0 transition-colors';
+
   return (
-    <div className="w-full py-8" style={{ fontFamily: "'Gibson', sans-serif" }}>
-      <div className="flex items-center justify-between gap-3 mb-2">
-        <h1 className="text-[24px] font-bold text-text-primary">Reading Lists</h1>
-        <Button size="sm" icon={<Plus className="w-4 h-4" />} onClick={openCreateModal}>New List</Button>
+    <div className="w-full space-y-6" style={{ fontFamily: "'Gibson', sans-serif" }}>
+      
+      <div className="flex items-start justify-between gap-4 mb-6">
+        <div>
+          <h3 className="text-[18px] font-bold text-text-primary">Reading Lists</h3>
+          <p className="text-[13px] text-text-muted mt-0.5">Organize articles and games into custom collections.</p>
+        </div>
+        <Button size="sm" icon={<Plus className="w-4 h-4" />} onClick={openCreateModal} className="shrink-0 whitespace-nowrap">New List</Button>
       </div>
-      <p className="text-[18px] text-text-muted mb-8">Organize articles and games into custom collections.</p>
 
       {listsLoading ? (
-        <div className="space-y-4">
-          {Array.from({ length: 3 }).map((_, i) => <div key={i} className="h-20 rounded-xl shimmer" />)}
+        <div className="rounded-xl border border-border dark:border-white/[0.08] overflow-hidden">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className={rowCls}>
+              <div className="flex-1 space-y-2">
+                <div className="h-4 w-48 rounded bg-gray-200 dark:bg-white/[0.06] animate-pulse" />
+                <div className="h-3 w-32 rounded bg-gray-200 dark:bg-white/[0.06] animate-pulse" />
+              </div>
+            </div>
+          ))}
         </div>
       ) : !lists?.length ? (
-        <div className="text-center py-16 bg-bg-surface dark:bg-[#3A3F4A] border border-border rounded-2xl">
-          <ListChecks className="w-10 h-10 text-text-muted mx-auto mb-3" />
-          <p className="text-[18px] text-text-muted mb-4">You haven&apos;t created any lists yet.</p>
+        <div className="rounded-xl border border-border dark:border-white/[0.08] py-16 text-center">
+          <ListChecks className="w-12 h-12 text-text-muted mb-4 mx-auto" />
+          <p className="text-[16px] font-semibold text-text-primary">No lists yet</p>
+          <p className="text-[14px] text-text-muted mt-1 mb-4">Create collections of your favorite content.</p>
           <Button variant="outline" size="sm" icon={<Plus className="w-4 h-4" />} onClick={openCreateModal}>Create your first list</Button>
         </div>
       ) : (
-        <div className="space-y-3">
+        <div className="rounded-xl border border-border dark:border-white/[0.08] overflow-hidden">
           {lists.map((list) => (
-            <div key={list.id} className="flex items-center gap-3 bg-bg-surface dark:bg-[#3A3F4A] border border-border rounded-xl p-4">
-              <Link href={`/settings/lists/${list.id}`} className="flex-1 min-w-0 group">
-                <div className="flex items-center gap-2 mb-1">
-                  <p className="font-semibold text-[18px] text-text-primary truncate group-hover:text-accent transition-colors">{list.name}</p>
+            <div key={list.id} className={rowCls + ' group hover:bg-black/5 dark:hover:bg-white/[0.02]'}>
+              <Link href={`/settings/lists/${list.id}`} className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-0.5">
+                  <p className="font-semibold text-[15px] text-text-primary truncate group-hover:text-accent transition-colors">{list.name}</p>
                 </div>
-                {list.description && <p className="text-[16px] text-text-muted truncate">{list.description}</p>}
-                <p className="text-[14px] text-text-muted mt-1">{list.itemCount ?? 0} {list.itemCount === 1 ? 'item' : 'items'}</p>
+                {list.description && <p className="text-[13px] text-text-muted truncate mb-1">{list.description}</p>}
+                <p className="text-[12px] text-text-muted">{list.itemCount ?? 0} {list.itemCount === 1 ? 'item' : 'items'}</p>
               </Link>
+              
               <div className="flex items-center gap-1 shrink-0">
                 <Button variant="ghost" size="sm" icon={<Pencil className="w-4 h-4" />} onClick={() => openEditModal(list)} aria-label="Edit list" />
                 <div className="relative" ref={confirmingId === list.id ? confirmRef : undefined}>
@@ -145,41 +160,29 @@ export default function SettingsListsPage() {
                     icon={<Trash2 className="w-4 h-4" />}
                     loading={deletingId === list.id}
                     onClick={() => setConfirmingId((id) => (id === list.id ? null : list.id))}
-                    className="text-danger hover:text-red-400"
+                    className="text-text-muted hover:text-danger hover:bg-danger/10 transition-colors"
                     aria-label="Delete list"
                     aria-haspopup="dialog"
                     aria-expanded={confirmingId === list.id}
                   />
                   {confirmingId === list.id && (
                     <div
-                      className="absolute right-0 top-full mt-2 w-60 z-50 rounded-xl border border-border p-3 shadow-2xl"
+                      className="absolute right-0 top-full mt-2 w-64 z-50 rounded-xl border border-border p-4 shadow-2xl"
                       style={{ background: 'var(--bg3)' }}
                       role="dialog"
                       aria-label="Confirm delete list"
                     >
-                      <p className="text-[16px] text-text-primary mb-3">
+                      <p className="text-[14px] text-text-primary mb-3">
                         Delete <span className="font-semibold">&ldquo;{list.name}&rdquo;</span>? This cannot be undone.
                       </p>
                       <div className="flex justify-end gap-2 pt-1">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => setConfirmingId(null)}
-                        >
-                          Cancel
-                        </Button>
-                        <Button
-                          variant="danger"
-                          size="sm"
-                          onClick={() => handleDelete(list)}
-                        >
-                          Delete
-                        </Button>
+                        <Button variant="ghost" size="sm" onClick={() => setConfirmingId(null)}>Cancel</Button>
+                        <Button variant="danger" size="sm" onClick={() => handleDelete(list)}>Delete</Button>
                       </div>
                     </div>
                   )}
                 </div>
-                <Link href={`/settings/lists/${list.id}`} className="p-1.5 text-text-muted hover:text-text-primary transition-colors">
+                <Link href={`/settings/lists/${list.id}`} className="p-2 text-text-muted hover:text-text-primary transition-colors">
                   <ChevronRight className="w-4 h-4" />
                 </Link>
               </div>
@@ -188,34 +191,35 @@ export default function SettingsListsPage() {
         </div>
       )}
 
+      {/* ── Modal ── */}
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} title={editing ? 'Edit List' : 'New List'} size="md">
         <div className="space-y-4">
           <div>
-            <label className="block text-[16px] font-medium text-text-primary mb-1.5">Name</label>
+            <label className="block text-[14px] font-medium text-text-primary mb-1.5">Name</label>
             <input
               type="text"
               value={form.name}
               onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
               maxLength={100}
               placeholder="e.g. Must-Play RPGs"
-              className="w-full px-3 py-2 bg-bg-primary border border-border rounded-lg text-[16px] text-text-primary outline-none focus:border-accent"
+              className="w-full bg-gray-50 dark:bg-white/[0.05] border border-gray-200 dark:border-white/[0.08] focus:border-blue-500/60 focus:ring-1 focus:ring-blue-500/40 text-black dark:text-white rounded-xl px-4 py-3 text-[14px] outline-none transition-all placeholder:text-gray-400"
               autoFocus
             />
           </div>
           <div>
-            <label className="block text-[16px] font-medium text-text-primary mb-1.5">Description (optional)</label>
+            <label className="block text-[14px] font-medium text-text-primary mb-1.5">Description (optional)</label>
             <textarea
               value={form.description}
               onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
               maxLength={500}
               rows={3}
               placeholder="What's this list about?"
-              className="w-full px-3 py-2 bg-bg-primary border border-border rounded-lg text-[16px] text-text-primary outline-none focus:border-accent resize-none"
+              className="w-full bg-gray-50 dark:bg-white/[0.05] border border-gray-200 dark:border-white/[0.08] focus:border-blue-500/60 focus:ring-1 focus:ring-blue-500/40 text-black dark:text-white rounded-xl px-4 py-3 text-[14px] outline-none transition-all placeholder:text-gray-400 resize-y"
             />
           </div>
           <div className="flex justify-end gap-2 pt-2">
             <Button variant="ghost" onClick={() => setModalOpen(false)}>Cancel</Button>
-            <Button loading={saving} onClick={handleSave}>{editing ? 'Save' : 'Create'}</Button>
+            <Button loading={saving} variant="auth" onClick={handleSave}>{editing ? 'Save' : 'Create'}</Button>
           </div>
         </div>
       </Modal>

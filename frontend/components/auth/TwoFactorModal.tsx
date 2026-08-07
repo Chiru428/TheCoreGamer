@@ -1,12 +1,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import { useAuthStore } from '@/store/authStore';
 import { useUIStore } from '@/store/uiStore';
 import Button from '@/components/ui/Button';
-import { Shield, ShieldCheck, ShieldOff, ChevronLeft, Copy, Check } from 'lucide-react';
+import Modal from '@/components/ui/Modal';
+import { Shield, ShieldCheck, ShieldOff, Copy, Check } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 
 const API_BASE =
@@ -49,10 +48,16 @@ async function disable2FA(code: string): Promise<{ success: boolean; error?: str
 
 type Step = 'idle' | 'loading' | 'qr' | 'verify' | 'codes' | 'done';
 
-export default function TwoFactorPage() {
-  const { user, setUser, isAuthenticated, isLoading } = useAuthStore();
+interface TwoFactorModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  isEnabled: boolean;
+  onStatusChange: (enabled: boolean) => void;
+}
+
+export default function TwoFactorModal({ isOpen, onClose, isEnabled, onStatusChange }: TwoFactorModalProps) {
+  const { user, setUser } = useAuthStore();
   const { addToast } = useUIStore();
-  const router = useRouter();
 
   const [step, setStep] = useState<Step>('idle');
   const [uri, setUri] = useState('');
@@ -60,26 +65,18 @@ export default function TwoFactorPage() {
   const [code, setCode] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [isEnabled, setIsEnabled] = useState(false);
-  const [statusLoading, setStatusLoading] = useState(true);
   const [backupCodes, setBackupCodes] = useState<string[]>([]);
   const [codesSaved, setCodesSaved] = useState(false);
 
+  // Reset state when modal opens
   useEffect(() => {
-    if (isLoading) return;
-    if (!isAuthenticated) {
-      router.replace('/auth/login?callbackUrl=/settings/profile/2fa');
-      setStatusLoading(false);
-      return;
+    if (isOpen) {
+      setStep('idle');
+      setCode('');
+      setBackupCodes([]);
+      setCodesSaved(false);
     }
-    fetch(`${API_BASE}/api/user/profile`, { credentials: 'include' })
-      .then(r => r.json())
-      .then(json => setIsEnabled(json?.data?.twoFactorEnabled ?? false))
-      .catch(() => {})
-      .finally(() => setStatusLoading(false));
-  }, [isLoading, isAuthenticated, router]);
-
-  if (!isAuthenticated || !user || statusLoading) return null;
+  }, [isOpen]);
 
   /* -- ENABLE FLOW -- */
   const handleStartEnable = async () => {
@@ -111,8 +108,8 @@ export default function TwoFactorPage() {
     const res = await verify2FASetup(code);
     setIsSubmitting(false);
     if (res.success) {
-      setIsEnabled(true);
-      setUser({ ...user, twoFactorEnabled: true });
+      onStatusChange(true);
+      if (user) setUser({ ...user, twoFactorEnabled: true });
       addToast({ type: 'success', message: '2FA enabled successfully!' });
       if (res.data?.backupCodes?.length) {
         setBackupCodes(res.data.backupCodes);
@@ -132,9 +129,10 @@ export default function TwoFactorPage() {
     const res = await disable2FA(code);
     setIsSubmitting(false);
     if (res.success) {
-      setUser({ ...user, twoFactorEnabled: false });
+      onStatusChange(false);
+      if (user) setUser({ ...user, twoFactorEnabled: false });
       addToast({ type: 'success', message: '2FA disabled.' });
-      router.push('/settings/profile');
+      onClose();
     } else {
       addToast({ type: 'error', message: res.error || 'Invalid code. Please try again.' });
     }
@@ -147,25 +145,15 @@ export default function TwoFactorPage() {
   };
 
   return (
-    <div className="max-w-md mx-auto px-4 py-10">
-      <Link
-        href="/settings/profile"
-        className="inline-flex items-center gap-1.5 text-sm text-text-muted hover:text-accent transition-colors mb-8"
-      >
-        <ChevronLeft className="w-4 h-4" />
-        Back to Account Settings
-      </Link>
-
-      <div className="rounded-2xl bg-bg-surface border border-border p-8">
+    <Modal isOpen={isOpen} onClose={onClose} title="Two-Factor Authentication">
+      <div className="space-y-6">
+        
         {/* Header */}
-        <div className="flex items-center gap-3 mb-6">
+        <div className="flex items-center gap-3">
           {isEnabled
             ? <ShieldCheck className="w-8 h-8 text-emerald-400" />
             : <ShieldOff className="w-8 h-8 text-text-muted" />}
           <div>
-            <h1 className="text-xl font-bold text-text-primary">
-              Two-Factor Authentication
-            </h1>
             <p className="text-sm text-text-muted">
               {isEnabled ? '2FA is currently enabled on your account.' : '2FA is not enabled.'}
             </p>
@@ -342,12 +330,12 @@ export default function TwoFactorPage() {
             <p className="text-sm text-text-muted">
               Your account is protected with two-factor authentication.
             </p>
-            <Button variant="outline" onClick={() => router.push('/settings/profile')}>
-              Back to Settings
+            <Button variant="outline" onClick={onClose} className="w-full">
+              Done
             </Button>
           </div>
         )}
       </div>
-    </div>
+    </Modal>
   );
 }

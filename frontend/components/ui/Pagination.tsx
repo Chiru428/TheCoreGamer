@@ -40,8 +40,8 @@ export default function Pagination({ currentPage, totalPages, basePath, classNam
     jumpLinks.push(i);
   }
 
-  const btnClass = "w-9 h-9 flex items-center justify-center rounded-lg text-sm transition-colors border border-black/60 dark:border-white/60 text-text hover:border-[var(--brand-green)] hover:text-[var(--brand-green)] hover:bg-bg-elevated font-medium";
-  const activeClass = "bg-[var(--brand-green)] text-black border-[var(--brand-green)] shadow-md hover:bg-[var(--brand-green-hover)] hover:border-[var(--brand-green-hover)] font-bold";
+  const btnClass = "w-9 h-9 flex items-center justify-center rounded-lg text-sm transition-all border border-border dark:border-white/[0.08] text-text-muted bg-transparent hover:border-[var(--brand-green)] hover:text-[var(--brand-green)] hover:bg-[var(--brand-green)]/10 font-medium";
+  const activeClass = "bg-[var(--brand-green)] text-black border-[var(--brand-green)] shadow-md shadow-[var(--brand-green)]/20 font-bold pointer-events-none";
   const disabledClass = "opacity-40 pointer-events-none";
 
   return (

@@ -45,6 +45,15 @@ export const resetPasswordSchema = z.object({
     .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/),
 });
 
+export const changePasswordSchema = z.object({
+  currentPassword: z.string().min(1),
+  newPassword: z
+    .string()
+    .min(8)
+    .max(128)
+    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/),
+});
+
 export const totpVerifySchema = z.object({
   code: z.string().length(6),
 });

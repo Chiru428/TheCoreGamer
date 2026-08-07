@@ -126,19 +126,25 @@ export default function NotificationsSettingsPage() {
   }
   const hasAny = notifications.length > 0;
 
+  // Shared row class
+  const rowCls = 'flex items-center gap-4 px-5 py-4 border-b border-border dark:border-white/[0.07] last:border-0 transition-colors';
+
   return (
-    <div className="space-y-8 w-full" style={{ fontFamily: "'Gibson', sans-serif" }}>
+    <div className="space-y-10 w-full" style={{ fontFamily: "'Gibson', sans-serif" }}>
 
-
-      {/* Preferences Section */}
-      <section className="bg-bg-surface dark:bg-[#3A3F4A] border border-border rounded-2xl p-6">
-        <h3 className="text-[20px] font-bold text-text-primary mb-5">Preferences</h3>
-        <div className="space-y-4">
+      {/* ── Preferences ── */}
+      <div>
+        <div className="mb-4">
+          <h3 className="text-[18px] font-bold text-text-primary">Preferences</h3>
+          <p className="text-[13px] text-text-muted mt-0.5">Manage how and where you receive notifications.</p>
+        </div>
+        <div className="rounded-xl border border-border dark:border-white/[0.08] overflow-hidden">
           {isSupported && (
-            <div className="flex items-center justify-between p-4 rounded-xl dark:bg-[#3A3F4A] border border-border dark:border-white/20">
-              <div>
-                <p className="text-[16px] font-medium text-text-primary">Push Notifications</p>
-                <p className="text-[14px] text-text-muted mt-0.5">Get notified in your browser</p>
+            <div className={rowCls}>
+              <Bell className="w-5 h-5 text-text-muted shrink-0" />
+              <div className="flex-1 min-w-0">
+                <p className="text-[15px] font-medium text-text-primary">Push Notifications</p>
+                <p className="text-[13px] text-text-muted mt-0.5">Get notified in your browser</p>
               </div>
               <Button
                 size="sm"
@@ -158,75 +164,93 @@ export default function NotificationsSettingsPage() {
               </Button>
             </div>
           )}
-          {notifPrefs && ['newArticlesInCategories', 'commentReplies', 'newsletter'].map(key => (
-            <div key={key} className="flex items-center justify-between p-4 rounded-xl dark:bg-[#3A3F4A] border border-border dark:border-white/20">
-              <p className="text-[16px] font-medium text-text-primary">
-                {key === 'newArticlesInCategories' ? 'New Articles'
-                  : key === 'commentReplies' ? 'Comment Replies'
-                  : 'Newsletter'}
-              </p>
-              <button onClick={() => {
-                const newValue = !notifPrefs[key as keyof typeof notifPrefs];
-                // Optimistically update the UI cache immediately
-                mutatePrefs({ ...notifPrefs, [key]: newValue }, false);
-                // Send the network request in the background
-                updateNotificationPreferences({ [key]: newValue }).catch(() => {
-                  // Revert if the request fails
-                  mutatePrefs();
-                });
+          
+          {notifPrefs && ['newArticlesInCategories', 'commentReplies', 'newsletter'].map((key) => {
+            const isNewsletter = key === 'newsletter';
+            // We handle newsletter separately below in Email Communications
+            if (isNewsletter) return null;
+            
+            return (
+              <div key={key} className={rowCls}>
+                <div className="w-5 h-5 shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <p className="text-[15px] font-medium text-text-primary">
+                    {key === 'newArticlesInCategories' ? 'New Articles' : 'Comment Replies'}
+                  </p>
+                  <p className="text-[13px] text-text-muted mt-0.5">
+                    {key === 'newArticlesInCategories' 
+                      ? 'In-app alerts for new articles in categories you follow.' 
+                      : 'In-app alerts when someone replies to your comment.'}
+                  </p>
+                </div>
+                <button
+                  onClick={() => {
+                    const newValue = !notifPrefs[key as keyof typeof notifPrefs];
+                    mutatePrefs({ ...notifPrefs, [key]: newValue }, false);
+                    updateNotificationPreferences({ [key]: newValue }).catch(() => mutatePrefs());
+                  }}
+                  className={`relative w-10 h-6 rounded-full transition-colors ${notifPrefs[key as keyof typeof notifPrefs] ? 'bg-accent' : 'bg-border'}`}
+                >
+                  <div className={`absolute left-1 top-1 w-4 h-4 rounded-full bg-white transition-transform ${notifPrefs[key as keyof typeof notifPrefs] ? 'translate-x-4' : 'translate-x-0'}`} />
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* ── Email Communications ── */}
+      <div>
+        <div className="mb-4">
+          <h3 className="text-[18px] font-bold text-text-primary">Email Communications</h3>
+          <p className="text-[13px] text-text-muted mt-0.5">Emails sent to {session?.user?.email ?? 'your email'}.</p>
+        </div>
+        <div className="rounded-xl border border-border dark:border-white/[0.08] overflow-hidden">
+          <div className={rowCls}>
+            <Mail className="w-5 h-5 text-text-muted shrink-0" />
+            <div className="flex-1 min-w-0">
+              <p className="text-[15px] font-medium text-text-primary">Marketing Newsletter</p>
+              <p className="text-[13px] text-text-muted mt-0.5">New game releases, reviews, deals, and site updates.</p>
+            </div>
+            <Button
+              size="sm"
+              variant={unsubDone ? "auth" : "outline"}
+              loading={unsubLoading}
+              onClick={async () => {
+                const email = session?.user?.email;
+                if (!email) return;
+                setUnsubLoading(true);
+                try {
+                  await fetch(`${process.env.NEXT_PUBLIC_API_URL || ''}/api/newsletter/${unsubDone ? 'subscribe' : 'unsubscribe'}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ email }),
+                  });
+                  setUnsubDone(!unsubDone);
+                } finally {
+                  setUnsubLoading(false);
+                }
               }}
-                className={`relative w-10 h-6 rounded-full transition-colors ${notifPrefs[key as keyof typeof notifPrefs] ? 'bg-accent' : 'bg-border'}`}>
-                <div className={`absolute left-1 top-1 w-4 h-4 rounded-full bg-white transition-transform ${notifPrefs[key as keyof typeof notifPrefs] ? 'translate-x-4' : 'translate-x-0'}`} />
-              </button>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Email Communications Section */}
-      <section className="bg-bg-surface dark:bg-[#3A3F4A] border border-border rounded-2xl p-6">
-        <h3 className="text-[20px] font-bold text-text-primary mb-5">Email Communications</h3>
-        <div className="flex flex-col sm:flex-row items-start sm:justify-between gap-4 p-4 rounded-xl dark:bg-[#3A3F4A] border border-border dark:border-white/20">
-          <div className="flex items-start">
-            <div>
-              <p className="text-[16px] font-medium text-text-primary">Marketing Newsletter</p>
-              <p className="text-[14px] text-text-muted mt-0.5">New game releases, reviews, deals, and site updates sent to {session?.user?.email ?? 'your email'}.</p>
-            </div>
+            >
+              {unsubDone ? 'Subscribe' : 'Unsubscribe'}
+            </Button>
           </div>
-          <Button
-            size="sm"
-            variant={unsubDone ? "auth" : "outline"}
-            loading={unsubLoading}
-            onClick={async () => {
-              const email = session?.user?.email;
-              if (!email) return;
-              setUnsubLoading(true);
-              try {
-                await fetch(`${process.env.NEXT_PUBLIC_API_URL || ''}/api/newsletter/${unsubDone ? 'subscribe' : 'unsubscribe'}`, {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  credentials: 'include',
-                  body: JSON.stringify({ email }),
-                });
-                setUnsubDone(!unsubDone);
-              } finally {
-                setUnsubLoading(false);
-              }
-            }}
-          >
-            {unsubDone ? 'Subscribe' : 'Unsubscribe'}
-          </Button>
         </div>
-      </section>
+      </div>
 
-      {/* Inbox Section */}
-      <section>
-        <h3 className="text-[20px] font-bold text-text-primary mb-5">Inbox</h3>
+      {/* ── Inbox ── */}
+      <div>
+        <div className="mb-4">
+          <h3 className="text-[18px] font-bold text-text-primary">Inbox</h3>
+          <p className="text-[13px] text-text-muted mt-0.5">Your recent in-app notifications.</p>
+        </div>
+        
         {!hasAny ? (
-          <div className="text-center py-16 bg-bg-surface dark:bg-[#3A3F4A] border border-border rounded-2xl">
+          <div className="rounded-xl border border-border dark:border-white/[0.08] py-16 text-center">
             <p className="text-4xl mb-4">🎮</p>
-            <p className="text-[20px] font-semibold text-text-primary">You're all caught up!</p>
-            <p className="text-[16px] text-text-muted mt-1">No notifications to show.</p>
+            <p className="text-[16px] font-semibold text-text-primary">You're all caught up!</p>
+            <p className="text-[14px] text-text-muted mt-1">No notifications to show.</p>
           </div>
         ) : (
           GROUP_ORDER.map(group => {
@@ -234,16 +258,16 @@ export default function NotificationsSettingsPage() {
             if (!items || items.length === 0) return null;
             return (
               <div key={group} className="mb-6">
-                <h4 className="text-[14px] font-bold uppercase tracking-widest text-text-muted mb-3">{group}</h4>
-                <div className="rounded-2xl overflow-hidden border border-border">
-                  {items.map((n, i) => (
+                <h4 className="text-[12px] font-bold uppercase tracking-widest text-text-muted mb-2 px-1">{group}</h4>
+                <div className="rounded-xl border border-border dark:border-white/[0.08] overflow-hidden">
+                  {items.map((n) => (
                     <div
                       key={n.id}
                       onClick={() => markOne(n.id, n.url)}
                       className={cn(
-                        'w-full text-left flex items-start gap-3 pl-3 pr-5 py-4 transition-colors hover:bg-accent-dim cursor-pointer',
-                        !n.isRead ? 'bg-accent/5' : 'dark:bg-[#3A3F4A]',
-                        i < items.length - 1 && 'border-b border-border dark:border-white/20'
+                        rowCls,
+                        'cursor-pointer hover:bg-accent-dim',
+                        !n.isRead ? 'bg-accent/5 dark:bg-[rgba(29,132,245,0.07)]' : 'dark:bg-white/[0.02]'
                       )}
                       role="button"
                       tabIndex={0}
@@ -254,17 +278,13 @@ export default function NotificationsSettingsPage() {
                         }
                       }}
                     >
-                      {!n.isRead ? (
-                        <span className="mt-2 w-2 h-2 rounded-full bg-accent shrink-0" />
-                      ) : (
-                        <span className="mt-2 w-2 h-2 shrink-0" />
-                      )}
+                      <span className={cn('w-2 h-2 rounded-full shrink-0', !n.isRead ? 'bg-accent' : 'bg-transparent')} />
                       <div className="flex-1 min-w-0">
-                        <p className="text-[16px] font-semibold text-text-primary">{n.title}</p>
-                        <p className="text-[16px] text-text-muted mt-0.5">{n.body}</p>
+                        <p className="text-[15px] font-semibold text-text-primary">{n.title}</p>
+                        <p className="text-[14px] text-text-muted mt-0.5">{n.body}</p>
                       </div>
-                      <div className="flex flex-col items-end gap-1.5 shrink-0 mt-0.5">
-                        <span className="text-[14px] text-text-dim">{timeAgo(n.createdAt)}</span>
+                      <div className="flex flex-col items-end gap-1.5 shrink-0">
+                        <span className="text-[12px] text-text-muted">{timeAgo(n.createdAt)}</span>
                         <button
                           onClick={(e) => deleteOne(e, n.id)}
                           className="p-1.5 text-text-muted hover:text-danger hover:bg-danger/10 rounded-lg transition-colors"
@@ -280,7 +300,8 @@ export default function NotificationsSettingsPage() {
             );
           })
         )}
-      </section>
+      </div>
     </div>
   );
 }
+

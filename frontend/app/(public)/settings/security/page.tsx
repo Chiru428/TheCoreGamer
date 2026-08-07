@@ -7,16 +7,17 @@ import Link from 'next/link';
 import useSWR from 'swr';
 import {
   fetchUserProfile, fetchUserSessions, revokeAllSessions, revokeSession,
-  exportUserData, deleteAccount, forgotPassword, unlinkProvider, fetchUserStrikes,
+  exportUserData, deleteAccount, forgotPassword, changePassword, unlinkProvider, fetchUserStrikes,
 } from '@/lib/api';
 import { useAuthStore } from '@/store/authStore';
 import { useUIStore } from '@/store/uiStore';
 import { formatDate, formatRelativeDate, maskIpDisplay } from '@/lib/utils';
 import Button from '@/components/ui/Button';
 import Modal from '@/components/ui/Modal';
+import TwoFactorModal from '@/components/auth/TwoFactorModal';
 import {
   ShieldCheck, ShieldOff, Monitor, Smartphone, Tablet, LogOut, X,
-  Mail, Link2, Shield, Download, Trash2, CheckCircle2, AlertTriangle,
+  Mail, Link2, Shield, Download, Trash2, CheckCircle2, AlertTriangle, ChevronDown,
 } from 'lucide-react';
 import { FaGoogle, FaDiscord, FaSteam } from 'react-icons/fa';
 
@@ -36,6 +37,7 @@ export default function SecuritySettingsPage() {
   const [revokingId, setRevokingId] = useState<string | null>(null);
   const [tfaEnabled, setTfaEnabled] = useState(false);
   const [tfaLoading, setTfaLoading] = useState(true);
+  const [is2faModalOpen, setIs2faModalOpen] = useState(false);
   const [sendingReset, setSendingReset] = useState(false);
   const [isUnlinking, setIsUnlinking] = useState(false);
   const [linkingProvider, setLinkingProvider] = useState<string | null>(null);
@@ -45,6 +47,12 @@ export default function SecuritySettingsPage() {
   const [deleteConfirmText, setDeleteConfirmText] = useState('');
   const [deletePassword, setDeletePassword] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
+
+  // Change password states
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [isChangingPassword, setIsChangingPassword] = useState(false);
+  const [isPasswordExpanded, setIsPasswordExpanded] = useState(false);
 
   useEffect(() => {
     if (isLoading) return;
@@ -76,9 +84,6 @@ export default function SecuritySettingsPage() {
     () => fetchUserStrikes().then((r) => r.data)
   );
 
-  // signIn() for OAuth providers does a full-page redirect, so we can't read the
-  // result of a "Connect" click directly — stash which provider we attempted in
-  // sessionStorage and diff the profile against it once we're back on this page.
   useEffect(() => {
     pendingLinkRef.current = sessionStorage.getItem('tcg_pending_link');
     if (pendingLinkRef.current) sessionStorage.removeItem('tcg_pending_link');
@@ -126,6 +131,25 @@ export default function SecuritySettingsPage() {
     }
   };
 
+  const handleChangePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (newPassword.length < 8) {
+      addToast({ type: 'error', message: 'New password must be at least 8 characters long.' });
+      return;
+    }
+    setIsChangingPassword(true);
+    const res = await changePassword(currentPassword, newPassword);
+    setIsChangingPassword(false);
+    if (res.success) {
+      addToast({ type: 'success', message: 'Password updated successfully.' });
+      setCurrentPassword('');
+      setNewPassword('');
+      mutateProfile();
+    } else {
+      addToast({ type: 'error', message: res.error || 'Failed to change password.' });
+    }
+  };
+
   const handleUnlinkProvider = async () => {
     setIsUnlinking(true);
     const res = await unlinkProvider();
@@ -144,18 +168,15 @@ export default function SecuritySettingsPage() {
       const blob = await exportUserData();
       const text = await blob.text();
       const jsonData = JSON.parse(text);
-      
       const { generateExportHtml } = await import('@/lib/exportTemplate');
       const htmlStr = generateExportHtml(jsonData);
-      
       const htmlBlob = new Blob([htmlStr], { type: 'text/html;charset=utf-8' });
       const url = URL.createObjectURL(htmlBlob);
-      const a = document.createElement('a'); 
-      a.href = url; 
-      a.download = 'thecoregamer-data.html'; 
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'thecoregamer-data.html';
       a.click();
       URL.revokeObjectURL(url);
-      
       addToast({ type: 'success', message: 'Data exported' });
     } catch (err) {
       console.error('Export failed', err);
@@ -207,130 +228,203 @@ export default function SecuritySettingsPage() {
     }
   };
 
-  const inputCls = 'w-full bg-gray-50 dark:bg-[#222222] border border-gray-200 dark:border-white/[0.06] focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 text-black dark:text-white rounded-xl pl-4 pr-4 py-3 text-[15px] outline-none transition-all placeholder:text-gray-400 dark:placeholder:text-[#555]';
+  // ── Shared styles ──────────────────────────────────────────────────────────
+  const inputCls = 'w-full bg-gray-50 dark:bg-white/[0.05] border border-gray-200 dark:border-white/[0.08] focus:border-blue-500/60 focus:ring-1 focus:ring-blue-500/40 text-black dark:text-white rounded-xl pl-4 pr-4 py-3 text-[15px] outline-none transition-all placeholder:text-gray-400 dark:placeholder:text-[#555]';
+  // Each row inside a grouped container
+  const rowCls = 'flex items-center gap-4 px-5 py-4 border-b border-border dark:border-white/[0.07] last:border-0';
 
   return (
-    <div className="space-y-8 w-full" style={{ fontFamily: "'Gibson', sans-serif" }}>
+    <div className="space-y-10 w-full" style={{ fontFamily: "'Gibson', sans-serif" }}>
 
-
-      {/* Account Standing */}
-      <section className="bg-bg-surface dark:bg-[#3A3F4A] border border-border rounded-2xl p-6">
-        <h3 className="text-[20px] font-bold text-text-primary mb-4">Account Standing</h3>
-        {!strikes || strikes.length === 0 ? (
-          <div className="flex items-center gap-3 p-4 rounded-xl bg-emerald-600/10 dark:bg-emerald-400/10 border border-emerald-600/20 dark:border-emerald-400/20">
-            <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
-            <p className="text-[16px] font-medium text-text-primary">Your account is in good standing</p>
-          </div>
-        ) : (
-          <div className="space-y-3">
-            <div className="flex items-center gap-3 p-4 rounded-xl bg-amber-600/10 dark:bg-amber-400/10 border border-amber-600/20 dark:border-amber-400/20">
-              <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0" />
-              <p className="text-[16px] font-medium text-text-primary">
-                {strikes.length} active {strikes.length === 1 ? 'warning' : 'warnings'} on your account
-              </p>
-            </div>
-            <ul className="space-y-2">
-              {strikes.map((s) => (
-                <li key={s.id} className="p-4 rounded-xl dark:bg-[#3A3F4A] border border-border dark:border-white/20">
-                  <p className="text-[16px] text-text-primary">{s.reason}</p>
-                  <p className="text-[14px] text-text-muted mt-1">
-                    Issued {formatDate(s.issuedAt)}
-                    {s.expiresAt && <> &middot; Expires {formatDate(s.expiresAt)}</>}
-                  </p>
-                </li>
-              ))}
-            </ul>
-            <p className="text-[16px] text-text-muted">
-              Think this is a mistake?{' '}
-              <Link href="/contact" className="text-accent hover:underline">Appeal this decision</Link>.
-            </p>
-          </div>
-        )}
-      </section>
-
-      {/* Change Password + Two-Factor Authentication */}
-      <section className="bg-bg-surface dark:bg-[#3A3F4A] border border-border rounded-2xl p-6">
-        <h3 className="text-[20px] font-bold text-text-primary mb-5">Authentication</h3>
-        <div className="space-y-3">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between gap-4 p-4 rounded-xl dark:bg-[#3A3F4A] border border-border dark:border-white/20">
-            <div>
-              <p className="text-[16px] font-medium text-text-primary flex items-center gap-2"><Mail className="w-4 h-4" /> Change Password</p>
-              <p className="text-[14px] text-text-muted mt-0.5">We'll email you a secure link to set a new password.</p>
-            </div>
-            <Button variant="outline" size="sm" loading={sendingReset} onClick={handleSendPasswordReset}>
-              Send Reset Link
-            </Button>
-          </div>
-
-          <div className="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between gap-4 p-4 rounded-xl dark:bg-[#3A3F4A] border border-border dark:border-white/20">
-            {tfaLoading ? (
-              <div className="flex-1 space-y-2 w-full">
-                <div className="h-5 w-48 shimmer rounded" />
-                <div className="h-4 w-64 shimmer rounded" />
+      {/* ── Account Standing ── */}
+      <div>
+        <div className="mb-4">
+          <h3 className="text-[18px] font-bold text-text-primary">Account Standing</h3>
+          <p className="text-[13px] text-text-muted mt-0.5">Your current moderation status on TheCoreGamer.</p>
+        </div>
+        <div className="rounded-xl border border-border dark:border-white/[0.08] overflow-hidden">
+          {!strikes || strikes.length === 0 ? (
+            <div className={rowCls}>
+              <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />
+              <div className="flex-1 min-w-0">
+                <p className="text-[15px] font-medium text-text-primary">Good Standing</p>
+                <p className="text-[13px] text-text-muted mt-0.5">Your account has no active warnings or strikes.</p>
               </div>
-            ) : (
-              <>
-                <div>
-                  <p className="text-[16px] font-medium text-text-primary flex items-center gap-2">
-                    {tfaEnabled ? <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> : <ShieldOff className="w-4 h-4 text-text-muted" />}
-                    Two-Factor Authentication
+              <span className="text-[12px] font-semibold text-emerald-500 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-2.5 py-0.5 shrink-0">
+                Active
+              </span>
+            </div>
+          ) : (
+            <>
+              <div className={rowCls}>
+                <AlertTriangle className="w-5 h-5 text-amber-500 shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <p className="text-[15px] font-medium text-text-primary">
+                    {strikes.length} active {strikes.length === 1 ? 'warning' : 'warnings'}
                   </p>
-                  <p className="text-[14px] text-text-muted mt-0.5">
-                    {tfaEnabled ? 'Enabled — your account has an extra layer of protection.' : 'Not enabled — add an extra layer of protection.'}
+                  <p className="text-[13px] text-text-muted mt-0.5">
+                    Think this is a mistake?{' '}
+                    <Link href="/contact" className="text-accent hover:underline">Appeal this decision</Link>.
                   </p>
                 </div>
-                <Link href="/settings/profile/2fa">
-                  <Button variant={tfaEnabled ? 'outline' : 'auth'} size="sm">
-                    {tfaEnabled ? 'Manage' : 'Enable 2FA'}
+              </div>
+              {strikes.map((s) => (
+                <div key={s.id} className={rowCls}>
+                  <div className="w-5 shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[14px] text-text-primary">{s.reason}</p>
+                    <p className="text-[13px] text-text-muted mt-0.5">
+                      Issued {formatDate(s.issuedAt)}
+                      {s.expiresAt && <> · Expires {formatDate(s.expiresAt)}</>}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* ── Authentication ── */}
+      <div>
+        <div className="mb-4">
+          <h3 className="text-[18px] font-bold text-text-primary">Authentication</h3>
+          <p className="text-[13px] text-text-muted mt-0.5">Manage your password and two-factor authentication.</p>
+        </div>
+        <div className="rounded-xl border border-border dark:border-white/[0.08] overflow-hidden">
+          {/* Password Section */}
+          <div className="border-b border-border dark:border-white/[0.07] p-5">
+            <button 
+              type="button"
+              onClick={() => setIsPasswordExpanded(!isPasswordExpanded)}
+              className="w-full flex items-start gap-4 text-left group"
+            >
+              <Shield className="w-5 h-5 text-text-muted shrink-0 mt-0.5" />
+              <div className="flex-1 min-w-0">
+                <p className="text-[15px] font-medium text-text-primary transition-colors">Password</p>
+                <p className="text-[13px] text-text-muted mt-0.5">
+                  {profile?.hasPassword 
+                    ? 'Update your password or request a reset link.' 
+                    : 'You haven\'t set a password yet. Send a setup link to your email to create one.'}
+                </p>
+              </div>
+              <ChevronDown className={`w-5 h-5 text-text-muted transition-transform shrink-0 mt-0.5 ${isPasswordExpanded ? 'rotate-180' : ''}`} />
+            </button>
+
+            {isPasswordExpanded && (
+              <div className="pl-9 space-y-4 mt-4 animate-in fade-in slide-in-from-top-2 duration-200">
+                {profile?.hasPassword ? (
+                  <form onSubmit={handleChangePassword} className="space-y-3 max-w-md">
+                    <div>
+                      <input
+                        type="password"
+                        placeholder="Current password"
+                        value={currentPassword}
+                        onChange={(e) => setCurrentPassword(e.target.value)}
+                        className={inputCls}
+                        required
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="password"
+                        placeholder="New password (min. 8 characters)"
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                        className={inputCls}
+                        required
+                        minLength={8}
+                      />
+                    </div>
+                    <div className="flex items-center gap-3 pt-1">
+                      <Button type="submit" variant="auth" size="sm" loading={isChangingPassword}>
+                        Change Password
+                      </Button>
+                      <Button type="button" variant="ghost" size="sm" loading={sendingReset} onClick={handleSendPasswordReset}>
+                        Send reset link
+                      </Button>
+                    </div>
+                  </form>
+                ) : (
+                  <Button variant="outline" size="sm" loading={sendingReset} onClick={handleSendPasswordReset}>
+                    Send Setup Link
                   </Button>
-                </Link>
-              </>
+                )}
+              </div>
             )}
           </div>
-        </div>
-      </section>
 
-      {/* Linked Accounts */}
-      <section className="bg-bg-surface dark:bg-[#3A3F4A] border border-border rounded-2xl p-6">
-        <h3 className="text-[20px] font-bold text-text-primary mb-5 flex items-center gap-2">
-          <Link2 className="w-5 h-5" /> Linked Accounts
-        </h3>
-        <div className="space-y-3">
+          {/* 2FA row */}
+          {tfaLoading ? (
+            <div className={rowCls}>
+              <div className="w-5 h-5 shimmer rounded shrink-0" />
+              <div className="flex-1 space-y-1.5">
+                <div className="h-4 w-44 shimmer rounded" />
+                <div className="h-3 w-56 shimmer rounded" />
+              </div>
+              <div className="h-7 w-24 shimmer rounded-full" />
+            </div>
+          ) : (
+            <div className={rowCls}>
+              {tfaEnabled
+                ? <ShieldCheck className="w-5 h-5 text-emerald-500 shrink-0" />
+                : <ShieldOff className="w-5 h-5 text-text-muted shrink-0" />
+              }
+              <div className="flex-1 min-w-0">
+                <p className="text-[15px] font-medium text-text-primary">Two-Factor Authentication</p>
+                <p className="text-[13px] text-text-muted mt-0.5">
+                  {tfaEnabled ? 'Enabled — your account has an extra layer of protection.' : 'Not enabled — add an extra layer of protection.'}
+                </p>
+              </div>
+              <Button variant={tfaEnabled ? 'outline' : 'auth'} size="sm" onClick={() => setIs2faModalOpen(true)}>
+                {tfaEnabled ? 'Manage' : 'Enable 2FA'}
+              </Button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* ── Social Accounts ── */}
+      <div>
+        <div className="mb-4">
+          <h3 className="text-[18px] font-bold text-text-primary">Social Accounts</h3>
+          <p className="text-[13px] text-text-muted mt-0.5">
+            {profile?.oauthProvider && !profile?.hasPassword
+              ? 'To disconnect, first set a password above — otherwise your account would become unreachable.'
+              : 'Connect a social account to sign in faster. Connecting a new provider replaces the current one.'}
+          </p>
+        </div>
+        <div className="rounded-xl border border-border dark:border-white/[0.08] overflow-hidden">
           {profileLoading ? (
             Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="h-[72px] shimmer rounded-xl w-full" />
+              <div key={i} className={rowCls}>
+                <div className="w-5 h-5 shimmer rounded shrink-0" />
+                <div className="flex-1 h-4 shimmer rounded" />
+                <div className="h-7 w-20 shimmer rounded-full" />
+              </div>
             ))
           ) : OAUTH_PROVIDERS.filter((p) => p.enabled).map(({ id, label, Icon, color }) => {
             const connected = profile?.oauthProvider === id;
             return (
-              <div key={id} className="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between gap-4 p-4 rounded-xl dark:bg-[#3A3F4A] border border-border dark:border-white/20">
-                <div className="flex items-center gap-3">
-                  <Icon className={`w-5 h-5 shrink-0 ${id === 'steam' ? 'text-[#171a21] dark:text-[#c6d4df]' : ''}`} style={id === 'steam' ? undefined : { color }} />
-                  <p className="text-[16px] font-medium text-text-primary">{label}</p>
+              <div key={id} className={rowCls}>
+                <Icon
+                  className={`w-5 h-5 shrink-0 ${id === 'steam' ? 'text-[#171a21] dark:text-[#c6d4df]' : ''}`}
+                  style={id === 'steam' ? undefined : { color }}
+                />
+                <div className="flex-1 min-w-0 flex items-center gap-2">
+                  <p className="text-[15px] font-medium text-text-primary">{label}</p>
                   {connected && (
-                    <span className="text-[14px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-600/10 dark:bg-emerald-400/10 border border-emerald-600/20 dark:border-emerald-400/20 rounded-full px-2.5 py-0.5">
+                    <span className="text-[12px] font-semibold text-emerald-500 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-2 py-0.5">
                       Connected
                     </span>
                   )}
                 </div>
                 {connected ? (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    loading={isUnlinking}
-                    disabled={!profile?.hasPassword}
-                    onClick={handleUnlinkProvider}
-                  >
+                  <Button variant="danger" size="sm" loading={isUnlinking} disabled={!profile?.hasPassword} onClick={handleUnlinkProvider}>
                     Disconnect
                   </Button>
                 ) : (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    loading={linkingProvider === id}
-                    disabled={linkingProvider !== null}
-                    onClick={() => handleLinkProvider(id)}
-                  >
+                  <Button variant="outline" size="sm" loading={linkingProvider === id} disabled={linkingProvider !== null} onClick={() => handleLinkProvider(id)}>
                     Connect
                   </Button>
                 )}
@@ -338,133 +432,124 @@ export default function SecuritySettingsPage() {
             );
           })}
         </div>
-        <p className="text-[14px] text-text-muted mt-4">
-          {profile?.oauthProvider && !profile?.hasPassword
-            ? 'To disconnect, first set a password using "Send Reset Link" above — otherwise your account would become unreachable.'
-            : 'Connecting a new provider replaces whichever one is currently linked.'}
-        </p>
-      </section>
+      </div>
 
-      {/* Devices & Sign-ins */}
-      <section className="bg-bg-surface dark:bg-[#3A3F4A] border border-border rounded-2xl p-6">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between gap-4 mb-5">
-          <h3 className="text-[20px] font-bold text-text-primary">Devices & Sign-ins</h3>
-          <Button variant="danger" size="sm" icon={<LogOut className="w-4 h-4" />} onClick={() => setShowConfirm(true)}>
+      {/* ── Devices & Sign-ins ── */}
+      <div>
+        <div className="flex items-start justify-between gap-4 mb-4">
+          <div>
+            <h3 className="text-[18px] font-bold text-text-primary">Devices & Sign-ins</h3>
+            <p className="text-[13px] text-text-muted mt-0.5">Devices that have recently accessed your account.</p>
+          </div>
+          <Button variant="outline" size="sm" icon={<LogOut className="w-4 h-4" />} onClick={() => setShowConfirm(true)} className="hover:!text-red-500 hover:!border-red-500 shrink-0 whitespace-nowrap">
             Sign out everywhere
           </Button>
         </div>
-        <p className="text-[16px] text-text-muted mb-4">
-          Devices that have signed into your account. "Sign out everywhere" ends all active sessions including this one.
-        </p>
 
         {sessionsLoading ? (
-          <div className="space-y-2">
+          <div className="rounded-xl border border-border dark:border-white/[0.08] overflow-hidden">
             {Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="h-16 shimmer rounded-xl" />
+              <div key={i} className={rowCls}>
+                <div className="w-5 h-5 shimmer rounded shrink-0" />
+                <div className="flex-1 space-y-1.5">
+                  <div className="h-4 w-40 shimmer rounded" />
+                  <div className="h-3 w-56 shimmer rounded" />
+                </div>
+                <div className="h-7 w-16 shimmer rounded-full" />
+              </div>
             ))}
           </div>
         ) : !sessions || sessions.length === 0 ? (
-          <p className="text-[16px] text-text-muted text-center py-8">No device history yet.</p>
+          <div className="rounded-xl border border-border dark:border-white/[0.08] py-10 text-center">
+            <p className="text-[15px] text-text-muted">No device history yet.</p>
+          </div>
         ) : (
-          <div className="rounded-2xl overflow-hidden border border-border">
-            {sessions.map((s, i) => {
-              const Icon = s.deviceType === 'mobile' ? Smartphone : s.deviceType === 'tablet' ? Tablet : Monitor;
+          <div className="rounded-xl border border-border dark:border-white/[0.08] overflow-hidden">
+            {sessions.map((s) => {
+              const DeviceIcon = s.deviceType === 'mobile' ? Smartphone : s.deviceType === 'tablet' ? Tablet : Monitor;
               return (
-                <div
-                  key={s.id}
-                  className={`flex flex-col gap-4 px-5 py-5 dark:bg-[#3A3F4A] ${i < sessions.length - 1 ? 'border-b border-border dark:border-white/20' : ''}`}
-                >
-                  <div className="flex flex-col gap-1.5 min-w-0">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Icon className="w-5 h-5 text-text-primary shrink-0" />
+                <div key={s.id} className={rowCls}>
+                  <DeviceIcon className="w-5 h-5 text-text-muted shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <p className="text-[15px] font-medium text-text-primary capitalize">{s.deviceType}</p>
                       {s.isCurrent && (
-                        <span className="text-[14px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-600/10 dark:bg-emerald-400/10 border border-emerald-600/20 dark:border-emerald-400/20 rounded-full px-2 py-0.5 shrink-0">
+                        <span className="text-[12px] font-semibold text-emerald-500 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-2 py-0.5">
                           This device
                         </span>
                       )}
                       {s.revoked && (
-                        <span className="text-[14px] font-medium text-text-muted bg-bg-surface border border-border rounded-full px-2.5 py-1 shrink-0">
+                        <span className="text-[12px] font-medium text-text-muted border border-border rounded-full px-2 py-0.5">
                           Signed out
                         </span>
                       )}
                     </div>
-                    
-                    <p className="text-[15px] text-text-primary">
-                      <span className="font-semibold w-32 inline-block">Device type</span> 
-                      <span className="capitalize">{s.deviceType}</span>
+                    <p className="text-[13px] text-text-muted mt-0.5">
+                      {s.browser}{s.browserVersion ? ` ${s.browserVersion}` : ''}
+                      {s.location ? ` · ${s.location}` : ''}
+                      {' · '}
+                      {s.isCurrent ? 'Active now' : formatRelativeDate(s.lastSeenAt)}
                     </p>
-                    
-                    <p className="text-[15px] text-text-primary">
-                      <span className="font-semibold w-32 inline-block">Browser</span> 
-                      {s.browser} {s.browserVersion || ''}
-                    </p>
-                    
-                    <p className="text-[15px] text-text-primary">
-                      <span className="font-semibold w-32 inline-block">First logged in</span> 
-                      {new Date(s.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} @ {new Date(s.createdAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'UTC' })} (UTC)
-                    </p>
-
-                    <p className="text-[15px] text-text-primary">
-                      <span className="font-semibold w-32 inline-block">Last active</span> 
-                      {s.isCurrent ? "Right now" : (
-                        <>{new Date(s.lastSeenAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} @ {new Date(s.lastSeenAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'UTC' })} (UTC)</>
-                      )}
-                    </p>
-                    
-                    {s.location && (
-                      <p className="text-[15px] text-text-primary">
-                        <span className="font-semibold w-32 inline-block">Location</span> 
-                        {s.location}
-                      </p>
-                    )}
                   </div>
-                  
                   {!s.revoked && (
-                    <div className="mt-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        loading={revokingId === s.id}
-                        onClick={() => handleRevokeDevice(s.id)}
-                      >
-                        Sign out
-                      </Button>
-                    </div>
+                    <Button variant="outline" size="sm" loading={revokingId === s.id} onClick={() => handleRevokeDevice(s.id)} className="hover:!text-red-500 hover:!border-red-500 shrink-0 whitespace-nowrap">
+                      Sign out
+                    </Button>
                   )}
                 </div>
               );
             })}
           </div>
         )}
-      </section>
+      </div>
 
-      {/* Data & Privacy */}
-      <section className="bg-bg-surface dark:bg-[#3A3F4A] border border-border rounded-2xl p-6">
-        <h3 className="text-[20px] font-bold text-text-primary mb-2 flex items-center gap-2">
-          <Shield className="w-5 h-5" /> Data & Privacy
-        </h3>
-        <p className="text-[16px] text-text-muted mb-4">
-          Download a copy of all the data we hold about your account — profile, comments, reviews, bookmarks, and reading lists.
-        </p>
-        <Button variant="outline" size="sm" icon={<Download className="w-4 h-4" />} loading={isExporting} onClick={handleExport}>
-          Download My Data
-        </Button>
-      </section>
+      {/* ── Data & Privacy ── */}
+      <div>
+        <div className="mb-4">
+          <h3 className="text-[18px] font-bold text-text-primary">Data & Privacy</h3>
+          <p className="text-[13px] text-text-muted mt-0.5">
+            Download a copy of all the data we hold — profile, comments, reviews, bookmarks, and reading lists.
+          </p>
+        </div>
+        <div className="rounded-xl border border-border dark:border-white/[0.08] overflow-hidden">
+          <div className={rowCls}>
+            <Download className="w-5 h-5 text-text-muted shrink-0" />
+            <div className="flex-1 min-w-0">
+              <p className="text-[15px] font-medium text-text-primary">Download My Data</p>
+              <p className="text-[13px] text-text-muted mt-0.5">Exported as a structured HTML file.</p>
+            </div>
+            <Button variant="outline" size="sm" loading={isExporting} onClick={handleExport}>
+              Export
+            </Button>
+          </div>
+        </div>
+      </div>
 
-      {/* Delete Account */}
-      <section className="bg-bg-surface dark:bg-[#3A3F4A] border border-red-500 rounded-2xl p-6">
-        <h3 className="text-[20px] font-bold text-danger mb-2">Delete Account</h3>
-        <p className="text-[16px] text-text-muted mb-4">This action is permanent and cannot be undone.</p>
-        <ul className="text-[16px] text-text-muted mb-4 space-y-1.5 list-disc pl-5">
-          <li><span className="text-text-primary font-medium">Deleted:</span> bookmarks, reading lists, and push subscriptions.</li>
-          <li><span className="text-text-primary font-medium">Cleared:</span> your profile (name, username, avatar, bio, email, password) and any comments — threads remain intact but are no longer linked to you.</li>
-        </ul>
-        <Button variant="danger" size="sm" icon={<Trash2 className="w-4 h-4" />} onClick={() => setShowDeleteModal(true)}>
-          Delete Account
-        </Button>
-      </section>
+      {/* ── Danger Zone ── */}
+      <div>
+        <div className="mb-4">
+          <h3 className="text-[18px] font-bold text-danger">Danger Zone</h3>
+          <p className="text-[13px] text-text-muted mt-0.5">Irreversible actions. Please proceed with caution.</p>
+        </div>
+        <div className="rounded-xl border border-red-500/30 overflow-hidden">
+          <button
+            type="button"
+            onClick={() => setShowDeleteModal(true)}
+            className="w-full flex items-center gap-4 px-5 py-4 hover:bg-red-500/5 transition-colors group"
+          >
+            <Trash2 className="w-5 h-5 text-danger shrink-0" />
+            <div className="flex-1 min-w-0 text-left">
+              <p className="text-[15px] font-medium text-danger">Delete Account</p>
+              <p className="text-[13px] text-text-muted mt-0.5">
+                Permanently deletes your profile, bookmarks, and reading lists. Comments are anonymised.
+              </p>
+            </div>
+            <X className="w-4 h-4 text-danger opacity-50 group-hover:opacity-100 transition-opacity shrink-0" />
+          </button>
+        </div>
+      </div>
 
-      {/* Sign out everywhere modal */}
+      {/* ── Sign out everywhere modal ── */}
       <Modal isOpen={showConfirm} onClose={() => setShowConfirm(false)} title="Sign out everywhere">
         <p className="text-[16px] text-text-muted mb-4">
           This will immediately end all active sessions on every device, including this one. You'll need to sign in again.
@@ -477,7 +562,7 @@ export default function SecuritySettingsPage() {
         </div>
       </Modal>
 
-      {/* Delete account modal */}
+      {/* ── Delete account modal ── */}
       <Modal isOpen={showDeleteModal} onClose={() => { setShowDeleteModal(false); setDeleteConfirmText(''); setDeletePassword(''); }} title="Delete Account">
         <p className="text-[16px] text-text-muted mb-3">This action is permanent and cannot be undone.</p>
         <p className="text-[16px] text-text-primary mb-2">
@@ -507,6 +592,16 @@ export default function SecuritySettingsPage() {
           </Button>
         </div>
       </Modal>
+
+      <TwoFactorModal
+        isOpen={is2faModalOpen}
+        onClose={() => setIs2faModalOpen(false)}
+        isEnabled={tfaEnabled}
+        onStatusChange={(enabled) => {
+          setTfaEnabled(enabled);
+          mutateProfile();
+        }}
+      />
     </div>
   );
 }

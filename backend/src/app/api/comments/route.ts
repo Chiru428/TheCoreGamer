@@ -271,10 +271,24 @@ export async function POST(request: Request) {
         const needsArticle = mentionedUserIds.length > 0 || hasReplyTarget;
         const article = needsArticle
           ? await withRetry(() =>
-              prisma.article.findUnique({ where: { id: data.articleId }, select: { slug: true } })
+              prisma.article.findUnique({ where: { id: data.articleId }, select: { slug: true, contentType: true } })
             )
           : null;
-        const href = article ? `/articles/${article.slug}#comment-${comment.id}` : undefined;
+        
+        let href: string | undefined = undefined;
+        if (article) {
+          const contentTypeToPath: Record<string, string> = { 
+            NEWS: 'news', 
+            REVIEW: 'reviews', 
+            MOD_GUIDE: 'mod-guides', 
+            WALKTHROUGH: 'articles', 
+            OPINION: 'articles', 
+            DEAL: 'deals' 
+          };
+          const basePath = contentTypeToPath[article.contentType] ?? 'articles';
+          href = `/${basePath}/${article.slug}#comment-${comment.id}`;
+        }
+        
         const actorName = comment.User?.username || comment.authorName;
 
         if (mentionedUserIds.length > 0) {

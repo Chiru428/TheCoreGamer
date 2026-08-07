@@ -389,6 +389,8 @@ export async function fetchSearchResults(
 // AUTH
 export const registerUser = (data: Record<string, unknown>) => apiMutate<{ id: string }>('/api/auth/register', 'POST', data);
 export const forgotPassword = (email: string) => apiMutate<null>('/api/auth/forgot-password', 'POST', { email });
+export const changePassword = (currentPassword: string, newPassword: string) => 
+  apiMutate<null>('/api/user/change-password', 'POST', { currentPassword, newPassword });
 export const resetPassword = (token: string, password: string) => apiMutate<null>('/api/auth/reset-password', 'POST', { token, password });
 export const verifyEmail = (token: string) => apiMutate<null>('/api/auth/verify-email', 'POST', { token });
 

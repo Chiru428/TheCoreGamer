@@ -112,9 +112,15 @@ export async function recordLoginDevice(
     where: { userId_deviceHash: { userId, deviceHash } },
   });
 
-  let location: string | undefined = undefined;
-  if (!existing) {
+  let location: string | undefined = existing?.location || undefined;
+  // If no existing device, or IP changed, or location is missing/wrong, fetch it
+  if (!existing || existing.ipAddress !== anonymizedIp || !existing.location || existing.location === "United States") {
     try {
+      const vercelCountry = req.headers.get("x-vercel-ip-country");
+      if (vercelCountry) {
+        // We could use a map, but let's just fall back to ip-api for full names
+        // Actually, if we're doing fetch, let's just use ip-api.
+      }
       const res = await fetch(`http://ip-api.com/json/${realClientIp}?fields=country`);
       if (res.ok) {
         const data = await res.json();
@@ -129,7 +135,12 @@ export async function recordLoginDevice(
 
   const device = await prisma.userDevice.upsert({
     where: { userId_deviceHash: { userId, deviceHash } },
-    update: { lastSeenAt: new Date(), revokedAt: null },
+    update: { 
+      lastSeenAt: new Date(), 
+      revokedAt: null,
+      ipAddress: anonymizedIp,
+      ...(location ? { location } : {})
+    },
     create: { userId, deviceHash, userAgent, ipAddress: anonymizedIp, location },
   });
 
@@ -140,6 +151,20 @@ export async function recordLoginDevice(
       where: { userId, id: { not: device.id }, createdAt: { lt: fiveMinutesAgo } },
     });
     isNewDevice = !!olderDevice;
+  }
+
+  // Prune old sessions: delete devices that haven't been seen in 30 days
+  try {
+    const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+    await prisma.userDevice.deleteMany({
+      where: { 
+        userId, 
+        lastSeenAt: { lt: thirtyDaysAgo },
+        id: { not: device.id } // never delete the current device
+      },
+    });
+  } catch (err) {
+    console.error("Failed to prune old devices:", err);
   }
 
   return { device, isNewDevice };

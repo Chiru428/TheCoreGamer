@@ -23,16 +23,28 @@ export default function CommentsSettingsPage() {
 
   if (!isAuthenticated) return null;
 
-  return (
-    <div className="space-y-8 w-full" style={{ fontFamily: "'Gibson', sans-serif" }}>
+  // Shared row class
+  const rowCls = 'flex flex-col gap-2 px-5 py-5 border-b border-border dark:border-white/[0.07] last:border-0 transition-colors';
 
+  return (
+    <div className="w-full space-y-6" style={{ fontFamily: "'Gibson', sans-serif" }}>
+
+      <div className="mb-6">
+        <h3 className="text-[18px] font-bold text-text-primary">Comments</h3>
+        <p className="text-[13px] text-text-muted mt-0.5">Your recent comments across articles and games.</p>
+      </div>
       
       {isSWRLoading ? (
-        <div className="flex justify-center items-center py-20">
-          <Loader2 className="w-8 h-8 animate-spin text-accent" />
+        <div className="rounded-xl border border-border dark:border-white/[0.08] overflow-hidden">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className={rowCls}>
+              <div className="h-4 w-64 rounded bg-gray-200 dark:bg-white/[0.06] animate-pulse mb-2" />
+              <div className="h-3 w-48 rounded bg-gray-200 dark:bg-white/[0.06] animate-pulse" />
+            </div>
+          ))}
         </div>
       ) : comments?.length ? (
-        <div className="space-y-4">
+        <div className="rounded-xl border border-border dark:border-white/[0.08] overflow-hidden">
           {comments.map(c => {
             if (!c.article) return null;
             const contentTypeToPath: Record<string, string> = { 
@@ -45,33 +57,33 @@ export default function CommentsSettingsPage() {
             };
             const link = `${contentTypeToPath[c.article.contentType] ?? '/articles'}/${c.article.slug}`;
             return (
-              <div key={c.id} className="bg-bg-surface dark:bg-[#3A3F4A] border border-border rounded-2xl p-5">
-                <p className="text-[16px] text-text-muted mb-3">
-                  On <Link href={link} className="text-accent-light hover:underline font-medium">{c.article.title}</Link>:
+              <div key={c.id} className={rowCls + ' hover:bg-black/5 dark:hover:bg-white/[0.02]'}>
+                <p className="text-[14px] text-text-muted">
+                  On <Link href={link} className="text-accent hover:underline font-medium">{c.article.title}</Link>:
                 </p>
                 {c.gifUrl && (
-                  <div className="mb-2">
+                  <div className="mt-1">
                     <img
                       src={c.gifUrl}
                       alt="GIF"
-                      className="rounded-lg object-contain border border-border"
+                      className="rounded-lg object-contain border border-border dark:border-white/[0.08]"
                       style={{ maxWidth: '160px', width: '100%', height: 'auto' }}
                     />
                   </div>
                 )}
                 {(!c.gifUrl || (c.body.trim() && c.body.trim() !== '[GIF]')) && (
-                  <p className="text-[16px] text-text-primary whitespace-pre-wrap">{renderCommentBody(c.body)}</p>
+                  <p className="text-[15px] text-text-primary whitespace-pre-wrap mt-1">{renderCommentBody(c.body)}</p>
                 )}
-                <p className="text-[14px] text-text-muted mt-3">{new Date(c.createdAt).toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' })}</p>
+                <p className="text-[12px] text-text-muted mt-2">{new Date(c.createdAt).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })}</p>
               </div>
             );
           })}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center py-20 text-center bg-bg-surface dark:bg-[#3A3F4A] border border-border rounded-2xl">
-          <MessageSquare className="w-16 h-16 text-border mb-4" />
-          <h3 className="text-[22px] font-semibold text-text-primary mb-2">No comments yet</h3>
-          <p className="text-[18px] text-text-muted">Join the discussion on our articles</p>
+        <div className="rounded-xl border border-border dark:border-white/[0.08] py-16 text-center">
+          <MessageSquare className="w-12 h-12 text-text-muted mb-4 mx-auto" />
+          <p className="text-[16px] font-semibold text-text-primary">No comments yet</p>
+          <p className="text-[14px] text-text-muted mt-1">Join the discussion on our articles.</p>
         </div>
       )}
     </div>

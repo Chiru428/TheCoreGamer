@@ -143,7 +143,7 @@ export default function PostCard({ article, variant = 'medium', className, aspec
       className={cn('scroll-animate-card article-card-hover group flex items-center py-3 sm:py-4 overflow-hidden', animationClass, className)}
       style={delayStyle}
     >
-      <Link href={href} className="relative w-[120px] min-w-[120px] sm:w-[160px] sm:min-w-[160px] aspect-video overflow-hidden flex-shrink-0" style={{ background: 'linear-gradient(135deg, #1e1228 0%, #0a1628 100%)' }}>
+      <Link href={href} className="hidden sm:block relative w-[120px] min-w-[120px] sm:w-[160px] sm:min-w-[160px] aspect-video overflow-hidden flex-shrink-0" style={{ background: 'linear-gradient(135deg, #1e1228 0%, #0a1628 100%)' }}>
         {article.featuredImageUrl ? (
           <Image src={article.featuredImageUrl} alt={article.title} fill className="absolute inset-0 w-full h-full object-cover card-thumbnail" sizes="(max-width: 640px) 120px, 160px" />
         ) : (
@@ -158,24 +158,23 @@ export default function PostCard({ article, variant = 'medium', className, aspec
         )}
       </Link>
       <div className="flex-1 min-w-0 pl-3 sm:pl-[14px]">
-        <Link href={href} className="group-hover:underline">
-          <p className="text-[var(--text-strong)] text-[13px] sm:text-[20px]" style={{ fontFamily: '"Gibson", sans-serif', fontWeight: 700, lineHeight: 1.3, marginBottom: '4px' }}>{article.title}</p>
-        </Link>
-        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] sm:text-xs" style={{ color: 'var(--text)' }}>
-          {showBadge && (
-            article.contentType === 'GUIDE' && article.guideType ? (
-              <span className="category-badge-bounce shrink-0" style={{ display: 'inline-block', fontSize: '10px', fontWeight: 800, letterSpacing: '1px', textTransform: 'uppercase', color: getGuideTypeColor(article.guideType) }}>
-                {article.guideType}
-              </span>
-            ) : (
-              <span className="category-badge-bounce shrink-0" style={{ display: 'inline-block', fontSize: '10px', fontWeight: 800, letterSpacing: '1px', textTransform: 'uppercase', color: tc.textColor || tc.bg }}>
-                {CONTENT_TYPE_LABELS[article.contentType] || article.contentType}
-              </span>
-            )
-          )}
-          {sponsoredBadge}
-          {liveBadge}
-          <div className="flex items-center gap-1.5 min-w-0">
+        <div className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-x-2 gap-y-1 text-[12px] sm:text-xs mb-1" style={{ color: 'var(--text)' }}>
+          <div className="flex flex-wrap items-center gap-1.5">
+            {showBadge && (
+              article.contentType === 'GUIDE' && article.guideType ? (
+                <span className="category-badge-bounce shrink-0" style={{ display: 'inline-block', fontSize: '10px', fontWeight: 800, letterSpacing: '1px', textTransform: 'uppercase', color: getGuideTypeColor(article.guideType) }}>
+                  {article.guideType}
+                </span>
+              ) : (
+                <span className="category-badge-bounce shrink-0" style={{ display: 'inline-block', fontSize: '10px', fontWeight: 800, letterSpacing: '1px', textTransform: 'uppercase', color: tc.textColor || tc.bg }}>
+                  {CONTENT_TYPE_LABELS[article.contentType] || article.contentType}
+                </span>
+              )
+            )}
+            {sponsoredBadge}
+            {liveBadge}
+          </div>
+          <div className="flex items-center gap-1.5 min-w-0 mt-0.5 sm:mt-0">
             {article.author?.username ? (
               <ProfileLink username={article.author.username}>
                 <span className="truncate" style={{ color: '#00e5a0', fontWeight: 600 }}>{article.author.displayName}</span>
@@ -187,6 +186,9 @@ export default function PostCard({ article, variant = 'medium', className, aspec
             <span className="shrink-0">{formatRelativeDate(article.publishedAt || article.createdAt)}</span>
           </div>
         </div>
+        <Link href={href} className="group-hover:underline">
+          <p className="text-[var(--text-strong)] text-[14px] sm:text-[20px]" style={{ fontFamily: '"Gibson", sans-serif', fontWeight: 700, lineHeight: 1.3, marginBottom: '4px' }}>{article.title}</p>
+        </Link>
       </div>
     </article>
   );

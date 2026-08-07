@@ -32,44 +32,52 @@ export default function MyPerformancePage() {
 
   if (!isAuthenticated || !hasRole([Role.AUTHOR, Role.EDITOR, Role.ADMIN])) return null;
 
+  // Shared row class
+  const rowCls = 'flex items-center justify-between px-5 py-4 border-b border-border dark:border-white/[0.07] last:border-0 transition-colors';
+
   if (isSWRLoading || !data) {
     return (
-      <div className="space-y-8 w-full" style={{ fontFamily: "'Gibson', sans-serif" }}>
-        <Skeleton className="h-8 w-48 rounded-lg" />
-
-        {/* Stat Cards Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="rounded-2xl bg-bg-surface border border-border p-4 space-y-2">
-              <Skeleton className="h-4 w-24 rounded-md" />
-              <Skeleton className="h-8 w-16 rounded-md" />
-            </div>
-          ))}
-        </div>
-
-        {/* Rank line */}
-        <Skeleton className="h-5 w-3/4 rounded-md" />
-
-        {/* Top Articles */}
-        <div className="space-y-3">
-          <Skeleton className="h-6 w-32 rounded-md" />
-          <div className="rounded-2xl bg-bg-surface border border-border overflow-hidden">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <div key={i} className={`flex items-center justify-between p-5 ${i < 4 ? 'border-b border-border' : ''}`}>
-                <div className="flex-1 min-w-0 space-y-2">
-                  <Skeleton className="h-5 w-3/4 rounded-md" />
-                  <Skeleton className="h-3 w-24 rounded-md" />
-                </div>
-                <Skeleton className="h-5 w-20 rounded-md shrink-0" />
+      <div className="space-y-10 w-full animate-pulse" style={{ fontFamily: "'Gibson', sans-serif" }}>
+        
+        <div>
+          <div className="mb-4">
+            <div className="h-6 w-48 rounded bg-gray-200 dark:bg-white/[0.06]" />
+            <div className="mt-1 h-4 w-64 rounded bg-gray-200 dark:bg-white/[0.06]" />
+          </div>
+          
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="rounded-xl border border-border dark:border-white/[0.08] p-4 space-y-2">
+                <div className="h-4 w-24 rounded bg-gray-200 dark:bg-white/[0.06]" />
+                <div className="h-8 w-16 rounded bg-gray-200 dark:bg-white/[0.06]" />
               </div>
             ))}
           </div>
         </div>
 
-        {/* Monthly Views Chart */}
-        <div className="space-y-3">
-          <Skeleton className="h-6 w-36 rounded-md" />
-          <Skeleton className="w-full h-[200px] rounded-xl" />
+        <div>
+          <div className="h-5 w-3/4 rounded bg-gray-200 dark:bg-white/[0.06] mb-4" />
+          <div className="h-5 w-1/2 rounded bg-gray-200 dark:bg-white/[0.06]" />
+        </div>
+
+        <div>
+          <div className="h-6 w-32 rounded bg-gray-200 dark:bg-white/[0.06] mb-4" />
+          <div className="rounded-xl border border-border dark:border-white/[0.08] overflow-hidden">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <div key={i} className={rowCls}>
+                <div className="flex-1 min-w-0 space-y-2">
+                  <div className="h-5 w-3/4 rounded bg-gray-200 dark:bg-white/[0.06]" />
+                  <div className="h-3 w-24 rounded bg-gray-200 dark:bg-white/[0.06]" />
+                </div>
+                <div className="h-5 w-20 rounded bg-gray-200 dark:bg-white/[0.06] shrink-0" />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <div className="h-6 w-36 rounded bg-gray-200 dark:bg-white/[0.06] mb-4" />
+          <div className="w-full h-[200px] rounded-xl bg-gray-200 dark:bg-white/[0.06]" />
         </div>
       </div>
     );
@@ -81,71 +89,87 @@ export default function MyPerformancePage() {
   };
 
   return (
-    <div className="space-y-8 w-full" style={{ fontFamily: "'Gibson', sans-serif" }}>
+    <div className="space-y-10 w-full" style={{ fontFamily: "'Gibson', sans-serif" }}>
 
+      <div>
+        <div className="mb-4">
+          <h3 className="text-[18px] font-bold text-text-primary">Performance</h3>
+          <p className="text-[13px] text-text-muted mt-0.5">Overview of your published content engagement.</p>
+        </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-        <div className="rounded-2xl bg-bg-surface dark:bg-[#3A3F4A] border border-border p-4">
-          <div className="flex items-center gap-2 mb-2 text-[14px] text-text-muted"><Eye className="w-4 h-4" />Total Views</div>
-          <p className="text-[22px] font-bold text-text-primary">{formatNumber(data.totalViews)}</p>
-        </div>
-        <div className="rounded-2xl bg-bg-surface dark:bg-[#3A3F4A] border border-border p-4">
-          <div className="flex items-center gap-2 mb-2 text-[14px] text-text-muted"><TrendingUp className="w-4 h-4" />This Month</div>
-          <p className="text-[22px] font-bold text-text-primary">{formatNumber(data.viewsThisMonth)}</p>
-        </div>
-        <div className="rounded-2xl bg-bg-surface dark:bg-[#3A3F4A] border border-border p-4">
-          <div className="flex items-center gap-2 mb-2 text-[14px] text-text-muted"><FileText className="w-4 h-4" />Articles</div>
-          <p className="text-[22px] font-bold text-text-primary">{formatNumber(data.articleCount)}</p>
-        </div>
-        <div className="rounded-2xl bg-bg-surface dark:bg-[#3A3F4A] border border-border p-4">
-          <div className="flex items-center gap-2 mb-2 text-[14px] text-text-muted"><Eye className="w-4 h-4" />Avg Views/Article</div>
-          <p className="text-[22px] font-bold text-text-primary">{formatNumber(Math.round(data.avgViewsPerArticle))}</p>
-        </div>
-        <div className="rounded-2xl bg-bg-surface dark:bg-[#3A3F4A] border border-border p-4">
-          <div className="flex items-center gap-2 mb-2 text-[14px] text-text-muted"><MessageSquare className="w-4 h-4" />Comments</div>
-          <p className="text-[22px] font-bold text-text-primary">{formatNumber(data.totalComments)}</p>
-        </div>
-        <div className="rounded-2xl bg-bg-surface dark:bg-[#3A3F4A] border border-border p-4">
-          <div className="flex items-center gap-2 mb-2 text-[14px] text-text-muted"><Star className="w-4 h-4" />Reviews</div>
-          <p className="text-[22px] font-bold text-text-primary">{formatNumber(data.reviewCount)}</p>
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+          <div className="rounded-xl border border-border dark:border-white/[0.08] dark:bg-white/[0.02] p-4">
+            <div className="flex items-center gap-2 mb-2 text-[13px] font-medium text-text-muted"><Eye className="w-4 h-4" />Total Views</div>
+            <p className="text-[24px] font-bold text-text-primary">{formatNumber(data.totalViews)}</p>
+          </div>
+          <div className="rounded-xl border border-border dark:border-white/[0.08] dark:bg-white/[0.02] p-4">
+            <div className="flex items-center gap-2 mb-2 text-[13px] font-medium text-text-muted"><TrendingUp className="w-4 h-4" />This Month</div>
+            <p className="text-[24px] font-bold text-text-primary">{formatNumber(data.viewsThisMonth)}</p>
+          </div>
+          <div className="rounded-xl border border-border dark:border-white/[0.08] dark:bg-white/[0.02] p-4">
+            <div className="flex items-center gap-2 mb-2 text-[13px] font-medium text-text-muted"><FileText className="w-4 h-4" />Articles</div>
+            <p className="text-[24px] font-bold text-text-primary">{formatNumber(data.articleCount)}</p>
+          </div>
+          <div className="rounded-xl border border-border dark:border-white/[0.08] dark:bg-white/[0.02] p-4">
+            <div className="flex items-center gap-2 mb-2 text-[13px] font-medium text-text-muted"><Eye className="w-4 h-4" />Avg Views/Article</div>
+            <p className="text-[24px] font-bold text-text-primary">{formatNumber(Math.round(data.avgViewsPerArticle))}</p>
+          </div>
+          <div className="rounded-xl border border-border dark:border-white/[0.08] dark:bg-white/[0.02] p-4">
+            <div className="flex items-center gap-2 mb-2 text-[13px] font-medium text-text-muted"><MessageSquare className="w-4 h-4" />Comments</div>
+            <p className="text-[24px] font-bold text-text-primary">{formatNumber(data.totalComments)}</p>
+          </div>
+          <div className="rounded-xl border border-border dark:border-white/[0.08] dark:bg-white/[0.02] p-4">
+            <div className="flex items-center gap-2 mb-2 text-[13px] font-medium text-text-muted"><Star className="w-4 h-4" />Reviews</div>
+            <p className="text-[24px] font-bold text-text-primary">{formatNumber(data.reviewCount)}</p>
+          </div>
         </div>
       </div>
 
-      <p className="text-[16px] text-text-muted">
-        You rank in the <span className="font-semibold text-text-primary">top {100 - data.percentileRank}%</span> of authors by total views
-        (site average: {formatNumber(Math.round(data.siteAverageViews))} views/article).
-      </p>
+      <div className="rounded-xl border border-blue-500/30 bg-blue-500/5 p-5">
+        <p className="text-[14px] text-text-primary leading-relaxed">
+          You rank in the <span className="font-bold text-blue-500 dark:text-blue-400">top {100 - data.percentileRank}%</span> of authors by total views.<br />
+          <span className="text-text-muted text-[13px] mt-1 inline-block">(Site average: {formatNumber(Math.round(data.siteAverageViews))} views/article).</span>
+        </p>
+      </div>
 
       <div>
-        <h3 className="text-[20px] font-semibold text-text-primary mb-3">Top Articles</h3>
+        <div className="mb-4">
+          <h3 className="text-[18px] font-bold text-text-primary">Top Articles</h3>
+          <p className="text-[13px] text-text-muted mt-0.5">Your most viewed content across the platform.</p>
+        </div>
         {data.topArticles.length > 0 ? (
-          <div className="rounded-2xl bg-bg-surface dark:bg-[#3A3F4A] border border-border dark:border-white/20 overflow-hidden">
-            {data.topArticles.map((a, i) => (
-              <div key={a.id} className={`flex items-center justify-between p-5 transition-colors hover:bg-accent/5 ${i < data.topArticles.length - 1 ? 'border-b border-border dark:border-white/20' : ''}`}>
-                <div className="flex-1 min-w-0">
-                  <Link href={`/${contentTypePath(a.contentType)}/${a.slug}`} target="_blank" className="font-medium text-[14px] sm:text-[16px] text-text-primary hover:underline block">
+          <div className="rounded-xl border border-border dark:border-white/[0.08] overflow-hidden">
+            {data.topArticles.map((a) => (
+              <div key={a.id} className={rowCls + ' hover:bg-black/5 dark:hover:bg-white/[0.02]'}>
+                <div className="flex-1 min-w-0 pr-4">
+                  <Link href={`/${contentTypePath(a.contentType)}/${a.slug}`} target="_blank" className="font-semibold text-[15px] text-text-primary hover:text-accent hover:underline block truncate">
                     {a.title}
                   </Link>
-                  <p className="text-[12px] sm:text-[14px] text-text-muted mt-1">{a.publishedAt ? formatDate(a.publishedAt) : ''}</p>
+                  <p className="text-[13px] text-text-muted mt-0.5">{a.publishedAt ? formatDate(a.publishedAt) : ''}</p>
                 </div>
-                <span className="text-[16px] font-semibold text-text-primary shrink-0">{formatNumber(a.viewCount)} views</span>
+                <span className="text-[14px] font-bold text-text-primary shrink-0">{formatNumber(a.viewCount)} <span className="text-text-muted font-normal text-[13px]">views</span></span>
               </div>
             ))}
           </div>
         ) : (
-          <p className="text-[16px] text-text-muted">No published articles yet.</p>
+          <div className="rounded-xl border border-border dark:border-white/[0.08] py-16 text-center">
+            <p className="text-[16px] font-semibold text-text-primary">No published articles yet</p>
+            <p className="text-[14px] text-text-muted mt-1">Check back here once you publish content.</p>
+          </div>
         )}
       </div>
 
       <div className="[&_*:focus]:outline-none">
-        <h3 className="text-[20px] font-semibold text-text-primary mb-6">Monthly Views</h3>
+        <div className="mb-4">
+          <h3 className="text-[18px] font-bold text-text-primary">Monthly Views</h3>
+        </div>
         <ResponsiveContainer width="100%" height={200} className="focus:outline-none focus-visible:outline-none">
           <LineChart data={data.monthlyTrend} margin={{ left: -25, right: 0, top: 10, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
             <XAxis dataKey="month" tick={{ fontSize: 11 }} tickFormatter={monthFormatter} />
             <YAxis tick={{ fontSize: 11 }} width={40} />
-            <Tooltip labelFormatter={monthFormatter} formatter={(v: any) => [formatNumber(v), 'Views']} />
-            <Line type="monotone" dataKey="views" stroke="var(--accent)" strokeWidth={2} dot={{ r: 3 }} />
+            <Tooltip labelFormatter={monthFormatter} formatter={(v: any) => [formatNumber(v), 'Views']} contentStyle={{ borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)', background: 'var(--bg-surface)' }} />
+            <Line type="monotone" dataKey="views" stroke="var(--accent)" strokeWidth={3} dot={{ r: 4, strokeWidth: 2, fill: 'var(--bg-surface)' }} />
           </LineChart>
         </ResponsiveContainer>
       </div>

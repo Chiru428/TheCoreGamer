@@ -445,64 +445,46 @@ export default function Header({ tickerArticles = [] }: { tickerArticles?: Artic
 
               {accountMenuOpen && (
                 <div
-                  className="absolute right-0 top-full mt-2 w-max min-w-[180px] py-2 rounded-xl backdrop-blur-md overflow-hidden z-50"
-                  style={{ background: 'var(--nav-bg)', border: '1px solid var(--border)', boxShadow: '0 16px 32px rgba(0,0,0,0.35)' }}
+                  className="absolute right-0 top-full mt-2 w-max min-w-[200px] py-2 rounded-xl overflow-hidden z-50 bg-[#3a3f4a] border border-white/10 shadow-2xl"
+                  style={{ boxShadow: '0 16px 32px rgba(0,0,0,0.5)' }}
                   role="menu"
                 >
                   {isAuthenticated && user && STAFF_ROLES.includes(user.role) && (
                     <Link
                       href="/admin"
                       role="menuitem"
-                      onClick={() => setAccountMenuOpen(false)}
-                      className="flex items-center gap-2 px-4 py-2.5 text-[13px] font-bold uppercase tracking-wide transition-colors hover:text-white group"
-                      style={{ color: 'var(--nav-link)' }}
+                      className="group flex items-center gap-3 px-4 py-2.5 text-[15px] font-semibold transition-all hover:bg-white/5 text-white/90 hover:text-white"
                     >
-                      <Shield className="w-4 h-4 shrink-0 text-accent" /> 
-                      <span className="relative inline-block text-accent">
-                        Admin Dashboard
-                        <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 transition-all duration-700 ease-in-out rounded-full group-hover:w-full opacity-0 group-hover:opacity-100" style={{ background: 'var(--accent)' }} />
-                      </span>
+                      <Shield className="w-4 h-4 shrink-0 text-accent transition-transform group-hover:scale-110" /> 
+                      <span className="text-accent transition-transform group-hover:translate-x-1">Admin Dashboard</span>
                     </Link>
                   )}
                   <Link
-                    href="/settings/profile"
+                    href="/settings"
                     role="menuitem"
                     onClick={() => setAccountMenuOpen(false)}
-                    className="flex items-center gap-2 px-4 py-2.5 text-[13px] font-bold uppercase tracking-wide transition-colors hover:text-white group"
-                    style={{ color: 'var(--nav-link)' }}
+                    className="group flex items-center gap-3 px-4 py-2.5 text-[15px] font-semibold transition-all hover:bg-white/5 text-white/90 hover:text-white"
                   >
-                    <UserCircle className="w-4 h-4 shrink-0" /> 
-                    <span className="relative inline-block">
-                      My account
-                      <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 transition-all duration-700 ease-in-out rounded-full group-hover:w-full opacity-0 group-hover:opacity-100" style={{ background: '#ffffff' }} />
-                    </span>
+                    <UserCircle className="w-4 h-4 shrink-0 transition-transform group-hover:scale-110" /> 
+                    <span className="transition-transform group-hover:translate-x-1">My Account</span>
                   </Link>
                   <Link
                     href="/settings/notifications"
                     role="menuitem"
                     onClick={() => setAccountMenuOpen(false)}
-                    className="flex items-center gap-2 px-4 py-2.5 text-[13px] font-bold uppercase tracking-wide transition-colors hover:text-white group"
-                    style={{ color: 'var(--nav-link)' }}
+                    className="group flex items-center gap-3 px-4 py-2.5 text-[15px] font-semibold transition-all hover:bg-white/5 text-white/90 hover:text-white"
                   >
-                    <Bell className="w-4 h-4 shrink-0" /> 
-                    <span className="relative inline-block">
-                      Notifications
-                      <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 transition-all duration-700 ease-in-out rounded-full group-hover:w-full opacity-0 group-hover:opacity-100" style={{ background: '#ffffff' }} />
-                    </span>
+                    <Bell className="w-4 h-4 shrink-0 transition-transform group-hover:scale-110" /> 
+                    <span className="transition-transform group-hover:translate-x-1">Notifications</span>
                   </Link>
-                  <div className="h-px bg-white/10 my-1 mx-4" />
+                  <div className="h-px bg-white/10 my-1 mx-3" />
                   <button
                     type="button"
-                    onClick={async () => { setAccountMenuOpen(false); clearSession(); await signOut({ callbackUrl: '/' }); }}
-                    className="flex w-full items-center gap-2 px-4 py-2.5 text-[13px] font-bold uppercase tracking-wide transition-colors hover:text-red-400 group text-left"
-                    style={{ color: 'var(--nav-link)' }}
+                    className="group flex w-full items-center gap-3 px-4 py-2.5 text-[15px] font-semibold transition-all hover:bg-red-500/10 text-white/90 hover:text-red-400 text-left"
                     role="menuitem"
                   >
-                    <LogOut className="w-4 h-4 shrink-0" />
-                    <span className="relative inline-block">
-                      Sign out
-                      <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 transition-all duration-700 ease-in-out rounded-full group-hover:w-full opacity-0 group-hover:opacity-100" style={{ background: '#f87171' }} />
-                    </span>
+                    <LogOut className="w-4 h-4 shrink-0 transition-transform group-hover:scale-110" /> 
+                    <span className="transition-transform group-hover:translate-x-1">Sign Out</span>
                   </button>
                 </div>
               )}
@@ -659,7 +641,7 @@ export default function Header({ tickerArticles = [] }: { tickerArticles?: Artic
                 {!isAuthenticated || !user ? null : (
                   <div className="flex flex-col gap-4">
                     <Link
-                      href="/settings/profile"
+                      href="/settings"
                       onClick={() => setMobileMenuOpen(false)}
                       className="flex items-center gap-4 text-[16px] font-semibold text-[color:var(--text)] transition-colors hover:text-accent"
                     >

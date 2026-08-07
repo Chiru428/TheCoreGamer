@@ -117,7 +117,7 @@ export default function HomePostCard({ article, isCompact, showBadge = false, sh
         {/* Title */}
         <div className={`no-underline ${mobileHorizontal ? 'mt-0.5 sm:mt-1.5' : 'mt-1 sm:mt-1.5'}${!showBackground && showExcerpt ? ' mb-3' : ''}`}>
           <h3
-            className={`post-card-title font-bold ${forceDarkTheme ? 'text-white' : 'text-gray-900 dark:text-white'} leading-[1.1] transition-colors group-hover:underline ${truncateTitle ? 'line-clamp-2 ' : ''}${titleClassName ? titleClassName : (mobileHorizontal ? 'mb-1 sm:mb-2 text-[15px] sm:text-[18px] lg:text-[20px]' : 'mb-2 text-[18px] lg:text-[20px]')}`}
+            className={`post-card-title font-bold ${forceDarkTheme ? 'text-white' : 'text-gray-900 dark:text-white'} leading-snug transition-colors group-hover:underline ${truncateTitle ? 'line-clamp-2 ' : ''}${titleClassName ? titleClassName : (mobileHorizontal ? 'mb-1 sm:mb-2 text-[15px] sm:text-[18px] lg:text-[20px]' : 'mb-2 text-[18px] lg:text-[20px]')}`}
             style={titleStyle ?? { fontFamily: "'Gibson', sans-serif" }}
           >
             {article.title}
@@ -128,7 +128,7 @@ export default function HomePostCard({ article, isCompact, showBadge = false, sh
         {showExcerpt && !isCompact && article.excerpt && (
           <div className={showExcerptOnMobile ? "block" : "hidden sm:block"}>
             <p 
-              className={`leading-relaxed line-clamp-3 mb-[20px] ${forceDarkTheme ? 'text-[#C4C4C4]' : 'text-gray-600 dark:text-[#C4C4C4]'}`}
+              className={`leading-normal line-clamp-3 mb-[20px] ${forceDarkTheme ? 'text-[#C4C4C4]' : 'text-gray-600 dark:text-[#C4C4C4]'}`}
               style={{ fontSize: '16px' }}
             >
               {article.excerpt}
