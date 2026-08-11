@@ -90,6 +90,7 @@ export const dealsQueue = new Queue("deals", { connection });
 export const toxicityQueue = new Queue("toxicity-check", { connection });
 export const igdbSyncQueue = new Queue("igdb-sync", { connection });
 export const algoliaQueue = new Queue("algolia", { connection });
+export const cleanupQueue = new Queue("cleanup", { connection });
 
 [
   emailQueue,
@@ -100,6 +101,7 @@ export const algoliaQueue = new Queue("algolia", { connection });
   toxicityQueue,
   igdbSyncQueue,
   algoliaQueue,
+  cleanupQueue,
 ].forEach((q) => {
   q.on("error", (err) => {
     if (isConnectionError(err)) return;

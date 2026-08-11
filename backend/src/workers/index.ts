@@ -13,6 +13,7 @@ import { articleWorker } from "./article.worker";
 import { toxicityWorker } from "./toxicity.worker";
 import { igdbWorker } from "./igdb.worker";
 import { startAlgoliaWorker } from "./algolia.worker";
+import { startCleanupWorker } from "./cleanup.worker";
 import { configureIndexes } from "@/lib/algolia";
 import { redis } from "@/lib/redis";
 import { captureError } from "@/lib/sentry";
@@ -20,6 +21,7 @@ import { logger } from "@/lib/logger";
 
 const algoliaWorker = startAlgoliaWorker();
 const dealsWorker = startDealsWorker();
+const cleanupWorker = startCleanupWorker();
 
 // One-time Algolia index/replica/settings configuration. Gated by a permanent
 // Redis flag so it never re-runs automatically after the first successful deploy.
@@ -46,6 +48,7 @@ logger.info("[Workers]   - Push notification worker");
 logger.info("[Workers]   - Article cron worker (scheduling & embargoes)");
 logger.info("[Workers]   - Deals price poll worker (hourly ITAD sync)");
 logger.info("[Workers]   - IGDB sync worker (imports & nightly rating refresh)");
+logger.info("[Workers]   - Cleanup worker (daily 2 AM UTC — prune stale PriceSnapshots)");
 
 // Start a tiny HTTP server to satisfy Render's Web Service port binding requirement
 // and provide a target for cron-job.org without running the heavy Next.js API server.
@@ -76,6 +79,7 @@ process.on("SIGTERM", async () => {
     toxicityWorker.close(),
     igdbWorker.close(),
     algoliaWorker.close(),
+    cleanupWorker.close(),
   ]);
   process.exit(0);
 });

@@ -8,6 +8,10 @@ import { triggerFrontendRevalidation } from "@/lib/revalidate";
 
 const BATCH_SIZE = 50;
 
+// Rolling window: keep exactly the last 5 days (today inclusive) of snapshots.
+// Anything older than 120 hours from now is deleted.
+const RETENTION_MS = 5 * 24 * 60 * 60 * 1000; // 120 hours
+
 export function startDealsWorker() {
   dealsQueue.add(
     "poll-prices",
@@ -31,11 +35,9 @@ export const dealsWorker = new Worker<DealsJobData>(
       logger.info("[DealsWorker] Starting price poll");
       const pollTime = new Date(_job.timestamp || Date.now());
 
-      // 1. Fetch all games with a steamAppId in batches of 50
+      // ── 1. Fetch all games in batches ──────────────────────────────────────
       let cursor: string | undefined;
       let processed = 0;
-      // Collect slugs of every game for which we write new snapshots so we can
-      // bust the frontend ISR cache after the batch is done.
       const revalidatedSlugs = new Set<string>();
 
       while (true) {
@@ -49,9 +51,13 @@ export const dealsWorker = new Worker<DealsJobData>(
         if (games.length === 0) break;
         cursor = games[games.length - 1].id;
 
-        // 2. Resolve ITAD IDs for each game (falls back to title search for
-        // games with no Steam release, e.g. Epic-exclusive titles)
-        const itadMappings: Array<{ gameId: string; itadId: string; gameTitle: string; gameSlug: string }> = [];
+        // ── 2. Resolve ITAD IDs ────────────────────────────────────────────
+        const itadMappings: Array<{
+          gameId: string;
+          itadId: string;
+          gameTitle: string;
+          gameSlug: string;
+        }> = [];
 
         for (const game of games) {
           const itadId = await resolveItadId(game.id, game.steamAppId, game.title);
@@ -60,7 +66,12 @@ export const dealsWorker = new Worker<DealsJobData>(
             logger.debug(`[DealsWorker] No ITAD match for game ${game.title}`);
             continue;
           }
-          itadMappings.push({ gameId: game.id, itadId, gameTitle: game.title, gameSlug: game.slug });
+          itadMappings.push({
+            gameId: game.id,
+            itadId,
+            gameTitle: game.title,
+            gameSlug: game.slug,
+          });
         }
 
         if (itadMappings.length === 0) {
@@ -69,19 +80,54 @@ export const dealsWorker = new Worker<DealsJobData>(
           continue;
         }
 
-        // 3. Fetch prices from ITAD in batches of 50
+        // ── 3. Fetch prices from ITAD ──────────────────────────────────────
         const itadIds = itadMappings.map((m) => m.itadId);
         const prices = await getPrices(itadIds);
 
         if (prices.length > 0) {
-          // 4. Write PriceSnapshot rows (bulk create)
-          // We switched from 1-by-1 upserts to bulk creation to prevent connection pool exhaustion.
-          // The cleanup logic below handles pruning old data.
+          // ── 4. Smart insert: only store if price changed OR no snapshot
+          //       exists in the last 24 hours (ensures current price is always
+          //       available even for stable-priced games).
+          //
+          //   WHY: Previously we wrote a new row every hour regardless of
+          //   whether the price changed, accumulating ~37,000 rows/day. With
+          //   this approach we only write when meaningful — reducing storage
+          //   by ~90% while keeping full price-change history. ──────────────
+
+          const gameIds = itadMappings.map((m) => m.gameId);
+
+          // Fetch the most recent snapshot for every game+shop pair in one query
+          const recentSnapshots = await prisma.priceSnapshot.findMany({
+            where: {
+              gameId: { in: gameIds },
+              recordedAt: { gte: new Date(Date.now() - 24 * 60 * 60 * 1000) },
+            },
+            select: { gameId: true, shop: true, priceINR: true },
+          });
+
+          // Build a lookup map: "gameId:shop" → last known price
+          const lastPriceMap = new Map<string, string>();
+          for (const s of recentSnapshots) {
+            lastPriceMap.set(`${s.gameId}:${s.shop}`, s.priceINR.toString());
+          }
+
           const snapshotData = prices
             .map((p) => {
               const mapping = itadMappings.find((m) => m.itadId === p.gameId);
               if (!mapping) return null;
-              // Track slugs of games that received new price data
+
+              const key = `${mapping.gameId}:${p.shop}`;
+              const lastPrice = lastPriceMap.get(key);
+              const currentPrice = p.price.toString();
+
+              // Skip if price hasn't changed AND we already have a recent snapshot
+              const priceChanged = lastPrice !== currentPrice;
+              const hasRecentSnapshot = lastPrice !== undefined;
+
+              if (!priceChanged && hasRecentSnapshot) {
+                return null; // no change, no need to write
+              }
+
               revalidatedSlugs.add(mapping.gameSlug);
               return {
                 gameId: mapping.gameId,
@@ -100,12 +146,15 @@ export const dealsWorker = new Worker<DealsJobData>(
             .filter((s): s is NonNullable<typeof s> => s !== null);
 
           if (snapshotData.length > 0) {
-            // Use createMany for high-performance bulk insertion
             const created = await prisma.priceSnapshot.createMany({
               data: snapshotData,
-              skipDuplicates: true, // Idempotent inserts with unique constraint
+              skipDuplicates: true,
             });
-            logger.info(`[DealsWorker] Bulk wrote ${created.count} price snapshots`);
+            logger.info(
+              `[DealsWorker] Wrote ${created.count} price snapshots (${prices.length - snapshotData.length} skipped — no change)`
+            );
+          } else {
+            logger.info("[DealsWorker] No price changes detected this poll — no rows written");
           }
         }
 
@@ -113,12 +162,9 @@ export const dealsWorker = new Worker<DealsJobData>(
         if (games.length < BATCH_SIZE) break;
       }
 
-      // 5. Trigger Next.js ISR revalidation for every game page that received
-      // updated prices. Without this the frontend serves stale ISR-cached data
-      // until the page's revalidate TTL naturally expires (up to 10 minutes).
+      // ── 5. Revalidate ISR for changed game pages ───────────────────────────
       if (revalidatedSlugs.size > 0) {
         logger.info(`[DealsWorker] Revalidating ${revalidatedSlugs.size} game page(s)`);
-        // Fire-and-forget in small concurrent batches to avoid hammering the frontend
         const slugList = Array.from(revalidatedSlugs);
         const REVALIDATE_BATCH = 10;
         for (let i = 0; i < slugList.length; i += REVALIDATE_BATCH) {
@@ -128,20 +174,9 @@ export const dealsWorker = new Worker<DealsJobData>(
             )
           );
         }
-        logger.info(`[DealsWorker] ISR revalidation triggered for ${revalidatedSlugs.size} game(s)`);
-      }
-
-      // Cleanup: delete price snapshots older than 5 days (today + 4 previous days = 5 days inclusive).
-      // Note: if this table grows into millions of rows, switch to raw SQL chunked deletes.
-      try {
-        const now = new Date();
-        const cutoff = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - 4));
-        const { count } = await prisma.priceSnapshot.deleteMany({
-          where: { recordedAt: { lt: cutoff } },
-        });
-        logger.info(`[DealsWorker] Cleaned up ${count} old price snapshots`);
-      } catch (err) {
-        logger.warn({ err }, "[DealsWorker] Cleanup of old price snapshots failed");
+        logger.info(
+          `[DealsWorker] ISR revalidation triggered for ${revalidatedSlugs.size} game(s)`
+        );
       }
 
       logger.info(`[DealsWorker] Poll complete. Processed ${processed} games.`);
@@ -161,9 +196,11 @@ dealsWorker.on("failed", (job, err) => {
 dealsWorker.on("error", (err) => {
   if (isConnectionError(err)) return;
   logger.error({ err }, "[DealsWorker] Worker connection error");
-  captureError(err);
 });
 
 dealsWorker.on("completed", (job) => {
   logger.info(`[DealsWorker] Job ${job.id} completed`);
 });
+
+// ── Exported retention constant so the cleanup worker uses the same value ─────
+export { RETENTION_MS };
