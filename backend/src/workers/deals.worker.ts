@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { resolveItadId, getPrices } from "@/lib/itad";
 import { captureError } from "@/lib/sentry";
 import { logger } from "@/lib/logger";
-import { triggerFrontendRevalidation } from "@/lib/revalidate";
+import { triggerFrontendRevalidationBatch } from "@/lib/revalidate";
 
 const BATCH_SIZE = 50;
 
@@ -164,16 +164,11 @@ export const dealsWorker = new Worker<DealsJobData>(
 
       // ── 5. Revalidate ISR for changed game pages ───────────────────────────
       if (revalidatedSlugs.size > 0) {
-        logger.info(`[DealsWorker] Revalidating ${revalidatedSlugs.size} game page(s)`);
         const slugList = Array.from(revalidatedSlugs);
-        const REVALIDATE_BATCH = 10;
-        for (let i = 0; i < slugList.length; i += REVALIDATE_BATCH) {
-          await Promise.allSettled(
-            slugList.slice(i, i + REVALIDATE_BATCH).map((slug) =>
-              triggerFrontendRevalidation(`/games/${slug}`)
-            )
-          );
-        }
+        const paths = slugList.map((slug) => `/games/${slug}`);
+        logger.info(`[DealsWorker] Revalidating ${paths.length} game page(s) in one batch call`);
+        // Single POST with all paths — replaces N individual HTTP calls.
+        await triggerFrontendRevalidationBatch(paths);
         logger.info(
           `[DealsWorker] ISR revalidation triggered for ${revalidatedSlugs.size} game(s)`
         );

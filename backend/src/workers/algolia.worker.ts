@@ -253,6 +253,33 @@ export async function syncGame(gameId: string) {
   logger.info(`[AlgoliaWorker] Synced game ${game.slug}`);
 }
 
+/**
+ * Builds an AlgoliaGameRecord for a single game ID by fetching from the DB.
+ * Exported so the IGDB worker can call it without importing Prisma directly.
+ */
+export async function buildGameRecordById(gameId: string): Promise<AlgoliaGameRecord | null> {
+  const game = await prisma.game.findUnique({ where: { id: gameId }, include: gameInclude });
+  if (!game) return null;
+  return buildGameRecord(game);
+}
+
+/**
+ * Syncs multiple games to Algolia in a single batched saveObjects call.
+ * Use this instead of calling syncGameToAlgolia() in a loop — reduces
+ * N individual HTTP calls to ceil(N/100) calls (Algolia batch limit).
+ */
+export async function bulkSyncGamesToAlgolia(gameIds: string[]): Promise<void> {
+  if (gameIds.length === 0) return;
+  const games = await prisma.game.findMany({
+    where: { id: { in: gameIds } },
+    include: gameInclude,
+  });
+  if (games.length === 0) return;
+  const records = games.map(buildGameRecord);
+  await upsertRecords(GAMES_INDEX, records);
+  logger.info(`[AlgoliaWorker] Bulk synced ${records.length} game(s) to Algolia`);
+}
+
 const tagInclude = { _count: { select: { ArticleTag: true } } } as const;
 type TagForAlgolia = NonNullable<
   Awaited<ReturnType<typeof prisma.tag.findFirst<{ include: typeof tagInclude }>>>

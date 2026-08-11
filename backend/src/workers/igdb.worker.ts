@@ -7,16 +7,18 @@ import { cacheSet, cacheDeletePattern } from "@/lib/redis";
 import { CACHE_TTL } from "@/lib/constants";
 import { captureError } from "@/lib/sentry";
 import { logger } from "@/lib/logger";
-import { syncGameToAlgolia } from "./algolia.worker";
+import { syncGameToAlgolia, buildGameRecordById, bulkSyncGamesToAlgolia } from "./algolia.worker";
 
 const SYNC_BATCH_SIZE = 50;
 
-// Register the nightly refresh (3 AM) for IGDB rating/popularity fields
+// Register the refresh for IGDB rating/popularity fields.
+// Runs every 3 days at 3 AM UTC instead of nightly — ratings change slowly
+// and this is the largest single outbound bandwidth event on the Render worker.
 igdbSyncQueue.add(
   "nightly-sync",
   {},
   {
-    repeat: { pattern: "0 3 * * *" },
+    repeat: { pattern: "0 3 */3 * *" },
     jobId: "igdb-nightly-sync",
   }
 ).catch((err) => {
@@ -127,11 +129,16 @@ async function handleNightlySync() {
     if (games.length === 0) break;
     cursor = games[games.length - 1].id;
 
+    // Collect IDs of games successfully updated this batch so we can
+    // flush them to Algolia in one batched saveObjects call instead of
+    // firing one individual HTTP request per game.
+    const updatedGameIds: string[] = [];
+
     for (const game of games) {
       if (!game.igdbId) continue;
       try {
         const igdbGame = await getIGDBGame(game.igdbId);
-        await withRetry(() => 
+        await withRetry(() =>
           prisma.game.update({
             where: { id: game.id },
             data: {
@@ -140,11 +147,7 @@ async function handleNightlySync() {
             },
           })
         );
-        // Re-sync to Algolia so totalRating sort fields stay fresh
-        // (Top Rated and Most Popular sort replicas use these fields).
-        syncGameToAlgolia(game.id).catch((err) =>
-          logger.warn({ err }, `[IGDBWorker] Algolia re-sync failed for "${game.title}"`)
-        );
+        updatedGameIds.push(game.id);
         refreshed++;
       } catch (err) {
         failed++;
@@ -152,6 +155,15 @@ async function handleNightlySync() {
       }
       // IGDB free tier allows 4 req/s — stay well under it
       await new Promise((resolve) => setTimeout(resolve, 300));
+    }
+
+    // Flush all updated games to Algolia in one batched call per batch
+    // instead of N individual saveObject calls — reduces outbound HTTP
+    // calls from O(games) to O(games/SYNC_BATCH_SIZE).
+    if (updatedGameIds.length > 0) {
+      bulkSyncGamesToAlgolia(updatedGameIds).catch((err) =>
+        logger.warn({ err }, "[IGDBWorker] Batched Algolia sync failed")
+      );
     }
 
     if (games.length < SYNC_BATCH_SIZE) break;

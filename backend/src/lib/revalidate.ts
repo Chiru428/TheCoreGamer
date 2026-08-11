@@ -33,6 +33,36 @@ export async function triggerFrontendRevalidation(path: string): Promise<void> {
 }
 
 /**
+ * Batch variant — sends all paths in a SINGLE POST to the frontend instead
+ * of N separate HTTP calls. Use this whenever multiple paths need revalidating
+ * at once (e.g. after a deals price-poll run) to minimise outbound bandwidth
+ * on the Render worker.
+ *
+ * Falls back silently to a no-op when REVALIDATE_SECRET is unset.
+ */
+export async function triggerFrontendRevalidationBatch(paths: string[]): Promise<void> {
+  if (paths.length === 0) return;
+  const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
+  const secret = process.env.REVALIDATE_SECRET;
+  if (!secret) {
+    console.warn("[revalidate] REVALIDATE_SECRET not set — skipping batch ISR revalidation");
+    return;
+  }
+  try {
+    const res = await fetch(`${frontendUrl}/api/revalidate?secret=${encodeURIComponent(secret)}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ paths }),
+    });
+    if (!res.ok) {
+      console.warn(`[revalidate] Batch ISR revalidation failed (${paths.length} paths): ${res.status}`);
+    }
+  } catch (err) {
+    console.warn("[revalidate] Batch ISR revalidation fetch error:", err);
+  }
+}
+
+/**
  * Revalidates every frontend path affected by a change to one article: its
  * own detail page, its actual listing page (content-type-aware — see
  * contentTypeListingPath), and the homepage.
