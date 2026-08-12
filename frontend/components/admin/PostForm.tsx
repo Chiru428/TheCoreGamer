@@ -198,11 +198,30 @@ export default function PostForm({
   const initialGames = (initialData?.games as any[])?.map((g) => g.id) || [];
   const [selectedGames, setSelectedGames] = useState<string[]>(initialGames);
   const [gameSearch, setGameSearch] = useState("");
+  const [debouncedGameSearch, setDebouncedGameSearch] = useState("");
   const [isAutoFilling, setIsAutoFilling] = useState(false);
-  const { data: allGames } = useSWR("form-games", () =>
-    fetchGames({ fields: 'card', limit: 100 }).then((r) => r.data || []),
+
+  // Cache of { id -> game object } for every game the user has ever selected,
+  // so pill titles resolve even after the search results are cleared.
+  const [selectedGameObjects, setSelectedGameObjects] = useState<Record<string, any>>(() => {
+    const map: Record<string, any> = {};
+    (initialData?.games as any[])?.forEach((g) => { map[g.id] = g; });
+    return map;
+  });
+
+  // Debounce the search input — only call the API 300 ms after the user stops typing.
+  useEffect(() => {
+    const t = setTimeout(() => setDebouncedGameSearch(gameSearch.trim()), 300);
+    return () => clearTimeout(t);
+  }, [gameSearch]);
+
+  // Server-side search: fires whenever the debounced query changes.
+  const { data: gameSearchResults, isLoading: gameSearchLoading } = useSWR(
+    debouncedGameSearch ? `game-search:${debouncedGameSearch}` : null,
+    () => fetchGames({ fields: 'card', search: debouncedGameSearch, limit: 20 }).then((r) => r.data || []),
+    { keepPreviousData: false },
   );
-  const availableGames = allGames || [];
+  const availableGames = gameSearchResults || [];
 
   // When a game is selected for a REVIEW, fetch its full record and pre-fill
   // the Game Review Details fields (still editable after auto-fill).
@@ -291,6 +310,7 @@ export default function PostForm({
   );
 
   const [newTag, setNewTag] = useState("");
+  const [tagSearch, setTagSearch] = useState("");
   const { mutate } = useSWRConfig();
 
   // Find a tag by exact name (case-insensitive), creating it if it doesn't exist yet.
@@ -1379,25 +1399,14 @@ export default function PostForm({
                 {selectedGames.length > 0 && (
                   <div className="flex flex-wrap gap-1.5 mb-2">
                     {selectedGames.map((gameId) => {
-                      const g = availableGames.find(
-                        (ag: any) => ag.id === gameId,
-                      ) || { id: gameId, title: "Unknown Game" };
-                      // If it's a previously selected game that's not in the first 100, we still show the pill, though its title might be "Unknown Game".
-                      // In a real app we'd fetch selected games by ID. For now initialData has title if needed, but we don't have it easily accessible here without a map.
-                      // Let's see if we can get it from initialData
-                      const initialG = (initialData?.games as any[])?.find(
-                        (ig) => ig.id === gameId,
-                      );
+                      const g = selectedGameObjects[gameId];
+                      const title = g?.title || "Unknown Game";
                       return (
                         <div
                           key={gameId}
                           className="flex items-center gap-1 px-2 py-0.5 rounded-full text-xs bg-accent/20 text-accent-light"
                         >
-                          <span>
-                            {g.title !== "Unknown Game"
-                              ? g.title
-                              : initialG?.title || "Unknown Game"}
-                          </span>
+                          <span>{title}</span>
                           <button
                             type="button"
                             onClick={() =>
@@ -1431,26 +1440,17 @@ export default function PostForm({
                   />
                   {gameSearch.trim() && (
                     <div className="absolute z-10 top-full left-0 right-0 mt-1 max-h-48 overflow-y-auto bg-bg-surface border border-border rounded-lg shadow-lg">
-                      {availableGames.filter(
-                        (g: any) =>
-                          g.title
-                            .toLowerCase()
-                            .includes(gameSearch.toLowerCase()) &&
-                          !selectedGames.includes(g.id),
-                      ).length > 0 ? (
+                      {gameSearchLoading ? (
+                        <div className="px-3 py-2 text-sm text-text-muted italic">Searching…</div>
+                      ) : availableGames.filter((g: any) => !selectedGames.includes(g.id)).length > 0 ? (
                         availableGames
-                          .filter(
-                            (g: any) =>
-                              g.title
-                                .toLowerCase()
-                                .includes(gameSearch.toLowerCase()) &&
-                              !selectedGames.includes(g.id),
-                          )
+                          .filter((g: any) => !selectedGames.includes(g.id))
                           .map((g: any) => (
                             <button
                               key={g.id}
                               type="button"
                               onClick={() => {
+                                setSelectedGameObjects((prev) => ({ ...prev, [g.id]: g }));
                                 setSelectedGames((prev) =>
                                   currentType === "REVIEW" ? [g.id] : [...prev, g.id],
                                 );
@@ -1464,11 +1464,9 @@ export default function PostForm({
                               {g.title}
                             </button>
                           ))
-                      ) : (
-                        <div className="px-3 py-2 text-sm text-text-muted italic">
-                          No games found.
-                        </div>
-                      )}
+                      ) : debouncedGameSearch ? (
+                        <div className="px-3 py-2 text-sm text-text-muted italic">No games found.</div>
+                      ) : null}
                     </div>
                   )}
                 </div>
@@ -1479,25 +1477,68 @@ export default function PostForm({
             <div>
               <label className="text-xs font-medium text-text-muted mb-1 block">
                 Tags
+                {selectedTags.length > 0 && (
+                  <span className="ml-1.5 text-accent-light">{selectedTags.length} selected</span>
+                )}
               </label>
-              <div className="flex flex-wrap gap-1.5 mb-2">
-                {(tags || []).map((t) => (
+
+              {/* Search bar */}
+              <div className="relative mb-2">
+                <input
+                  type="text"
+                  value={tagSearch}
+                  onChange={(e) => setTagSearch(e.target.value)}
+                  placeholder="Search tags…"
+                  className="w-full px-3 py-1.5 pl-8 bg-bg-primary border border-border rounded-lg text-xs text-text-primary outline-none focus:border-accent"
+                />
+                <svg className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-text-muted pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" />
+                </svg>
+                {tagSearch && (
                   <button
-                    key={t.id}
                     type="button"
-                    onClick={() =>
-                      setSelectedTags((prev) =>
-                        prev.includes(t.id)
-                          ? prev.filter((id) => id !== t.id)
-                          : [...prev, t.id],
-                      )
-                    }
-                    className={`px-2 py-0.5 rounded-full text-xs transition-colors ${selectedTags.includes(t.id) ? "bg-accent/20 text-accent-light" : "bg-bg-elevated text-text-muted hover:text-text-primary"}`}
-                  >
-                    {t.name}
-                  </button>
-                ))}
+                    onClick={() => setTagSearch("")}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-primary text-xs"
+                  >✕</button>
+                )}
               </div>
+
+              {/* Scrollable tag list — selected float to top */}
+              <div className="overflow-y-auto max-h-[200px] flex flex-wrap gap-1.5 mb-2 pr-0.5" style={{ scrollbarWidth: 'thin' }}>
+                {(tags || [])
+                  .filter((t) =>
+                    tagSearch.trim() === "" ||
+                    t.name.toLowerCase().includes(tagSearch.toLowerCase())
+                  )
+                  .sort((a, b) => {
+                    const aSelected = selectedTags.includes(a.id);
+                    const bSelected = selectedTags.includes(b.id);
+                    if (aSelected && !bSelected) return -1;
+                    if (!aSelected && bSelected) return 1;
+                    return 0;
+                  })
+                  .map((t) => (
+                    <button
+                      key={t.id}
+                      type="button"
+                      onClick={() =>
+                        setSelectedTags((prev) =>
+                          prev.includes(t.id)
+                            ? prev.filter((id) => id !== t.id)
+                            : [...prev, t.id],
+                        )
+                      }
+                      className={`px-2 py-0.5 rounded-full text-xs transition-colors ${selectedTags.includes(t.id) ? "bg-accent/20 text-accent-light ring-1 ring-accent/40" : "bg-bg-elevated text-text-muted hover:text-text-primary"}`}
+                    >
+                      {t.name}
+                    </button>
+                  ))}
+                {tagSearch.trim() !== "" && (tags || []).filter((t) => t.name.toLowerCase().includes(tagSearch.toLowerCase())).length === 0 && (
+                  <p className="text-xs text-text-muted italic px-1">No tags match &ldquo;{tagSearch}&rdquo;</p>
+                )}
+              </div>
+
+              {/* Create new tag */}
               <div className="flex gap-2">
                 <input
                   type="text"

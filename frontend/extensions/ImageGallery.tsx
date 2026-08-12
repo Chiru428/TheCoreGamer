@@ -9,6 +9,8 @@ const ImageGalleryComponent = (props: any) => {
 
   const [editingSlot, setEditingSlot] = useState<number | null>(null)
   const [urlInput, setUrlInput] = useState('')
+  const [uploadingSlots, setUploadingSlots] = useState<Set<number>>(new Set())
+  const [bulkUploading, setBulkUploading] = useState(false)
 
   // Lightbox state
   const [lbOpen, setLbOpen] = useState(false)
@@ -59,6 +61,7 @@ const ImageGalleryComponent = (props: any) => {
     updateAttributes({ images: newImages })
   }
 
+  /** Upload a single file into a specific slot (replace/add). */
   const handleUpload = async (index: number) => {
     const fileInput = document.createElement('input')
     fileInput.type = 'file'
@@ -66,6 +69,7 @@ const ImageGalleryComponent = (props: any) => {
     fileInput.onchange = async (e: any) => {
       const file = e.target.files?.[0]
       if (!file) return
+      setUploadingSlots(prev => new Set(prev).add(index))
       try {
         const res = await uploadImage(file)
         if (res.data?.url) {
@@ -73,6 +77,40 @@ const ImageGalleryComponent = (props: any) => {
         }
       } catch (err) {
         console.error('Failed to upload image', err)
+      } finally {
+        setUploadingSlots(prev => { const s = new Set(prev); s.delete(index); return s })
+      }
+    }
+    fileInput.click()
+  }
+
+  /** Upload multiple files at once — appended after existing images. */
+  const handleBulkUpload = () => {
+    const fileInput = document.createElement('input')
+    fileInput.type = 'file'
+    fileInput.accept = 'image/*'
+    fileInput.multiple = true
+    fileInput.onchange = async (e: any) => {
+      const files: File[] = Array.from(e.target.files || [])
+      if (!files.length) return
+      setBulkUploading(true)
+      try {
+        const results = await Promise.allSettled(files.map(f => uploadImage(f)))
+        const urls = results
+          .filter((r): r is PromiseFulfilledResult<any> => r.status === 'fulfilled')
+          .map(r => r.value?.data?.url)
+          .filter(Boolean)
+        if (urls.length) {
+          const newImages = [
+            ...images,
+            ...urls.map((url: string) => ({ src: url, alt: '', caption: '', credit: '' })),
+          ]
+          updateAttributes({ images: newImages })
+        }
+      } catch (err) {
+        console.error('Bulk upload failed', err)
+      } finally {
+        setBulkUploading(false)
       }
     }
     fileInput.click()
@@ -92,6 +130,7 @@ const ImageGalleryComponent = (props: any) => {
     const alt = imgData.alt || ''
     const caption = imgData.caption || ''
     const credit = imgData.credit || ''
+    const isUploading = uploadingSlots.has(index)
 
     if (src) {
       const lbIdxForSlot = lbImages.findIndex((img: any) => img.src === src)
@@ -152,6 +191,15 @@ const ImageGalleryComponent = (props: any) => {
       )
     }
 
+    if (isUploading) {
+      return (
+        <div key={index} className="flex flex-col items-center justify-center p-3 border-2 border-dashed border-cyan-500/40 rounded-md bg-gray-800/40 w-64 shrink-0 h-36">
+          <div className="w-6 h-6 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin mb-2" />
+          <span className="text-[11px] text-cyan-400">Uploading…</span>
+        </div>
+      )
+    }
+
     if (editingSlot === index) {
       return (
         <div key={index} className="flex flex-col justify-center gap-2 p-3 border-2 border-cyan-500/50 rounded-md bg-slate-900 w-64 shrink-0 h-36">
@@ -175,10 +223,14 @@ const ImageGalleryComponent = (props: any) => {
       )
     }
 
+    // Empty placeholder slot — shows single + bulk upload options
     return (
-      <div key={index} className="flex flex-col items-center justify-center p-3 border-2 border-dashed border-gray-600 rounded-md bg-gray-800/40 w-64 shrink-0 h-36">
-        <button type="button" onClick={() => handleUpload(index)} className="px-2.5 py-1.5 mb-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded text-[11px] font-bold transition-colors">
-          📁 Upload
+      <div key={index} className="flex flex-col items-center justify-center gap-1.5 p-3 border-2 border-dashed border-gray-600 rounded-md bg-gray-800/40 w-64 shrink-0 h-36">
+        <button type="button" onClick={() => handleUpload(index)} className="px-2.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded text-[11px] font-bold transition-colors w-full">
+          📁 Upload Single
+        </button>
+        <button type="button" onClick={handleBulkUpload} className="px-2.5 py-1.5 bg-violet-600 hover:bg-violet-700 text-white rounded text-[11px] font-bold transition-colors w-full">
+          🖼️ Upload Multiple
         </button>
         <button type="button" onClick={() => { setEditingSlot(index); setUrlInput('') }} className="text-[10px] text-blue-400 hover:underline transition-colors">
           🔗 Enter URL
@@ -199,6 +251,17 @@ const ImageGalleryComponent = (props: any) => {
         className="absolute -top-3 -right-3 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs z-10 transition-opacity"
         style={{ opacity: 0.5 }}
       >✕</button>
+
+      {/* Bulk upload progress banner */}
+      {bulkUploading && (
+        <div
+          contentEditable={false}
+          className="flex items-center gap-2 px-3 py-2 mb-2 bg-violet-900/60 border border-violet-500/40 rounded-md text-[12px] text-violet-200"
+        >
+          <div className="w-4 h-4 border-2 border-violet-300 border-t-transparent rounded-full animate-spin shrink-0" />
+          Uploading images… please wait
+        </div>
+      )}
 
       {/* Horizontal scrollable row */}
       <div
