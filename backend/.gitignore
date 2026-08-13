@@ -16,3 +16,27 @@ dist/
 node_modules/
 logs/
 *.log
+
+# ─── Auto-generated Prisma client (run `prisma generate` to rebuild) ──────────
+src/generated/
+
+# ─── Internal docs & changelog ────────────────────────────────────────────────
+README.md
+CHANGELOG.md
+
+# ─── One-off test / debug scripts ─────────────────────────────────────────────
+test-*.ts
+test-*.js
+
+# ─── One-off utility / migration scripts ──────────────────────────────────────
+clean-prices.ts
+fix-guides.mjs
+fix-repeat.ts
+manual-deals.ts
+manual-index.ts
+sync.ts
+sync_games.ts
+trigger.ts
+
+# ─── Nested frontend (belongs in /frontend at root) ───────────────────────────
+frontend/
