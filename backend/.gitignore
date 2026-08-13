@@ -35,6 +35,12 @@ manual-index.ts
 sync.ts
 sync_games.ts
 trigger.ts
+clear-cache.ts
+start-workers.js
+
+# ─── Auto-generated & personal tool configs ───────────────────────────────────
+next-env.d.ts
+prisma.config.ts
 
 # ─── Nested frontend (belongs in /frontend at root) ───────────────────────────
 frontend/
