@@ -42,6 +42,9 @@ start-workers.js
 next-env.d.ts
 prisma.config.ts
 
+# ─── One-off admin/maintenance scripts folder ─────────────────────────────────
+scripts/
+
 # ─── Nested frontend (belongs in /frontend at root) ───────────────────────────
 frontend/
 
