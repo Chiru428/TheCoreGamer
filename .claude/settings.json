@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(node -e ' *)",
-      "Bash(cd \"/c/Users/dhana/Downloads/Project files/frameRateHub/frontend\" && find components -iname \"*comment*\" 2>/dev/null | head -10)",
-      "Read(//c/c/Users/dhana/Downloads/Project files/frameRateHub/frontend/**)"
-    ]
-  }
-}

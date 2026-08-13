@@ -5,6 +5,7 @@ node_modules/
 .next/
 dist/
 out/
+*.tsbuildinfo
 
 # ─── Test coverage ────────────────────────────────────────────────────────────
 coverage/
@@ -32,3 +33,15 @@ Thumbs.db
 *service_account*.json
 *-credentials.json
 *-key.json
+
+# ─── AI / Editor tool configs (personal, not project code) ────────────────────
+.claude/
+.vscode/
+
+# ─── Git hooks (personal project, no team) ────────────────────────────────────
+.husky/
+
+# ─── Internal docs & one-off scripts ──────────────────────────────────────────
+docs/
+add-pagination.js
+README.md
