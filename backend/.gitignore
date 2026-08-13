@@ -39,7 +39,6 @@ clear-cache.ts
 
 # ─── Auto-generated & personal tool configs ───────────────────────────────────
 next-env.d.ts
-prisma.config.ts
 
 # ─── One-off admin/maintenance scripts folder ─────────────────────────────────
 scripts/
