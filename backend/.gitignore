@@ -38,3 +38,13 @@ trigger.ts
 
 # ─── Nested frontend (belongs in /frontend at root) ───────────────────────────
 frontend/
+
+# ─── Prisma: one-off scripts, seeds, SQL patches & archive ────────────────────
+prisma/seed*.ts
+prisma/fix-*.ts
+prisma/fix_*.sql
+prisma/patch-*.ts
+prisma/migrate-*.ts
+prisma/cleanup-*.sql
+prisma/migrations_archive*/
+prisma/README.md
