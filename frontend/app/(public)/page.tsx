@@ -12,12 +12,13 @@ import HeroSection from '@/components/blog/HeroSection';
 import ScrollableArticleSection from '@/components/home/ScrollableArticleSection';
 import GameTabsSection from '@/components/home/GameTabsSection';
 import ReviewsGrid from '@/components/home/ReviewsGrid';
+import NewsWithTrending from '@/components/home/NewsWithTrending';
 import DiscoveryTabsSection from '@/components/home/DiscoveryTabsSection';
 import PollWidget from '@/components/blog/PollWidget';
 import { contentTypePath } from '@/lib/seo';
 import AdSlot from '@/components/monetization/AdSlot';
 
-// Hide all ad layer boxes when AdSense is not yet configured
+// Ad slots always enabled on homepage
 const adsEnabled = !!process.env.NEXT_PUBLIC_ADSENSE_ID;
 
 export const dynamic = 'force-dynamic';
@@ -91,8 +92,9 @@ async function getData() {
 /* -- Section header ------------------------------------------------ */
 function SectionHead({ title, className }: { title: string; className?: string }) {
  return (
-  <div className={`flex items-center justify-between ${className ?? 'mb-4'}`}>
-   <div className="section-title-bar font-bold text-[var(--text)]">
+  <div className={`flex flex-col items-start ${className ?? 'mb-4'}`}>
+   <div className="w-[60px] h-[6px] bg-gradient-to-r from-[#ff4b4b] to-[#ff9033] mb-2" />
+   <div className="section-title-bar font-bold text-[var(--text)] uppercase">
     {title}
    </div>
   </div>
@@ -176,9 +178,7 @@ export default async function HomePage() {
     .home-page-root .gibson-label {
      font-family: "Gibson", sans-serif !important;
     }
-    .home-page-root .hero-main-title.post-card-title {
-     font-family: "acumin-pro", sans-serif !important;
-    }
+
     /* Popular This Week list titles use Gibson (falls through to the
       .post-card-title Gibson rule above). */
     .home-page-root .gibson-title.post-card-title,
@@ -192,6 +192,15 @@ export default async function HomePage() {
     @media (min-width: 768px) {
      .home-page-root h2 {
       font-size: 20px !important;
+     }
+    }
+    .home-page-root .news-hero-title {
+     font-size: 18px !important;
+     line-height: 1.2 !important;
+    }
+    @media (min-width: 768px) {
+     .home-page-root .news-hero-title {
+      font-size: 26px !important;
      }
     }
     .home-page-root h2.hero-post-title {
@@ -248,7 +257,7 @@ export default async function HomePage() {
     }
     .home-page-root h1 {
      /* Allow hero titles to be larger */
-     font-size: clamp(24px, 4vw, 40px) !important;
+     font-size: clamp(20px, 4vw, 40px) !important;
      line-height: 1.1 !important;
     }
    `}} />
@@ -257,7 +266,7 @@ export default async function HomePage() {
    {adsEnabled && (
    <div className="hidden sm:flex w-full justify-center border-b border-white/[0.06]" style={{ background: 'var(--bg2)' }}>
      <div className="w-full max-w-[970px] min-h-[250px] flex items-center justify-center py-5">
-       <AdSlot slot="ADS-01" className="w-full" />
+       <AdSlot slot="ADS-01" className="w-full" showPlaceholder />
      </div>
    </div>
    )}
@@ -282,32 +291,26 @@ export default async function HomePage() {
    {adsEnabled && (
    <div className="flex sm:hidden w-full bg-[var(--bg2)] py-5 justify-center border-y border-[var(--border)]">
      <div className="w-full min-h-[250px] flex items-center justify-center px-4">
-       <AdSlot slot="ADS-01" className="w-full" />
+       <AdSlot slot="ADS-01" className="w-full" showPlaceholder />
      </div>
    </div>
    )}
 
    {/* -- PAGE BODY -------------------------------------------- */}
-   <div className="w-full max-w-[1280px] mx-auto px-4 lg:px-0 pt-10 md:pt-14 pb-7">
+   <div className="w-full max-w-[1280px] mx-auto px-4 lg:px-0 pt-10 md:pt-14 pb-0">
 
     {/* TRENDING / NEWS */}
     {newsArticles.length > 0 && (
      <section className="mb-14 md:mb-20 last:mb-0">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-5 mb-4">
-       <div className="md:col-span-3 flex items-center">
-        <SectionHead title="Latest News" className="mb-0" />
-       </div>
-
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-       <HomePostCard article={newsArticles[0]} titleClassName="!text-[18px]" showExcerptOnMobile={true} showBackground={false} truncateTitle={false} showViewArticle={false} />
-       {newsArticles.slice(1, 4).map((a) => (
-        <HomePostCard key={a.id} article={a} titleClassName="!text-[18px]" showExcerptOnMobile={true} showBackground={false} truncateTitle={false} showViewArticle={false} />
-       ))}
-      </div>
-      <SeeMoreBtn href="/news" label="News" />
+      <SectionHead title="Latest News" />
+      <NewsWithTrending
+       newsArticles={newsArticles.slice(0, 5)}
+       trendingArticles={[...newsArticles].sort((a, b) => (b.viewCount ?? 0) - (a.viewCount ?? 0))}
+       actionButton={<SeeMoreBtn href="/news" label="News" className="!mt-0" />}
+      />
      </section>
     )}
+
     {/* REVIEWS */}
     {reviewArticles.length > 0 && (
      <section className="mb-10 md:mb-14 last:mb-0">
@@ -318,7 +321,7 @@ export default async function HomePage() {
 
       </div>
 
-      <ReviewsGrid articles={reviewArticles.slice(0, 7)} />
+      <ReviewsGrid articles={reviewArticles.slice(0, 6)} />
       <SeeMoreBtn href="/reviews" label="Reviews" />
      </section>
     )}
@@ -328,12 +331,12 @@ export default async function HomePage() {
     <div className="mb-10 md:mb-14 flex justify-center w-full">
       <div className="hidden sm:flex w-full bg-[var(--bg2)] py-5 items-center justify-center border border-[var(--border)]">
         <div className="w-full max-w-[970px] min-h-[250px] flex items-center justify-center px-4">
-          <AdSlot slot="ADS-02" className="w-full" />
+          <AdSlot slot="ADS-02" className="w-full" showPlaceholder />
         </div>
       </div>
       <div className="flex sm:hidden w-[100vw] relative left-[50%] -translate-x-1/2 bg-[var(--bg2)] py-5 items-center justify-center border-y border-[var(--border)]">
         <div className="w-full min-h-[250px] flex items-center justify-center px-4">
-          <AdSlot slot="ADS-02" className="w-full" />
+          <AdSlot slot="ADS-02" className="w-full" showPlaceholder />
         </div>
       </div>
     </div>
@@ -409,8 +412,54 @@ export default async function HomePage() {
     )}
 
 
+    {/* DEALS */}
+    {(() => {
+      const allDeals = [...dealArticles, ...hotDeals].filter((a, i, arr) => arr.findIndex(x => x.id === a.id) === i);
+      if (allDeals.length === 0) return null;
+      return (
+       <section className="mb-10 md:mb-14 last:mb-0">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-5 mb-4">
+         <div className="md:col-span-3 flex items-center">
+          <SectionHead title="Deals" className="mb-0" />
+         </div>
+        </div>
+        <ReviewsGrid articles={allDeals.slice(0, 6)} />
+        <SeeMoreBtn href="/deals" label="Deals" />
+       </section>
+      );
+    })()}
+
+    {/* GUIDES */}
+    {(() => {
+      if (guideArticles.length === 0) return null;
+      let popularGuides = popularArticles.filter(a => a.contentType === 'GUIDE');
+      
+      // If we have less than 6 popular guides, pad them with the most viewed latest guides
+      if (popularGuides.length < 6) {
+        const existingIds = new Set(popularGuides.map(g => g.id));
+        const extraGuides = [...guideArticles]
+          .filter(g => !existingIds.has(g.id))
+          .sort((a, b) => (b.viewCount || 0) - (a.viewCount || 0));
+        
+        popularGuides = [...popularGuides, ...extraGuides];
+      }
+
+      return (
+       <section className="mb-14 md:mb-20 last:mb-0">
+        <SectionHead title="Guides" />
+        <NewsWithTrending
+         newsArticles={guideArticles.slice(0, 5)}
+         trendingArticles={popularGuides}
+         sidebarTitle="Popular Guides"
+         showBadge={true}
+         actionButton={<SeeMoreBtn href="/guides" label="Guides" className="!mt-0" />}
+        />
+       </section>
+      );
+    })()}
+
     {/* DISCOVERY — tabbed feed (845px) + Poll sidebar */}
-    <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 lg:items-start mb-0 md:mb-14">
+    <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 mb-0">
 
      {/* Left: IGN-style tabbed section — capped at 845px */}
      <div className="w-full" style={{ maxWidth: '845px' }}>
@@ -424,20 +473,20 @@ export default async function HomePage() {
       />
      </div>
 
-     {/* Right: Poll widget — fills remaining space, sticky on desktop */}
+     {/* Right: Poll widget & Sticky Ad */}
      {homepagePoll2Id && (
       <div className="flex-1 w-full min-w-0 mt-2 lg:mt-[145px]">
-       <div className="lg:sticky lg:top-24">
         <div className="mb-0 lg:mb-10">
          <PollWidget pollId={homepagePoll2Id} />
         </div>
         
         {adsEnabled && (
-         <div className="hidden lg:flex justify-start">
-          <AdSlot slot="ADS-06" className="w-full flex justify-center" />
+         <div className="flex justify-center lg:sticky lg:top-[100px] mt-8 w-full">
+          <div className="w-full bg-[var(--bg2)] py-5 px-4 flex items-center justify-center border border-[var(--border)]">
+            <AdSlot slot="ADS-06" className="w-full flex justify-center" showPlaceholder />
+          </div>
          </div>
         )}
-       </div>
       </div>
      )}
 

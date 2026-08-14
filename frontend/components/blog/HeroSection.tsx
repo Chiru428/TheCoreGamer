@@ -100,7 +100,7 @@ export default function HeroSection({
               >
                 <h1
                   className="post-card-title hero-main-title group-hover:underline"
-                  style={{ fontSize: 'clamp(20px, 2.5vw, 32px)', fontWeight: 800, lineHeight: 1.2, color: '#ffffff', fontFamily: "'acumin-pro', sans-serif" }}
+                  style={{ fontSize: 'clamp(20px, 2.5vw, 32px)', fontWeight: 700, lineHeight: 1.2, color: '#ffffff', fontFamily: "'Gibson', sans-serif" }}
                 >
                   {current.title}
                 </h1>
@@ -226,7 +226,7 @@ export default function HeroSection({
             >
               <h1
                 className="post-card-title hero-main-title group-hover:underline"
-                style={{ fontSize: 'clamp(18px, 5vw, 24px)', fontWeight: 800, lineHeight: 1.2, color: '#ffffff', fontFamily: "'acumin-pro', sans-serif" }}
+                style={{ fontSize: 'clamp(18px, 5vw, 24px)', fontWeight: 700, lineHeight: 1.2, color: '#ffffff', fontFamily: "'Gibson', sans-serif" }}
               >
                 {current.title}
               </h1>
@@ -234,13 +234,13 @@ export default function HeroSection({
           </div>
         </Link>
 
-        {/* Mobile: 3 cards stacked */}
+        {/* Mobile: 1 full-width card, then 2 cards adjacent */}
         {cards.length > 0 && (
-          <div className="px-4 pt-5 grid grid-cols-1 gap-5">
-            {cards.map((a) => (
+          <div className="px-4 pt-5 flex flex-col gap-5">
+            {cards.length >= 1 && (
               <HomePostCard
-                key={a.id}
-                article={a}
+                key={cards[0].id}
+                article={cards[0]}
                 titleClassName="!text-[18px] mb-1 gibson-title"
                 titleStyle={{ fontFamily: "'Gibson', sans-serif" }}
                 showExcerpt={false}
@@ -252,7 +252,28 @@ export default function HeroSection({
                 truncateTitle={false}
                 showViewArticle={false}
               />
-            ))}
+            )}
+            {cards.length >= 2 && (
+              <div className="grid grid-cols-2 gap-4">
+                {cards.slice(1).map((a) => (
+                  <HomePostCard
+                    key={a.id}
+                    article={a}
+                    titleClassName="!text-[18px] leading-snug mb-1 gibson-title"
+                    titleStyle={{ fontFamily: "'Gibson', sans-serif" }}
+                    metaClassName="!text-[14px] flex-row items-center gap-1.5 flex-wrap"
+                    showExcerpt={false}
+                    showBackground={false}
+                    showBadge
+                    showImageBadge={false}
+                    badgeClassName="text-[12px]"
+                    showAuthor={false}
+                    truncateTitle={false}
+                    showViewArticle={false}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         )}
 

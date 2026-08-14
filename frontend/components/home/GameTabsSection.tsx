@@ -76,6 +76,7 @@ export default function GameTabsSection({ newReleaseGames, topRatedGames, coming
                     fill
                     className="object-cover"
                     sizes="(max-width: 640px) 50vw, 225px"
+                    unoptimized={true}
                   />
                 ) : (
                   <div className="game-tab-cover-placeholder">

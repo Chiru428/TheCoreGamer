@@ -5,7 +5,7 @@ import { useUIStore } from '@/store/uiStore';
 import { cn } from '@/lib/utils';
 import { AD_ZONES } from '@/lib/constants';
 
-interface AdSlotProps { slot: string; className?: string; }
+interface AdSlotProps { slot: string; className?: string; showPlaceholder?: boolean; }
 
 // Next.js inlines `process.env.NEXT_PUBLIC_*` references statically at build time —
 // dynamic lookups like `process.env[key]` are not replaced, so each zone's numeric
@@ -21,7 +21,7 @@ const AD_SLOT_IDS: Record<string, string | undefined> = {
   'ADS-08': process.env.NEXT_PUBLIC_AD_SLOT_ADS_08,
 };
 
-export default function AdSlot({ slot, className }: AdSlotProps) {
+export default function AdSlot({ slot, className, showPlaceholder }: AdSlotProps) {
   const { consentGranted } = useUIStore();
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
@@ -44,7 +44,28 @@ export default function AdSlot({ slot, className }: AdSlotProps) {
   // ── STATE 1: No AdSense configured yet (pre-monetization) ──────────────────
   // Return null so no gap appears in the article body at all.
   // Once you add NEXT_PUBLIC_ADSENSE_ID + the slot env var, this gate opens.
-  if (!pubId || !slotId) return null;
+  if (!pubId || !slotId) {
+    if (!showPlaceholder) return null;
+    // ── PLACEHOLDER: visible dummy ad box for layout preview ──────────────────
+    return (
+      <div
+        ref={ref}
+        className={cn('flex flex-col items-center justify-center w-full', className)}
+        style={{
+          maxWidth: typeof zone.width === 'number' ? `${zone.width}px` : zone.width,
+          minHeight: typeof zone.height === 'number' ? `${zone.height}px` : '90px',
+          margin: '0 auto',
+          border: '2px dashed var(--border)',
+          borderRadius: '4px',
+          background: 'var(--bg2)',
+          gap: '6px',
+        }}
+      >
+        <span style={{ fontSize: '9px', fontWeight: 600, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--muted3)' }}>Advertisement</span>
+        <span style={{ fontSize: '11px', color: 'var(--muted3)', fontWeight: 500 }}>{zone.name} — {typeof zone.width === 'number' ? `${zone.width}×${zone.height}` : zone.format}</span>
+      </div>
+    );
+  }
 
   // ── STATE 2: AdSense configured, ad not yet ready (not visible / no consent) ─
   // Reserve the exact space so the page doesn't shift when the ad renders.

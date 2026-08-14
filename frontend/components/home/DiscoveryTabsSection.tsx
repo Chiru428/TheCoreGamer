@@ -10,7 +10,7 @@ import { CONTENT_TYPE_LABELS, CONTENT_TYPE_COLORS } from '@/lib/constants';
 import ScoreBadge from '@/components/review/ScoreBadge';
 
 // ─── Tab definitions ───────────────────────────────────────────────────────────
-type TabKey = 'latest' | 'guides' | 'lists' | 'opinions' | 'deals';
+type TabKey = 'lists' | 'opinions';
 
 interface Tab {
   key: TabKey;
@@ -21,20 +21,15 @@ interface Tab {
 }
 
 const TABS: Tab[] = [
-  { key: 'latest',   label: 'Latest',     href: '/',        accentColor: '#3b82f6',  badgeClass: '' },
-  { key: 'guides',   label: 'Guides',     href: '/guides',  accentColor: '#60a5fa',  badgeClass: 'badge-guide' },
   { key: 'lists',    label: 'Core Picks', href: '/lists',   accentColor: '#fbbf24',  badgeClass: 'badge-list' },
   { key: 'opinions', label: 'Opinions',   href: '/opinions', accentColor: '#f472b6', badgeClass: 'badge-opinion' },
-  { key: 'deals',    label: 'Deals',      href: '/deals',   accentColor: '#22d3ee',  badgeClass: 'badge-deal' },
 ];
 
 // ─── Map content type → tab key ───────────────────────────────────────────────
 function contentTypeToTabKey(contentType: string): TabKey {
   switch (contentType) {
-    case 'GUIDE':    return 'guides';
     case 'LISTICLE': return 'lists';
     case 'OPINION':  return 'opinions';
-    case 'DEAL':     return 'deals';
     default:         return 'latest';
   }
 }
@@ -49,7 +44,7 @@ interface DiscoveryTabsSectionProps {
   hotDeals:        Article[];
 }
 
-import ArticleRow from '@/components/blog/ArticleRow';
+import HomePostCard from '@/components/blog/HomePostCard';
 
 // ─── Main component ───────────────────────────────────────────────────────────
 export default function DiscoveryTabsSection({
@@ -60,21 +55,13 @@ export default function DiscoveryTabsSection({
   dealArticles,
   hotDeals,
 }: DiscoveryTabsSectionProps) {
-  const [activeTab, setActiveTab] = useState<TabKey>('latest');
+  const [activeTab, setActiveTab] = useState<TabKey>('lists');
   const tabBarRef = useRef<HTMLDivElement>(null);
-
-  // The articles that will actually be shown in the 'latest' tab
-  const displayedLatestIds = new Set(latestArticles.slice(0, 10).map(a => a.id));
 
   // Per-tab article lists
   const articlesByTab: Record<TabKey, Article[]> = {
-    latest:   latestArticles,
-    guides:   guideArticles.filter(a => !displayedLatestIds.has(a.id)),
-    lists:    listicleArticles.filter(a => !displayedLatestIds.has(a.id)),
-    opinions: opinionArticles.filter(a => !displayedLatestIds.has(a.id)),
-    deals:    [...dealArticles, ...hotDeals].filter(
-      (a, i, arr) => arr.findIndex(x => x.id === a.id) === i && !displayedLatestIds.has(a.id)
-    ),
+    lists:    listicleArticles,
+    opinions: opinionArticles,
   };
 
   // Only render tabs that have content
@@ -88,68 +75,41 @@ export default function DiscoveryTabsSection({
   const activeTabObj = TABS.find(t => t.key === activeTab) || TABS[0];
 
   // "See more" destination
-  const seeMoreHref = activeTab === 'latest' ? null : activeTabObj.href;
-  const seeMoreLabel = activeTab === 'latest' ? null : `See more ${activeTabObj.label}`;
+  const seeMoreHref = activeTabObj.href;
+  const seeMoreLabel = `See more ${activeTabObj.label}`;
 
   return (
     <section className="mt-6">
       {/* ── Section header ───────────────────────────────────── */}
-      <div className="mb-0">
-        <div className="section-title-bar font-bold text-[var(--text)]">
+      <div className="mb-0 flex flex-col items-start">
+        <div className="w-[60px] h-[6px] bg-gradient-to-r from-[#ff4b4b] to-[#ff9033] mb-2" />
+        <div className="section-title-bar font-bold text-[var(--text)] uppercase">
           More from TheCoreGamer
         </div>
       </div>
 
-      {/* ── IGN-style tab bar ─────────────────────────────────── */}
+      {/* ── IGN-style tab bar (Games Section Style) ─────────────── */}
       <div className="w-full overflow-x-auto mt-5" style={{ scrollbarWidth: 'none' }}>
         <div
           ref={tabBarRef}
-          className="inline-flex items-stretch"
-          style={{
-            background: 'var(--bg2)',
-            borderRadius: '999px',
-            minHeight: '40px',
-            gap: '3px',
-          }}
+          className="flex items-end border-b border-[rgba(255,255,255,0.08)] mb-5"
           role="tablist"
         >
-          {visibleTabs.map((tab, i) => {
+          {visibleTabs.map((tab) => {
             const isActive = activeTab === tab.key;
-            const isLast   = i === visibleTabs.length - 1;
             return (
               <button
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key)}
                 role="tab"
                 aria-selected={isActive}
-                className="shrink-0 outline-none transition-colors duration-150 flex items-center justify-center"
-                style={{
-                  padding: '7px 28px',
-                  borderRadius: isActive
-                    ? (i === 0
-                        ? '999px 0 0 999px'
-                        : isLast
-                          ? '0 999px 999px 0'
-                          : '0')
-                    : '0',
-                  margin: '0',
-                  fontSize: '15px',
-                  fontWeight: 700,
-                  cursor: 'pointer',
-                  border: 'none',
-                  background: isActive ? '#ffffff' : 'transparent',
-                  color: isActive ? '#000000' : 'var(--muted2)',
-                  letterSpacing: '0.1px',
-                  whiteSpace: 'nowrap',
-                }}
-                onMouseEnter={e => {
-                  if (!isActive) (e.currentTarget as HTMLButtonElement).style.color = 'var(--text)';
-                }}
-                onMouseLeave={e => {
-                  if (!isActive) (e.currentTarget as HTMLButtonElement).style.color = 'var(--muted2)';
-                }}
+                className={`relative pb-2.5 mr-7 bg-transparent border-none cursor-pointer text-[12px] md:text-[14px] font-bold tracking-[0.12em] uppercase transition-colors outline-none whitespace-nowrap ${isActive ? 'text-[var(--text-strong,#fff)]' : 'text-[var(--muted2,#6b7280)] hover:text-[var(--text-strong,#fff)]'}`}
+                style={{ fontFamily: "'Gibson', sans-serif" }}
               >
                 {tab.label}
+                {isActive && (
+                  <div className="absolute bottom-[-1px] left-0 right-0 h-[2px] bg-[#00e5a0] rounded-t-[2px]" />
+                )}
               </button>
             );
           })}
@@ -157,16 +117,42 @@ export default function DiscoveryTabsSection({
       </div>
 
 
-      {/* ── Article feed — single column, IGN-style ────────── */}
-      <div className="flex flex-col mt-2">
-        {activeArticles.slice(0, 10).map((article, index) => (
-          <ArticleRow
-            key={article.id}
-            article={article}
-            showTypeBadge={activeTab === 'latest'}
-            isHero={index === 0}
-          />
-        ))}
+      {/* ── Article feed — Hero + Grid ────────── */}
+      <div className="flex flex-col mt-4">
+        {activeArticles.length > 0 && (
+          <div className="mb-0 md:mb-2">
+            <HomePostCard
+              article={activeArticles[0]}
+              showBadge={false}
+              showExcerptOnMobile={true}
+              titleClassName="!text-[18px] md:!text-[26px] !font-[700]"
+              showExcerpt={true}
+              showBackground={false}
+              truncateTitle={false}
+              showViewArticle={false}
+              metaClassName="flex-row items-center gap-1.5"
+            />
+          </div>
+        )}
+
+        {activeArticles.length > 1 && (
+          <div className="grid grid-cols-2 gap-4 lg:gap-5 mt-4">
+            {activeArticles.slice(1, 7).map((article) => (
+              <HomePostCard
+                key={article.id}
+                article={article}
+                showBadge={false}
+                titleClassName="!text-[16px] md:!text-[18px]"
+                showExcerptOnMobile={false}
+                showExcerpt={true}
+                showBackground={false}
+                truncateTitle={false}
+                showViewArticle={false}
+                metaClassName="flex-col items-start gap-0.5 sm:flex-row sm:items-center sm:gap-1.5"
+              />
+            ))}
+          </div>
+        )}
       </div>
 
       {/* ── Bottom "See all" button ──────────────────────────── */}
