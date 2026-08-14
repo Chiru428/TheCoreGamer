@@ -30,7 +30,7 @@ function contentTypeToTabKey(contentType: string): TabKey {
   switch (contentType) {
     case 'LISTICLE': return 'lists';
     case 'OPINION':  return 'opinions';
-    default:         return 'latest';
+    default:         return 'lists';
   }
 }
 

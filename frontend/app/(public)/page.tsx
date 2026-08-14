@@ -101,9 +101,9 @@ function SectionHead({ title, className }: { title: string; className?: string }
  );
 }
 
-function SeeMoreBtn({ href, label }: { href: string; label: string }) {
+function SeeMoreBtn({ href, label, className }: { href: string; label: string; className?: string }) {
  return (
-  <div className="mt-7">
+  <div className={`mt-7 ${className ?? ''}`}>
    <Link
     href={href}
     className="flex justify-center w-full sm:w-auto sm:inline-flex items-center rounded-full px-8 font-bold tracking-wide text-black border border-[#00e5a0] bg-[#00e5a0] hover:bg-[#00c98a] hover:border-[#00c98a] hover:underline transition-colors duration-200"
