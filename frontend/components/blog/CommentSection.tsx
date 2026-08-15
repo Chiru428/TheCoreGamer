@@ -168,6 +168,18 @@ interface CommentFormProps {
   setReplyTo: (id: string | null) => void;
   setGifPreview: (g: TenorGif | null) => void;
   clearEditor: () => void;
+  showMentionPrompt: boolean;
+  setShowMentionPrompt: React.Dispatch<React.SetStateAction<boolean>>;
+  mentionQuery: string;
+  setMentionQuery: (q: string) => void;
+  confirmMention: (e?: React.FormEvent) => void;
+  mentionInputRef: React.RefObject<HTMLDivElement | null>;
+  showLinkPrompt: boolean;
+  setShowLinkPrompt: React.Dispatch<React.SetStateAction<boolean>>;
+  linkQuery: string;
+  setLinkQuery: (q: string) => void;
+  confirmLink: (e?: React.FormEvent) => void;
+  linkInputRef: React.RefObject<HTMLDivElement | null>;
 }
 
 // A real, module-level component (not a closure defined inside CommentSection)
@@ -209,6 +221,8 @@ function CommentForm({
   setReplyTo,
   setGifPreview,
   clearEditor,
+  showMentionPrompt, setShowMentionPrompt, mentionQuery, setMentionQuery, confirmMention, mentionInputRef,
+  showLinkPrompt, setShowLinkPrompt, linkQuery, setLinkQuery, confirmLink, linkInputRef,
 }: CommentFormProps) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={isInline ? 'mt-2 mb-4' : 'mb-8'}>
@@ -229,7 +243,7 @@ function CommentForm({
         </div>
       )}
 
-      <div className="border border-border rounded-xl overflow-visible bg-[var(--bg)] focus-within:ring-1 focus-within:ring-accent transition-shadow">
+      <div className="border-2 border-border rounded-xl overflow-visible bg-[var(--bg)] transition-shadow">
         
         <div className="relative pt-3 pb-2 px-3">
           {editorEmpty && (
@@ -275,12 +289,12 @@ function CommentForm({
         )}
 
         {/* Format toolbar */}
-        <div className="flex items-center justify-between gap-2 px-2 py-2 border-t border-border bg-[var(--bg2)] rounded-b-xl">
+        <div className="flex items-center justify-between gap-2 px-2 py-2 border-t-2 border-border bg-[var(--bg2)] rounded-b-xl">
           <div className="flex items-center gap-0.5 flex-wrap">
             {/* GIF */}
             <div className="relative" ref={gifPickerRef}>
-              <button type="button" onClick={() => setShowGifPicker(v => !v)} title="Add GIF" className="p-1.5 rounded hover:bg-bg-primary text-text-muted hover:text-text-primary transition-colors text-[10px] font-bold tracking-tight flex items-center justify-center" style={{ width: 28, height: 28, border: '1.5px solid currentColor', borderRadius: 4, fontSize: 10 }}>
-                GIF
+              <button type="button" onClick={() => setShowGifPicker(v => !v)} title="Add GIF" className="p-1.5 rounded hover:bg-bg-primary text-text-muted hover:text-text-primary transition-colors flex items-center justify-center">
+                <span className="flex items-center justify-center text-[7px] font-[800] tracking-tighter w-4 h-4" style={{ border: '2px solid currentColor', borderRadius: 4 }}>GIF</span>
               </button>
               {showGifPicker && (
                 <div className="absolute top-full left-0 mt-1 z-50 w-64 p-2 rounded-xl border border-border bg-bg-surface shadow-2xl">
@@ -324,10 +338,10 @@ function CommentForm({
               )}
             </div>
 
-            {/* Emoji */}
+            {/* Emoji / Media */}
             <div className="relative" ref={emojiPickerRef}>
-              <button type="button" onClick={() => setShowEmojiPicker(v => !v)} title="Add emoji" className="p-1.5 rounded hover:bg-bg-primary text-text-muted hover:text-text-primary transition-colors flex items-center justify-center" style={{ width: 28, height: 28 }}>
-                <Smile className="w-3.5 h-3.5" />
+              <button type="button" onClick={() => setShowEmojiPicker(v => !v)} title="Add emoji" className="p-1.5 rounded hover:bg-bg-primary text-text-muted hover:text-text-primary transition-colors flex items-center justify-center">
+                <Smile className="w-4 h-4" strokeWidth={2.5} />
               </button>
               {showEmojiPicker && (
                 <div className="absolute top-full left-0 mt-1 z-50">
@@ -347,59 +361,105 @@ function CommentForm({
             </div>
 
             {/* Divider */}
-            <span className="w-px h-4 bg-border mx-1" />
+            <span className="w-px h-5 bg-border mx-1" />
 
             {/* Bold */}
             <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => applyFormat('bold')} title="Bold" className={toolbarBtnCls(activeFormats.has('bold'))}>
-              <Bold className="w-3.5 h-3.5" />
+              <Bold className="w-4 h-4" strokeWidth={2.5} />
             </button>
 
             {/* Italic */}
             <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => applyFormat('italic')} title="Italic" className={toolbarBtnCls(activeFormats.has('italic'))}>
-              <Italic className="w-3.5 h-3.5" />
+              <Italic className="w-4 h-4" strokeWidth={2.5} />
             </button>
 
             {/* Underline */}
             <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => applyFormat('underline')} title="Underline" className={toolbarBtnCls(activeFormats.has('underline'))}>
-              <Underline className="w-3.5 h-3.5" />
+              <Underline className="w-4 h-4" strokeWidth={2.5} />
             </button>
 
             {/* Strikethrough */}
             <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => applyFormat('strikethrough')} title="Strikethrough" className={toolbarBtnCls(activeFormats.has('strikethrough'))}>
-              <Strikethrough className="w-3.5 h-3.5" />
+              <Strikethrough className="w-4 h-4" strokeWidth={2.5} />
             </button>
 
             {/* Link */}
-            <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => applyFormat('link')} title="Link" className={toolbarBtnCls(activeFormats.has('link'))}>
-              <LinkIcon className="w-3.5 h-3.5" />
-            </button>
+            <div className="relative" ref={linkInputRef}>
+              <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => applyFormat('link')} title="Link" className={toolbarBtnCls(activeFormats.has('link'))}>
+                <LinkIcon className="w-4 h-4" strokeWidth={2.5} />
+              </button>
+              {showLinkPrompt && (
+                <div className="absolute top-full left-0 mt-1 z-50 w-64 p-2 rounded-xl border border-border bg-bg-surface shadow-2xl">
+                  <div className="flex gap-2">
+                    <input
+                      type="url"
+                      value={linkQuery}
+                      onChange={(e) => setLinkQuery(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault();
+                          confirmLink(e as any);
+                        }
+                      }}
+                      placeholder="Enter URL..."
+                      autoFocus
+                      className="flex-1 w-full px-2 py-1.5 bg-bg-primary border border-border rounded-lg text-xs text-text-primary placeholder:text-text-dim focus:border-accent outline-none"
+                    />
+                    <Button type="button" onClick={(e: any) => confirmLink(e)} size="sm" className="px-3 rounded-lg text-xs">Add</Button>
+                  </div>
+                </div>
+              )}
+            </div>
 
             {/* Spoiler / Hide */}
             <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => applyFormat('spoiler')} title="Spoiler" className={toolbarBtnCls(activeFormats.has('spoiler'))}>
-              <EyeOff className="w-3.5 h-3.5" />
+              <EyeOff className="w-4 h-4" strokeWidth={2.5} />
             </button>
 
             {/* Code */}
             <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => applyFormat('code')} title="Inline Code" className={toolbarBtnCls(activeFormats.has('code'))}>
-              <Code className="w-3.5 h-3.5" />
+              <Code className="w-4 h-4" strokeWidth={2.5} />
             </button>
 
             {/* Blockquote */}
             <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => applyFormat('blockquote')} title="Blockquote" className={toolbarBtnCls(activeFormats.has('blockquote'))}>
-              <Quote className="w-3.5 h-3.5" />
+              <Quote className="w-4 h-4" strokeWidth={2.5} />
             </button>
 
             {/* Mention */}
-            <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => applyFormat('mention')} title="Mention" className="p-1.5 rounded hover:bg-bg-primary text-text-muted hover:text-text-primary transition-colors">
-              <AtSign className="w-3.5 h-3.5" />
-            </button>
+            <div className="relative" ref={mentionInputRef}>
+              <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => applyFormat('mention')} title="Mention" className="p-1.5 rounded hover:bg-bg-primary text-text-muted hover:text-text-primary transition-colors">
+                <AtSign className="w-4 h-4" strokeWidth={2.5} />
+              </button>
+              {showMentionPrompt && (
+                <div className="absolute top-full right-0 mt-1 z-50 w-56 p-2 rounded-xl border border-border bg-bg-surface shadow-2xl">
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={mentionQuery}
+                      onChange={(e) => setMentionQuery(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault();
+                          confirmMention(e as any);
+                        }
+                      }}
+                      placeholder="Username..."
+                      autoFocus
+                      className="flex-1 w-full px-2 py-1.5 bg-bg-primary border border-border rounded-lg text-xs text-text-primary placeholder:text-text-dim focus:border-accent outline-none"
+                    />
+                    <Button type="button" onClick={(e: any) => confirmMention(e)} size="sm" className="px-3 rounded-lg text-xs">Add</Button>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="flex items-center gap-2 shrink-0 pr-1">
             {isInline && (
               <Button type="button" variant="ghost" size="sm" onClick={() => { setReplyTo(null); reset({ body: '' }); setGifPreview(null); clearEditor(); }}>Cancel</Button>
             )}
-            <Button type="submit" size="sm" loading={isSubmitting} className="rounded-full !px-5">{isInline ? 'Reply' : 'Comment'}</Button>
+            <Button type="submit" size="sm" loading={isSubmitting} className="rounded-full !px-5 bg-white text-black hover:bg-gray-200 dark:bg-[#E4E6EB] dark:text-[#050505] dark:hover:bg-[#D8DADF] border-none font-bold">{isInline ? 'Reply' : 'Comment'}</Button>
           </div>
         </div>
       </div>
@@ -429,6 +489,27 @@ export default function CommentSection({ articleId }: CommentSectionProps) {
   // lose track of where to insert it.
   const lastRangeRef = useRef<Range | null>(null);
 
+  const [showMentionPrompt, setShowMentionPrompt] = useState(false);
+  const [mentionQuery, setMentionQuery] = useState('');
+  const mentionInputRef = useRef<HTMLDivElement>(null);
+
+  const [showLinkPrompt, setShowLinkPrompt] = useState(false);
+  const [linkQuery, setLinkQuery] = useState('');
+  const linkInputRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (mentionInputRef.current && !mentionInputRef.current.contains(e.target as Node)) {
+        setShowMentionPrompt(false);
+      }
+      if (linkInputRef.current && !linkInputRef.current.contains(e.target as Node)) {
+        setShowLinkPrompt(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   const cacheKey = `comments-${articleId}-${sort}`;
   const { data, mutate, isLoading } = useSWR(
     cacheKey,
@@ -438,6 +519,14 @@ export default function CommentSection({ articleId }: CommentSectionProps) {
   const comments = data || [];
   const topLevelComments = comments.filter(c => !c.parentId);
   const totalCount = countAllComments(topLevelComments);
+
+  useEffect(() => {
+    if (data !== undefined) {
+      window.dispatchEvent(new CustomEvent('commentCountUpdated', { 
+        detail: { count: totalCount, articleId } 
+      }));
+    }
+  }, [totalCount, articleId, data]);
 
   const activeSchema = isAuthenticated ? schema : guestSchema;
   const { register, handleSubmit, reset, setValue, formState: { errors, isSubmitting } } = useForm<z.infer<typeof guestSchema>>({
@@ -577,6 +666,97 @@ export default function CommentSection({ articleId }: CommentSectionProps) {
     return () => document.removeEventListener('selectionchange', updateActiveFormats);
   }, [updateActiveFormats]);
 
+  const confirmMention = (e?: React.FormEvent) => {
+    e?.preventDefault();
+    if (!mentionQuery.trim()) {
+      setShowMentionPrompt(false);
+      return;
+    }
+    const el = bodyRef.current;
+    if (!el) return;
+    
+    const sel = window.getSelection();
+    if (!sel) return;
+    const savedRange = lastRangeRef.current;
+    if (savedRange && el.contains(savedRange.startContainer)) {
+      sel.removeAllRanges();
+      sel.addRange(savedRange);
+    } else {
+      const range = document.createRange();
+      range.selectNodeContents(el);
+      range.collapse(false);
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+    el.focus();
+    const range = sel.getRangeAt(0);
+    const mention = document.createTextNode(`@${mentionQuery} `);
+    range.deleteContents();
+    range.insertNode(mention);
+    sel.collapse(mention, mention.length);
+    const markdown = htmlToMarkdown(el);
+    setEditorEmpty(!markdown.trim());
+    setValue('body', markdown, { shouldValidate: false });
+    
+    setShowMentionPrompt(false);
+    setMentionQuery('');
+  };
+
+  const confirmLink = (e?: React.FormEvent) => {
+    e?.preventDefault();
+    if (!linkQuery.trim()) {
+      setShowLinkPrompt(false);
+      return;
+    }
+    const el = bodyRef.current;
+    if (!el) return;
+    
+    const sel = window.getSelection();
+    if (!sel) return;
+    const savedRange = lastRangeRef.current;
+    if (savedRange && el.contains(savedRange.startContainer)) {
+      sel.removeAllRanges();
+      sel.addRange(savedRange);
+    } else {
+      const range = document.createRange();
+      range.selectNodeContents(el);
+      range.collapse(false);
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+    el.focus();
+    const range = sel.getRangeAt(0);
+    
+    const wrapper = document.createElement('a');
+    wrapper.href = linkQuery;
+    wrapper.setAttribute('target', '_blank');
+    wrapper.setAttribute('rel', 'noopener noreferrer nofollow');
+    wrapper.className = 'text-accent underline cursor-pointer';
+    
+    if (range.collapsed) {
+      const ph = document.createTextNode(ZERO_WIDTH_SPACE);
+      wrapper.appendChild(ph);
+      range.insertNode(wrapper);
+      const newRange = document.createRange();
+      newRange.setStart(ph, ph.length);
+      newRange.collapse(true);
+      sel.removeAllRanges();
+      sel.addRange(newRange);
+    } else {
+      wrapper.appendChild(range.extractContents());
+      range.insertNode(wrapper);
+      sel.collapse(wrapper.nextSibling || wrapper, wrapper.nextSibling ? 0 : wrapper.childNodes.length);
+    }
+    lastRangeRef.current = sel.getRangeAt(0).cloneRange();
+    const markdown = htmlToMarkdown(el);
+    setEditorEmpty(!markdown.trim());
+    setValue('body', markdown, { shouldValidate: false });
+    updateActiveFormats();
+    
+    setShowLinkPrompt(false);
+    setLinkQuery('');
+  };
+
   const applyFormat = (type: 'bold' | 'italic' | 'underline' | 'strikethrough' | 'code' | 'link' | 'spoiler' | 'blockquote' | 'mention') => {
     const el = bodyRef.current;
     if (!el) return;
@@ -586,16 +766,15 @@ export default function CommentSection({ articleId }: CommentSectionProps) {
     if (!sel || sel.rangeCount === 0) return;
 
     if (type === 'mention') {
-      const range = sel.getRangeAt(0);
-      const name = window.prompt('Enter username to mention:');
-      if (!name) return;
-      const mention = document.createTextNode(`@${name} `);
-      range.deleteContents();
-      range.insertNode(mention);
-      sel.collapse(mention, mention.length);
-      const markdown = htmlToMarkdown(el);
-      setEditorEmpty(!markdown.trim());
-      setValue('body', markdown, { shouldValidate: false });
+      const sel = window.getSelection();
+      if (sel && sel.rangeCount > 0) {
+        lastRangeRef.current = sel.getRangeAt(0).cloneRange();
+      }
+      setShowMentionPrompt(true);
+      setShowLinkPrompt(false);
+      setShowEmojiPicker(false);
+      setShowGifPicker(false);
+      setMentionQuery('');
       return;
     }
 
@@ -628,13 +807,16 @@ export default function CommentSection({ articleId }: CommentSectionProps) {
 
     let wrapper: HTMLElement;
     if (type === 'link') {
-      const url = window.prompt('Enter URL:');
-      if (!url) return;
-      wrapper = document.createElement('a');
-      (wrapper as HTMLAnchorElement).href = url;
-      wrapper.setAttribute('target', '_blank');
-      wrapper.setAttribute('rel', 'noopener noreferrer nofollow');
-      wrapper.className = 'text-accent underline cursor-pointer';
+      const sel = window.getSelection();
+      if (sel && sel.rangeCount > 0) {
+        lastRangeRef.current = sel.getRangeAt(0).cloneRange();
+      }
+      setShowLinkPrompt(true);
+      setShowMentionPrompt(false);
+      setShowEmojiPicker(false);
+      setShowGifPicker(false);
+      setLinkQuery('');
+      return;
     } else if (type === 'code') {
       wrapper = document.createElement('code');
       wrapper.className = 'px-1 py-0.5 rounded bg-bg-surface text-[0.85em] font-mono';
@@ -665,7 +847,7 @@ export default function CommentSection({ articleId }: CommentSectionProps) {
         range.surroundContents(wrapper);
       } catch {
         range.deleteContents();
-        wrapper.textContent = selectedText || (type === 'link' ? 'link text' : '');
+        wrapper.textContent = selectedText || ((type as string) === 'link' ? 'link text' : '');
         range.insertNode(wrapper);
       }
       sel.collapse(wrapper, wrapper.childNodes.length);
@@ -815,13 +997,18 @@ export default function CommentSection({ articleId }: CommentSectionProps) {
     setReplyTo,
     setGifPreview,
     clearEditor,
+    showMentionPrompt, setShowMentionPrompt, mentionQuery, setMentionQuery, confirmMention, mentionInputRef,
+    showLinkPrompt, setShowLinkPrompt, linkQuery, setLinkQuery, confirmLink, linkInputRef,
   };
 
   return (
-    <section className="mt-8 pt-8 border-t border-border" id="comments">
-      <h3 className="text-lg font-bold text-text-primary mb-6 flex items-center gap-2">
-        <MessageSquare className="w-5 h-5 text-accent-light" />
-        Comments ({totalCount})
+    <section className="mt-8 pt-8 border-t-[3px] border-border" id="comments">
+      <h3 className="text-lg font-bold text-text-primary mb-6 flex items-center">
+        {isLoading ? (
+          <span className="shimmer inline-block w-24 h-6 rounded" />
+        ) : (
+          <>{totalCount} {totalCount === 1 ? 'comment' : 'comments'}</>
+        )}
       </h3>
 
       {!replyTo && (

@@ -17,7 +17,7 @@ export default function ResumeReadingBanner({
 }: ResumeReadingBannerProps) {
   return (
     <div className="mb-8 animate-in fade-in slide-in-from-top-4 duration-500">
-      <div className="relative group bg-bg-elevated border border-border border-l-4 border-l-[#00e5a0] rounded-xl p-4 md:p-5 shadow-2xl overflow-hidden">
+      <div className="relative group bg-[var(--bg2)] border-l-4 border-l-[#00e5a0] p-4 md:p-5 shadow-2xl overflow-hidden">
         
         <div className="relative flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3 text-sm">

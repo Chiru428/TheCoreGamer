@@ -280,6 +280,34 @@ export default function ArticleBody({ content, className = '', slug }: ArticleBo
       });
     });
 
+    // Hydrate MentionedGame blocks with the latest cover image
+    const mentionedGames = containerRef.current.querySelectorAll('[data-type="mentioned-game"][data-game-slug]');
+    mentionedGames.forEach((el) => {
+      const slug = el.getAttribute('data-game-slug');
+      if (!slug) return;
+      
+      fetch(`/api/games/${slug}`)
+        .then(r => r.json())
+        .then(res => {
+          if (res.success && res.data?.coverImageUrl) {
+            const newCoverUrl = res.data.coverImageUrl;
+            const wrapper = el.querySelector('.mg-cover-wrapper');
+            if (wrapper) {
+              const img = wrapper.querySelector('img');
+              if (img) {
+                // Check exact string or if Next.js image url contains it
+                if (!img.src.includes(encodeURIComponent(newCoverUrl)) && img.src !== newCoverUrl) {
+                  img.src = newCoverUrl;
+                }
+              } else {
+                wrapper.innerHTML = `<img src="${newCoverUrl}" alt="${res.data.title || slug} cover" style="width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:0;box-shadow:0 4px 6px -1px rgba(0,0,0,0.1);" loading="lazy" />`;
+              }
+            }
+          }
+        })
+        .catch(err => console.error('Failed to update MentionedGame cover:', err));
+    });
+
     // Attach Spoiler Blur removal
     const spoilers = containerRef.current.querySelectorAll<HTMLElement>('.spoiler-reveal-btn');
     spoilers.forEach(btn => {
@@ -408,6 +436,24 @@ export default function ArticleBody({ content, className = '', slug }: ArticleBo
       mainImg.addEventListener('click', () => {
         setGalleryLightbox({ images: srcs, index: current });
       });
+    })
+
+    // Gallery grids (2, 3, 4 images)
+    const galleryGrids = containerRef.current.querySelectorAll('.gc-gallery-grid[data-type="gallery-grid"]')
+    galleryGrids.forEach(grid => {
+      const imgs = Array.from(grid.querySelectorAll<HTMLImageElement>('img.gc-gallery-grid-img'))
+      const srcs = imgs.map(img => ({
+          src: img.src,
+          alt: img.alt,
+          caption: img.getAttribute('data-caption') || '',
+          credit: img.getAttribute('data-credit') || ''
+      }))
+      imgs.forEach((img, idx) => {
+        img.style.cursor = 'zoom-in'
+        img.addEventListener('click', () => {
+          setGalleryLightbox({ images: srcs, index: idx })
+        })
+      })
     })
 
     // Task-list checkboxes — persist checked state in localStorage
@@ -1194,6 +1240,19 @@ function renderNode(node: TipTapNode, idCounts: Map<string, number>, docHeadings
       }))
       
       if (filled.length === 0) return ''
+
+      if (filled.length >= 2 && filled.length <= 4) {
+        const gridClass = `gc-gallery-grid gc-gallery-grid-${filled.length}`;
+        const imagesHtml = filled.map((slot: any) => 
+          `<div class="gc-gallery-grid-item" data-lb-index="${slot.lbIndex}">
+            <img src="${escapeAttr(slot.src)}" alt="${escapeAttr(slot.alt)}" loading="lazy" decoding="async" class="gc-gallery-grid-img" data-caption="${escapeAttr(slot.caption || '')}" data-credit="${escapeAttr(slot.credit || '')}" />
+          </div>`
+        ).join('')
+
+        return `<div class="${gridClass}" data-type="gallery-grid" data-lb-total="${filled.length}">
+          ${imagesHtml}
+        </div>`
+      }
 
       const thumbnails = filled.map((slot: any, i: number) =>
         `<button class="gc-gallery-lb-thumb${i === 0 ? ' active' : ''}" data-dot="${i}" aria-label="Go to image ${i+1}">

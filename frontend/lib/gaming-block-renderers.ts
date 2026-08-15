@@ -156,11 +156,11 @@ export function renderMentionedGame(attrs: MentionedGameAttrs): string {
     : `<div style="width:100%;aspect-ratio:2/3;background:var(--gc-elevated);border-radius:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--gc-muted);font-size:12px;padding:8px;"><svg style="width:32px;height:32px;margin-bottom:8px;opacity:0.5;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>No Cover</div>`;
 
   return `
-    <div class="not-prose my-10 md:h-[300px]" data-type="mentioned-game" style="background:transparent;border:1px solid var(--gc-text);border-radius:0;overflow:hidden;position:relative;">
+    <div class="not-prose my-6 md:h-[300px]" data-type="mentioned-game" data-game-slug="${slug || ''}" style="background:var(--bg2);border:none;border-radius:0;overflow:hidden;position:relative;">
       
       <div class="flex flex-col md:flex-row gap-6 p-5 h-full" style="font-family:'acumin-pro', sans-serif;">
         <!-- Cover Image (Left) -->
-        <div class="w-full max-w-[170px] shrink-0 mx-auto md:mx-0 flex items-center">
+        <div class="mg-cover-wrapper w-full max-w-[250px] md:max-w-[170px] shrink-0 mx-auto md:mx-0 flex items-center">
           ${imageHtml}
         </div>
         
@@ -201,7 +201,7 @@ export function renderReviewCard(attrs: ReviewCardAttrs): string {
   const color = score >= 8 ? 'var(--gc-accent)' : score >= 6 ? 'var(--gc-warning)' : 'var(--gc-danger)';
   const verdict = score >= 9 ? 'Must-Play' : score >= 8 ? 'Outstanding' : score >= 6 ? 'Good' : 'Mediocre';
 
-  return `<div class="review-score-card" data-type="review-score-card" style="background:var(--gc-surface);border:1px solid var(--gc-border);border-radius:16px;overflow:hidden;margin:24px 0">
+  return `<div class="review-score-card" data-type="review-score-card" style="background:var(--gc-surface);border:1px solid var(--gc-border);border-radius:16px;overflow:hidden;margin:12px 0 24px 0">
     <div class="rsc-header" style="display:flex;align-items:center;gap:16px;padding:20px;border-bottom:1px solid var(--gc-border)">
       <div style="flex:1">
         <div style="font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gc-accent-dim);margin-bottom:4px">Review</div>
@@ -1280,10 +1280,10 @@ export function renderRelatedArticles(attrs: RelatedArticlesAttrs): string {
     const imgHtml = article.imageUrl
       ? `<div class="gc-ra-row-img-wrap"><img class="gc-ra-row-img" src="${article.imageUrl}" alt="${article.title}" loading="lazy" /></div>`
       : `<div class="gc-ra-row-img-wrap gc-ra-img-placeholder"></div>`;
-    return `<a class="gc-ra-row" href="/${articlePath}/${article.slug}">
+    return `<a class="gc-ra-row group" href="/${articlePath}/${article.slug}">
       ${imgHtml}
       <div class="gc-ra-row-text">
-        <h4 class="gc-ra-row-title">${article.title}</h4>
+        <h4 class="gc-ra-row-title"><span class="hover-underline-animation">${article.title}</span></h4>
       </div>
     </a>`;
   }).join('');

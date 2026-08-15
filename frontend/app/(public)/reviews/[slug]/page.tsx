@@ -130,11 +130,11 @@ export default async function ReviewDetailPage({ params }: Props) {
 
           {/* Sticky left-gap action bar — hidden on mobile, only renders at lg+ */}
           <div className="hidden lg:flex flex-col absolute left-0 top-0 bottom-[1000px] w-[44px] pt-4">
-            <div className="sticky top-24 flex flex-col bg-black/10 dark:bg-white/10 gap-[1px]">
+            <div className="sticky top-24 flex flex-col bg-[var(--bg2)]">
               <ArticleLikeButton articleId={article.id} initialCount={article._count?.reactions ?? 0} hideCount={true} variant="sidebar" />
               <a
                 href="#comments"
-                className="flex items-center justify-center w-[44px] h-[44px] transition-colors text-text-muted bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 hover:text-text-primary"
+                className="flex items-center justify-center w-[44px] h-[44px] transition-colors text-text-muted bg-transparent hover:bg-black/10 dark:hover:bg-white/10 hover:text-text-primary"
                 aria-label="Jump to comments"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
@@ -151,7 +151,7 @@ export default async function ReviewDetailPage({ params }: Props) {
               className="flex flex-col lg:flex-row gap-8"
               style={{ width: 'calc(100% + max(0px, min(100vw, 1280px) - 945.6px))' }}
             >
-              <div className="w-full lg:w-[849.6px] lg:shrink-0 lg:border-r lg:border-border lg:pr-8">
+              <div className="w-full lg:w-[849.6px] lg:shrink-0 lg:border-r-2 lg:border-border lg:pr-8">
                 {/* Hero */}
                 <div className="mt-1 md:mt-2 mb-3 md:mb-6">
                   {/* FTC disclosure — must be clear and conspicuous, not buried in fine print */}
@@ -406,7 +406,7 @@ export default async function ReviewDetailPage({ params }: Props) {
               <aside className="w-full lg:flex-1 flex flex-col">
                 <hr className="border-border lg:hidden w-full" />
                 {article.polls && article.polls.length > 0 && (
-                  <div className="space-y-4 mb-8 hidden lg:block">
+                  <div className="space-y-4 mb-8 mt-6 hidden lg:block">
                     {article.polls.map(poll => <PollWidget key={poll.id} pollId={poll.id} />)}
                   </div>
                 )}

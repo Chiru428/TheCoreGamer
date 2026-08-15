@@ -81,8 +81,8 @@ export default function ArticleLikeButton({
           variant === 'sidebar'
             ? `flex items-center justify-center w-[44px] h-[44px] transition-colors ${
                 liked
-                  ? 'text-[#ef4444] bg-black/10 dark:bg-white/10'
-                  : 'text-text-muted bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 hover:text-text-primary'
+                  ? 'text-[#ef4444] bg-transparent hover:bg-black/10 dark:hover:bg-white/10'
+                  : 'text-text-muted bg-transparent hover:bg-black/10 dark:hover:bg-white/10 hover:text-text-primary'
               }`
             : 'flex items-center justify-center w-8 h-8 rounded-full text-white transition-transform hover:scale-105'
         }

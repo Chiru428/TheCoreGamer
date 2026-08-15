@@ -49,6 +49,21 @@ export default function ArticleByline({ authorName, authorUsername, publishedAt,
   const [fullUrl, setFullUrl] = useState(url);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const [liveCommentCount, setLiveCommentCount] = useState(commentCount);
+
+  useEffect(() => {
+    setLiveCommentCount(commentCount);
+  }, [commentCount]);
+
+  useEffect(() => {
+    const handleCommentUpdate = (e: any) => {
+      if (e.detail && e.detail.articleId === articleId && typeof e.detail.count === 'number') {
+        setLiveCommentCount(e.detail.count);
+      }
+    };
+    window.addEventListener('commentCountUpdated', handleCommentUpdate);
+    return () => window.removeEventListener('commentCountUpdated', handleCommentUpdate);
+  }, [articleId]);
 
   const { data: bookmarksData, mutate: mutateBookmarks } = useSWR(isAuthenticated ? 'bookmarks' : null, fetchBookmarks);
   const [localBookmarked, setLocalBookmarked] = useState<boolean>(false);
@@ -165,7 +180,7 @@ export default function ArticleByline({ authorName, authorUsername, publishedAt,
           <span className="text-[16px]">Published {formatDate(publishedAt)}</span>
           <span className="text-[16px] text-text-dim">|</span>
           <a href="#comments" className="text-[16px] hover:text-text-primary hover:underline transition-colors">
-            Comments ({commentCount})
+            {liveCommentCount} {liveCommentCount === 1 ? 'comment' : 'comments'}
           </a>
         </div>
         <div className="flex items-center gap-2">
@@ -211,7 +226,7 @@ export default function ArticleByline({ authorName, authorUsername, publishedAt,
           <span>Published {formatDate(publishedAt)}</span>
           <span className="text-text-dim">|</span>
           <a href="#comments" className="hover:text-text-primary hover:underline transition-colors">
-            Comments ({commentCount})
+            {liveCommentCount} {liveCommentCount === 1 ? 'comment' : 'comments'}
           </a>
           <span className="text-text-dim">|</span>
           <div className="relative" ref={mobileMenuRef}>

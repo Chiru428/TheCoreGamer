@@ -261,6 +261,9 @@ model Comment {
   @@index([parentId])
   @@index([status])
   @@index([articleId, status, parentId])
+  @@index([articleId, status, parentId, isPinned, createdAt(sort: Desc)])
+  @@index([articleId, status, parentId, isPinned, upvotes(sort: Desc)])
+  @@index([articleId, status, parentId, isPinned, sortScore(sort: Desc)])
   @@index([createdAt])
   @@index([rootId])
 }
