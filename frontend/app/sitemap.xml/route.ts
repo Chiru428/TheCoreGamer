@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+export const dynamic = 'force-dynamic';
 import { SITE_URL } from '@/lib/constants';
 import { 
   fetchAdminSeries, 

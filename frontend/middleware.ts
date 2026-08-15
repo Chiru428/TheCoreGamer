@@ -10,7 +10,7 @@ const CSRF_EXEMPT = [
   '/api/auth/refresh',
   '/api/revalidate',
   '/api/webhooks/',
-  '/api/auth/[...nextauth]',
+  '/api/auth/',
 ];
 
 const ALLOWED_ORIGINS = [
@@ -18,6 +18,8 @@ const ALLOWED_ORIGINS = [
   process.env.NEXT_PUBLIC_SITE_URL,
   'http://localhost:3000',
   'http://localhost:3001',
+  process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined,
+  process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : undefined,
 ].filter(Boolean) as string[];
 
 export default async function proxy(request: NextRequest) {
