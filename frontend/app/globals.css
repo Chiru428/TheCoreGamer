@@ -1249,6 +1249,21 @@
     color: var(--accent) !important;
   }
 
+  /* Animated hover underline effect for inline text (matches wccftech style) */
+  .hover-underline-animation {
+    background-image: linear-gradient(to right, currentColor, currentColor);
+    background-position: 0 100%;
+    background-size: 0% 1px;
+    background-repeat: no-repeat;
+    transition: background-size 0.4s cubic-bezier(0, 0, 0, 1);
+    display: inline;
+  }
+
+  .group:hover .hover-underline-animation,
+  .hover-underline-animation:hover {
+    background-size: 100% 1px;
+  }
+
   /* === Homepage Scroll and Interaction Animations === */
 
   /* 9. Hero Slider Word Stagger Animation */

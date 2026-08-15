@@ -6,6 +6,7 @@ const adsEnabled = !!process.env.NEXT_PUBLIC_ADSENSE_ID;
 import { buildMeta } from '@/lib/seo';
 import SharedListCard from '@/components/blog/SharedListCard';
 import HomeListCard from '@/components/blog/HomeListCard';
+import TrendingSidebarBox from '@/components/ui/TrendingSidebarBox';
 
 import CategorySearch from '@/components/search/CategorySearch';
 import ContentTypeHeading from '@/components/ui/ContentTypeHeading';
@@ -77,26 +78,7 @@ export default async function NewsListingPage({ searchParams }: Props) {
         {/* -- Sidebar — reordered to the top on mobile (below the search bar), back to the right column at lg+ -- */}
         <aside className="order-first lg:order-none flex flex-col gap-4 pb-0 md:pb-8 md:gap-6 md:w-full self-stretch">
           {/* Popular panel */}
-          <div className="w-full flex flex-col gap-4">
-            {/* "POPULAR" header with accent lines */}
-            <div className="flex items-center gap-3 mb-1">
-              <div className="flex-1 h-[2px] bg-border" />
-              <span
-                className="text-xs font-extrabold tracking-widest uppercase px-2 py-0.5 rounded text-white"
-                style={{ background: 'var(--accent)' }}
-              >
-                Popular News
-              </span>
-              <div className="flex-1 h-[2px] bg-border" />
-            </div>
-
-            {/* Display full list with no scroll container on mobile */}
-            <div className="flex flex-col divide-y-2 divide-border">
-              {popularArticles.map((a) => (
-                <HomeListCard key={a.id} article={a} />
-              ))}
-            </div>
-          </div>
+          <TrendingSidebarBox title="Popular News" articles={popularArticles} />
 
           {/* Sticky Bottom Ad in Sidebar */}
           {adsEnabled && (

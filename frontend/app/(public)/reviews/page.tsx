@@ -1,5 +1,6 @@
 import { fetchReviews, fetchReviewFacets } from '@/lib/api';
 import AdSlot from '@/components/monetization/AdSlot';
+import TrendingSidebarBox from '@/components/ui/TrendingSidebarBox';
 
 const adsEnabled = !!process.env.NEXT_PUBLIC_ADSENSE_ID;
 import { buildMeta } from '@/lib/seo';
@@ -57,26 +58,7 @@ export default async function ReviewsListingPage({ searchParams }: Props) {
         sidebarChildren={
           <>
             {/* Popular Reviews panel */}
-            <div className="w-full flex flex-col gap-4 mt-0 md:mt-8">
-              {/* "POPULAR" header with accent lines */}
-              <div className="flex items-center gap-3 mb-1">
-                <div className="flex-1 h-[2px] bg-border" />
-                <span
-                  className="text-xs font-extrabold tracking-widest uppercase px-2 py-0.5 rounded text-white"
-                  style={{ background: 'var(--accent)' }}
-                >
-                  Popular Reviews
-                </span>
-                <div className="flex-1 h-[2px] bg-border" />
-              </div>
-
-              {/* Display full list with no scroll container on mobile */}
-              <div className="flex flex-col divide-y-2 divide-border">
-                {popularArticles.map((a) => (
-                  <HomeListCard key={a.id} article={a} />
-                ))}
-              </div>
-            </div>
+            <TrendingSidebarBox title="Popular Reviews" articles={popularArticles} />
 
             {/* Sticky Bottom Ad in Sidebar */}
             {adsEnabled && (

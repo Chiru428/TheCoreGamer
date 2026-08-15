@@ -49,7 +49,7 @@ export async function GET(
       prisma.game.findMany({
         where: { gameModes: { has: exactMode } },
         orderBy: [
-          { avgUserScore: { sort: 'desc', nulls: 'last' } },
+          { aggregatedRating: { sort: 'desc', nulls: 'last' } },
           { totalRating: { sort: 'desc', nulls: 'last' } }
         ],
         take: 60,

@@ -27,6 +27,7 @@ export default function GamesFilterSidebar({ facets }: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [isMainOpen, setIsMainOpen] = useState(false);
 
   const handleToggle = (paramKey: string, value: string) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -56,15 +57,26 @@ export default function GamesFilterSidebar({ facets }: Props) {
   const hasAnyFilter = FILTER_CONFIG.some(config => getSelected(config.id).length > 0);
 
   return (
-    <div className="w-full bg-transparent border-2 border-border rounded-none overflow-hidden mb-2">
-      <div className="w-full flex items-center justify-between p-4 border-b-2 border-border">
+    <div className="w-full bg-[var(--bg2)] px-7 mb-6">
+      <button 
+        onClick={() => setIsMainOpen(!isMainOpen)}
+        className="w-full h-[60px] lg:h-auto lg:pt-5 lg:pb-3 flex items-center justify-between transition-colors group lg:cursor-default lg:pointer-events-none"
+      >
         <div className="flex items-center gap-2 font-black tracking-widest uppercase text-text text-[15px]">
-          <Filter className="w-4 h-4 text-text-muted" />
+          <Filter className="w-4 h-4 text-text-muted group-hover:text-[var(--brand-green)] transition-colors" />
           Filter
           {hasAnyFilter && <span className="ml-2 w-2 h-2 rounded-full bg-[var(--brand-green)]"></span>}
         </div>
-      </div>
-      <div className="flex flex-col px-4 pb-2">
+        <div className="lg:hidden">
+          {isMainOpen ? (
+            <ChevronUp className="w-5 h-5 text-text-muted group-hover:text-[var(--brand-green)] transition-colors" />
+          ) : (
+            <ChevronDown className="w-5 h-5 text-text-muted group-hover:text-[var(--brand-green)] transition-colors" />
+          )}
+        </div>
+      </button>
+
+      <div className={`transition-all duration-300 ease-in-out flex-col lg:max-h-[80vh] lg:opacity-100 lg:overflow-y-auto lg:no-scrollbar lg:pb-5 ${isMainOpen ? 'max-h-[2500px] opacity-100 flex pb-5 pt-4 overflow-hidden' : 'max-h-0 opacity-0 overflow-hidden hidden lg:flex lg:pt-2'}`}>
       {FILTER_CONFIG.map((config) => {
         const facetValues = facets[config.facetKey] || [];
         const selectedValues = getSelected(config.id);

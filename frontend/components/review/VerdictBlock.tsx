@@ -4,8 +4,8 @@ interface VerdictBlockProps {
 
 export default function VerdictBlock({ verdict }: VerdictBlockProps) {
   return (
-    <div className="my-8 rounded-xl bg-gradient-to-br from-accent/10 to-accent-green/10 border border-accent/20 p-6">
-      <h3 className="text-lg font-bold text-text-primary mb-4">The Verdict</h3>
+    <div className="my-8 px-7 py-5 bg-[var(--bg2)]">
+      <h3 className="text-lg font-bold text-text-primary mb-4 pb-3 border-b-2 border-[#00e5a0]">The Verdict</h3>
       <p className="text-text-muted leading-relaxed">{verdict}</p>
     </div>
   );

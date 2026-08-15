@@ -28,8 +28,8 @@ export default async function GamesPage({ searchParams }: { searchParams: Promis
 
   return (
     <>
-      <PageHeader title={pageTitle} description="Browse games for reviews, mod guides, and news" titleFontFamily="'IBM Plex Serif', serif" />
-      <div className="w-full max-w-[1280px] mx-auto px-4 md:px-6 pb-12">
+      <PageHeader title={pageTitle} description="Browse games for reviews, mod guides, and news" />
+      <div className="w-full max-w-[1280px] mx-auto px-4 md:px-6 xl:px-0 pb-12">
       <div className="mb-4 flex flex-col gap-3">
         <div className="flex justify-end pb-2">
           <CategorySearch indexName="games" placeholder="Search games..." />

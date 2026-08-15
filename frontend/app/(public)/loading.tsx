@@ -1,38 +1,45 @@
-import Skeleton from '@/components/ui/Skeleton';
+import React from 'react';
 
-/* -- Shared pieces, mirroring the section helpers in page.tsx ------- */
-
-function SectionHeadSkeleton({ width = 'w-40' }: { width?: string }) {
-  return <Skeleton className={`h-7 ${width} mb-4`} />;
-}
-
-function SubHeadSkeleton() {
+function SectionHeadSkeleton({ className = "mb-4" }: { className?: string }) {
   return (
-    <div className="flex items-center gap-2 mb-4">
-      <span style={{ width: '3px', height: '18px', background: 'var(--accent)', borderRadius: '2px', display: 'inline-block' }} />
-      <Skeleton className="h-5 w-32" />
+    <div className={`flex flex-col items-start ${className}`}>
+      <div className="w-[60px] h-[6px] bg-border mb-2 rounded" />
+      <div className="shimmer h-[30px] w-[180px] rounded" />
     </div>
   );
 }
 
-function SeeMoreBtnSkeleton() {
-  return <Skeleton className="mt-7 h-[33px] w-[160px] rounded-full" />;
+function SeeMoreBtnSkeleton({ className = "" }: { className?: string }) {
+  return (
+    <div className={`mt-7 flex justify-center sm:justify-start ${className}`}>
+      <div className="shimmer h-[33px] w-full sm:w-[160px] rounded-full" />
+    </div>
+  );
 }
 
-/** Mirrors HomePostCard.tsx: image, meta line, 2-line title, optional excerpt. */
-function HomePostCardSkeleton({ big = false, imageClassName = 'aspect-[16/9]' }: { big?: boolean; imageClassName?: string }) {
+function AdSlotSkeleton({ id }: { id: string }) {
   return (
-    <div className="flex flex-col h-full">
-      <Skeleton className={`w-full rounded-none ${imageClassName}`} />
-      <div className="flex-1 flex flex-col pt-2">
-        <Skeleton className="h-3 w-24 mb-2" />
-        <Skeleton className={`w-full mb-2 ${big ? 'h-5' : 'h-4'}`} />
-        <Skeleton className={`w-3/4 ${big ? 'h-5' : 'h-4'}`} />
+    <div className="w-full flex items-center justify-center py-5 bg-[var(--bg2)] border-y border-[var(--border)] relative overflow-hidden">
+      <div className="w-full max-w-[970px] min-h-[250px] flex flex-col items-center justify-center">
+         <div className="w-[100px] h-[12px] bg-gray-800/30 rounded mb-4" />
+         <div className="w-full max-w-[728px] h-[90px] shimmer rounded border border-border/50" />
+      </div>
+    </div>
+  );
+}
+
+/* -- Exact PostCard shape ----------------------------- */
+function PostCardSkeleton({ big = false, compact = false, horizontalMobile = false }) {
+  return (
+    <div className={`flex h-full ${horizontalMobile ? 'flex-row sm:flex-col items-start gap-3 sm:gap-0' : 'flex-col'}`}>
+      <div className={`${horizontalMobile ? 'w-[45%] sm:w-full' : 'w-full'} aspect-[16/9] shrink-0 shimmer`} />
+      <div className={`flex-1 flex flex-col w-full ${horizontalMobile ? 'pt-0 sm:pt-4' : 'pt-4'}`}>
+        <div className={`w-full mb-2.5 ${big ? 'h-6' : 'h-5'} shimmer rounded`} />
+        <div className={`w-3/4 mb-4 ${big ? 'h-6' : 'h-5'} shimmer rounded`} />
         {big && (
-          <div className="space-y-2 mt-3">
-            <Skeleton className="h-3.5 w-full" />
-            <Skeleton className="h-3.5 w-full" />
-            <Skeleton className="h-3.5 w-2/3" />
+          <div className="space-y-2.5 mt-2 hidden md:block">
+            <div className="h-4 w-full shimmer rounded" />
+            <div className="h-4 w-2/3 shimmer rounded" />
           </div>
         )}
       </div>
@@ -40,226 +47,244 @@ function HomePostCardSkeleton({ big = false, imageClassName = 'aspect-[16/9]' }:
   );
 }
 
-/** Mirrors the connector-line timeline used by "Latest" (Reviews/News) and "Popular This Week" (Hero). */
-function TimelineListSkeleton({ count }: { count: number }) {
-  return (
-    <div className="flex flex-col overflow-hidden">
-      {Array.from({ length: count }).map((_, i) => (
-        <div key={i} className={`flex items-stretch gap-3${i !== count - 1 ? ' mb-7' : ''}`}>
-          <div className="flex-1 min-w-0 flex flex-col">
-            <div className="flex items-center gap-3">
-              <Skeleton className="h-2.5 w-[30px]" />
-              <Skeleton className="h-2.5 w-12" />
-            </div>
-            <div className="flex gap-3 mt-2">
-              <div className="shrink-0" style={{ width: '46px' }} />
-              <Skeleton className="h-4 flex-1" />
-            </div>
-          </div>
-          <Skeleton className="w-24 h-14 shrink-0 rounded-none" />
-        </div>
-      ))}
-    </div>
-  );
-}
-
-/** Deals / Core Picks / Strategy Guides / Mod Guides / Features / Opinions all share this shape now:
-    SectionHead + 1 big card + 3 regular cards + See more. */
-function StandardCardSectionSkeleton() {
-  return (
-    <>
-      <SectionHeadSkeleton />
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
-        <HomePostCardSkeleton big imageClassName="aspect-[16/9] md:aspect-auto md:h-[164px]" />
-        {Array.from({ length: 3 }).map((_, i) => (
-          <HomePostCardSkeleton key={i} imageClassName="aspect-[16/9] md:aspect-auto md:h-[164px]" />
-        ))}
-      </div>
-      <SeeMoreBtnSkeleton />
-    </>
-  );
-}
-
-/** Reviews / News: header row with a red "Latest" label, 3 cards + a timeline column. */
-function LatestFeedSectionSkeleton({ headWidth }: { headWidth?: string }) {
-  return (
-    <>
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-5 mb-4">
-        <div className="md:col-span-3 flex items-center">
-          <SectionHeadSkeleton width={headWidth} />
-        </div>
-        <div className="hidden md:flex items-center justify-center">
-          <Skeleton className="h-4 w-16" />
-        </div>
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
-        <HomePostCardSkeleton big />
-        {Array.from({ length: 2 }).map((_, i) => (
-          <HomePostCardSkeleton key={i} />
-        ))}
-        <TimelineListSkeleton count={8} />
-      </div>
-      <SeeMoreBtnSkeleton />
-    </>
-  );
-}
-
-/** PollWidget already shows its own internal loading state once mounted — this just reserves space. */
-function PollSkeleton() {
-  return (
-    <div className="w-full max-w-[1280px] mx-auto px-4 lg:px-0">
-      <div className="grid md:grid-cols-4 gap-5">
-        <div className="md:col-span-3 flex justify-center">
-          <div className="w-full max-w-[800px] p-6 border-2 border-border rounded-xl space-y-4">
-            <Skeleton className="h-5 w-2/3" />
-            {Array.from({ length: 3 }).map((_, i) => (
-              <Skeleton key={i} className="h-8 w-full rounded-lg" />
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/** Static placeholder markup — identical in the real page, so it's reused as-is rather than "skeletonized". */
-function AdSlotPlaceholder() {
-  return (
-    <div className="w-full h-[250px] bg-[var(--bg2)]/50 border border-[var(--border)]/50 flex flex-col items-center justify-center my-6 animate-pulse">
-      <div className="w-[100px] h-[12px] bg-gray-800/50 rounded mb-4" />
-      <div className="w-full max-w-[728px] h-[90px] bg-bg-primary/50 border border-border/50 rounded" />
-    </div>
-  );
-}
-
-/** Mirrors HeroSection.tsx: desktop 2-col (hero image + 3 cards / Popular This Week list), mobile stacked. */
+/* -- Exactly Hero Section ----------------------------- */
 function HeroSkeleton() {
   return (
-    <section className="relative overflow-hidden mt-4 md:mt-0" style={{ background: 'var(--bg)' }}>
+    <div className="w-full" style={{ background: 'var(--bg)' }}>
       {/* Desktop */}
       <div className="hidden md:grid w-full max-w-[1280px] mx-auto px-4 lg:px-0 pt-8" style={{ gridTemplateColumns: '1fr 300px', gap: '30px' }}>
+        
+        {/* Left Col (Main + 3 sub) */}
         <div className="flex flex-col gap-5">
-          <Skeleton className="w-full rounded-none" style={{ aspectRatio: '16/9' }} />
-          <div className="flex gap-5 justify-between">
-            {Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} style={{ width: '293px' }} className="shrink-0 flex flex-col gap-2">
-                <Skeleton className="w-full aspect-[16/9] rounded-none" />
-                <Skeleton className="h-5 w-full" />
-                <Skeleton className="h-5 w-2/3" />
-              </div>
-            ))}
+          <div className="w-full aspect-[16/9] shimmer rounded-sm" />
+          <div className="flex gap-5 justify-between h-[280px]">
+             {Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className="w-[293px] shrink-0 h-full">
+                  <PostCardSkeleton />
+                </div>
+             ))}
           </div>
         </div>
-        <div>
-          <Skeleton className="h-4 w-40 mb-6" />
-          <TimelineListSkeleton count={9} />
+
+        {/* Right Col (Top Stories) */}
+        <div className="relative h-[900px]">
+          <div className="flex items-center w-full gap-4 mb-6">
+            <div className="flex-1 h-[2px] bg-[var(--border)]"></div>
+            <div className="h-[20px] w-[140px] shimmer rounded"></div>
+            <div className="flex-1 h-[2px] bg-[var(--border)]"></div>
+          </div>
+          <div className="flex flex-col flex-1">
+             {Array.from({ length: 8 }).map((_, i) => (
+               <div key={i} className="flex items-center gap-4 mb-7">
+                 <div className="flex-1 flex flex-col gap-2">
+                   <div className="h-4 w-full shimmer rounded" />
+                   <div className="h-4 w-3/4 shimmer rounded" />
+                 </div>
+                 <div className="w-[114px] h-[64px] shrink-0 shimmer rounded-sm" />
+               </div>
+             ))}
+          </div>
         </div>
+
       </div>
 
       {/* Mobile */}
       <div className="md:hidden">
-        <Skeleton className="w-full rounded-none" style={{ aspectRatio: '16/9' }} />
-        <div className="px-4 pt-5 grid grid-cols-1 gap-4">
-          {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="flex gap-3">
-              <Skeleton className="h-[90px] w-[140px] shrink-0 rounded-none" />
-              <div className="flex-1 space-y-2 pt-1">
-                <Skeleton className="h-4 w-full" />
-                <Skeleton className="h-4 w-2/3" />
-              </div>
-            </div>
-          ))}
+        <div className="w-full aspect-[16/9] shimmer rounded-none" />
+        <div className="px-4 pt-5 flex flex-col gap-5">
+          <PostCardSkeleton big />
+          <div className="grid grid-cols-2 gap-4">
+             <PostCardSkeleton />
+             <PostCardSkeleton />
+          </div>
         </div>
-        <div className="px-4 pt-6 pb-2">
-          <Skeleton className="h-4 w-40 mb-6" />
-          <TimelineListSkeleton count={6} />
+      </div>
+    </div>
+  );
+}
+
+/* -- Exactly NewsWithTrending ------------------------ */
+function NewsWithTrendingSkeleton({ sidebarTitle }: { sidebarTitle: string }) {
+  return (
+    <div className="flex flex-col lg:flex-row gap-6 lg:gap-10">
+      {/* Left Col */}
+      <div className="flex-1 min-w-0">
+        <div className="mb-6">
+           <PostCardSkeleton big />
         </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-5">
+           {Array.from({ length: 4 }).map((_, i) => (
+             <PostCardSkeleton key={i} horizontalMobile />
+           ))}
+        </div>
+      </div>
+      
+      {/* Right Col */}
+      <aside className="w-full lg:w-[320px] xl:w-[360px] shrink-0">
+        <div className="flex items-center gap-3 mb-6">
+           <div className="h-[30px] w-[160px] shimmer rounded" />
+           <div className="flex-1 h-[2px] bg-border" />
+        </div>
+        <div className="flex flex-col">
+           {Array.from({ length: 6 }).map((_, i) => (
+             <div key={i} className="flex items-start gap-3 py-4 border-b border-border last:border-0">
+               <div className="w-8 font-bold text-2xl text-border shimmer-text">{(i+1).toString().padStart(2, '0')}</div>
+               <div className="flex-1 flex flex-col gap-2 pt-1">
+                 <div className="h-[18px] w-full shimmer rounded" />
+                 <div className="h-[18px] w-4/5 shimmer rounded" />
+               </div>
+             </div>
+           ))}
+        </div>
+      </aside>
+    </div>
+  );
+}
+
+/* -- Exactly ReviewsGrid ----------------------------- */
+function ReviewsGridSkeleton({ count = 6 }) {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+       {Array.from({ length: count }).map((_, i) => (
+         <PostCardSkeleton key={i} big={i===0} horizontalMobile={i>0} />
+       ))}
+    </div>
+  );
+}
+
+/* -- Exactly Games Overlay Section ------------------- */
+function GamesOverlaySkeleton() {
+  return (
+    <section className="relative w-[100vw] left-[50%] -translate-x-1/2 mb-10 md:mb-14 py-5 overflow-hidden border-y border-white/10 shadow-2xl">
+      <div className="absolute inset-0 w-full h-full bg-[var(--bg2)] pointer-events-none" />
+      <div className="relative z-10 w-full max-w-[1280px] mx-auto px-4 lg:px-0">
+         <SectionHeadSkeleton className="mb-6" />
+         <div className="mb-6">
+           {/* Tab Bar */}
+           <div className="flex gap-6 mb-8 overflow-hidden">
+             {Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className="h-6 w-[120px] shimmer rounded-sm" />
+             ))}
+           </div>
+           {/* 4 Cards */}
+           <div className="grid grid-cols-2 gap-5 md:grid-cols-4 md:gap-6">
+             {Array.from({ length: 4 }).map((_, i) => (
+               <div key={i} className="block overflow-hidden">
+                 <div className="w-full aspect-[2/3] shimmer rounded border border-border" />
+                 <div className="pt-4 flex flex-col gap-2">
+                   <div className="h-[20px] w-full shimmer rounded" />
+                   <div className="h-[16px] w-3/4 shimmer rounded" />
+                 </div>
+               </div>
+             ))}
+           </div>
+         </div>
+         <SeeMoreBtnSkeleton />
       </div>
     </section>
   );
 }
 
-function GamesSectionSkeleton() {
-  const row = (
-    <div className="grid grid-cols-2 gap-5 md:flex md:gap-8 md:justify-between">
-      {Array.from({ length: 4 }).map((_, i) => (
-        <div key={i} className="md:w-[296px] md:shrink-0">
-          <Skeleton className="aspect-[2/3] w-full rounded-none" />
-          <div className="pt-4">
-            <Skeleton className="h-5 w-full mb-1.5" />
-            <Skeleton className="h-3.5 w-1/2" />
-          </div>
-        </div>
-      ))}
-    </div>
-  );
+/* -- Exactly Discovery Tabs Section ------------------- */
+function DiscoveryTabsSkeleton() {
   return (
-    <>
-      <SectionHeadSkeleton width="w-28" />
-      <div className="mb-8">
-        <SubHeadSkeleton />
-        {row}
+    <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 mb-0">
+      
+      {/* Left Col (845px max) */}
+      <div className="w-full" style={{ maxWidth: '845px' }}>
+         <SectionHeadSkeleton />
+         <div className="w-full overflow-hidden mb-5 border-b border-border">
+           <div className="flex">
+             {Array.from({ length: 5 }).map((_, i) => (
+               <div key={i} className="mr-7 pb-2.5 h-4 w-[80px] shimmer rounded-sm" />
+             ))}
+           </div>
+         </div>
+         <div className="flex flex-col mt-4">
+           <div className="mb-4">
+             <PostCardSkeleton big />
+           </div>
+           <div className="grid grid-cols-2 gap-4 lg:gap-5 mt-4">
+             {Array.from({ length: 6 }).map((_, i) => (
+               <PostCardSkeleton key={i} horizontalMobile />
+             ))}
+           </div>
+         </div>
       </div>
-      <div>
-        <SubHeadSkeleton />
-        {row}
+
+      {/* Right Col (Poll) */}
+      <div className="flex-1 w-full min-w-0 mt-2 lg:mt-[145px]">
+         <div className="w-full h-[350px] shimmer rounded-xl border border-border" />
       </div>
-      <SeeMoreBtnSkeleton />
-    </>
+      
+    </div>
   );
 }
 
+
 export default function HomepageLoading() {
   return (
-    <div style={{ background: 'var(--bg)' }}>
+    <div className="home-page-root" style={{ background: 'var(--bg)' }}>
+      {/* TOP AD */}
+      <div className="hidden sm:block">
+        <AdSlotSkeleton id="ADS-01" />
+      </div>
+      
       <HeroSkeleton />
+      
+      {/* MOBILE AD */}
+      <div className="sm:hidden block">
+        <AdSlotSkeleton id="ADS-01m" />
+      </div>
 
-      <div className="w-full max-w-[1280px] mx-auto px-4 lg:px-0 pt-10 md:pt-14 pb-7">
-        <section className="mb-10 md:mb-14 last:mb-0">
-          <GamesSectionSkeleton />
+      <div className="w-full max-w-[1280px] mx-auto px-4 lg:px-0 pt-10 md:pt-14 pb-0">
+        
+        {/* LATEST NEWS */}
+        <section className="mb-14 md:mb-20">
+           <SectionHeadSkeleton />
+           <NewsWithTrendingSkeleton sidebarTitle="Trending News" />
+           <SeeMoreBtnSkeleton />
         </section>
 
-        <section className="mb-10 md:mb-14 last:mb-0">
-          <LatestFeedSectionSkeleton headWidth="w-28" />
+        {/* REVIEWS */}
+        <section className="mb-10 md:mb-14">
+           <SectionHeadSkeleton />
+           <ReviewsGridSkeleton count={6} />
+           <SeeMoreBtnSkeleton />
         </section>
 
-        <AdSlotPlaceholder />
+        {/* AD SLOT 02 */}
+        <div className="mb-10 md:mb-14 flex justify-center w-full">
+           <AdSlotSkeleton id="ADS-02" />
+        </div>
 
-        <section className="mb-14 md:mb-20 last:mb-0">
-          <LatestFeedSectionSkeleton headWidth="w-44" />
+        {/* POLL */}
+        <section className="mb-14 md:mb-20 flex justify-center w-full">
+           <div className="w-full max-w-[800px] h-[350px] shimmer rounded-xl border border-border" />
         </section>
 
-        <section className="mb-14 md:mb-20 last:mb-0">
-          <PollSkeleton />
+        {/* GAMES */}
+        <GamesOverlaySkeleton />
+
+        {/* DEALS */}
+        <section className="mb-10 md:mb-14">
+           <SectionHeadSkeleton />
+           <ReviewsGridSkeleton count={6} />
+           <SeeMoreBtnSkeleton />
         </section>
 
-        <section className="mb-10 md:mb-14 last:mb-0">
-          <StandardCardSectionSkeleton />
+        {/* GUIDES */}
+        <section className="mb-14 md:mb-20">
+           <SectionHeadSkeleton />
+           <NewsWithTrendingSkeleton sidebarTitle="Popular Guides" />
+           <SeeMoreBtnSkeleton />
         </section>
 
-        <section className="mb-10 md:mb-14 last:mb-0">
-          <StandardCardSectionSkeleton />
+        {/* DISCOVERY */}
+        <section className="mb-14 md:mb-20">
+           <DiscoveryTabsSkeleton />
         </section>
 
-        <section className="mb-10 md:mb-14 last:mb-0">
-          <StandardCardSectionSkeleton />
-        </section>
-
-        <section className="mb-10 md:mb-14 last:mb-0">
-          <StandardCardSectionSkeleton />
-        </section>
-
-        <section className="mb-14 md:mb-20 last:mb-0">
-          <PollSkeleton />
-        </section>
-
-        <section className="mb-10 md:mb-14 last:mb-0">
-          <StandardCardSectionSkeleton />
-        </section>
-
-        <section className="mb-10 md:mb-14 last:mb-0">
-          <StandardCardSectionSkeleton />
-        </section>
       </div>
     </div>
   );

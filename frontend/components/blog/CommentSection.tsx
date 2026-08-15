@@ -229,175 +229,179 @@ function CommentForm({
         </div>
       )}
 
-      {/* Format toolbar */}
-      <div className="flex items-center gap-0.5 mb-1 relative flex-wrap border border-border rounded-lg px-2 py-1.5 bg-bg-surface">
-        {/* GIF */}
-        <div className="relative" ref={gifPickerRef}>
-          <button type="button" onClick={() => setShowGifPicker(v => !v)} title="Add GIF" className="p-1.5 rounded hover:bg-bg-primary text-text-muted hover:text-text-primary transition-colors text-[10px] font-bold tracking-tight flex items-center justify-center" style={{ width: 28, height: 28, border: '1.5px solid currentColor', borderRadius: 4, fontSize: 10 }}>
-            GIF
-          </button>
-          {showGifPicker && (
-            <div className="absolute top-full left-0 mt-1 z-50 w-64 p-2 rounded-xl border border-border bg-bg-surface shadow-2xl">
-              <input
-                type="text"
-                value={gifQuery}
-                onChange={(e) => setGifQuery(e.target.value)}
-                placeholder="Search GIFs..."
-                aria-label="Search GIFs"
-                autoFocus
-                className="w-full px-2 py-1.5 mb-2 bg-bg-primary border border-border rounded-lg text-xs text-text-primary placeholder:text-text-dim focus:border-accent outline-none"
-              />
-              {gifLoading ? (
-                <div className="grid grid-cols-3 gap-1">
-                  {Array.from({ length: 6 }).map((_, i) => (
-                    <div key={i} className="shimmer rounded" style={{ height: '80px' }} />
-                  ))}
-                </div>
-              ) : gifResults.length > 0 ? (
-                <div className="grid grid-cols-3 gap-1 max-h-48 overflow-y-auto">
-                  {gifResults.map((gif) => (
-                    <button
-                      key={gif.id}
-                      type="button"
-                      onClick={() => selectGif(gif)}
-                      className="relative overflow-hidden rounded hover:ring-2 hover:ring-accent transition-all"
-                      style={{ height: '80px' }}
-                    >
-                      <Image src={gif.previewUrl} alt={gif.title} fill unoptimized className="object-cover" sizes="80px" />
-                    </button>
-                  ))}
-                </div>
-              ) : (
-                <p className="text-xs text-text-dim text-center py-4">No GIFs found</p>
-              )}
-              {/* Required by Giphy ToS: https://developers.giphy.com/docs/sdk#attribution */}
-              <p className="text-[10px] text-text-dim text-right mt-1 pr-0.5 opacity-60 select-none">
-                Powered by GIPHY
-              </p>
-            </div>
+      <div className="border border-border rounded-xl overflow-visible bg-[var(--bg)] focus-within:ring-1 focus-within:ring-accent transition-shadow">
+        
+        <div className="relative pt-3 pb-2 px-3">
+          {editorEmpty && (
+            <span className="absolute top-3 left-4 text-sm text-text-dim pointer-events-none select-none z-10">
+              {isInline ? 'Add a reply...' : 'Join the discussion...'}
+            </span>
           )}
-        </div>
-
-        {/* Emoji */}
-        <div className="relative" ref={emojiPickerRef}>
-          <button type="button" onClick={() => setShowEmojiPicker(v => !v)} title="Add emoji" className="p-1.5 rounded hover:bg-bg-primary text-text-muted hover:text-text-primary transition-colors flex items-center justify-center" style={{ width: 28, height: 28 }}>
-            <Smile className="w-3.5 h-3.5" />
-          </button>
-          {showEmojiPicker && (
-            <div className="absolute top-full left-0 mt-1 z-50">
-              <EmojiPicker
-                onEmojiClick={(emojiData: { emoji: string }) => insertEmoji(emojiData.emoji)}
-                theme={theme === 'dark' ? EmojiPickerTheme.DARK : EmojiPickerTheme.LIGHT}
-                emojiStyle={EmojiStyle.NATIVE}
-                width={300}
-                height={360}
-                searchDisabled={false}
-                skinTonesDisabled
-                lazyLoadEmojis
-                previewConfig={{ showPreview: false }}
-              />
-            </div>
-          )}
-        </div>
-
-        {/* Divider */}
-        <span className="w-px h-4 bg-border mx-1" />
-
-        {/* Bold */}
-        <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => applyFormat('bold')} title="Bold" className={toolbarBtnCls(activeFormats.has('bold'))}>
-          <Bold className="w-3.5 h-3.5" />
-        </button>
-
-        {/* Italic */}
-        <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => applyFormat('italic')} title="Italic" className={toolbarBtnCls(activeFormats.has('italic'))}>
-          <Italic className="w-3.5 h-3.5" />
-        </button>
-
-        {/* Underline */}
-        <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => applyFormat('underline')} title="Underline" className={toolbarBtnCls(activeFormats.has('underline'))}>
-          <Underline className="w-3.5 h-3.5" />
-        </button>
-
-        {/* Strikethrough */}
-        <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => applyFormat('strikethrough')} title="Strikethrough" className={toolbarBtnCls(activeFormats.has('strikethrough'))}>
-          <Strikethrough className="w-3.5 h-3.5" />
-        </button>
-
-        {/* Link */}
-        <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => applyFormat('link')} title="Link" className={toolbarBtnCls(activeFormats.has('link'))}>
-          <LinkIcon className="w-3.5 h-3.5" />
-        </button>
-
-        {/* Spoiler / Hide */}
-        <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => applyFormat('spoiler')} title="Spoiler" className={toolbarBtnCls(activeFormats.has('spoiler'))}>
-          <EyeOff className="w-3.5 h-3.5" />
-        </button>
-
-        {/* Code */}
-        <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => applyFormat('code')} title="Inline Code" className={toolbarBtnCls(activeFormats.has('code'))}>
-          <Code className="w-3.5 h-3.5" />
-        </button>
-
-        {/* Blockquote */}
-        <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => applyFormat('blockquote')} title="Blockquote" className={toolbarBtnCls(activeFormats.has('blockquote'))}>
-          <Quote className="w-3.5 h-3.5" />
-        </button>
-
-        {/* Mention */}
-        <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => applyFormat('mention')} title="Mention" className="p-1.5 rounded hover:bg-bg-primary text-text-muted hover:text-text-primary transition-colors">
-          <AtSign className="w-3.5 h-3.5" />
-        </button>
-      </div>
-
-      {gifPreview && (
-        <div className="relative inline-block mb-2">
-          <Image
-            src={gifPreview.previewUrl}
-            alt={gifPreview.title}
-            width={160}
-            height={120}
-            unoptimized
-            className="rounded-lg object-cover border border-border"
-            style={{ maxWidth: '160px', height: 'auto' }}
+          <div
+            ref={bodyRef}
+            id={isInline ? 'reply-textarea' : 'main-textarea'}
+            contentEditable
+            suppressContentEditableWarning
+            onInput={handleContentEditableInput}
+            onKeyUp={updateActiveFormats}
+            onMouseUp={updateActiveFormats}
+            onFocus={updateActiveFormats}
+            className={editorCls}
+            style={{ minHeight: isInline ? '60px' : '80px' }}
           />
-          <button
-            type="button"
-            onClick={removeGif}
-            className="absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 rounded-full bg-bg-primary border border-border text-text-muted hover:text-danger transition-colors"
-            aria-label="Remove GIF"
-            title="Remove GIF"
-          >
-            <X className="w-3.5 h-3.5" />
-          </button>
         </div>
-      )}
-      <div className="relative">
-        {editorEmpty && (
-          <span className="absolute top-3 left-4 text-sm text-text-dim pointer-events-none select-none z-10">
-            {isInline ? 'Add a reply...' : 'Share your thoughts...'}
-          </span>
-        )}
-        <div
-          ref={bodyRef}
-          id={isInline ? 'reply-textarea' : 'main-textarea'}
-          contentEditable
-          suppressContentEditableWarning
-          onInput={handleContentEditableInput}
-          onKeyUp={updateActiveFormats}
-          onMouseUp={updateActiveFormats}
-          onFocus={updateActiveFormats}
-          className={editorCls}
-          style={{ minHeight: isInline ? '60px' : '80px' }}
-        />
-      </div>
 
-      {errors.body && <p className="text-xs text-danger mt-1">{String(errors.body.message)}</p>}
-
-      <div className="flex items-center justify-end gap-2 mt-2">
-        {isInline && (
-          <Button type="button" variant="ghost" size="sm" onClick={() => { setReplyTo(null); reset({ body: '' }); setGifPreview(null); clearEditor(); }}>Cancel</Button>
+        {gifPreview && (
+          <div className="relative inline-block mb-2 ml-3">
+            <Image
+              src={gifPreview.previewUrl}
+              alt={gifPreview.title}
+              width={160}
+              height={120}
+              unoptimized
+              className="rounded-lg object-cover border border-border"
+              style={{ maxWidth: '160px', height: 'auto' }}
+            />
+            <button
+              type="button"
+              onClick={removeGif}
+              className="absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 rounded-full bg-bg-primary border border-border text-text-muted hover:text-danger transition-colors"
+              aria-label="Remove GIF"
+              title="Remove GIF"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
         )}
-        <Button type="submit" size="sm" loading={isSubmitting}>{isInline ? 'Reply' : 'Post Comment'}</Button>
+
+        {/* Format toolbar */}
+        <div className="flex items-center justify-between gap-2 px-2 py-2 border-t border-border bg-[var(--bg2)] rounded-b-xl">
+          <div className="flex items-center gap-0.5 flex-wrap">
+            {/* GIF */}
+            <div className="relative" ref={gifPickerRef}>
+              <button type="button" onClick={() => setShowGifPicker(v => !v)} title="Add GIF" className="p-1.5 rounded hover:bg-bg-primary text-text-muted hover:text-text-primary transition-colors text-[10px] font-bold tracking-tight flex items-center justify-center" style={{ width: 28, height: 28, border: '1.5px solid currentColor', borderRadius: 4, fontSize: 10 }}>
+                GIF
+              </button>
+              {showGifPicker && (
+                <div className="absolute top-full left-0 mt-1 z-50 w-64 p-2 rounded-xl border border-border bg-bg-surface shadow-2xl">
+                  <input
+                    type="text"
+                    value={gifQuery}
+                    onChange={(e) => setGifQuery(e.target.value)}
+                    placeholder="Search GIFs..."
+                    aria-label="Search GIFs"
+                    autoFocus
+                    className="w-full px-2 py-1.5 mb-2 bg-bg-primary border border-border rounded-lg text-xs text-text-primary placeholder:text-text-dim focus:border-accent outline-none"
+                  />
+                  {gifLoading ? (
+                    <div className="grid grid-cols-3 gap-1">
+                      {Array.from({ length: 6 }).map((_, i) => (
+                        <div key={i} className="shimmer rounded" style={{ height: '80px' }} />
+                      ))}
+                    </div>
+                  ) : gifResults.length > 0 ? (
+                    <div className="grid grid-cols-3 gap-1 max-h-48 overflow-y-auto">
+                      {gifResults.map((gif) => (
+                        <button
+                          key={gif.id}
+                          type="button"
+                          onClick={() => selectGif(gif)}
+                          className="relative overflow-hidden rounded hover:ring-2 hover:ring-accent transition-all"
+                          style={{ height: '80px' }}
+                        >
+                          <Image src={gif.previewUrl} alt={gif.title} fill unoptimized className="object-cover" sizes="80px" />
+                        </button>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-xs text-text-dim text-center py-4">No GIFs found</p>
+                  )}
+                  {/* Required by Giphy ToS: https://developers.giphy.com/docs/sdk#attribution */}
+                  <p className="text-[10px] text-text-dim text-right mt-1 pr-0.5 opacity-60 select-none">
+                    Powered by GIPHY
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Emoji */}
+            <div className="relative" ref={emojiPickerRef}>
+              <button type="button" onClick={() => setShowEmojiPicker(v => !v)} title="Add emoji" className="p-1.5 rounded hover:bg-bg-primary text-text-muted hover:text-text-primary transition-colors flex items-center justify-center" style={{ width: 28, height: 28 }}>
+                <Smile className="w-3.5 h-3.5" />
+              </button>
+              {showEmojiPicker && (
+                <div className="absolute top-full left-0 mt-1 z-50">
+                  <EmojiPicker
+                    onEmojiClick={(emojiData: { emoji: string }) => insertEmoji(emojiData.emoji)}
+                    theme={theme === 'dark' ? EmojiPickerTheme.DARK : EmojiPickerTheme.LIGHT}
+                    emojiStyle={EmojiStyle.NATIVE}
+                    width={300}
+                    height={360}
+                    searchDisabled={false}
+                    skinTonesDisabled
+                    lazyLoadEmojis
+                    previewConfig={{ showPreview: false }}
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Divider */}
+            <span className="w-px h-4 bg-border mx-1" />
+
+            {/* Bold */}
+            <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => applyFormat('bold')} title="Bold" className={toolbarBtnCls(activeFormats.has('bold'))}>
+              <Bold className="w-3.5 h-3.5" />
+            </button>
+
+            {/* Italic */}
+            <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => applyFormat('italic')} title="Italic" className={toolbarBtnCls(activeFormats.has('italic'))}>
+              <Italic className="w-3.5 h-3.5" />
+            </button>
+
+            {/* Underline */}
+            <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => applyFormat('underline')} title="Underline" className={toolbarBtnCls(activeFormats.has('underline'))}>
+              <Underline className="w-3.5 h-3.5" />
+            </button>
+
+            {/* Strikethrough */}
+            <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => applyFormat('strikethrough')} title="Strikethrough" className={toolbarBtnCls(activeFormats.has('strikethrough'))}>
+              <Strikethrough className="w-3.5 h-3.5" />
+            </button>
+
+            {/* Link */}
+            <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => applyFormat('link')} title="Link" className={toolbarBtnCls(activeFormats.has('link'))}>
+              <LinkIcon className="w-3.5 h-3.5" />
+            </button>
+
+            {/* Spoiler / Hide */}
+            <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => applyFormat('spoiler')} title="Spoiler" className={toolbarBtnCls(activeFormats.has('spoiler'))}>
+              <EyeOff className="w-3.5 h-3.5" />
+            </button>
+
+            {/* Code */}
+            <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => applyFormat('code')} title="Inline Code" className={toolbarBtnCls(activeFormats.has('code'))}>
+              <Code className="w-3.5 h-3.5" />
+            </button>
+
+            {/* Blockquote */}
+            <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => applyFormat('blockquote')} title="Blockquote" className={toolbarBtnCls(activeFormats.has('blockquote'))}>
+              <Quote className="w-3.5 h-3.5" />
+            </button>
+
+            {/* Mention */}
+            <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => applyFormat('mention')} title="Mention" className="p-1.5 rounded hover:bg-bg-primary text-text-muted hover:text-text-primary transition-colors">
+              <AtSign className="w-3.5 h-3.5" />
+            </button>
+          </div>
+
+          <div className="flex items-center gap-2 shrink-0 pr-1">
+            {isInline && (
+              <Button type="button" variant="ghost" size="sm" onClick={() => { setReplyTo(null); reset({ body: '' }); setGifPreview(null); clearEditor(); }}>Cancel</Button>
+            )}
+            <Button type="submit" size="sm" loading={isSubmitting} className="rounded-full !px-5">{isInline ? 'Reply' : 'Comment'}</Button>
+          </div>
+        </div>
       </div>
     </form>
   );
@@ -770,7 +774,7 @@ export default function CommentSection({ articleId }: CommentSectionProps) {
     }, 50);
   };
 
-  const editorCls = 'w-full px-4 py-3 bg-bg-primary border border-border rounded-xl text-sm text-text-primary focus:border-accent outline-none [&_strong]:font-bold [&_em]:italic [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded [&_code]:bg-bg-surface [&_code]:text-[0.85em] [&_code]:font-mono [&_a]:text-accent [&_a]:underline';
+  const editorCls = 'w-full px-1 text-sm text-text-primary outline-none [&_strong]:font-bold [&_em]:italic [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded [&_code]:bg-bg-surface [&_code]:text-[0.85em] [&_code]:font-mono [&_a]:text-accent [&_a]:underline';
 
   const toolbarBtnCls = (active: boolean) => cn(
     'p-1.5 rounded hover:bg-bg-primary transition-colors',

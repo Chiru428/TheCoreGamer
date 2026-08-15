@@ -54,8 +54,8 @@ export default function CorePicksSection({ articles }: { articles: Article[] }) 
                   )}
                   <span className="shrink-0">{formatDate(article.publishedAt || article.createdAt)}</span>
                 </div>
-                <h3 className="post-card-title text-black dark:text-white text-[22px] font-bold leading-tight group-hover:underline dark:drop-shadow-md mb-2.5">
-                  {article.title}
+                <h3 className="post-card-title text-black dark:text-white text-[22px] font-bold leading-tight dark:drop-shadow-md mb-2.5">
+                  <span className="hover-underline-animation">{article.title}</span>
                 </h3>
                 {article.excerpt && (
                   <p className="text-[16px] text-text-muted line-clamp-3 leading-relaxed">

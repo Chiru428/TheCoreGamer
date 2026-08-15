@@ -1,9 +1,9 @@
-import Skeleton, { RowCardSkeleton, SidebarPanelSkeleton, PageHeaderSkeleton } from '@/components/ui/Skeleton';
+import Skeleton, { RowCardSkeleton, SidebarPanelSkeleton, ContentTypeHeadingSkeleton } from '@/components/ui/Skeleton';
 
 export default function OpinionsLoading() {
   return (
     <>
-      <PageHeaderSkeleton />
+      <ContentTypeHeadingSkeleton />
       <div className="w-full max-w-[1280px] mx-auto px-4 lg:px-0 pb-8">
         <div className="mb-8 flex justify-end">
           <Skeleton className="h-10 w-32 rounded-lg" />
@@ -25,3 +25,4 @@ export default function OpinionsLoading() {
     </>
   );
 }
+

@@ -73,10 +73,10 @@ export default function ArticleRow({ article, showTypeBadge = true, isHero = fal
 
         {/* Title */}
         <h3
-          className={`post-card-title font-bold text-[var(--text)] leading-snug group-hover:underline ${isHero ? 'text-[18px] md:text-[24px]' : 'text-[15px] md:text-[17px]'}`}
+          className={`post-card-title font-bold text-[var(--text)] leading-snug ${isHero ? 'text-[18px] md:text-[24px]' : 'text-[15px] md:text-[17px]'}`}
           style={{ fontFamily: "'Gibson', sans-serif" }}
         >
-          {article.title}
+          <span className="hover-underline-animation">{article.title}</span>
         </h3>
 
         {/* Excerpt */}

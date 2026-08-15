@@ -53,7 +53,7 @@ export async function GET(
       prisma.game.findMany({
         where: { platforms: { hasSome: platformNames } },
         orderBy: [
-          { avgUserScore: { sort: 'desc', nulls: 'last' } },
+          { aggregatedRating: { sort: 'desc', nulls: 'last' } },
           { totalRating: { sort: 'desc', nulls: 'last' } }
         ],
         take: 12,

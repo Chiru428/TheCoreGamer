@@ -581,10 +581,11 @@ function ArticlesResults({ hits, onHitClick }: { hits: AlgoliaArticleHit[] } & H
         {CONTENT_TYPE_LABELS[hit.contentType] || hit.contentType}
        </span>
        <h3
-        className="text-[16px] font-bold uppercase text-text-strong leading-snug group-hover:underline"
+        className="text-[16px] font-bold uppercase text-text-strong leading-snug"
         style={{ fontFamily: '"Gibson", sans-serif' }}
-        dangerouslySetInnerHTML={{ __html: titleHtml }}
-       />
+       >
+         <span className="hover-underline-animation" dangerouslySetInnerHTML={{ __html: titleHtml }} />
+       </h3>
        <div className="flex items-center gap-2 text-[13px] text-text-muted mt-1.5">
         {hit.authorName && <span className="text-[#00e5a0] font-bold">{hit.authorName}</span>}
         {hit.publishedAtISO && <span>{formatDate(hit.publishedAtISO)}</span>}
@@ -635,10 +636,11 @@ function GamesResults({ hits, onHitClick }: { hits: AlgoliaGameHit[] } & HitClic
       </div>
       <div className="pt-3">
        <p
-        className="line-clamp-2 group-hover:underline"
+        className="line-clamp-2"
         style={{ fontSize: '16px', fontWeight: 600, color: 'var(--text)', lineHeight: 1.35, marginBottom: hit.publisher ? '3px' : 0 }}
-        dangerouslySetInnerHTML={{ __html: titleHtml }}
-       />
+       >
+         <span className="hover-underline-animation" dangerouslySetInnerHTML={{ __html: titleHtml }} />
+       </p>
        {hit.publisher && (
         <p className="line-clamp-1" style={{ fontSize: '14px', fontWeight: 500, color: '#fff' }}>
          {hit.publisher}
@@ -738,10 +740,11 @@ function VideosResults({ hits, onHitClick }: { hits: AlgoliaVideoHit[] } & HitCl
       </div>
       <div className="p-2.5">
        <p
-        className="text-sm font-bold text-text-strong truncate group-hover:underline group-hover:underline transition-colors"
+        className="text-sm font-bold text-text-strong truncate transition-colors"
         style={{ fontFamily: '"Gibson", sans-serif' }}
-        dangerouslySetInnerHTML={{ __html: titleHtml }}
-       />
+       >
+         <span className="hover-underline-animation" dangerouslySetInnerHTML={{ __html: titleHtml }} />
+       </p>
        {hit.gameName && <p className="text-xs text-text-muted mt-1">{hit.gameName}</p>}
       </div>
      </Link>

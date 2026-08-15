@@ -76,8 +76,8 @@ export default function EditorialTabsSection({ corePicks, opinions }: EditorialT
                 )}
                 <span className="shrink-0">{formatDate(article.publishedAt || article.createdAt)}</span>
               </div>
-              <h3 className="post-card-title text-black dark:text-white text-[16px] sm:text-[18px] md:text-[22px] font-bold leading-tight group-hover:underline dark:drop-shadow-md mb-1.5 md:mb-2.5">
-                {article.title}
+              <h3 className="post-card-title text-black dark:text-white text-[16px] sm:text-[18px] md:text-[22px] font-bold leading-tight dark:drop-shadow-md mb-1.5 md:mb-2.5">
+                <span className="hover-underline-animation">{article.title}</span>
               </h3>
               {article.excerpt && (
                 <p className="hidden sm:block text-[14px] md:text-[16px] text-text-muted line-clamp-2 md:line-clamp-3 leading-relaxed">

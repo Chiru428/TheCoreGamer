@@ -99,10 +99,10 @@ export default function HeroSection({
                 style={{ background: '#00000066' }}
               >
                 <h1
-                  className="post-card-title hero-main-title group-hover:underline"
+                  className="post-card-title hero-main-title"
                   style={{ fontSize: 'clamp(20px, 2.5vw, 32px)', fontWeight: 700, lineHeight: 1.2, color: '#ffffff', fontFamily: "'Gibson', sans-serif" }}
                 >
-                  {current.title}
+                  <span className="hover-underline-animation">{current.title}</span>
                 </h1>
               </div>
             </div>
@@ -182,8 +182,8 @@ export default function HeroSection({
                             <div className="absolute top-0 -bottom-6 w-[2px] bg-[var(--muted3)] -translate-x-1/2" style={{ left: '50%' }} />
                           )}
                         </div>
-                        <h2 className="flex-1 min-w-0 post-card-title popular-title-acumin transition-colors group-hover:text-accent group-hover:underline !text-[16px]" style={{ fontWeight: 700, lineHeight: 1.35, color: 'var(--text-strong)', fontFamily: "'Gibson', sans-serif" }}>
-                          {article.title}
+                        <h2 className="flex-1 min-w-0 post-card-title popular-title-acumin transition-colors group-hover:text-accent !text-[16px]" style={{ fontWeight: 700, lineHeight: 1.35, color: 'var(--text-strong)', fontFamily: "'Gibson', sans-serif" }}>
+                          <span className="hover-underline-animation">{article.title}</span>
                         </h2>
                       </div>
                     </div>
@@ -225,10 +225,10 @@ export default function HeroSection({
               style={{ background: '#00000066' }}
             >
               <h1
-                className="post-card-title hero-main-title group-hover:underline"
-                style={{ fontSize: 'clamp(18px, 5vw, 24px)', fontWeight: 700, lineHeight: 1.2, color: '#ffffff', fontFamily: "'Gibson', sans-serif" }}
+                className="post-card-title hero-main-title"
+                style={{ fontSize: 'clamp(20px, 4vw, 40px)', fontWeight: 700, lineHeight: 1.1, color: '#ffffff', fontFamily: "'Gibson', sans-serif" }}
               >
-                {current.title}
+                <span className="hover-underline-animation">{current.title}</span>
               </h1>
             </div>
           </div>
@@ -319,8 +319,8 @@ export default function HeroSection({
                           <div className="absolute top-0 -bottom-6 w-[2px] bg-[var(--muted3)] -translate-x-1/2" style={{ left: '50%' }} />
                         )}
                       </div>
-                      <h2 className="flex-1 min-w-0 post-card-title popular-title-acumin transition-colors group-hover:text-accent group-hover:underline !text-[16px]" style={{ fontWeight: 700, lineHeight: 1.35, color: 'var(--text-strong)', fontFamily: "'Gibson', sans-serif" }}>
-                        {article.title}
+                      <h2 className="flex-1 min-w-0 post-card-title popular-title-acumin transition-colors group-hover:text-accent !text-[16px]" style={{ fontWeight: 700, lineHeight: 1.35, color: 'var(--text-strong)', fontFamily: "'Gibson', sans-serif" }}>
+                        <span className="hover-underline-animation">{article.title}</span>
                       </h2>
                     </div>
                   </div>

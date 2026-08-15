@@ -141,7 +141,7 @@ function GameRow({ games }: { games: { id: string; slug: string; title: string; 
       )}
      </div>
      <div className="pt-3">
-      <p className="post-card-title font-bold group-hover:underline transition-colors text-[16px] md:text-[20px]" style={{ color: 'var(--text-strong)', lineHeight: 1.3, marginBottom: '4px' }}>{g.title}</p>
+      <p className="post-card-title font-bold transition-colors text-[16px] md:text-[20px]" style={{ color: 'var(--text-strong)', lineHeight: 1.3, marginBottom: '4px' }}><span className="hover-underline-animation">{g.title}</span></p>
       {g.publisher && (
        <p className="hidden md:block" style={{ fontSize: '16px', color: 'var(--muted)', fontWeight: 400 }}>{g.publisher}</p>
       )}

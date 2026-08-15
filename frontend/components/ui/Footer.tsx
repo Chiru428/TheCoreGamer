@@ -199,7 +199,7 @@ export default function Footer() {
 
       {/* -- BOTTOM NEWSLETTER BAR (NOT HOMEPAGE) -- */}
       {!isHomePage && (
-        <div className="w-full py-5 flex items-center justify-center border-t border-white/5" style={{ background: '#181818' }}>
+        <div className="w-full pt-5 pb-24 md:py-5 flex items-center justify-center border-t border-white/5" style={{ background: '#181818' }}>
           <div className="max-w-[1140px] px-4 w-full flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6">
             <span className="text-white font-bold text-[15px] md:text-[16px] text-center">
               Level up your inbox with the latest gaming news, reviews, and guides.

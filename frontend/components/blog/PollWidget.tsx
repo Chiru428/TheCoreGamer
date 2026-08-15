@@ -197,11 +197,11 @@ function PollWidgetInner({ pollId }: { pollId: string }) {
   };
 
   return (
-    <div className="p-6 border-2 border-black dark:border-white rounded-xl bg-[var(--bg)]">
+    <div className="px-7 py-5 bg-[var(--bg2)]">
       {/* Header */}
-      <div className="flex items-start justify-between gap-4 mb-5">
+      <div className="flex items-start justify-between gap-4 pb-3 mb-5 border-b-2 border-[#00e5a0]">
         <h3 className="font-bold text-text-primary leading-snug !text-[16px] md:!text-[20px]">{poll.question}</h3>
-        <span className="text-sm text-text-muted shrink-0 whitespace-nowrap">
+        <span className="text-sm text-text-muted shrink-0 whitespace-nowrap mt-1">
           {displayTotalVotes.toLocaleString()} votes
         </span>
       </div>

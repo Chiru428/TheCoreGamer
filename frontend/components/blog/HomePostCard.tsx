@@ -118,10 +118,10 @@ export default function HomePostCard({ article, isCompact, showBadge = false, sh
         {/* Title */}
         <div className={`no-underline ${mobileHorizontal ? 'mt-0.5 sm:mt-1.5' : 'mt-1 sm:mt-1.5'}${!showBackground && showExcerpt ? ' mb-3' : ''}`}>
           <h3
-            className={`post-card-title font-bold ${forceDarkTheme ? 'text-white' : 'text-gray-900 dark:text-white'} leading-snug transition-colors group-hover:underline ${truncateTitle ? 'line-clamp-2 ' : ''}${titleClassName ? titleClassName : (mobileHorizontal ? 'mb-1 sm:mb-2 text-[15px] sm:text-[18px] lg:text-[20px]' : 'mb-2 text-[18px] lg:text-[20px]')}`}
+            className={`post-card-title font-bold ${forceDarkTheme ? 'text-white' : 'text-gray-900 dark:text-white'} leading-snug transition-colors ${truncateTitle ? 'line-clamp-2 ' : ''}${titleClassName ? titleClassName : (mobileHorizontal ? 'mb-1 sm:mb-2 text-[15px] sm:text-[18px] lg:text-[20px]' : 'mb-2 text-[18px] lg:text-[20px]')}`}
             style={titleStyle ?? { fontFamily: "'Gibson', sans-serif" }}
           >
-            {article.title}
+            <span className="hover-underline-animation">{article.title}</span>
           </h3>
         </div>
 

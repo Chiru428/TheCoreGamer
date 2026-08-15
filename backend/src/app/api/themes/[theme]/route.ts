@@ -59,7 +59,7 @@ export async function GET(
       prisma.game.findMany({
         where: { themes: { contains: exactTheme } },
         orderBy: [
-          { avgUserScore: { sort: 'desc', nulls: 'last' } },
+          { aggregatedRating: { sort: 'desc', nulls: 'last' } },
           { totalRating: { sort: 'desc', nulls: 'last' } }
         ],
         take: 60,

@@ -1,9 +1,9 @@
-import Skeleton, { PageHeaderSkeleton } from '@/components/ui/Skeleton';
+import Skeleton, { ContentTypeHeadingSkeleton } from '@/components/ui/Skeleton';
 
 export default function SeriesLoading() {
   return (
     <div className="w-full">
-      <PageHeaderSkeleton />
+      <ContentTypeHeadingSkeleton />
       <div style={{ maxWidth: 800, margin: '0 auto', padding: '0 24px 80px' }}>
         <Skeleton className="h-4 w-24 mb-6" />
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>

@@ -112,8 +112,8 @@ export default function PostCard({ article, variant = 'medium', className, aspec
             {liveBadge}
           </div>
         )}
-        <Link href={href} className="group-hover:underline">
-          <h3 className="line-clamp-2 text-[var(--text-strong)]" style={{ fontFamily: '"Gibson", sans-serif', fontSize: '20px', fontWeight: 700, lineHeight: 1.15 }}>{article.title}</h3>
+        <Link href={href}>
+          <h3 className="line-clamp-2 text-[var(--text-strong)]" style={{ fontFamily: '"Gibson", sans-serif', fontSize: '20px', fontWeight: 700, lineHeight: 1.15 }}><span className="hover-underline-animation">{article.title}</span></h3>
         </Link>
         {article.excerpt && <p className="line-clamp-2" style={{ fontSize: '16px', color: 'var(--text)', lineHeight: 1.55 }}>{article.excerpt}</p>}
         <div className="flex items-center gap-2.5 mt-1 text-sm" style={{ color: 'var(--text)' }}>
@@ -186,8 +186,8 @@ export default function PostCard({ article, variant = 'medium', className, aspec
             <span className="shrink-0">{formatRelativeDate(article.publishedAt || article.createdAt)}</span>
           </div>
         </div>
-        <Link href={href} className="group-hover:underline">
-          <p className="text-[var(--text-strong)] text-[14px] sm:text-[20px]" style={{ fontFamily: '"Gibson", sans-serif', fontWeight: 700, lineHeight: 1.3, marginBottom: '4px' }}>{article.title}</p>
+        <Link href={href}>
+          <p className="text-[var(--text-strong)] text-[14px] sm:text-[20px]" style={{ fontFamily: '"Gibson", sans-serif', fontWeight: 700, lineHeight: 1.3, marginBottom: '4px' }}><span className="hover-underline-animation">{article.title}</span></p>
         </Link>
       </div>
     </article>
@@ -238,9 +238,9 @@ export default function PostCard({ article, variant = 'medium', className, aspec
         )}
       </Link>
       <div className="flex flex-col flex-1 px-1">
-        <Link href={href} className="group-hover:underline">
+        <Link href={href}>
           <h3 className="text-[20px] font-bold text-text-primary leading-snug line-clamp-2 mb-2" style={{ fontFamily: '"Gibson", sans-serif' }}>
-            {article.title}
+            <span className="hover-underline-animation">{article.title}</span>
           </h3>
         </Link>
         <div className="mt-auto flex items-center gap-2 text-[11px] text-text-primary font-bold uppercase tracking-wider">
@@ -297,7 +297,7 @@ export default function PostCard({ article, variant = 'medium', className, aspec
             {liveBadge}
           </div>
         )}
-        <Link href={href} className="shrink-0 group-hover:underline">
+        <Link href={href} className="shrink-0">
           <h3
             className={cn(
               fullTitle ? '' : 'line-clamp-2',
@@ -310,7 +310,7 @@ export default function PostCard({ article, variant = 'medium', className, aspec
               fontSize: fullTitle ? 'clamp(16px, 2.5vw, 18px)' : '20px',
             }}
           >
-            {article.title}
+            <span className="hover-underline-animation">{article.title}</span>
           </h3>
         </Link>
         <div className="mt-auto flex items-center gap-1.5 text-xs sm:text-[14px] shrink-0" style={{ color: 'var(--text)' }}>

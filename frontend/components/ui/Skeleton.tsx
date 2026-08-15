@@ -60,10 +60,22 @@ export function ArticleSkeleton() {
 
 export function PageHeaderSkeleton() {
   return (
-    <div className="w-full relative overflow-hidden h-[165px] px-4 mb-6 md:mb-8 bg-[#111111] flex items-center justify-center">
-      <div className="relative z-10 w-full max-w-5xl mx-auto text-center p-8 flex flex-col items-center gap-4">
-        <Skeleton className="h-10 md:h-[48px] w-3/4 max-w-md mx-auto rounded-lg" style={{ background: 'rgba(255,255,255,0.08)' }} />
-        <Skeleton className="h-5 md:h-[20px] w-2/3 max-w-sm mx-auto rounded-md" style={{ background: 'rgba(255,255,255,0.06)' }} />
+    <div className="w-full max-w-[1280px] mx-auto px-0 md:px-6 xl:px-0 mt-0 md:mt-10 mb-6 md:mb-8 h-[120px] md:h-auto">
+      <div className="w-full h-full bg-[#111111] px-6 md:px-8 py-0 md:py-10 flex flex-col justify-center items-center">
+        <Skeleton className="h-[12px] w-16 mb-2 rounded" style={{ background: 'rgba(255,255,255,0.08)' }} />
+        <Skeleton className="h-[36px] md:h-[48px] w-3/4 max-w-md mx-auto mb-3 rounded-lg" style={{ background: 'rgba(255,255,255,0.08)' }} />
+        <Skeleton className="hidden md:block h-[20px] w-2/3 max-w-sm mx-auto rounded-md" style={{ background: 'rgba(255,255,255,0.06)' }} />
+      </div>
+    </div>
+  );
+}
+
+export function ContentTypeHeadingSkeleton() {
+  return (
+    <div className="w-full max-w-[1280px] mx-auto px-0 lg:mt-10 mb-6 md:mb-8 h-[100px] lg:h-auto">
+      <div className="w-full h-full bg-[#111111] px-6 lg:px-8 py-0 lg:py-10 flex flex-col justify-center">
+        <Skeleton className="h-[12px] w-16 mb-2 rounded" style={{ background: 'rgba(255,255,255,0.08)' }} />
+        <Skeleton className="h-[36px] md:h-[48px] w-48 rounded-lg" style={{ background: 'rgba(255,255,255,0.08)' }} />
       </div>
     </div>
   );
@@ -133,7 +145,7 @@ export function SidebarItemSkeleton() {
 
 export function SidebarPanelSkeleton({ title }: { title: string }) {
   return (
-    <div className="w-full flex flex-col gap-4">
+    <div className="hidden lg:flex w-full flex-col gap-4">
       {/* Header with accent lines */}
       <div className="flex items-center gap-3 mb-1">
         <div className="flex-1 h-[2px] bg-border" />
@@ -141,38 +153,14 @@ export function SidebarPanelSkeleton({ title }: { title: string }) {
         <div className="flex-1 h-[2px] bg-border" />
       </div>
 
-      <div className="flex flex-col gap-2">
-        {Array.from({ length: 4 }).map((_, i) => (
-          <SidebarItemSkeleton key={i} />
-        ))}
-      </div>
+      <Skeleton className="w-full h-[450px] rounded-xl" />
     </div>
   );
 }
 
 export function FilterBoxSkeleton() {
   return (
-    <div className="w-full bg-transparent border-2 border-border overflow-hidden">
-      <div className="w-full flex items-center gap-2 p-4">
-        <Skeleton className="w-4 h-4 rounded" />
-        <Skeleton className="h-4 w-20 rounded" />
-      </div>
-      <div className="border-t-2 border-border px-4 py-2 flex flex-col">
-        {Array.from({ length: 4 }).map((_, i) => (
-          <div key={i} className="py-4 border-b border-border/30 last:border-b-0">
-            <Skeleton className="h-3 w-24 mb-4 rounded" />
-            <div className="flex flex-col gap-3">
-              {Array.from({ length: 3 }).map((_, j) => (
-                <div key={j} className="flex items-center gap-3">
-                  <Skeleton className="w-4 h-4 rounded-sm" />
-                  <Skeleton className="h-3 w-32 rounded" />
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
+    <Skeleton className="w-full h-[60px] md:h-[300px] rounded-xl" />
   );
 }
 

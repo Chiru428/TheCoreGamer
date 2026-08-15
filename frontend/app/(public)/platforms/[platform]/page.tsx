@@ -154,7 +154,7 @@ export default async function PlatformHubPage({ params }: { params: Promise<{ pl
            </div>
           </div>
           <div className="p-4 bg-bg-surface">
-           <h3 className="font-semibold text-lg leading-snug line-clamp-2 group-hover:underline">{article.title}</h3>
+           <h3 className="font-semibold text-lg leading-snug line-clamp-2"><span className="hover-underline-animation">{article.title}</span></h3>
            <div className="flex items-center text-xs text-text-muted mt-3">
             <span>{article.author?.displayName}</span>
             <span className="mx-2">•</span>

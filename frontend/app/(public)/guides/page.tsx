@@ -4,6 +4,7 @@ import AdSlot from '@/components/monetization/AdSlot';
 import { buildMeta } from '@/lib/seo';
 import SharedListCard from '@/components/blog/SharedListCard';
 import HomeListCard from '@/components/blog/HomeListCard';
+import TrendingSidebarBox from '@/components/ui/TrendingSidebarBox';
 import CategorySearch from '@/components/search/CategorySearch';
 import ContentTypeHeading from '@/components/ui/ContentTypeHeading';
 import GuideFilters from '@/components/search/GuideFilters';
@@ -91,23 +92,7 @@ export default async function GuidesPage({ searchParams }: Props) {
           sidebarChildren={
             <>
               {/* Popular guides */}
-              <div className="w-full flex flex-col gap-4 mt-0 md:mt-4">
-                <div className="flex items-center gap-3 mb-1">
-                  <div className="flex-1 h-[2px] bg-border" />
-                  <span
-                    className="text-xs font-extrabold tracking-widest uppercase px-2 py-0.5 rounded text-white"
-                    style={{ background: 'var(--accent)' }}
-                  >
-                    Popular Guides
-                  </span>
-                  <div className="flex-1 h-[2px] bg-border" />
-                </div>
-                <div className="flex flex-col divide-y-2 divide-border">
-                  {popularArticles.map((a: Article) => (
-                    <HomeListCard key={a.id} article={a} />
-                  ))}
-                </div>
-              </div>
+              <TrendingSidebarBox title="Popular Guides" articles={popularArticles} showBadge={true} />
 
               {/* Sticky bottom ad */}
               {adsEnabled && (

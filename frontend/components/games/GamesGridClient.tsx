@@ -22,8 +22,7 @@ interface Props {
   totalPages: number;
 }
 
-export default function GamesGridClient({ initialGames }: Props) {
-  const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
+export default function GamesGridClient({ initialGames, totalPages: initialTotalPages }: Props) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -76,26 +75,18 @@ export default function GamesGridClient({ initialGames }: Props) {
   const showLoadMore = hasMore;
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-2 md:gap-6">
       {/* Top Header Row with Sort and Filter Pills */}
-      <div className="flex flex-col md:flex-row gap-8 md:items-center">
-        <div className="w-full md:w-[250px] shrink-0 flex items-center justify-between gap-4">
+      <div className="flex flex-col md:flex-row gap-4 md:gap-8 md:items-center">
+        <div className="w-full md:w-[250px] xl:w-auto xl:flex-1 shrink-0 flex items-center justify-between gap-4">
           <SortDropdown options={GAME_SORT_OPTIONS} defaultValue="newest" />
-          <button 
-            onClick={() => setIsMobileFiltersOpen(!isMobileFiltersOpen)}
-            className="md:hidden flex items-center gap-2 px-4 py-2 bg-surface border border-border rounded-md text-sm font-bold text-text hover:border-[var(--brand-green)] hover:text-[var(--brand-green)] transition-colors"
-          >
-            <Filter className="w-4 h-4" />
-            Filters
-          </button>
         </div>
         
-        <div className="flex-1 w-full flex flex-col sm:flex-row sm:items-center gap-4">
-          {hasFilters && (
+        {hasFilters && (
+          <div className="w-full flex-1 xl:flex-none xl:w-[950px] flex flex-col sm:flex-row sm:items-center gap-4">
             <p className="text-text-muted text-sm font-medium whitespace-nowrap">
               Showing <span className="text-text font-bold">{totalHits || displayGames.length}</span> results
             </p>
-          )}
           
           {activeFilters.length > 0 && (
             <div className="flex flex-wrap items-center gap-2">
@@ -120,20 +111,13 @@ export default function GamesGridClient({ initialGames }: Props) {
             </div>
           )}
         </div>
-      </div>
-
-      {/* Mobile Filters (Collapsible) */}
-      <div className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden -mt-4 ${isMobileFiltersOpen ? 'max-h-[2000px] opacity-100 mb-6' : 'max-h-0 opacity-0'}`}>
-        {isLoading && hits.length === 0 ? (
-          <FilterBoxSkeleton />
-        ) : (
-          <GamesFilterSidebar facets={facets} />
         )}
       </div>
 
-      <div className="flex flex-col md:flex-row gap-8">
-        {/* Sidebar - Hidden on small screens, can add a mobile drawer later if needed */}
-        <aside className="hidden md:block w-[250px] shrink-0 sticky top-32 max-h-[calc(100vh-8rem)] overflow-y-auto no-scrollbar pb-6 pr-2">
+
+      <div className="flex flex-col md:flex-row gap-4 md:gap-8">
+        {/* Sidebar - Shows on top on mobile, on the left on desktop */}
+        <aside className="block order-first md:order-none w-full md:w-[250px] xl:w-auto xl:flex-1 shrink-0 relative md:sticky md:top-32 md:max-h-[calc(100vh-8rem)] md:overflow-y-auto no-scrollbar md:pb-6 md:pr-2">
           {isLoading && hits.length === 0 ? (
             <FilterBoxSkeleton />
           ) : (
@@ -142,7 +126,7 @@ export default function GamesGridClient({ initialGames }: Props) {
         </aside>
 
         {/* Main Grid */}
-        <div className="flex-1 min-w-0">
+        <div className="flex-1 xl:flex-none xl:w-[950px] min-w-0">
           {isLoading && hits.length === 0 ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10">
               {Array.from({ length: 10 }).map((_, i) => (
@@ -211,8 +195,8 @@ export default function GamesGridClient({ initialGames }: Props) {
                           )}
                         </div>
                         <div className="pt-3">
-                          <p className="text-[16px] font-bold text-text leading-tight group-hover:underline">
-                            {title}
+                          <p className="text-[16px] font-bold text-text leading-tight">
+                            <span className="hover-underline-animation">{title}</span>
                           </p>
                           {publisher && (
                             <p className="text-[13px] font-medium text-text-muted mt-1">

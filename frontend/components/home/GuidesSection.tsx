@@ -33,8 +33,8 @@ export default function GuidesSection({ guides }: GuidesSectionProps) {
                 className="group flex gap-4 overflow-hidden items-center transition-all py-1 h-[126px]"
               >
                 <div className="flex flex-col justify-center flex-1 min-w-0 pl-2">
-                  <h3 className="post-card-title font-bold text-gray-900 dark:text-white !text-[17px] leading-snug group-hover:underline mb-2" style={{ fontFamily: "'Gibson', sans-serif" }}>
-                    {article.title}
+                  <h3 className="post-card-title font-bold text-gray-900 dark:text-white !text-[17px] leading-snug mb-2" style={{ fontFamily: "'Gibson', sans-serif" }}>
+                    <span className="hover-underline-animation">{article.title}</span>
                   </h3>
                   <div className="flex items-center gap-1.5 text-[13px] text-gray-600 dark:text-gray-300 font-medium">
                     {article.author?.displayName && (
@@ -93,8 +93,8 @@ export default function GuidesSection({ guides }: GuidesSectionProps) {
               className="group flex gap-3 overflow-hidden items-center transition-all py-1 h-[100px] sm:h-[126px]"
             >
               <div className="flex flex-col justify-center flex-1 min-w-0 pl-1">
-                <h3 className="post-card-title font-bold text-gray-900 dark:text-white !text-[15px] sm:!text-[17px] leading-snug group-hover:underline mb-1.5" style={{ fontFamily: "'Gibson', sans-serif" }}>
-                  {article.title}
+                <h3 className="post-card-title font-bold text-gray-900 dark:text-white !text-[15px] sm:!text-[17px] leading-snug mb-1.5" style={{ fontFamily: "'Gibson', sans-serif" }}>
+                  <span className="hover-underline-animation">{article.title}</span>
                 </h3>
                 <div className="flex items-center gap-1.5 text-[13px] text-gray-600 dark:text-gray-300 font-medium">
                   {article.author?.displayName && (

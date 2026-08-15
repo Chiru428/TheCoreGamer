@@ -212,7 +212,7 @@ export default async function ReviewDetailPage({ params }: Props) {
 
               {/* Game Info Details Card — plain bordered box, no bg */}
               {review && (
-                <div className="w-full px-5 py-3 md:px-6 md:py-4 border border-black dark:border-white mb-4 md:mb-8" style={{ borderWidth: '1px' }}>
+                <div className="w-full px-7 py-5 bg-[var(--bg2)] mb-4 md:mb-8">
 
                 <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-center md:items-start">
 

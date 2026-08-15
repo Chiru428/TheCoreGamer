@@ -90,7 +90,7 @@ export default function GameTabsSection({ newReleaseGames, topRatedGames, coming
                 )}
               </div>
               <div className="game-tab-info">
-                <p className="game-tab-title group-hover:underline">{g.title}</p>
+                <p className="game-tab-title"><span className="hover-underline-animation">{g.title}</span></p>
                 {g.publisher && (
                   <p className="game-tab-publisher">{g.publisher}</p>
                 )}

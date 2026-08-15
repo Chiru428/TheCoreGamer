@@ -66,7 +66,7 @@ export default function SortDropdown({ options = defaultSortOptions, defaultValu
       <div className="relative">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center w-[180px] px-4 py-2 text-sm font-medium text-gray-800 dark:text-white bg-white/80 dark:bg-[#333333]/80 backdrop-blur-md border border-gray-200/50 dark:border-white/10 rounded-full shadow-sm hover:bg-gray-100/90 dark:hover:bg-[#333333]/90 transition-all focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-600"
+          className="flex items-center w-[180px] px-4 py-2 text-sm font-medium text-[var(--text)] bg-[var(--bg2)] border border-gray-200/50 dark:border-white/10 rounded-full shadow-sm hover:opacity-90 transition-all focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
         >
           <span className="flex-1 text-center truncate px-2">{currentLabel}</span>
           <ChevronDown className={cn("w-4 h-4 shrink-0 transition-transform duration-200 opacity-70", isOpen && "rotate-180")} />
@@ -74,7 +74,7 @@ export default function SortDropdown({ options = defaultSortOptions, defaultValu
         
         {isOpen && (
           <div className="absolute top-full right-0 mt-2 w-[180px] z-50 animate-in fade-in slide-in-from-top-2 duration-200">
-            <div className="py-4 flex flex-col gap-3 bg-white/90 dark:bg-[#333333]/90 backdrop-blur-xl border border-gray-200/60 dark:border-white/10 rounded-[20px] shadow-xl dark:shadow-2xl shadow-black/5 dark:shadow-black/50">
+            <div className="py-4 flex flex-col gap-3 bg-[var(--bg2)] border border-gray-200/60 dark:border-white/10 rounded-[20px] shadow-xl dark:shadow-2xl shadow-black/5 dark:shadow-black/50">
               {options.map((opt) => (
                 <button
                   key={opt.value}

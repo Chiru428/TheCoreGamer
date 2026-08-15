@@ -66,10 +66,10 @@ export default function ReviewFilters({ facets }: Props) {
   const hasAnyFilter = FILTER_CONFIG.some(config => getSelected(config.id).length > 0);
 
   return (
-    <div className="w-full bg-transparent border-2 border-border rounded-none overflow-hidden mb-2">
+    <div className="w-full bg-[var(--bg2)] px-7 mb-6">
       <button 
         onClick={() => setIsMainOpen(!isMainOpen)}
-        className="w-full flex items-center justify-between p-4 transition-colors group lg:cursor-default lg:pointer-events-none"
+        className="w-full h-[60px] lg:h-auto lg:pt-5 lg:pb-3 flex items-center justify-between transition-colors group lg:cursor-default lg:pointer-events-none"
       >
         <div className="flex items-center gap-2 font-black tracking-widest uppercase text-text text-[15px]">
           <Filter className="w-4 h-4 text-text-muted group-hover:text-[var(--brand-green)] transition-colors" />
@@ -85,7 +85,7 @@ export default function ReviewFilters({ facets }: Props) {
         </div>
       </button>
 
-      <div className={`transition-all duration-300 ease-in-out flex-col px-4 pb-2 lg:max-h-[80vh] lg:opacity-100 lg:overflow-y-auto lg:no-scrollbar lg:border-t-2 lg:border-border ${isMainOpen ? 'max-h-[60vh] overflow-y-auto no-scrollbar opacity-100 border-t-2 border-border flex' : 'max-h-0 opacity-0 overflow-hidden hidden lg:flex'}`}>
+      <div className={`transition-all duration-300 ease-in-out flex-col lg:max-h-[80vh] lg:opacity-100 lg:overflow-y-auto lg:no-scrollbar lg:pb-5 ${isMainOpen ? 'max-h-[2500px] opacity-100 flex pb-5 pt-4 overflow-hidden' : 'max-h-0 opacity-0 overflow-hidden hidden lg:flex lg:pt-2'}`}>
         {FILTER_CONFIG.map((config) => {
           const selectedValues = getSelected(config.id);
           

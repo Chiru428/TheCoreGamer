@@ -83,7 +83,7 @@ export default function NewsWithTrending({ newsArticles, trendingArticles, sideb
                     className="trending-link group"
                   >
                     <div className="trending-body">
-                      <p className="post-card-title trending-title group-hover:underline">{article.title}</p>
+                      <p className="post-card-title trending-title"><span className="hover-underline-animation">{article.title}</span></p>
                       <div className="news-meta" style={{ marginTop: '4px' }}>
                         {article.author?.displayName && (
                           <span className="news-author" style={{ fontSize: '14px' }}>{article.author.displayName}</span>
@@ -232,7 +232,7 @@ export default function NewsWithTrending({ newsArticles, trendingArticles, sideb
         
         .trending-sidebar {
           background: var(--bg2);
-          padding: 20px;
+          padding: 20px 28px;
         }
         .trending-header {
           padding-bottom: 12px;

@@ -39,10 +39,10 @@ export default function HomeListCard({ article, titleClassName }: HomeListCardPr
           </span>
         )}
         <h3
-          className={`post-card-title font-bold text-gray-900 dark:text-white leading-[1.2] transition-colors group-hover:underline ${titleClassName || '!text-[16px]'}`}
+          className={`post-card-title font-bold text-gray-900 dark:text-white leading-[1.2] transition-colors ${titleClassName || '!text-[16px]'}`}
           style={{ fontFamily: "'Gibson', sans-serif" }}
         >
-          {article.title}
+          <span className="hover-underline-animation">{article.title}</span>
         </h3>
         <div className="flex items-center gap-2 text-xs text-text-muted mt-1.5">
           {article.author?.displayName && (

@@ -61,10 +61,10 @@ export default function CorePicksStrip({ articles }: { articles: Article[] }) {
               
               {/* Title */}
               <h3 
-                className="text-white font-bold text-[15px] sm:text-[16px] leading-[1.3] mb-4 group-hover:underline line-clamp-4"
+                className="text-white font-bold text-[15px] sm:text-[16px] leading-[1.3] mb-4 line-clamp-4"
                 style={{ fontFamily: '"Gibson", sans-serif' }}
               >
-                {article.title}
+                <span className="hover-underline-animation">{article.title}</span>
               </h3>
               
               {/* Spacer to push author to bottom */}

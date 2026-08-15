@@ -326,7 +326,7 @@ export default function AdminDashboard() {
               <div className="space-y-3">
                 {stats?.recentActivity?.articles?.map((article: any) => (
                   <Link key={article.id} href={`/${contentTypePath(article.type)}/${article.slug}`} target="_blank" className="block p-3.5 rounded-xl bg-bg-elevated/20 border border-white/5 hover:border-white/10 hover:bg-bg-elevated/30 transition-colors group">
-                    <div className="text-sm font-medium text-text-primary mb-2 group-hover:underline decoration-white/30 underline-offset-2 transition-all leading-snug">{article.title}</div>
+                    <div className="text-sm font-medium text-text-primary mb-2 transition-all leading-snug"><span className="hover-underline-animation">{article.title}</span></div>
                     <div className="flex items-center justify-between text-xs text-text-muted">
                       <span className="flex items-center gap-1.5">
                          <span className="w-1.5 h-1.5 rounded-full bg-accent"></span>

@@ -17,7 +17,6 @@ interface Props {
 }
 
 export default function GuidesListClient({ initialGuides, totalPages: initialTotalPages, sidebarChildren }: Props) {
-  const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -73,16 +72,7 @@ export default function GuidesListClient({ initialGuides, totalPages: initialTot
   return (
     <div className="flex flex-col gap-4 md:gap-6">
       {/* Top Header Row with Filter Pills */}
-      <div className={`flex flex-col md:flex-row gap-8 md:items-center ${hasFilters ? 'mb-2' : 'lg:hidden'}`}>
-        <div className="w-full lg:w-auto shrink-0 flex items-center justify-between gap-4">
-          <button 
-            onClick={() => setIsMobileFiltersOpen(!isMobileFiltersOpen)}
-            className="lg:hidden flex items-center gap-2 px-4 py-2 bg-surface border border-border rounded-md text-sm font-bold text-text hover:border-[var(--brand-green)] hover:text-[var(--brand-green)] transition-colors"
-          >
-            <Filter className="w-4 h-4" />
-            Filters
-          </button>
-        </div>
+      <div className={`flex flex-col md:flex-row gap-8 md:items-center ${hasFilters ? 'mb-2' : 'hidden'}`}>
         
         {hasFilters && (
           <div className="flex-1 w-full flex flex-col sm:flex-row sm:items-center gap-4">
@@ -116,7 +106,7 @@ export default function GuidesListClient({ initialGuides, totalPages: initialTot
         )}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] xl:grid-cols-[900px_1fr] gap-8 items-start content-start min-h-screen">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] xl:grid-cols-[900px_1fr] gap-4 lg:gap-8 items-start content-start min-h-screen">
         
         {/* Main List */}
         <div className="lg:border-r-2 lg:border-border lg:pr-8">
@@ -171,7 +161,7 @@ export default function GuidesListClient({ initialGuides, totalPages: initialTot
 
         {/* Sidebar */}
         <aside className="order-first lg:order-none flex flex-col gap-4 pb-0 md:pb-8 md:gap-6 md:w-full self-stretch">
-          <div className={`lg:block transition-all duration-300 ease-in-out overflow-hidden ${isMobileFiltersOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 lg:max-h-none opacity-0 lg:opacity-100'}`}>
+          <div className="block">
             {isLoading && hits.length === 0 ? (
               <FilterBoxSkeleton />
             ) : (

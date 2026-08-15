@@ -58,8 +58,8 @@ export default function WalkthroughSlider({ articles }: { articles: Article[] })
                 )}
                 <span className="shrink-0">{formatDate(article.publishedAt || article.createdAt)}</span>
               </div>
-              <h3 className="post-card-title text-white !text-[14px] sm:!text-[28px] font-bold leading-tight group-hover:underline drop-shadow-md">
-                {article.title}
+              <h3 className="post-card-title text-white !text-[14px] sm:!text-[28px] font-bold leading-tight drop-shadow-md">
+                <span className="hover-underline-animation">{article.title}</span>
               </h3>
             </div>
           </Link>

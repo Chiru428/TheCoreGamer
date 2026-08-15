@@ -480,6 +480,7 @@ export default function Header({ tickerArticles = [] }: { tickerArticles?: Artic
                   <div className="h-px bg-white/10 my-1 mx-3" />
                   <button
                     type="button"
+                    onClick={async () => { setAccountMenuOpen(false); clearSession(); await signOut({ callbackUrl: '/' }); }}
                     className="group flex w-full items-center gap-3 px-4 py-2.5 text-[15px] font-semibold transition-all hover:bg-red-500/10 text-white/90 hover:text-red-400 text-left"
                     role="menuitem"
                   >

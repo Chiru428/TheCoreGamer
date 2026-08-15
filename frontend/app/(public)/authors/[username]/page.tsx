@@ -66,8 +66,8 @@ function ArticleListItem({ article, authorName }: { article: AuthorArticleItem; 
         </div>
 
         {/* Title */}
-        <p className="text-[16px] sm:text-[20px] font-bold text-text-primary line-clamp-3 sm:line-clamp-2 leading-snug mb-0 sm:mb-3 group-hover:underline">
-          {article.title}
+        <p className="text-[16px] sm:text-[20px] font-bold text-text-primary line-clamp-3 sm:line-clamp-2 leading-snug mb-0 sm:mb-3">
+          <span className="hover-underline-animation">{article.title}</span>
         </p>
 
         {/* Excerpt - Hidden on mobile */}

@@ -93,7 +93,7 @@ function PostListItem({ post, avatarUrl, displayName, onNavigate }: PostListItem
             <Image src={post.articleFeaturedImageUrl} alt="" fill className="object-cover" sizes="70px" />
           </div>
         )}
-        <span className="text-[14px] font-semibold text-text-primary line-clamp-2 group-hover:underline">{post.articleTitle}</span>
+        <span className="text-[14px] font-semibold text-text-primary line-clamp-2"><span className="hover-underline-animation">{post.articleTitle}</span></span>
       </Link>
     </div>
   );
@@ -190,7 +190,7 @@ function ArticleListItem({ article, onNavigate }: ArticleListItemProps) {
         </div>
       ) : null}
       <div className="flex-1 min-w-0">
-        <p className="text-[15px] font-semibold text-text-primary line-clamp-2 mb-1 group-hover:underline">{article.title}</p>
+        <p className="text-[15px] font-semibold text-text-primary line-clamp-2 mb-1"><span className="hover-underline-animation">{article.title}</span></p>
         {article.excerpt && <p className="text-[13px] text-text-dim line-clamp-2 mb-1">{article.excerpt}</p>}
         <div className="flex items-center gap-2 text-[12px] text-text-dim">
           <span

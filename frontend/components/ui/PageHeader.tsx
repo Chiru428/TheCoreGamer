@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 interface PageHeaderProps {
   title: string;
@@ -8,31 +9,19 @@ interface PageHeaderProps {
 
 export default function PageHeader({ title, description, titleFontFamily }: PageHeaderProps) {
   return (
-    <div className="w-full relative overflow-hidden h-[100px] md:h-[165px] px-4 mb-6 md:mb-8 bg-[#111111] dark:bg-[#111111] flex items-center justify-center">
-      {/* Background Texture Overlay */}
-      <div 
-        className="absolute inset-0 z-0 opacity-80 pointer-events-none" 
-        style={{
-          backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22 opacity=%220.4%22/%3E%3C/svg%3E")',
-          backgroundSize: '150px 150px'
-        }}
-      />
-      
-      {/* Container with pseudo-borders */}
-      <div className="relative z-10 w-full max-w-5xl mx-auto text-center p-8">
-        
-
-
-        {/* Content */}
+    <div className="w-full max-w-[1280px] mx-auto px-0 md:px-6 xl:px-0 mt-0 md:mt-10 mb-6 md:mb-8 h-[120px] md:h-auto">
+      <div className="w-full h-full bg-[var(--bg2)] px-6 md:px-8 py-0 md:py-10 flex flex-col justify-center">
+        <Link href="/" className="w-fit text-[#f03a5f] text-[12px] font-black uppercase tracking-[0.15em] mb-1 md:mb-2 hover:underline hover:text-[var(--text)] transition-colors" style={{ fontFamily: "'Gibson', sans-serif" }}>
+          HOME
+        </Link>
         <h1 
-          className="text-3xl md:text-5xl lg:text-[56px] text-white mt-1 md:mt-2 mb-2 md:mb-4 uppercase drop-shadow-md"
-          style={{ fontFamily: titleFontFamily || "'Gibson', sans-serif", fontWeight: 900, letterSpacing: '2px', lineHeight: 1 }}
+          className="text-3xl md:text-4xl lg:text-[44px] text-[var(--text)]"
+          style={{ fontFamily: titleFontFamily || "'Gibson', sans-serif", fontWeight: 900, lineHeight: 1.1 }}
         >
           {title}
         </h1>
-        
         {description && (
-          <p className="text-gray-300 text-sm md:text-[15px] font-medium max-w-2xl mx-auto drop-shadow-sm" style={{ fontFamily: "'Gibson', sans-serif" }}>
+          <p className="text-[var(--muted)] text-sm md:text-[15px] font-medium max-w-3xl mt-3" style={{ fontFamily: "'Gibson', sans-serif" }}>
             {description}
           </p>
         )}

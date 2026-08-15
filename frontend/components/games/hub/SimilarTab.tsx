@@ -31,8 +31,8 @@ export default function SimilarTab({ game }: { game: GameHubData }) {
          )}
         </div>
         <div className="pt-3">
-         <p className="line-clamp-2 group-hover:underline" style={{ fontSize: '16px', fontWeight: 600, color: 'var(--text)', lineHeight: 1.35, marginBottom: g.publisher ? '3px' : 0 }}>
-          {g.title}
+         <p className="line-clamp-2" style={{ fontSize: '16px', fontWeight: 600, color: 'var(--text)', lineHeight: 1.35, marginBottom: g.publisher ? '3px' : 0 }}>
+          <span className="hover-underline-animation">{g.title}</span>
          </p>
          {g.publisher && (
           <p className="line-clamp-1" style={{ fontSize: '14px', fontWeight: 500, color: 'var(--muted2)' }}>

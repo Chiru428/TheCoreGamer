@@ -5,6 +5,7 @@ import AdSlot from '@/components/monetization/AdSlot';
 const adsEnabled = !!process.env.NEXT_PUBLIC_ADSENSE_ID;
 import { buildMeta } from '@/lib/seo';
 import SharedListCard from '@/components/blog/SharedListCard';
+import TrendingSidebarBox from '@/components/ui/TrendingSidebarBox';
 import HomeListCard from '@/components/blog/HomeListCard';
 
 import CategorySearch from '@/components/search/CategorySearch';
@@ -68,23 +69,7 @@ export default async function OpinionsPage({ searchParams }: Props) {
           </div>
 
           <aside className="order-first lg:order-none flex flex-col gap-4 pb-0 md:pb-8 md:gap-6 md:w-full self-stretch">
-            <div className="w-full flex flex-col gap-4">
-              <div className="flex items-center gap-3 mb-1">
-                <div className="flex-1 h-[2px] bg-border" />
-                <span
-                  className="text-xs font-extrabold tracking-widest uppercase px-2 py-0.5 rounded text-white"
-                  style={{ background: 'var(--accent)' }}
-                >
-                  Popular Opinions
-                </span>
-                <div className="flex-1 h-[2px] bg-border" />
-              </div>
-              <div className="flex flex-col divide-y-2 divide-border">
-                {popularArticles.map((a) => (
-                  <HomeListCard key={a.id} article={a} />
-                ))}
-              </div>
-            </div>
+            <TrendingSidebarBox title="Popular Opinions" articles={popularArticles} />
             {/* Sticky Bottom Ad in Sidebar */}
             {adsEnabled && (
             <div className="hidden md:flex justify-center md:sticky md:top-[var(--sticky-offset)] mt-4">

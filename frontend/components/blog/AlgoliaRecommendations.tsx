@@ -202,8 +202,8 @@ export default function AlgoliaRecommendations({
                       {(hit.contentType === 'GUIDE' && hit.guideType) ? hit.guideType : (CONTENT_TYPE_LABELS[hit.contentType] || hit.contentType)}
                     </span>
                   )}
-                  <p className="text-[16px] font-bold text-text-strong group-hover:underline" style={{ fontFamily: '"Gibson", sans-serif' }}>
-                    {hit.title}
+                  <p className="text-[16px] font-bold text-text-strong" style={{ fontFamily: '"Gibson", sans-serif' }}>
+                    <span className="hover-underline-animation">{hit.title}</span>
                   </p>
                   {(hit.authorName || hit.publishedAtISO) && (
                     <span className="flex items-center gap-4 text-xs text-text-muted mt-1.5">
@@ -246,8 +246,8 @@ export default function AlgoliaRecommendations({
                     </div>
                   )}
                 </div>
-                <p className="flex-1 min-w-0 text-sm font-bold text-text-strong line-clamp-2 group-hover:underline" style={{ fontFamily: '"Gibson", sans-serif' }}>
-                  {hit.title}
+                <p className="flex-1 min-w-0 text-sm font-bold text-text-strong line-clamp-2" style={{ fontFamily: '"Gibson", sans-serif' }}>
+                  <span className="hover-underline-animation">{hit.title}</span>
                 </p>
                 {score != null && <ScoreBadge score={Number(score)} size="sm" />}
               </Link>
@@ -278,8 +278,8 @@ export default function AlgoliaRecommendations({
                 )}
               </div>
               <div className="p-2.5">
-                <p className="text-sm font-bold text-text-strong line-clamp-2 group-hover:text-accent group-hover:underline transition-colors" style={{ fontFamily: '"Gibson", sans-serif' }}>
-                  {hit.title}
+                <p className="text-sm font-bold text-text-strong line-clamp-2 group-hover:text-accent transition-colors" style={{ fontFamily: '"Gibson", sans-serif' }}>
+                  <span className="hover-underline-animation">{hit.title}</span>
                 </p>
               </div>
             </Link>
@@ -316,8 +316,8 @@ export default function AlgoliaRecommendations({
                       {(hit.contentType === 'GUIDE' && hit.guideType) ? hit.guideType : (CONTENT_TYPE_LABELS[hit.contentType] || hit.contentType)}
                     </span>
                   )}
-                  <p className="text-sm font-bold text-text-strong line-clamp-2 group-hover:text-accent group-hover:underline transition-colors" style={{ fontFamily: '"Gibson", sans-serif' }}>
-                    {hit.title}
+                  <p className="text-sm font-bold text-text-strong line-clamp-2 group-hover:text-accent transition-colors" style={{ fontFamily: '"Gibson", sans-serif' }}>
+                    <span className="hover-underline-animation">{hit.title}</span>
                   </p>
                   {hit.publishedAtISO && (
                     <span className="text-xs text-text-muted">{formatDate(hit.publishedAtISO)}</span>
