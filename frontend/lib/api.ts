@@ -451,7 +451,20 @@ export const subscribePush = (sub: { endpoint: string; keys: { auth: string; p25
 
 // UPLOAD
 export async function uploadImage(file: File, folder?: string): Promise<ApiResponse<{ url: string }>> {
-  const fd = new FormData(); fd.append('image', file);
+  let finalFile = file;
+  // Compress client-side if file is >4MB to bypass Vercel's 4.5MB Serverless function limit
+  if (typeof window !== 'undefined' && file.size > 4 * 1024 * 1024) {
+    try {
+      const imageCompression = (await import('browser-image-compression')).default;
+      const options = { maxSizeMB: 4, maxWidthOrHeight: 2560, useWebWorker: true };
+      finalFile = await imageCompression(file, options);
+    } catch (err) {
+      console.warn('Image compression failed, falling back to original:', err);
+    }
+  }
+
+  const fd = new FormData(); 
+  fd.append('image', finalFile);
   if (folder) fd.append('folder', folder);
   const r = await fetch(`${API_BASE}/api/upload/image`, { method: 'POST', credentials: 'include', body: fd });
   return r.json();

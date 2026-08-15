@@ -56,6 +56,7 @@
     "@types/dompurify": "^3.0.5",
     "@vercel/og": "^0.11.1",
     "algoliasearch": "^5.54.0",
+    "browser-image-compression": "^2.0.2",
     "clsx": "^2.1.1",
     "diff": "^9.0.0",
     "diff-match-patch": "^1.0.5",
