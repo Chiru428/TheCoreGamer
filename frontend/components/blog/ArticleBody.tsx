@@ -875,10 +875,10 @@ function extractHeadings(content: any): HeadingInfo[] {
 
 /**
  * Convert an editor font-size value (e.g. "18px") to a responsive clamp().
- * Desktop shows the exact value; mobile scales down to 90% fluidly.
+ * Desktop shows the exact value; mobile scales down to 94% fluidly.
  *
  * clamp(min, fluid, max)
- *   min   = px × 0.9            (mobile floor)
+ *   min   = px × 0.94           (mobile floor)
  *   fluid = px × 0.0833vw       (reaches `max` at ~1200px viewport)
  *   max   = px                  (desktop ceiling)
  *
@@ -888,7 +888,7 @@ function responsiveFontSize(value: string): string {
   const match = value.match(/^([0-9]+(?:\.[0-9]+)?)px$/);
   if (!match) return value; // rem/em/% — leave as-is
   const px    = parseFloat(match[1]);
-  const min   = Math.round(px * 0.9 * 10) / 10;       // 1 decimal, e.g. 16.2
+  const min   = Math.round(px * 0.94 * 100) / 100;    // 2 decimals, e.g. 16.92
   const fluid = Math.round(px * 0.0833 * 100) / 100;  // 2 decimals, e.g. 1.5
   return `clamp(${min}px, ${fluid}vw, ${px}px)`;
 }
