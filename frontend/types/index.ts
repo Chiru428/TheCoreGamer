@@ -629,7 +629,10 @@ export interface UserScreenshot {
   Game?: { id: string; title: string; slug: string };
 }
 
-export type ArticleReactionCounts = Record<string, number>;
+export interface ArticleReactionResponse {
+  counts: Record<string, number>;
+  userReactions: string[];
+}
 
 export interface Bookmark {
   id: string;

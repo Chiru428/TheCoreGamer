@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { toggleReaction } from '@/lib/api';
+import { toggleReaction, fetchReactions } from '@/lib/api';
 
 export default function ArticleLikeButton({
   articleId,
@@ -29,6 +29,18 @@ export default function ArticleLikeButton({
         setCount(initialCount);
       }
     } catch {}
+
+    fetchReactions(articleId).then(res => {
+      if (res.success && res.data) {
+        const hasLiked = res.data.userReactions?.includes('LIKE') || false;
+        setLiked(hasLiked);
+        setCount(res.data.counts['LIKE'] || 0);
+        try {
+          if (hasLiked) localStorage.setItem(storageKey, '1');
+          else localStorage.removeItem(storageKey);
+        } catch {}
+      }
+    }).catch(console.error);
 
     const handleSync = (e: CustomEvent) => {
       if (e.detail.articleId === articleId) {

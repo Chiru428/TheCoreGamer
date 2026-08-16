@@ -1,7 +1,7 @@
 import type {
   ApiResponse, Article, Tag, Game, Comment,
   CommentSort, CommentReactionType, TenorGif,
-  ArticleReactionCounts, Bookmark, SearchResult, AutocompleteResult,
+  ArticleReactionResponse, Bookmark, SearchResult, AutocompleteResult,
   SearchApiResponse, AutocompleteApiResponse, AlgoliaArticleHit, AlgoliaSearchResult,
   AdminStats, WorkerHealth, AdPlacement, User, NotificationPreference,
   NewsletterSubscriber, NewsletterStats, ArticleVersion, AnalyticsData, AdSenseReport,
@@ -319,7 +319,7 @@ export const searchTenorGifs = (query: string, limit = 20) =>
   apiFetch<{ results: TenorGif[] }>(`/api/tenor/search?q=${encodeURIComponent(query)}&limit=${limit}`, { cache: 'no-store' });
 
 // REACTIONS
-export const fetchReactions = (articleId: string) => apiFetch<ArticleReactionCounts>(`/api/reactions?articleId=${articleId}`, { cache: 'no-store' });
+export const fetchReactions = (articleId: string) => apiFetch<ArticleReactionResponse>(`/api/reactions?articleId=${articleId}`, { cache: 'no-store' });
 export const toggleReaction = (articleId: string, type: string) => apiMutate<null>('/api/reactions', 'POST', { articleId, type });
 
 // SEARCH

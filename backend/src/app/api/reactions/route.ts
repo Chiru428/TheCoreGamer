@@ -35,7 +35,18 @@ export async function GET(request: NextRequest) {
       {} as Record<string, number>
     );
 
-    return NextResponse.json(successResponse(counts));
+    const session = await auth();
+    let userReactions: any[] = [];
+    if (session?.user) {
+      userReactions = await withRetry(() => prisma.articleReaction.findMany({ where: { articleId, userId: session.user.id }}));
+    } else {
+      const ip = getClientIp(request);
+      const ua = request.headers.get("user-agent") || "";
+      const sessionId = crypto.createHash("sha256").update(`${ip}:${ua}`).digest("hex").slice(0, 32);
+      userReactions = await withRetry(() => prisma.articleReaction.findMany({ where: { articleId, sessionId }}));
+    }
+
+    return NextResponse.json(successResponse({ counts, userReactions: userReactions.map((r: any) => r.type) }));
   } catch (err) {
     captureError(err);
     return NextResponse.json(errorResponse("Internal server error"), { status: 500 });
