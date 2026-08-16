@@ -61,7 +61,7 @@ export default function ScreenshotsTab({ slug, game }: { slug: string; game: Gam
             id: o.id,
             gameId: '',
             userId: '',
-            imageUrl: o.imageUrl,
+            imageUrl: o.imageUrl.replace('t_screenshot_huge', 't_1080p'),
             caption: game.developer ? `${o.caption || 'Official artwork'} | Credit: ${game.developer}` : o.caption,
             status: 'APPROVED',
             createdAt: '',

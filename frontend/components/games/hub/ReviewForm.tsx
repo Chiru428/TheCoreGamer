@@ -72,7 +72,7 @@ export default function ReviewForm({
   };
 
   return (
-    <div className="p-4 bg-bg-surface border border-accent/30 rounded-none mb-6">
+    <div className="p-4 bg-bg-surface rounded-none mb-6">
       <h3 className="text-sm font-bold text-text-primary mb-3 flex items-center gap-2">
         <Star className="w-4 h-4 text-accent" />
         {existing ? 'Update your review' : 'Write a review'}

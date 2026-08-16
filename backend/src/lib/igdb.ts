@@ -709,8 +709,8 @@ export function mapIGDBToDb(igdb: IGDBGame): IGDBFullGame {
     coverImageUrl: resolveCoverUrl(igdb) ?? undefined,
     steamAppId,
     backgroundImageUrl: resolveBackgroundUrl(igdb) ?? undefined,
-    screenshotUrls: igdb.screenshots?.map((s) => buildIGDBImageUrl(s.image_id, "screenshot_huge")) ?? [],
-    artworkUrls: igdb.artworks?.map((a) => buildIGDBImageUrl(a.image_id, "screenshot_huge")) ?? [],
+    screenshotUrls: igdb.screenshots?.map((s) => buildIGDBImageUrl(s.image_id, "1080p")) ?? [],
+    artworkUrls: igdb.artworks?.map((a) => buildIGDBImageUrl(a.image_id, "1080p")) ?? [],
     developer: igdb.involved_companies?.filter((c) => c.developer).map((c) => c.company.name).join(", ") || undefined,
     publisher: igdb.involved_companies?.filter((c) => c.publisher).map((c) => c.company.name).join(", ") || undefined,
     allCompanies:

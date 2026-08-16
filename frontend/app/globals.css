@@ -43,12 +43,12 @@
 :root,
 [data-theme="dark"] {
   color-scheme: dark;
-  --bg: #1a1a1a;
-  --bg-transparent: rgba(26, 26, 26, 0);
-  --bg2: #242424;
-  --bg3: #2d2d2d;
-  --bg4: #333333;
-  --border: rgba(255, 255, 255, 0.15);
+  --bg: #0a0c0d;
+  --bg-transparent: rgba(10, 12, 13, 0);
+  --bg2: #15191B; /* Forced refresh */
+  --bg3: #23292c;
+  --bg4: #282e31;
+  --border: #282e31;
   --border-hover: rgba(59, 130, 246, 0.50);
   --accent: #3b82f6;
   --accent2: #2563eb;
@@ -68,14 +68,14 @@
   --r: 0px;
   --sidebar-w: 300px;
 
-  --nav-bg: rgba(58, 63, 74, 0.85);
+  --nav-bg: #3A3F4A;
   --footer-bg: #3A3F4A;
   --ticker-bg: var(--bg);
   --nav-link: #ffffff;
   --nav-link-hover: #ffffff;
   --nav-link-active: #3b82f6;
   --nav-link-underline: #3b82f6;
-  --search-bg: #1c2128;
+  --search-bg: #23292c;
   --search-text: #ffffff;
   --logo-accent: #3b82f6;
   --logo-gh: #3b82f6;
@@ -147,7 +147,7 @@
   --filter-accent: #00866B;
 
   /* â”€â”€ NAV / TICKER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-  --nav-bg: rgba(58, 63, 74, 0.85);
+  --nav-bg: #3A3F4A;
   --footer-bg: #3A3F4A;
   --ticker-bg: var(--bg);
   --nav-link: #ffffff;

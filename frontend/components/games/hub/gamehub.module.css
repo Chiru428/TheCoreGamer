@@ -7,11 +7,11 @@
 .hero {
   /* Hero always uses the dark-theme palette, regardless of the active
      site theme, since it sits on top of a dark blurred artwork backdrop. */
-  --bg: #1a1a1a;
-  --bg2: #242424;
-  --bg3: #2d2d2d;
-  --bg4: #333333;
-  --border: rgba(255, 255, 255, 0.15);
+  --bg: #0a0c0d;
+  --bg2: #15191B;
+  --bg3: #23292c;
+  --bg4: #282e31;
+  --border: #282e31;
   --border-hover: rgba(59, 130, 246, 0.50);
   --accent: #3b82f6;
   --text: #ffffff;
@@ -491,21 +491,19 @@
 
 .overviewLayout :global(.widget) {
   background: var(--bg2);
+  border: none;
   padding: 20px;
 }
 
 .contentCard {
   background: var(--bg2);
-  border: 1px solid var(--border);
+  border: none;
   padding: 20px;
   margin-bottom: 24px;
 }
 
-:global([data-theme="dark"]) .contentCard,
-:global([data-theme="dark"]) .overviewLayout :global(.widget),
 :global([data-theme="dark"]) .tabBar,
-:global([data-theme="dark"]) .priceRow:not(.priceRowBest),
-:global([data-theme="dark"]) .ratingCard {
+:global([data-theme="dark"]) .priceRow:not(.priceRowBest) {
   background: #3a3f4a;
 }
 
@@ -620,21 +618,44 @@
   font-weight: 500;
 }
 
+.reviewHeading {
+  font-size: 26px !important;
+}
+
+@media (min-width: 768px) {
+  .reviewHeading {
+    font-size: 30px !important;
+  }
+}
+
 /* ════ REVIEWS TAB ════════════════════════════════════════════════════ */
 
 .reviewHero {
   display: flex;
   flex-wrap: wrap;
-  gap: 24px;
+  gap: 8px;
   align-items: center;
+}
+
+@media (min-width: 768px) {
+  .reviewHero {
+    gap: 24px;
+  }
 }
 
 .reviewHeroMeta {
   display: flex;
   align-items: center;
-  gap: 36px;
+  gap: 24px;
   flex: 1 1 280px;
-  margin-left: 24px;
+  margin-left: 0;
+}
+
+@media (min-width: 768px) {
+  .reviewHeroMeta {
+    gap: 36px;
+    margin-left: 24px;
+  }
 }
 
 .hexBadge {
@@ -667,7 +688,7 @@
 .reviewVerdictLabel {
   font-family: 'Gibson', sans-serif;
   font-size: 1.5rem;
-  font-weight: 800;
+  font-weight: 600;
   color: var(--text-strong);
 }
 
@@ -690,6 +711,13 @@
   transition: border-bottom-color 0.15s;
 }
 
+@media (min-width: 768px) {
+  .reviewPlatformIcon {
+    width: 36px;
+    height: 36px;
+  }
+}
+
 .reviewPlatformIcon:hover {
   border-bottom-color: var(--accent);
 }
@@ -698,25 +726,22 @@
   display: inline-flex;
   align-items: center;
   margin-top: 14px;
-  padding: 10px 24px;
-  background: #141824;
-  color: #ffffff;
+  padding: 6px 16px;
+  background: #00E5A0;
+  color: #1a1a1a;
   font-weight: 700;
   border-radius: 9999px;
   box-shadow: var(--shadow-sm);
-  transition: background 0.2s;
+  transition: filter 0.2s, background 0.2s;
 }
 
 .reviewReadBtn:hover {
-  background: #1f2534;
+  filter: brightness(1.1);
 }
 
 :global([data-theme="light"]) .reviewReadBtn {
-  background: var(--accent);
-}
-
-:global([data-theme="light"]) .reviewReadBtn:hover {
-  background: var(--accent2);
+  background: #00866B;
+  color: #ffffff;
 }
 
 .reviewHeroImage {
@@ -821,7 +846,7 @@
 
 .ratingCard {
   background: var(--bg2);
-  border: 1px solid var(--border);
+  border: none;
   border-radius: 0px;
   padding: 16px;
   margin-bottom: 14px;

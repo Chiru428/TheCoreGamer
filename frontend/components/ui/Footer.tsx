@@ -182,7 +182,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t py-6 px-4" style={{ borderColor: 'var(--border)' }}>
+        <div className="py-6 px-4">
           <div className="max-w-[1140px] mx-auto flex flex-col-reverse md:flex-row items-center justify-between gap-6 md:gap-4">
             <p className="text-center md:text-left font-bold" style={{ fontSize: '14px', color: 'var(--text-muted)' }}>
               © Copyright by TheCoreGamer. All rights reserved.

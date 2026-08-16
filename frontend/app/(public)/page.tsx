@@ -357,43 +357,8 @@ export default async function HomePage() {
 
     {/* GAMES */}
     {(newReleaseGames.length > 0 || topRatedGames.length > 0 || comingSoonGames.length > 0) && (
-     <section className="relative w-[100vw] left-[50%] -translate-x-1/2 mb-10 md:mb-14 py-5 overflow-hidden border-y border-white/10 shadow-2xl">
-      {/* Blurred image matching Hero styling, but with less blur for more visibility */}
-      <div
-        aria-hidden="true"
-        className="hero-backdrop-img absolute inset-0 w-full h-full pointer-events-none"
-        style={{
-          backgroundImage: `url('/images/gamesbd.jpg')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center top',
-          filter: 'blur(12px) saturate(1.25)',
-          transform: 'scale(1.12)',
-        }}
-      />
-      {/* Light/Dark theme gradient overlay and accent line */}
-      <style>{`
-        .games-backdrop-overlay {
-          background: linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.65) 30%, rgba(255,255,255,0.65) 65%, rgba(255,255,255,0.95) 100%);
-        }
-        .games-accent-line {
-          /* Colorful gradient for both themes */
-          background: linear-gradient(90deg, transparent 0%, rgba(0,229,160,0.6) 30%, rgba(195,160,60,0.6) 70%, transparent 100%);
-        }
-        
-        [data-theme="dark"] .games-backdrop-overlay {
-          background: linear-gradient(180deg, rgba(5,4,2,0.75) 0%, rgba(8,6,2,0.55) 30%, rgba(8,6,2,0.55) 65%, rgba(5,4,2,0.85) 100%);
-        }
-      `}</style>
-      <div
-        aria-hidden="true"
-        className="games-backdrop-overlay absolute inset-0 w-full h-full pointer-events-none transition-colors duration-500"
-      />
-      {/* Bottom accent line */}
-      <div
-        aria-hidden="true"
-        className="games-accent-line absolute bottom-0 left-0 w-full h-[2px] pointer-events-none transition-all duration-500"
-      />
-      
+     <section className="mb-10 md:mb-14 last:mb-0">
+
       {/* Content wrapper */}
       <div className="relative z-10 w-full max-w-[1280px] mx-auto px-4 lg:px-0">
         <SectionHead title="Games" className="mb-6" />

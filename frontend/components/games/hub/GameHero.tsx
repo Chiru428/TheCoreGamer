@@ -132,7 +132,7 @@ export default function GameHero({ game, slug, trailerUrl, youtubeId, youtubeSea
                 <span className="text-[20px] font-bold text-white mb-1">Game Rating</span>
                 <span className="text-[16px] text-white/80">Our Review: <strong className="text-white">{game.GameReview?.[0]?.reviewScore ? `${game.GameReview[0].reviewScore}/10` : 'N/A'}</strong></span>
                 <span className="text-[16px] text-white/80">User Ratings: <strong className="text-white">{game.userRatings?.average ? `${game.userRatings.average.toFixed(1)}/10` : 'N/A'} <span className="text-xs font-normal">({game.userRatings?.count ?? 0})</span></strong></span>
-                <Link href="?tab=reviews" scroll={false} className="mt-3 bg-[#2453A4] hover:bg-[#1c4282] text-white text-[16px] font-bold py-2 px-4 transition-colors w-fit shadow-md text-center">
+                <Link href="?tab=reviews" scroll={false} className="mt-3 bg-[#00E5A0] hover:bg-[#00C98A] text-black text-[16px] font-bold py-2 px-4 transition-colors w-fit shadow-md text-center">
                   {hasUserRated ? 'Edit Your Review' : 'Write a Review'}
                 </Link>
               </div>
@@ -202,7 +202,7 @@ export default function GameHero({ game, slug, trailerUrl, youtubeId, youtubeSea
                 <span className="text-[20px] font-bold text-white mb-1">Game Rating</span>
                 <span className="text-[16px] text-white/80">Our Review: <strong className="text-white">{game.GameReview?.[0]?.reviewScore ? `${game.GameReview[0].reviewScore}/10` : 'N/A'}</strong></span>
                 <span className="text-[16px] text-white/80">User Ratings: <strong className="text-white">{game.userRatings?.average ? `${game.userRatings.average.toFixed(1)}/10` : 'N/A'} <span className="text-xs font-normal">({game.userRatings?.count ?? 0})</span></strong></span>
-                <Link href="?tab=reviews" scroll={false} className="mt-3 bg-[#2453A4] hover:bg-[#1c4282] text-white text-[16px] font-bold py-2 px-4 transition-colors w-fit shadow-md text-center">
+                <Link href="?tab=reviews" scroll={false} className="mt-3 bg-[#00E5A0] hover:bg-[#00C98A] text-black text-[16px] font-bold py-2 px-4 transition-colors w-fit shadow-md text-center">
                   {hasUserRated ? 'Edit Your Review' : 'Write a Review'}
                 </Link>
               </div>

@@ -75,7 +75,7 @@ export default function GamesGridClient({ initialGames, totalPages: initialTotal
   const showLoadMore = hasMore;
 
   return (
-    <div className="flex flex-col gap-2 md:gap-6">
+    <div className="flex flex-col gap-5 md:gap-6">
       {/* Top Header Row with Sort and Filter Pills */}
       <div className="flex flex-col md:flex-row gap-4 md:gap-8 md:items-center">
         <div className="w-full md:w-[250px] xl:w-auto xl:flex-1 shrink-0 flex items-center justify-between gap-4">

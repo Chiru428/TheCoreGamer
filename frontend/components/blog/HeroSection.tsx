@@ -40,36 +40,6 @@ export default function HeroSection({
   return (
     <section className="relative overflow-hidden mt-4 md:mt-0">
 
-      {/* ── ELDEN RING BLURRED BACKDROP ───────────────────────────────────── */}
-      {/* Blurred image */}
-      <div
-        aria-hidden="true"
-        className="hero-backdrop-img absolute inset-0 w-full h-full pointer-events-none"
-        style={{
-          backgroundImage: `url('/images/hero-backdrop.jpg')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center top',
-          filter: 'blur(32px) saturate(1.25)',
-          transform: 'scale(1.12)',
-        }}
-      />
-      {/* Dark overlay — lighter in centre so the hero image pops */}
-      <div
-        aria-hidden="true"
-        className="hero-backdrop-overlay absolute inset-0 w-full h-full pointer-events-none"
-        style={{
-          background: 'linear-gradient(180deg, rgba(5,4,2,0.88) 0%, rgba(8,6,2,0.72) 30%, rgba(8,6,2,0.70) 65%, rgba(5,4,2,0.93) 100%)',
-        }}
-      />
-      {/* Bottom accent line — green→amber matching Elden Ring gold */}
-      <div
-        aria-hidden="true"
-        className="hero-backdrop-line absolute bottom-0 left-0 w-full h-[2px] pointer-events-none"
-        style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(0,229,160,0.6) 30%, rgba(195,160,60,0.6) 70%, transparent 100%)' }}
-      />
-
-
-
       {/* All existing content sits above the backdrop, z-index auto */}
       <div className="relative">
 

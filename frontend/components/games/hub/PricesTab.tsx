@@ -9,6 +9,7 @@ import { trackClarityEvent } from '@/lib/clarity';
 import { formatRelativeDate } from '@/lib/utils';
 import type { GameHubData, GamePriceEntry } from '@/types';
 import PriceHistoryChart from '@/components/deals/PriceHistoryChart';
+import styles from './gamehub.module.css';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || '';
 
@@ -178,7 +179,7 @@ export default function PricesTab({ game, slug }: { game: GameHubData; slug: str
         <p className="text-xs text-amber-400 mb-3 px-1">{error}</p>
       )}
 
-      <div className="w-full bg-[#E0E0E0] dark:bg-[#1e1e24] rounded-none overflow-hidden border border-gray-200 dark:border-white/5 shadow-sm dark:shadow-none">
+      <div className={`w-full rounded-none overflow-hidden ${styles.contentCard} !p-0`}>
         {/* Header */}
         <div className="hidden md:grid grid-cols-[3fr_2fr_3fr_4fr] gap-4 p-3 bg-[#2453A4] border-b border-[#183973] text-xs font-bold text-white uppercase tracking-wider">
           <div>Store</div>
@@ -202,7 +203,7 @@ export default function PricesTab({ game, slug }: { game: GameHubData; slug: str
             return (
               <div 
                 key={price.shop + i} 
-                className={`relative group flex flex-row justify-between md:grid md:grid-cols-[3fr_2fr_3fr_4fr] gap-2 md:gap-4 items-center p-3 md:px-4 md:py-3 border-b border-gray-100 dark:border-white/5 transition-colors cursor-pointer border-l-4 ${borderColor} bg-[var(--store-bg-light)] dark:bg-[var(--store-bg-dark)]`}
+                className={`relative group flex flex-row justify-between md:grid md:grid-cols-[3fr_2fr_3fr_4fr] gap-2 md:gap-4 items-center p-3 md:px-4 md:py-3 border-b border-gray-100 dark:border-white/5 transition-colors cursor-pointer border-l-4 ${borderColor} bg-transparent hover:bg-black/5 dark:hover:bg-white/5`}
                 style={{ '--store-bg-light': lightBg, '--store-bg-dark': darkBg } as any}
                 onClick={() => handleBuyClick(price, slug, game.id, getAlgoliaUserToken(session?.user?.id))}
               >

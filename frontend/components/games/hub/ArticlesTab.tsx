@@ -9,7 +9,7 @@ import type { Article, ApiResponse, GameHubData } from '@/types';
 import styles from './gamehub.module.css';
 
 const PAGE_SIZE = 9;
-const FILTERS = ['NEWS', 'WALKTHROUGH', 'MOD_GUIDE', 'OPINION'] as const;
+const FILTERS = ['NEWS', 'GUIDE', 'OPINION', 'LISTICLE'] as const;
 
 export default function ArticlesTab({ game, slug }: { game: GameHubData; slug: string }) {
   const [contentType, setContentType] = useState<string | null>(null);
@@ -38,7 +38,7 @@ export default function ArticlesTab({ game, slug }: { game: GameHubData; slug: s
 
   const availableFilters = game.articleContentTypes 
     ? FILTERS.filter(ct => game.articleContentTypes!.includes(ct))
-    : FILTERS;
+    : [];
 
   return (
     <div>

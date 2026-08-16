@@ -166,7 +166,7 @@ function RatingCard({
 }
 
 export default function ReviewsTab({ game, slug }: { game: GameHubData; slug: string }) {
-  const { data: session } = useSession();
+  const { data: session, status: sessionStatus } = useSession();
   const viewerId = session?.user?.id;
 
   const [sort, setSort] = useState<SortMode>('helpful');
@@ -193,14 +193,14 @@ export default function ReviewsTab({ game, slug }: { game: GameHubData; slug: st
       {/* -- Editorial review ------------------------------------------- */}
       {review ? (
         <div className={styles.contentCard}>
-          <div className="section-title-bar">{review.Article?.title ?? 'TheCoreGamer Review'}</div>
-
-          <div className={styles.reviewHero}>
-            <div className={styles.reviewHeroMeta}>
-              <div className={styles.hexBadge} style={{ background: getScoreColor(reviewScore) }}>
-                <span className={styles.hexBadgeScore}>{reviewScore.toFixed(1)}</span>
-              </div>
-              <div className="min-w-0 flex-1">
+          <div className={`${styles.reviewHero} items-start`}>
+            <div className="flex flex-col gap-0 md:gap-8 flex-1 min-w-[280px]">
+              <div className={`section-title-bar ${styles.reviewHeading} !mb-0`}>TheCoreGamer Review</div>
+              <div className={`${styles.reviewHeroMeta} justify-center md:justify-start -mt-9 md:mt-0`}>
+                <div className={styles.hexBadge} style={{ background: getScoreColor(reviewScore) }}>
+                  <span className={styles.hexBadgeScore}>{reviewScore.toFixed(1)}</span>
+                </div>
+                <div className="min-w-0 flex flex-col items-center">
                 <div className={styles.reviewVerdictLabel}>{getScoreLabel(reviewScore)}</div>
                 {reviewPlatforms.length > 0 && (
                   <div className={styles.reviewPlatformRow}>
@@ -218,9 +218,10 @@ export default function ReviewsTab({ game, slug }: { game: GameHubData; slug: st
                 )}
               </div>
             </div>
+            </div>
 
             {review.Article?.featuredImageUrl && (
-              <div className={styles.reviewHeroImage}>
+              <div className={`${styles.reviewHeroImage} -mt-9 md:mt-0`}>
                 <Image
                   src={review.Article.featuredImageUrl}
                   alt={review.Article.title}
@@ -339,7 +340,7 @@ export default function ReviewsTab({ game, slug }: { game: GameHubData; slug: st
           onCancel={ratingsRes?.data?.aggregate?.userRating ? () => setIsEditing(false) : undefined}
         />
       )}
-      {!viewerId && (
+      {sessionStatus === 'unauthenticated' && (
         <p className="text-sm mb-6 p-4 rounded-none border border-border" style={{ color: 'var(--muted)', background: 'var(--bg3)' }}>
           <a href="/auth/login" style={{ color: 'var(--accent)' }} className="underline hover:no-underline font-bold">Sign in</a> to leave a community review.
         </p>

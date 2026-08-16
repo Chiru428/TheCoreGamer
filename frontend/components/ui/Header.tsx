@@ -445,7 +445,7 @@ export default function Header({ tickerArticles = [] }: { tickerArticles?: Artic
 
               {accountMenuOpen && (
                 <div
-                  className="absolute right-0 top-full mt-2 w-max min-w-[200px] py-2 rounded-xl overflow-hidden z-50 bg-[#3a3f4a] border border-white/10 shadow-2xl"
+                  className="absolute right-0 top-full mt-2 w-max min-w-[200px] py-2 rounded-xl overflow-hidden z-50 bg-[var(--bg2)] border border-black/10 dark:border-white/10 shadow-2xl"
                   style={{ boxShadow: '0 16px 32px rgba(0,0,0,0.5)' }}
                   role="menu"
                 >
@@ -453,7 +453,7 @@ export default function Header({ tickerArticles = [] }: { tickerArticles?: Artic
                     <Link
                       href="/admin"
                       role="menuitem"
-                      className="group flex items-center gap-3 px-4 py-2.5 text-[15px] font-semibold transition-all hover:bg-white/5 text-white/90 hover:text-white"
+                      className="group flex items-center gap-3 px-4 py-2.5 text-[15px] font-semibold transition-all hover:bg-black/5 dark:hover:bg-white/5 text-gray-700 hover:text-black dark:text-white/90 dark:hover:text-white"
                     >
                       <Shield className="w-4 h-4 shrink-0 text-accent transition-transform group-hover:scale-110" /> 
                       <span className="text-accent transition-transform group-hover:translate-x-1">Admin Dashboard</span>
@@ -463,7 +463,7 @@ export default function Header({ tickerArticles = [] }: { tickerArticles?: Artic
                     href="/settings"
                     role="menuitem"
                     onClick={() => setAccountMenuOpen(false)}
-                    className="group flex items-center gap-3 px-4 py-2.5 text-[15px] font-semibold transition-all hover:bg-white/5 text-white/90 hover:text-white"
+                    className="group flex items-center gap-3 px-4 py-2.5 text-[15px] font-semibold transition-all hover:bg-black/5 dark:hover:bg-white/5 text-gray-700 hover:text-black dark:text-white/90 dark:hover:text-white"
                   >
                     <UserCircle className="w-4 h-4 shrink-0 transition-transform group-hover:scale-110" /> 
                     <span className="transition-transform group-hover:translate-x-1">My Account</span>
@@ -472,16 +472,16 @@ export default function Header({ tickerArticles = [] }: { tickerArticles?: Artic
                     href="/settings/notifications"
                     role="menuitem"
                     onClick={() => setAccountMenuOpen(false)}
-                    className="group flex items-center gap-3 px-4 py-2.5 text-[15px] font-semibold transition-all hover:bg-white/5 text-white/90 hover:text-white"
+                    className="group flex items-center gap-3 px-4 py-2.5 text-[15px] font-semibold transition-all hover:bg-black/5 dark:hover:bg-white/5 text-gray-700 hover:text-black dark:text-white/90 dark:hover:text-white"
                   >
                     <Bell className="w-4 h-4 shrink-0 transition-transform group-hover:scale-110" /> 
                     <span className="transition-transform group-hover:translate-x-1">Notifications</span>
                   </Link>
-                  <div className="h-px bg-white/10 my-1 mx-3" />
+                  <div className="h-px bg-black/10 dark:bg-white/10 my-1 mx-3" />
                   <button
                     type="button"
                     onClick={async () => { setAccountMenuOpen(false); clearSession(); await signOut({ callbackUrl: '/' }); }}
-                    className="group flex w-full items-center gap-3 px-4 py-2.5 text-[15px] font-semibold transition-all hover:bg-red-500/10 text-white/90 hover:text-red-400 text-left"
+                    className="group flex w-full items-center gap-3 px-4 py-2.5 text-[15px] font-semibold transition-all hover:bg-red-500/10 text-gray-700 dark:text-white/90 hover:text-red-600 dark:hover:text-red-400 text-left"
                     role="menuitem"
                   >
                     <LogOut className="w-4 h-4 shrink-0 transition-transform group-hover:scale-110" /> 
