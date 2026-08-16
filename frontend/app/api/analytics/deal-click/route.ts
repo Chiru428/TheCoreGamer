@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+
+export const runtime = 'edge';
 import { injectUtm } from "@/lib/affiliate";
 
 const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:3001';
