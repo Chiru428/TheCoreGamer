@@ -875,21 +875,21 @@ function extractHeadings(content: any): HeadingInfo[] {
 
 /**
  * Convert an editor font-size value (e.g. "18px") to a responsive clamp().
- * Desktop shows the exact value; mobile scales down to 94% fluidly.
+ * Desktop shows the exact value; mobile scales down to the given factor fluidly.
  *
  * clamp(min, fluid, max)
- *   min   = px × 0.94           (mobile floor)
+ *   min   = px × factor         (mobile floor)
  *   fluid = px × 0.0833vw       (reaches `max` at ~1200px viewport)
  *   max   = px                  (desktop ceiling)
  *
  * Non-px values (rem, em, %) are returned unchanged — they are already relative.
  */
-function responsiveFontSize(value: string): string {
+function responsiveFontSize(value: string, factor: number = 0.94): string {
   const match = value.match(/^([0-9]+(?:\.[0-9]+)?)px$/);
   if (!match) return value; // rem/em/% — leave as-is
   const px    = parseFloat(match[1]);
-  const min   = Math.round(px * 0.94 * 100) / 100;    // 2 decimals, e.g. 16.92
-  const fluid = Math.round(px * 0.0833 * 100) / 100;  // 2 decimals, e.g. 1.5
+  const min   = Math.round(px * factor * 100) / 100;
+  const fluid = Math.round(px * 0.0833 * 100) / 100;
   return `clamp(${min}px, ${fluid}vw, ${px}px)`;
 }
 
@@ -914,8 +914,8 @@ function renderNodes(node: TipTapNode | any, idCounts: Map<string, number>, docH
   return renderNode(node, idCounts, docHeadings);
 }
 
-function renderNode(node: TipTapNode, idCounts: Map<string, number>, docHeadings: HeadingInfo[], isFirstNode: boolean = false): string {
-  const inner = node.content ? node.content.map(n => renderNode(n, idCounts, docHeadings)).join('') : (node.text ? escapeHTML(node.text) : '');
+function renderNode(node: TipTapNode, idCounts: Map<string, number>, docHeadings: HeadingInfo[], isFirstNode: boolean = false, parentNodeType: string = 'paragraph'): string {
+  const inner = node.content ? node.content.map(n => renderNode(n, idCounts, docHeadings, false, node.type)).join('') : (node.text ? escapeHTML(node.text) : '');
 
   // Apply marks
   let result = inner;
@@ -940,7 +940,10 @@ function renderNode(node: TipTapNode, idCounts: Map<string, number>, docHeadings
         
         // Basic styles
         if (mark.attrs?.color) styles.push(`color: ${mark.attrs.color}`);
-        if (mark.attrs?.fontSize) styles.push(`font-size: ${responsiveFontSize(mark.attrs.fontSize)}`);
+        if (mark.attrs?.fontSize) {
+          const factor = parentNodeType === 'paragraph' ? 0.94 : 0.90;
+          styles.push(`font-size: ${responsiveFontSize(mark.attrs.fontSize, factor)}`);
+        }
         if (mark.attrs?.fontFamily) styles.push(`font-family: ${mark.attrs.fontFamily}`);
         
         // TypographyEngine styles
@@ -1022,7 +1025,10 @@ function renderNode(node: TipTapNode, idCounts: Map<string, number>, docHeadings
     // Typography Engine Block Attrs
     if (attrs.lineHeight) styles.push(`line-height: ${attrs.lineHeight}`);
     if (attrs.textAlign) styles.push(`text-align: ${attrs.textAlign}`);
-    if (attrs.fontSize) styles.push(`font-size: ${responsiveFontSize(attrs.fontSize)}`);
+    if (attrs.fontSize) {
+      const factor = node.type === 'paragraph' ? 0.94 : 0.90;
+      styles.push(`font-size: ${responsiveFontSize(attrs.fontSize, factor)}`);
+    }
     if (attrs.fontFamily) styles.push(`font-family: ${attrs.fontFamily}`);
     if (attrs.fontWeight) styles.push(`font-weight: ${attrs.fontWeight}`);
     if (attrs.letterSpacing) styles.push(`letter-spacing: ${attrs.letterSpacing}`);
