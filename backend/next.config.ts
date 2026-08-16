@@ -65,6 +65,58 @@ const nextConfig: NextConfig = {
           { key: "Access-Control-Allow-Credentials", value: "true" },
         ],
       },
+
+      // ── CDN Cache Headers ─────────────────────────────────────────────────
+      // Public, read-only reference data — changes very rarely (genres, tags,
+      // platforms, themes, modes, perspectives, series).
+      // s-maxage=600 → Vercel CDN caches for 10 min, zero Fluid CPU for hits.
+      // stale-while-revalidate=1800 → serve stale while refreshing in background.
+      {
+        source: "/api/(genres|platforms|tags|themes|modes|perspectives|series)/:path*",
+        headers: [
+          { key: "Cache-Control", value: "public, s-maxage=600, stale-while-revalidate=1800" },
+        ],
+      },
+      {
+        source: "/api/(genres|platforms|tags|themes|modes|perspectives|series)",
+        headers: [
+          { key: "Cache-Control", value: "public, s-maxage=600, stale-while-revalidate=1800" },
+        ],
+      },
+
+      // Public content listings — articles, reviews, guides, games, news,
+      // deals, polls, homepage. Changes more frequently so shorter TTL.
+      // s-maxage=120 → CDN caches for 2 min.
+      {
+        source: "/api/(games|articles|reviews|guides|news|deals|polls|homepage|oembed|videos|awards|search|sitemap.xml|news-sitemap.xml|robots.txt|ads.txt|feed|rss)/:path*",
+        headers: [
+          { key: "Cache-Control", value: "public, s-maxage=120, stale-while-revalidate=600" },
+        ],
+      },
+      {
+        source: "/api/(games|articles|reviews|guides|news|deals|polls|homepage|oembed|videos|awards|search|sitemap.xml|news-sitemap.xml|robots.txt|ads.txt|feed|rss)",
+        headers: [
+          { key: "Cache-Control", value: "public, s-maxage=120, stale-while-revalidate=600" },
+        ],
+      },
+
+      // Public user profile data — safe to cache briefly.
+      {
+        source: "/api/users/:username*",
+        headers: [
+          { key: "Cache-Control", value: "public, s-maxage=60, stale-while-revalidate=300" },
+        ],
+      },
+
+      // Private / mutation routes — MUST never be cached by CDN.
+      // Covers auth, user account, admin, uploads, webhooks, push,
+      // reactions, bookmarks, comments (writes), revalidate triggers.
+      {
+        source: "/api/(auth|user|admin|upload|webhooks|push|revalidate|analytics|newsletter|ai)/:path*",
+        headers: [
+          { key: "Cache-Control", value: "no-store, no-cache" },
+        ],
+      },
     ];
   },
 };
