@@ -873,6 +873,26 @@ function extractHeadings(content: any): HeadingInfo[] {
   return results;
 }
 
+/**
+ * Convert an editor font-size value (e.g. "18px") to a responsive clamp().
+ * Desktop shows the exact value; mobile scales down to 90% fluidly.
+ *
+ * clamp(min, fluid, max)
+ *   min   = px × 0.9            (mobile floor)
+ *   fluid = px × 0.0833vw       (reaches `max` at ~1200px viewport)
+ *   max   = px                  (desktop ceiling)
+ *
+ * Non-px values (rem, em, %) are returned unchanged — they are already relative.
+ */
+function responsiveFontSize(value: string): string {
+  const match = value.match(/^([0-9]+(?:\.[0-9]+)?)px$/);
+  if (!match) return value; // rem/em/% — leave as-is
+  const px    = parseFloat(match[1]);
+  const min   = Math.round(px * 0.9 * 10) / 10;       // 1 decimal, e.g. 16.2
+  const fluid = Math.round(px * 0.0833 * 100) / 100;  // 2 decimals, e.g. 1.5
+  return `clamp(${min}px, ${fluid}vw, ${px}px)`;
+}
+
 function renderNodes(node: TipTapNode | any, idCounts: Map<string, number>, docHeadings: HeadingInfo[]): string {
   if (!node) return '';
 
@@ -920,7 +940,7 @@ function renderNode(node: TipTapNode, idCounts: Map<string, number>, docHeadings
         
         // Basic styles
         if (mark.attrs?.color) styles.push(`color: ${mark.attrs.color}`);
-        if (mark.attrs?.fontSize) styles.push(`font-size: ${mark.attrs.fontSize}`);
+        if (mark.attrs?.fontSize) styles.push(`font-size: ${responsiveFontSize(mark.attrs.fontSize)}`);
         if (mark.attrs?.fontFamily) styles.push(`font-family: ${mark.attrs.fontFamily}`);
         
         // TypographyEngine styles
@@ -1002,7 +1022,7 @@ function renderNode(node: TipTapNode, idCounts: Map<string, number>, docHeadings
     // Typography Engine Block Attrs
     if (attrs.lineHeight) styles.push(`line-height: ${attrs.lineHeight}`);
     if (attrs.textAlign) styles.push(`text-align: ${attrs.textAlign}`);
-    if (attrs.fontSize) styles.push(`font-size: ${attrs.fontSize}`);
+    if (attrs.fontSize) styles.push(`font-size: ${responsiveFontSize(attrs.fontSize)}`);
     if (attrs.fontFamily) styles.push(`font-family: ${attrs.fontFamily}`);
     if (attrs.fontWeight) styles.push(`font-weight: ${attrs.fontWeight}`);
     if (attrs.letterSpacing) styles.push(`letter-spacing: ${attrs.letterSpacing}`);

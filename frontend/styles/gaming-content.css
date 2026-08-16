@@ -38,7 +38,7 @@
 }
 
 .gaming-content {
-  font-family: var(--gc-font-body);
+  font-family: var(--gc-font-body) !important;
   font-size: 16px;
   line-height: 1.85;
   color: var(--gc-text);
@@ -2289,9 +2289,13 @@ a.gc-dep-name:hover {
 
 /* ── MOBILE RESPONSIVE ───────────────────────────────────────── */
 @media (max-width: 768px) {
+  /* This padding compensates for the -mx-5 (−20px) negative-margin wrapper
+     used around ArticleBody in article pages. The outer article has px-4 (16px),
+     so net text position = 16 − 20 + 20 = 16px from edge — correct alignment. */
   .gaming-content {
     padding: 20px;
   }
+
 
   .gaming-content h1 {
     font-size: 1.8rem;
