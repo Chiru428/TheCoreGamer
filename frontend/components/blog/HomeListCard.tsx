@@ -54,7 +54,7 @@ export default function HomeListCard({ article, titleClassName }: HomeListCardPr
 
       <div className="relative h-20 aspect-video shrink-0 overflow-hidden bg-[var(--deep,#0d0d1a)]">
         {article.featuredImageUrl ? (
-          <Image
+          <Image quality={100}
             src={article.featuredImageUrl}
             alt={article.title}
             fill

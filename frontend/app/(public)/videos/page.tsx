@@ -45,7 +45,7 @@ function VideoCard({ video }: { video: VideoAsset }) {
     <div className="group flex flex-col rounded-xl border border-border bg-bg-surface overflow-hidden hover:border-accent/40 transition-colors">
       {/* Thumbnail */}
       <div className="relative aspect-video bg-bg-elevated overflow-hidden">
-        <Image
+        <Image quality={100}
           src={thumb}
           alt={video.title}
           fill

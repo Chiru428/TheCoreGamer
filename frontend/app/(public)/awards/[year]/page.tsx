@@ -106,7 +106,7 @@ export default async function AwardsPage(
                         )}
                         <div className="relative aspect-[3/4] w-full overflow-hidden">
                           {nominee.coverImageUrl ? (
-                            <Image
+                            <Image quality={100}
                               src={nominee.coverImageUrl}
                               alt={nominee.title}
                               fill

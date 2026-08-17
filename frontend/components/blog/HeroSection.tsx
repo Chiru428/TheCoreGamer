@@ -55,7 +55,7 @@ export default function HeroSection({
           <Link href={`${linkBase}/${current.slug}`} className="block group overflow-hidden relative" style={{ background: 'var(--deep)' }}>
             <div className="relative w-full" style={{ aspectRatio: '16/9' }}>
               {current.featuredImageUrl && (
-                <Image
+                <Image quality={100}
                   src={current.featuredImageUrl}
                   alt={current.title}
                   fill
@@ -160,7 +160,7 @@ export default function HeroSection({
                     {/* Small cover image, vertically centered */}
                     <div className="relative w-[114px] h-[64px] shrink-0 overflow-hidden bg-[var(--deep,#0d0d1a)] self-center">
                       {article.featuredImageUrl ? (
-                        <Image src={article.featuredImageUrl} alt={article.title} fill className="object-cover" sizes="114px" />
+                        <Image quality={100} src={article.featuredImageUrl} alt={article.title} fill className="object-cover" sizes="114px" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center"><Gamepad2 className="w-4 h-4 opacity-30" /></div>
                       )}
@@ -179,7 +179,7 @@ export default function HeroSection({
           {/* Image */}
           <div className="relative w-full" style={{ aspectRatio: '16/9' }}>
             {current.featuredImageUrl && (
-              <Image
+              <Image quality={100}
                 src={current.featuredImageUrl}
                 alt={current.title}
                 fill
@@ -297,7 +297,7 @@ export default function HeroSection({
                   {/* Small cover image, vertically centered */}
                   <div className="relative w-[130px] h-[73px] shrink-0 overflow-hidden bg-[var(--deep,#0d0d1a)] self-center">
                     {article.featuredImageUrl ? (
-                      <Image src={article.featuredImageUrl} alt={article.title} fill className="object-cover" sizes="130px" />
+                      <Image quality={100} src={article.featuredImageUrl} alt={article.title} fill className="object-cover" sizes="130px" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center"><Gamepad2 className="w-4 h-4 opacity-30" /></div>
                     )}

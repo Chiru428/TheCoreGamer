@@ -38,7 +38,7 @@ export default function WalkthroughSlider({ articles }: { articles: Article[] })
             className="group relative w-full h-full shrink-0"
           >
             {article.featuredImageUrl ? (
-              <Image 
+              <Image quality={100} 
                 src={article.featuredImageUrl} 
                 alt={article.title} 
                 fill 

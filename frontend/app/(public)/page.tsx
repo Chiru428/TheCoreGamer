@@ -133,7 +133,7 @@ function GameRow({ games }: { games: { id: string; slug: string; title: string; 
     <Link key={g.id} href={`/games/${g.slug}`} className="group block overflow-hidden">
      <div className="relative overflow-hidden aspect-[2/3] w-full rounded-none border border-[var(--text)]">
       {g.coverImageUrl ? (
-       <Image src={g.coverImageUrl} alt={g.title} fill className="object-cover transition-transform duration-1000 ease-out " sizes="(max-width: 768px) 50vw, 225px" />
+       <Image quality={100} src={g.coverImageUrl} alt={g.title} fill className="object-cover transition-transform duration-1000 ease-out " sizes="(max-width: 768px) 50vw, 225px" />
       ) : (
        <div className="w-full h-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #1e1228 0%, #0a1628 100%)' }}>
         <span className="text-3xl opacity-20">🎮</span>

@@ -56,7 +56,7 @@ export default function EditorialTabsSection({ corePicks, opinions }: EditorialT
           >
             <div className="relative w-[140px] sm:w-[240px] md:w-[320px] shrink-0 aspect-[16/9] overflow-hidden bg-[var(--deep,#0d0d1a)]">
               {article.featuredImageUrl ? (
-                <Image
+                <Image quality={100}
                   src={article.featuredImageUrl}
                   alt={article.title}
                   fill

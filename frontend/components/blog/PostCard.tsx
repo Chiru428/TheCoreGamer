@@ -82,7 +82,7 @@ export default function PostCard({ article, variant = 'medium', className, aspec
     >
       <Link href={href} className="relative w-full h-full overflow-hidden block min-h-[160px]">
         {article.featuredImageUrl ? (
-          <Image src={article.featuredImageUrl} alt={article.title} fill className="absolute inset-0 w-full h-full object-cover card-thumbnail" sizes="(max-width: 768px) 100vw, 420px" />
+          <Image quality={100} src={article.featuredImageUrl} alt={article.title} fill className="absolute inset-0 w-full h-full object-cover card-thumbnail" sizes="(max-width: 768px) 100vw, 420px" />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
             <Gamepad2 className="w-10 h-10" style={{ color: 'var(--muted3)' }} />
@@ -145,7 +145,7 @@ export default function PostCard({ article, variant = 'medium', className, aspec
     >
       <Link href={href} className="hidden sm:block relative w-[120px] min-w-[120px] sm:w-[160px] sm:min-w-[160px] aspect-video overflow-hidden flex-shrink-0" style={{ background: 'linear-gradient(135deg, #1e1228 0%, #0a1628 100%)' }}>
         {article.featuredImageUrl ? (
-          <Image src={article.featuredImageUrl} alt={article.title} fill className="absolute inset-0 w-full h-full object-cover card-thumbnail" sizes="(max-width: 640px) 120px, 160px" />
+          <Image quality={100} src={article.featuredImageUrl} alt={article.title} fill className="absolute inset-0 w-full h-full object-cover card-thumbnail" sizes="(max-width: 640px) 120px, 160px" />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
             <Gamepad2 className="w-5 h-5" style={{ color: 'var(--muted3)' }} />
@@ -202,7 +202,7 @@ export default function PostCard({ article, variant = 'medium', className, aspec
     >
       <Link href={href} className="relative aspect-video w-full overflow-hidden mb-3 block shadow-md border border-white/5">
         {article.featuredImageUrl ? (
-          <Image
+          <Image quality={100}
             src={article.featuredImageUrl}
             alt={article.title}
             fill
@@ -267,7 +267,7 @@ export default function PostCard({ article, variant = 'medium', className, aspec
     >
       <Link href={href} className="relative w-[140px] min-w-[140px] aspect-video sm:aspect-auto sm:h-full sm:w-[231px] sm:min-w-[231px] overflow-hidden flex-shrink-0">
         {article.featuredImageUrl ? (
-          <Image src={article.featuredImageUrl} alt={article.title} fill className="absolute inset-0 w-full h-full object-cover card-thumbnail" sizes="(max-width: 640px) 140px, 280px" />
+          <Image quality={100} src={article.featuredImageUrl} alt={article.title} fill className="absolute inset-0 w-full h-full object-cover card-thumbnail" sizes="(max-width: 640px) 140px, 280px" />
         ) : (
           <div className="w-full h-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #1e1228 0%, #0a1628 100%)' }}>
             <Gamepad2 className="w-8 h-8" style={{ color: 'var(--muted3)' }} />

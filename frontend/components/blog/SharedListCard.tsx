@@ -34,7 +34,7 @@ export default function SharedListCard({ article, priority = false, isLast = fal
         {/* Image Area */}
         <div className="block w-full sm:w-[240px] lg:w-[320px] aspect-[16/9] shrink-0 relative overflow-hidden bg-[var(--deep,#0d0d1a)]">
           {article.featuredImageUrl ? (
-            <Image 
+            <Image quality={100} 
               src={article.featuredImageUrl} 
               alt={article.title} 
               fill 

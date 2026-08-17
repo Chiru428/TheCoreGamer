@@ -115,7 +115,7 @@ export default async function PlatformHubPage({ params }: { params: Promise<{ pl
         <div key={game.id} className="card-sm transition-transform hover:-translate-y-[1px] overflow-hidden">
          <Link href={`/games/${game.slug}`} className="block relative overflow-hidden aspect-[2/3] rounded-none border border-[var(--text)]">
           {game.coverImageUrl ? (
-           <Image src={game.coverImageUrl} alt={game.title} fill className="object-cover" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw" unoptimized={true} priority={i < 4} />
+           <Image quality={100} src={game.coverImageUrl} alt={game.title} fill className="object-cover" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw" unoptimized={true} priority={i < 4} />
           ) : (
            <div className="w-full h-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #1e1228 0%, #0a1628 100%)' }}>
             <span className="text-3xl opacity-20">🎮</span>
@@ -145,7 +145,7 @@ export default async function PlatformHubPage({ params }: { params: Promise<{ pl
          <Link key={article.id} href={`/articles/${article.slug}`} className="card-sm block group">
           <div className="relative aspect-[2/3] w-full overflow-hidden rounded-none border border-[var(--text)]">
            {article.featuredImageUrl ? (
-            <Image src={article.featuredImageUrl} alt={article.title} fill className="object-cover " sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" unoptimized />
+            <Image quality={100} src={article.featuredImageUrl} alt={article.title} fill className="object-cover " sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" unoptimized />
            ) : (
             <div className="w-full h-full bg-bg3" />
            )}
@@ -177,7 +177,7 @@ export default async function PlatformHubPage({ params }: { params: Promise<{ pl
         <div key={game.id} className="card-sm transition-transform hover:-translate-y-[1px] overflow-hidden">
          <Link href={`/games/${game.slug}`} className="block relative overflow-hidden aspect-[2/3] rounded-none border border-[var(--text)]">
           {game.coverImageUrl ? (
-           <Image src={game.coverImageUrl} alt={game.title} fill className="object-cover" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw" unoptimized={true} priority={i < 4} />
+           <Image quality={100} src={game.coverImageUrl} alt={game.title} fill className="object-cover" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw" unoptimized={true} priority={i < 4} />
           ) : (
            <div className="w-full h-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #1e1228 0%, #0a1628 100%)' }}>
             <span className="text-3xl opacity-20">📅</span>

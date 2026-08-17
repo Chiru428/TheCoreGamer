@@ -70,7 +70,7 @@ export default function GameTabsSection({ newReleaseGames, topRatedGames, coming
             <Link key={g.id} href={`/games/${g.slug}`} className="game-tab-card group">
               <div className="game-tab-cover">
                 {g.coverImageUrl ? (
-                  <Image
+                  <Image quality={100}
                     src={g.coverImageUrl}
                     alt={g.title}
                     fill

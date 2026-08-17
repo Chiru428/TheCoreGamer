@@ -45,7 +45,7 @@ export default function GuidesSection({ guides }: GuidesSectionProps) {
                 </div>
                 <div className="relative aspect-[16/9] shrink-0 h-full overflow-hidden shadow-sm">
                   {article.featuredImageUrl ? (
-                    <Image src={article.featuredImageUrl} alt={article.title} fill className="object-cover" sizes="224px" />
+                    <Image quality={100} src={article.featuredImageUrl} alt={article.title} fill className="object-cover" sizes="224px" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center bg-[#0d0d1a] opacity-30 text-2xl">🎮</div>
                   )}
@@ -105,7 +105,7 @@ export default function GuidesSection({ guides }: GuidesSectionProps) {
               </div>
               <div className="relative aspect-[16/9] shrink-0 h-full overflow-hidden shadow-sm">
                 {article.featuredImageUrl ? (
-                  <Image src={article.featuredImageUrl} alt={article.title} fill className="object-cover" sizes="(max-width: 640px) 177px, 224px" />
+                  <Image quality={100} src={article.featuredImageUrl} alt={article.title} fill className="object-cover" sizes="(max-width: 640px) 177px, 224px" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-[#0d0d1a] opacity-30 text-xl">🎮</div>
                 )}

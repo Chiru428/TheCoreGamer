@@ -267,7 +267,7 @@ function CommentForm({
 
         {gifPreview && (
           <div className="relative inline-block mb-2 ml-3">
-            <Image
+            <Image quality={100}
               src={gifPreview.previewUrl}
               alt={gifPreview.title}
               width={160}
@@ -323,7 +323,7 @@ function CommentForm({
                           className="relative overflow-hidden rounded hover:ring-2 hover:ring-accent transition-all"
                           style={{ height: '80px' }}
                         >
-                          <Image src={gif.previewUrl} alt={gif.title} fill unoptimized className="object-cover" sizes="80px" />
+                          <Image quality={100} src={gif.previewUrl} alt={gif.title} fill unoptimized className="object-cover" sizes="80px" />
                         </button>
                       ))}
                     </div>

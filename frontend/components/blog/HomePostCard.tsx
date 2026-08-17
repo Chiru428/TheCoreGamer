@@ -48,7 +48,7 @@ export default function HomePostCard({ article, isCompact, showBadge = false, sh
       {/* Top Image Area */}
       <div className={`block ${mobileHorizontal ? 'w-[45%] sm:w-full sm:my-0' : 'w-full'} ${imageClassName || 'aspect-[16/9]'} relative overflow-hidden bg-[var(--deep,#0d0d1a)] shrink-0`} style={{ flexBasis: mobileHorizontal ? 'auto' : undefined }}>
         {article.featuredImageUrl ? (
-          <Image 
+          <Image quality={100} 
             src={article.featuredImageUrl} 
             alt={article.title} 
             fill 

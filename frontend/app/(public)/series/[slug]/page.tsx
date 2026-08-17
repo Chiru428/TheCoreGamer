@@ -36,7 +36,7 @@ export default async function SeriesHubPage({ params }: Props) {
       {/* Hero */}
       <div style={{ position: 'relative', width: '100%', minHeight: 280, overflow: 'hidden', marginBottom: 48 }}>
         {series.coverImageUrl ? (
-          <Image
+          <Image quality={100}
             src={series.coverImageUrl}
             alt={series.name}
             fill
@@ -156,7 +156,7 @@ export default async function SeriesHubPage({ params }: Props) {
                       width: 80, height: 54, borderRadius: 6, overflow: 'hidden',
                       flexShrink: 0, position: 'relative', border: '1px solid var(--border)',
                     }}>
-                      <Image
+                      <Image quality={100}
                         src={art.featuredImageUrl}
                         alt={art.title}
                         fill

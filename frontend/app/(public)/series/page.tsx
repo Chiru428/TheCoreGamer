@@ -76,7 +76,7 @@ function SeriesCard({ series }: { series: SeriesSummary }) {
       {/* Cover image */}
       <div style={{ position: 'relative', aspectRatio: '16/7', background: 'var(--bg3)', overflow: 'hidden' }}>
         {series.coverImageUrl ? (
-          <Image
+          <Image quality={100}
             src={series.coverImageUrl}
             alt={series.name}
             fill

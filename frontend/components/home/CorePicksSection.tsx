@@ -34,7 +34,7 @@ export default function CorePicksSection({ articles }: { articles: Article[] }) 
             >
               <div className="relative w-[320px] shrink-0 aspect-[16/9] overflow-hidden bg-[var(--deep,#0d0d1a)]">
                 {article.featuredImageUrl ? (
-                  <Image
+                  <Image quality={100}
                     src={article.featuredImageUrl}
                     alt={article.title}
                     fill

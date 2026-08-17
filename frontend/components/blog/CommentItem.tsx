@@ -311,7 +311,7 @@ export default function CommentItem({ comment, onReply, depth, replyToId, render
 
           {comment.gifUrl && (
             <div className="mb-2">
-              <Image
+              <Image quality={100}
                 src={comment.gifUrl}
                 alt="GIF"
                 width={160}

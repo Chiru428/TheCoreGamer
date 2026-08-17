@@ -505,7 +505,7 @@ export default function Header({ tickerArticles = [] }: { tickerArticles?: Artic
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-nav-drawer"
           >
-            {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
@@ -597,30 +597,59 @@ export default function Header({ tickerArticles = [] }: { tickerArticles?: Artic
                   ) : isAuthenticated && user ? (
                     <>
                       {user.avatarUrl ? (
-                        <div className="w-[46px] h-[46px] rounded-full overflow-hidden shrink-0">
+                        <div className="w-[54px] h-[54px] rounded-full overflow-hidden shrink-0">
                           <img src={user.avatarUrl} alt={user.displayName} className="w-full h-full object-cover" />
                         </div>
                       ) : (
-                        <div className="w-[46px] h-[46px] rounded-full overflow-hidden shrink-0 flex items-center justify-center text-[18px] font-bold text-[#1A0A03]" style={{ background: 'var(--accent)', fontFamily: 'var(--font-display)' }}>
+                        <div className="w-[54px] h-[54px] rounded-full overflow-hidden shrink-0 flex items-center justify-center text-[22px] font-bold text-[#1A0A03]" style={{ background: 'var(--accent)', fontFamily: 'var(--font-display)' }}>
                           {getInitials(user.displayName)[0]}
                         </div>
                       )}
                       <div className="text-[20px] font-bold tracking-[0.2px]" style={{ fontFamily: 'var(--font-display)', color: 'var(--text-primary)' }}>{user.displayName}</div>
                     </>
                   ) : (
-                    <Link href="/auth/login" onClick={() => setMobileMenuOpen(false)} className="text-[16px] font-bold text-accent hover:underline" style={{ fontFamily: 'var(--font-display)' }}>
-                      SIGN IN
-                    </Link>
+                    <>
+                      <div className="w-[54px] h-[54px] rounded-full overflow-hidden shrink-0 flex items-center justify-center text-[22px] font-bold" style={{ background: 'var(--divider)', color: 'var(--text-muted)', fontFamily: 'var(--font-display)' }}>
+                        G
+                      </div>
+                      <div className="flex flex-col">
+                        <div className="text-[20px] font-bold tracking-[0.2px] mb-1" style={{ fontFamily: 'var(--font-display)', color: 'var(--text-primary)' }}>Guest</div>
+                        <HeaderPill href="/auth/login" icon={UserCircle} accent underlineOnHover onClick={() => setMobileMenuOpen(false)} className="text-[10.5px] px-2 py-0.5 h-[26px]">Sign in / Create account</HeaderPill>
+                      </div>
+                    </>
                   )}
                 </div>
 
-                <div className="flex items-center gap-5 mt-[18px]">
+                <div className="flex items-center gap-6 mt-[18px]">
+                  <div className="relative flex items-center p-[4px] rounded-full shrink-0" style={{ background: 'var(--divider)' }}>
+                    <div 
+                      className="absolute inset-y-[4px] w-12 rounded-full shadow-sm transition-transform duration-300 ease-out"
+                      style={{ 
+                        background: 'var(--surface)',
+                        transform: theme === 'dark' ? 'translateX(100%)' : 'translateX(0)' 
+                      }}
+                    />
+                    <button 
+                      onClick={() => setTheme('light')} 
+                      className="relative z-10 w-12 h-[30px] flex items-center justify-center transition-colors duration-200"
+                      style={{ color: theme === 'light' ? 'var(--text-primary)' : 'var(--text-muted)' }}
+                      aria-label="Light mode"
+                    >
+                      <Sun className="w-[16px] h-[16px]" />
+                    </button>
+                    <button 
+                      onClick={() => setTheme('dark')} 
+                      className="relative z-10 w-12 h-[30px] flex items-center justify-center transition-colors duration-200"
+                      style={{ color: theme === 'dark' ? 'var(--text-primary)' : 'var(--text-muted)' }}
+                      aria-label="Dark mode"
+                    >
+                      <Moon className="w-[16px] h-[16px]" />
+                    </button>
+                  </div>
+
                   <div className="relative cursor-pointer hover:opacity-80 transition-opacity" style={{ color: 'var(--icon-color)' }}>
                     <NotificationBell color="currentColor" />
                   </div>
-                  <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} aria-label="Toggle theme" className="cursor-pointer hover:opacity-80 transition-opacity" style={{ color: 'var(--icon-color)' }}>
-                    {theme === 'dark' ? <Sun className="w-[22px] h-[22px]" /> : <Moon className="w-[22px] h-[22px]" />}
-                  </button>
                 </div>
               </div>
 

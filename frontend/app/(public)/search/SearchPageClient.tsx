@@ -577,7 +577,7 @@ function ArticlesResults({ hits, onHitClick }: { hits: AlgoliaArticleHit[] } & H
       {/* Top Image Area */}
       <div className="block w-full aspect-[16/9] relative overflow-hidden bg-[var(--deep,#0d0d1a)] shrink-0">
        {hit.featuredImageUrl ? (
-        <Image 
+        <Image quality={100} 
          src={hit.featuredImageUrl} 
          alt={hit.title} 
          fill 
@@ -676,7 +676,7 @@ function GamesResults({ hits, onHitClick }: { hits: AlgoliaGameHit[] } & HitClic
      >
       <div className="relative overflow-hidden aspect-[2/3] w-full rounded-none border border-[var(--text)]">
        {hit.coverImageUrl ? (
-        <Image src={hit.coverImageUrl} alt={hit.title} fill className="object-cover " sizes="(max-width: 640px) 50vw, 20vw" unoptimized />
+        <Image quality={100} src={hit.coverImageUrl} alt={hit.title} fill className="object-cover " sizes="(max-width: 640px) 50vw, 20vw" unoptimized />
        ) : (
         <div className="w-full h-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #1e1228 0%, #0a1628 100%)' }}>
          <span className="text-3xl opacity-20">🎮</span>
@@ -730,7 +730,7 @@ function UsersResults({ hits, onHitClick }: { hits: AlgoliaUserHit[] } & HitClic
      <>
       <div className="relative w-12 h-12 shrink-0 rounded-full overflow-hidden bg-bg-elevated flex items-center justify-center">
        {hit.avatarUrl ? (
-        <Image src={hit.avatarUrl} alt={hit.displayName} fill className="object-cover" sizes="48px" unoptimized />
+        <Image quality={100} src={hit.avatarUrl} alt={hit.displayName} fill className="object-cover" sizes="48px" unoptimized />
        ) : (
         <span className="text-sm font-bold text-text-muted">{getInitials(hit.displayName)}</span>
        )}
@@ -780,7 +780,7 @@ function VideosResults({ hits, onHitClick }: { hits: AlgoliaVideoHit[] } & HitCl
      >
       <div className="relative w-full aspect-video overflow-hidden bg-bg-elevated">
        {hit.thumbnailUrl ? (
-        <Image src={hit.thumbnailUrl} alt={hit.title} fill className="object-cover" sizes="(max-width: 640px) 100vw, 50vw" unoptimized />
+        <Image quality={100} src={hit.thumbnailUrl} alt={hit.title} fill className="object-cover" sizes="(max-width: 640px) 100vw, 50vw" unoptimized />
        ) : (
         <div className="w-full h-full flex items-center justify-center">
          <Gamepad2 className="w-8 h-8 opacity-30" />

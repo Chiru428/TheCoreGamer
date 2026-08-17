@@ -175,7 +175,7 @@ export default function AlgoliaRecommendations({
               >
                 <div className={cn('relative w-full overflow-hidden bg-bg-elevated', indexName === 'games' ? 'aspect-[3/4]' : 'aspect-video')}>
                   {image ? (
-                    <Image src={image} alt={hit.title} fill className="object-cover transition-transform duration-1000 ease-out" sizes="260px" unoptimized />
+                    <Image quality={100} src={image} alt={hit.title} fill className="object-cover transition-transform duration-1000 ease-out" sizes="260px" unoptimized />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
                       <Gamepad2 className="w-8 h-8 opacity-30" />
@@ -247,7 +247,7 @@ export default function AlgoliaRecommendations({
                 >
                   <div className="relative w-full aspect-video overflow-hidden bg-bg-elevated rounded-none">
                     {image ? (
-                      <Image src={image} alt={hit.title} fill className="object-cover" sizes="50vw" unoptimized />
+                      <Image quality={100} src={image} alt={hit.title} fill className="object-cover" sizes="50vw" unoptimized />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
                         <Gamepad2 className="w-8 h-8 opacity-30" />
@@ -292,7 +292,7 @@ export default function AlgoliaRecommendations({
               >
                 <div className="relative w-16 h-12 shrink-0 overflow-hidden rounded-none bg-bg-elevated">
                   {image ? (
-                    <Image src={image} alt={hit.title} fill className="object-cover" sizes="64px" unoptimized />
+                    <Image quality={100} src={image} alt={hit.title} fill className="object-cover" sizes="64px" unoptimized />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
                       <Gamepad2 className="w-4 h-4 opacity-30" />
@@ -318,7 +318,7 @@ export default function AlgoliaRecommendations({
             >
               <div className="relative w-full aspect-[3/4] overflow-hidden bg-bg-elevated">
                 {hit.coverImageUrl ? (
-                  <Image src={hit.coverImageUrl} alt={hit.title} fill className="object-cover" sizes="(max-width: 640px) 50vw, 25vw" unoptimized />
+                  <Image quality={100} src={hit.coverImageUrl} alt={hit.title} fill className="object-cover" sizes="(max-width: 640px) 50vw, 25vw" unoptimized />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
                     <Gamepad2 className="w-8 h-8 opacity-30" />
@@ -351,7 +351,7 @@ export default function AlgoliaRecommendations({
               >
                 <div className="relative w-full aspect-video overflow-hidden bg-bg-elevated">
                   {hit.featuredImageUrl ? (
-                    <Image src={hit.featuredImageUrl} alt={hit.title} fill className="object-cover" sizes="(max-width: 640px) 100vw, 33vw" unoptimized />
+                    <Image quality={100} src={hit.featuredImageUrl} alt={hit.title} fill className="object-cover" sizes="(max-width: 640px) 100vw, 33vw" unoptimized />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
                       <Gamepad2 className="w-8 h-8 opacity-30" />

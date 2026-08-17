@@ -11,7 +11,7 @@ export default function FeaturedImage({ src, alt, credit, priority }: Props) {
   return (
     <>
       <div className="relative left-1/2 -ml-[50vw] w-screen md:left-0 md:ml-0 md:w-full aspect-video overflow-hidden mt-0 md:mt-6 rounded-none border-0">
-        <Image 
+        <Image quality={100} 
           src={src} 
           alt={alt} 
           fill 
