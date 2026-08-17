@@ -605,7 +605,7 @@ export default function Header({ tickerArticles = [] }: { tickerArticles?: Artic
                           {getInitials(user.displayName)[0]}
                         </div>
                       )}
-                      <div className="text-[20px] font-semibold tracking-[0.2px]" style={{ fontFamily: 'var(--font-display)', color: 'var(--text-primary)' }}>{user.displayName}</div>
+                      <div className="text-[20px] font-bold tracking-[0.2px]" style={{ fontFamily: 'var(--font-display)', color: 'var(--text-primary)' }}>{user.displayName}</div>
                     </>
                   ) : (
                     <Link href="/auth/login" onClick={() => setMobileMenuOpen(false)} className="text-[16px] font-bold text-accent hover:underline" style={{ fontFamily: 'var(--font-display)' }}>
