@@ -420,7 +420,7 @@ export default async function ReviewDetailPage({ params }: Props) {
                 {/* B6 — Lazy-render related posts to keep initial paint fast */}
                 <div className="w-full">
                   <LazySection minHeight="200px">
-                    <AlgoliaRecommendations objectID={article.id} indexName="articles" model="related-products" title="You May Also Like" max={8} layout="sidebar" titleClassName="text-[20px] w-full justify-center" staticBadges className="mt-6" />
+                    <AlgoliaRecommendations objectID={article.id} indexName="articles" model="related-products" title="You May Also Like" max={8} layout="sidebar" staticBadges />
                   </LazySection>
                 </div>
                 <div className="mt-8 flex-1 w-full hidden lg:block">

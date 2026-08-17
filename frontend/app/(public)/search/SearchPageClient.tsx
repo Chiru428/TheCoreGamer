@@ -23,7 +23,7 @@ import {
 } from '@/lib/algolia';
 import { CONTENT_TYPE_COLORS, CONTENT_TYPE_LABELS } from '@/lib/constants';
 import { contentTypePath } from '@/lib/seo';
-import { cn, formatDate, getInitials } from '@/lib/utils';
+import { cn, formatDate, getInitials, getGuideTypeColor } from '@/lib/utils';
 import ScoreBadge from '@/components/review/ScoreBadge';
 import Pagination from '@/components/ui/Pagination';
 import AdSlot from '@/components/monetization/AdSlot';
@@ -562,47 +562,96 @@ interface HitClickHandler {
 
 function ArticlesResults({ hits, onHitClick }: { hits: AlgoliaArticleHit[] } & HitClickHandler) {
  return (
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8">
+  <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8">
    {hits.map((hit, i) => {
     const tc = CONTENT_TYPE_COLORS[hit.contentType] || { bg: 'var(--accent)', color: '#fff' };
     const titleHtml = hit._highlightResult?.title?.value ?? hit.title;
+    
     return (
      <Link
       key={hit.objectID}
       href={`/${contentTypePath(hit.contentType)}/${hit.slug}`}
       onClick={() => onHitClick(hit.objectID, i)}
-      className="group flex items-start justify-between gap-4 py-5 border-b border-border min-w-0"
+      className="group flex flex-col h-full bg-transparent relative overflow-hidden"
      >
-      <div className="flex-1 min-w-0">
-       <span
-        className="mb-1.5 inline-block text-[13px] font-bold uppercase tracking-wider"
-        style={{ color: tc.textColor || tc.bg }}
-       >
-        {CONTENT_TYPE_LABELS[hit.contentType] || hit.contentType}
-       </span>
-       <h3
-        className="text-[16px] font-bold uppercase text-text-strong leading-snug"
-        style={{ fontFamily: '"Gibson", sans-serif' }}
-       >
-         <span className="hover-underline-animation" dangerouslySetInnerHTML={{ __html: titleHtml }} />
-       </h3>
-       <div className="flex items-center gap-2 text-[13px] text-text-muted mt-1.5">
-        {hit.authorName && <span className="text-[#00e5a0] font-bold">{hit.authorName}</span>}
-        {hit.publishedAtISO && <span>{formatDate(hit.publishedAtISO)}</span>}
-       </div>
-      </div>
-
-      <div className="relative w-[140px] aspect-video shrink-0 overflow-hidden bg-bg-elevated">
+      {/* Top Image Area */}
+      <div className="block w-full aspect-[16/9] relative overflow-hidden bg-[var(--deep,#0d0d1a)] shrink-0">
        {hit.featuredImageUrl ? (
-        <Image src={hit.featuredImageUrl} alt={hit.title} fill className="object-cover" sizes="140px" unoptimized />
+        <Image 
+         src={hit.featuredImageUrl} 
+         alt={hit.title} 
+         fill 
+         className="object-cover transition-transform duration-1000 ease-out" 
+         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" 
+         unoptimized 
+        />
        ) : (
-        <div className="w-full h-full flex items-center justify-center">
-         <Gamepad2 className="w-5 h-5 opacity-30" />
-        </div>
+        <div className="w-full h-full flex items-center justify-center text-4xl">🎮</div>
        )}
        {hit.reviewScore != null && (
-        <div className="absolute bottom-1 right-1 z-10">
-         <ScoreBadge score={hit.reviewScore} size="sm" />
+        <div className="absolute bottom-2 right-2 z-10">
+         <ScoreBadge score={hit.reviewScore} />
+        </div>
+       )}
+       {/* Mobile Badge on Image */}
+       {hit.contentType === 'GUIDE' && hit.guideType ? (
+        <span 
+         className="absolute bottom-2 left-2 z-10 sm:hidden" 
+         style={{ padding: '1px 4px', borderRadius: '3px', fontSize: '10px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', backgroundColor: getGuideTypeColor(hit.guideType), color: '#fff' }}
+        >
+         {hit.guideType}
+        </span>
+       ) : (
+        <span 
+         className="absolute bottom-2 left-2 z-10 sm:hidden" 
+         style={{ padding: '1px 4px', borderRadius: '3px', fontSize: '10px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', backgroundColor: tc.bg, color: tc.color || '#fff' }}
+        >
+         {CONTENT_TYPE_LABELS[hit.contentType] || hit.contentType}
+        </span>
+       )}
+      </div>
+
+      {/* Content Area */}
+      <div className="flex-1 flex flex-col justify-start w-full pt-2 sm:pt-4">
+       {/* Meta info (Date + Badge) */}
+       <div className="flex flex-wrap items-center gap-1.5 text-[14px] text-text-muted font-medium mb-1.5 sm:mb-2">
+        <span>{formatDate(hit.publishedAtISO)}</span>
+        {hit.contentType === 'GUIDE' && hit.guideType ? (
+         <span 
+          className="hidden sm:inline-block text-[10px] sm:text-[13px]" 
+          style={{ marginLeft: '4px', fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase', color: getGuideTypeColor(hit.guideType) }}
+         >
+          {hit.guideType}
+         </span>
+        ) : (
+         <span 
+          className="hidden sm:inline-block text-[10px] sm:text-[13px]" 
+          style={{ marginLeft: '4px', fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase', color: tc.textColor || tc.bg }}
+         >
+          {CONTENT_TYPE_LABELS[hit.contentType] || hit.contentType}
+         </span>
+        )}
+       </div>
+       
+       {/* Title */}
+       <div className="mb-2">
+        <h3
+         className="post-card-title font-bold text-text-strong leading-snug transition-colors line-clamp-none sm:line-clamp-3 text-[16px] sm:text-[18px]"
+         style={{ fontFamily: "'Gibson', sans-serif" }}
+        >
+         <span className="hover-underline-animation" dangerouslySetInnerHTML={{ __html: titleHtml }} />
+        </h3>
+       </div>
+
+       {/* Excerpt */}
+       {hit.excerpt && (
+        <div className="hidden sm:block">
+         <p 
+          className="leading-normal line-clamp-3 mb-2 text-text-muted"
+          style={{ fontSize: '16px' }}
+         >
+          {hit.excerpt}
+         </p>
         </div>
        )}
       </div>
@@ -625,7 +674,7 @@ function GamesResults({ hits, onHitClick }: { hits: AlgoliaGameHit[] } & HitClic
       onClick={() => onHitClick(hit.objectID, i)}
       className="group block"
      >
-      <div className="relative overflow-hidden aspect-[2/3] w-full rounded border border-[var(--text)]">
+      <div className="relative overflow-hidden aspect-[2/3] w-full rounded-none border border-[var(--text)]">
        {hit.coverImageUrl ? (
         <Image src={hit.coverImageUrl} alt={hit.title} fill className="object-cover " sizes="(max-width: 640px) 50vw, 20vw" unoptimized />
        ) : (

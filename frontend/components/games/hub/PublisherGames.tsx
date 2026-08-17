@@ -98,7 +98,7 @@ export default function PublisherGames({ publisher, excludeSlug }: { publisher: 
           {loading ? (
             Array.from({ length: 5 }).map((_, i) => (
               <div key={i} className="group/card block flex-shrink-0 w-[140px] sm:w-[160px] md:w-[180px] snap-start">
-                <Skeleton className="w-full aspect-[2/3] rounded mb-3 border border-[var(--text)]" />
+                <Skeleton className="w-full aspect-[2/3] rounded-none mb-3 border border-[var(--text)]" />
                 <div>
                   <Skeleton className="w-3/4 h-4 rounded mb-2" />
                   <Skeleton className="w-1/2 h-3 rounded" />
@@ -114,7 +114,7 @@ export default function PublisherGames({ publisher, excludeSlug }: { publisher: 
                   href={`/games/${g.slug}`} 
                   className="group/card block flex-shrink-0 w-[140px] sm:w-[160px] md:w-[180px] snap-start"
                 >
-                  <div className="relative overflow-hidden aspect-[2/3] w-full mb-3 rounded border border-[var(--text)]">
+                  <div className="relative overflow-hidden aspect-[2/3] w-full mb-3 rounded-none border border-[var(--text)]">
                     {g.coverImageUrl ? (
                       <img
                         src={g.coverImageUrl}

@@ -24,62 +24,8 @@ const ROLE_BADGE_VARIANT: Record<string, 'danger' | 'purple' | 'info'> = {
   AUTHOR: 'info',
 };
 
-function ArticleListItem({ article, authorName }: { article: AuthorArticleItem; authorName?: string }) {
-  const tc = CONTENT_TYPE_COLORS[article.contentType] || { bg: 'var(--accent)', color: '#fff' };
-  return (
-    <Link
-      href={`/${contentTypePath(article.contentType)}/${article.slug}`}
-      className="group flex items-center sm:items-start gap-3 sm:gap-5 hover:opacity-90 transition-opacity"
-    >
-      {/* Image — 150px on mobile, 350px on sm/desktop, 16:9 */}
-      <div className="relative shrink-0 overflow-hidden border border-border bg-bg-surface w-[150px] sm:w-[350px] aspect-video">
-        {article.featuredImageUrl ? (
-          <Image src={article.featuredImageUrl} alt="" fill className="object-cover" sizes="(max-width: 640px) 150px, 350px" />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            <Gamepad2 className="w-6 h-6 sm:w-8 sm:h-8 opacity-20" />
-          </div>
-        )}
-      </div>
-
-      {/* Right: meta → title → excerpt */}
-      <div className="flex-1 min-w-0 py-0 sm:py-1">
-        {/* Row 1: content type + date */}
-        <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-3">
-          {article.contentType === 'GUIDE' && article.guideType ? (
-            <span
-              className="shrink-0 text-[10px] sm:text-[12px] font-bold uppercase tracking-widest"
-              style={{ color: getGuideTypeColor(article.guideType) }}
-            >
-              {article.guideType}
-            </span>
-          ) : (
-            <span
-              className="shrink-0 text-[10px] sm:text-[12px] font-bold uppercase tracking-widest"
-              style={{ color: tc.textColor || tc.bg }}
-            >
-              {CONTENT_TYPE_LABELS[article.contentType] || article.contentType}
-            </span>
-          )}
-          <span className="text-text-dim text-[11px] sm:text-[13px]">·</span>
-          <span className="text-text-dim text-[11px] sm:text-[13px] font-medium truncate">{formatRelativeDate(article.publishedAt || article.createdAt)}</span>
-        </div>
-
-        {/* Title */}
-        <p className="text-[16px] sm:text-[20px] font-bold text-text-primary line-clamp-3 sm:line-clamp-2 leading-snug mb-0 sm:mb-3">
-          <span className="hover-underline-animation">{article.title}</span>
-        </p>
-
-        {/* Excerpt - Hidden on mobile */}
-        {article.excerpt && (
-          <p className="hidden sm:block text-[16px] text-text-dim line-clamp-3 leading-relaxed">
-            {article.excerpt}
-          </p>
-        )}
-      </div>
-    </Link>
-  );
-}
+import HomePostCard from '@/components/blog/HomePostCard';
+import SharedListCard from '@/components/blog/SharedListCard';
 
 
 export default function AuthorPage({ params }: { params: Promise<{ username: string }> }) {
@@ -228,9 +174,9 @@ export default function AuthorPage({ params }: { params: Promise<{ username: str
         </aside>
 
         {/* ── Main Content: Articles ── */}
-        <div className="flex-1 min-w-0">
+        <div className="flex-1 min-w-0 lg:border-l-2 lg:border-border lg:pl-12">
           {/* Section heading */}
-          <div className="mb-8 pb-3 border-b border-border">
+          <div className="mb-8 pb-3 border-b-2 border-border">
             <h2 className="text-[18px] font-bold text-text-primary">
               Published Work {profile ? `(${profile.articlesCount})` : ''}
             </h2>
@@ -242,7 +188,7 @@ export default function AuthorPage({ params }: { params: Promise<{ username: str
               <button
                 type="button"
                 onClick={() => setSelectedType(null)}
-                className={`px-3 py-1.5 rounded-full text-[13px] font-semibold border transition-colors bg-bg-elevated ${
+                className={`px-3 py-1.5 rounded-md text-[13px] font-semibold border transition-colors bg-bg-elevated ${
                   selectedType === null
                     ? 'border-accent text-accent'
                     : 'border-border text-text-primary hover:border-accent hover:text-accent'
@@ -258,7 +204,7 @@ export default function AuthorPage({ params }: { params: Promise<{ username: str
                     key={type}
                     type="button"
                     onClick={() => setSelectedType(isActive ? null : type)}
-                    className={`px-3 py-1.5 rounded-full text-[13px] font-semibold border transition-colors bg-bg-elevated ${
+                    className={`px-3 py-1.5 rounded-md text-[13px] font-semibold border transition-colors bg-bg-elevated ${
                       isActive
                         ? 'border-[var(--hover-color)] text-[var(--hover-color)]'
                         : 'border-border text-text-primary hover:border-[var(--hover-color)] hover:text-[var(--hover-color)]'
@@ -289,30 +235,45 @@ export default function AuthorPage({ params }: { params: Promise<{ username: str
           ) : articles.length === 0 ? (
             <p className="text-sm text-text-dim py-8 text-center">No published articles yet.</p>
           ) : (
-            <div className="flex flex-col">
+            <>
+            <div className="grid grid-cols-2 sm:grid-cols-1 gap-4 sm:gap-0">
               {filteredArticles.map((a, i) => (
                 <div key={a.id}>
-                  <div className="py-8">
-                    <ArticleListItem article={a} authorName={profile?.displayName || username} />
+                  {/* Mobile View: 2-column grid card */}
+                  <div className="block sm:hidden h-full">
+                    <HomePostCard
+                      article={a as any}
+                      showBadge={true}
+                      hideMetaBadgeOnMobile={true}
+                      titleClassName="!text-[16px] leading-tight"
+                      showExcerptOnMobile={false}
+                      showExcerpt={false}
+                      showBackground={false}
+                      truncateTitle={false}
+                      showViewArticle={false}
+                      metaClassName="flex-col items-start gap-0.5"
+                    />
                   </div>
-                  {i < filteredArticles.length - 1 && (
-                    <div className="flex justify-center">
-                      <div className="w-full h-px bg-border" />
-                    </div>
-                  )}
+                  {/* Desktop View: List card */}
+                  <div className="hidden sm:block">
+                    <SharedListCard article={a as any} priority={i === 0} isLast={i === filteredArticles.length - 1} />
+                  </div>
                 </div>
               ))}
-              {hasMoreArticles && (
-                <button
-                  type="button"
-                  onClick={() => setArticlesSize(articlesSize + 1)}
-                  disabled={isValidatingArticles}
-                  className="mt-6 self-center px-6 py-2 rounded-full border border-border text-sm font-bold text-accent hover:bg-bg-elevated transition-colors disabled:opacity-50"
-                >
-                  {isValidatingArticles ? 'Loading…' : 'Load more'}
-                </button>
-              )}
             </div>
+              {hasMoreArticles && (
+                <div className="flex justify-center mt-6">
+                  <button
+                    type="button"
+                    onClick={() => setArticlesSize(articlesSize + 1)}
+                    disabled={isValidatingArticles}
+                    className="px-6 py-2 rounded-full border border-border text-sm font-bold text-accent hover:bg-bg-elevated transition-colors disabled:opacity-50"
+                  >
+                    {isValidatingArticles ? 'Loading…' : 'Load more'}
+                  </button>
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>

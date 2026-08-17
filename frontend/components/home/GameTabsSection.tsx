@@ -171,7 +171,7 @@ export default function GameTabsSection({ newReleaseGames, topRatedGames, coming
           position: relative;
           aspect-ratio: 2/3;
           width: 100%;
-          border-radius: 4px;
+          border-radius: 0;
           overflow: hidden;
           border: 1px solid rgba(255,255,255,0.08);
           background: linear-gradient(135deg, #1e1228 0%, #0a1628 100%);
@@ -208,18 +208,18 @@ export default function GameTabsSection({ newReleaseGames, topRatedGames, coming
         .game-tab-title {
           font-family: 'Gibson', sans-serif;
           font-weight: 700;
-          font-size: 15px;
+          font-size: 16px;
           color: var(--text-strong, #fff);
           line-height: 1.3;
           margin-bottom: 3px;
         }
         @media (min-width: 768px) {
           .game-tab-title {
-            font-size: 17px;
+            font-size: 18px;
           }
         }
         .game-tab-publisher {
-          font-size: 13px;
+          font-size: 14px;
           color: var(--muted, #6b7280);
           font-weight: 400;
           display: none;

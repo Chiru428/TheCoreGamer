@@ -105,7 +105,7 @@ export default function RecentlyViewedGames({ currentGame }: Props) {
       href={`/games/${g.slug}`} 
       className="group/card block flex-shrink-0 w-[140px] sm:w-[160px] md:w-[180px] snap-start"
      >
-      <div className="relative overflow-hidden aspect-[2/3] w-full mb-3 rounded border border-[var(--text)]">
+      <div className="relative overflow-hidden aspect-[2/3] w-full mb-3 rounded-none border border-[var(--text)]">
        {g.coverImageUrl ? (
         <img
          src={g.coverImageUrl}

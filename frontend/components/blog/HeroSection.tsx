@@ -229,7 +229,7 @@ export default function HeroSection({
                   <HomePostCard
                     key={a.id}
                     article={a}
-                    titleClassName="!text-[18px] leading-snug mb-1 gibson-title"
+                    titleClassName="!text-[16px] leading-snug mb-1 gibson-title"
                     titleStyle={{ fontFamily: "'Gibson', sans-serif" }}
                     metaClassName="!text-[14px] flex-row items-center gap-1.5 flex-wrap"
                     showExcerpt={false}

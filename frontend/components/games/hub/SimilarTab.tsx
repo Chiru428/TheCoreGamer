@@ -15,7 +15,7 @@ export default function SimilarTab({ game }: { game: GameHubData }) {
      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-x-4 gap-y-7 sm:gap-x-6 md:gap-x-8">
       {similarGames.map((g) => (
        <Link key={g.slug} href={`/games/${g.slug}`} className="group block">
-        <div className="relative overflow-hidden aspect-[2/3] w-full rounded border border-[var(--text)]">
+        <div className="relative overflow-hidden aspect-[2/3] w-full rounded-none border border-[var(--text)]">
          {g.coverImageUrl ? (
           <img
            src={g.coverImageUrl}

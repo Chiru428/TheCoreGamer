@@ -945,7 +945,7 @@ export default function AdminGamesPage() {
             <div>
               <Label>Cover Image <span className="opacity-60 font-normal normal-case">(2:3 — portrait from IGDB)</span></Label>
               {form.coverImageUrl && (
-                <div className="mb-2 w-[140px] aspect-[2/3] rounded-lg overflow-hidden border border-border">
+                <div className="mb-2 w-[140px] aspect-[2/3] rounded-none overflow-hidden border border-border">
                   <img src={form.coverImageUrl} alt="Cover" className="w-full h-full object-cover" />
                 </div>
               )}

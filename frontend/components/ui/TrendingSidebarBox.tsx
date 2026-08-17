@@ -31,22 +31,24 @@ export default function TrendingSidebarBox({ title, articles, showBadge = false 
                   <p className="post-card-title trending-title">
                     <span className="hover-underline-animation">{article.title}</span>
                   </p>
-                  <div className="news-meta flex flex-wrap items-center gap-[6px]" style={{ marginTop: '4px' }}>
+                  <div className="flex flex-col gap-1 mt-2">
                     {article.author?.displayName && (
                       <span className="news-author" style={{ fontSize: '14px' }}>{article.author.displayName}</span>
                     )}
-                    <span className="news-date" style={{ fontSize: '14px' }}>{formatDate(article.publishedAt || article.createdAt)}</span>
-                    {showBadge && (
-                      article.contentType === 'GUIDE' && article.guideType ? (
-                        <span style={{ marginLeft: '6px', fontSize: '10px', fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase', color: getGuideTypeColor(article.guideType) }}>
-                          {article.guideType}
-                        </span>
-                      ) : (
-                        <span style={{ marginLeft: '6px', fontSize: '10px', fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase', color: (CONTENT_TYPE_COLORS[article.contentType] || { bg: 'var(--accent)' }).textColor || (CONTENT_TYPE_COLORS[article.contentType] || { bg: 'var(--accent)' }).bg }}>
-                          {CONTENT_TYPE_LABELS[article.contentType] || article.contentType}
-                        </span>
-                      )
-                    )}
+                    <div className="flex flex-wrap items-center gap-3">
+                      <span className="news-date" style={{ fontSize: '14px' }}>{formatDate(article.publishedAt || article.createdAt)}</span>
+                      {showBadge && (
+                        article.contentType === 'GUIDE' && article.guideType ? (
+                          <span style={{ fontSize: '12px', fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase', color: getGuideTypeColor(article.guideType) }}>
+                            {article.guideType}
+                          </span>
+                        ) : (
+                          <span style={{ fontSize: '12px', fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase', color: (CONTENT_TYPE_COLORS[article.contentType] || { bg: 'var(--accent)' }).textColor || (CONTENT_TYPE_COLORS[article.contentType] || { bg: 'var(--accent)' }).bg }}>
+                            {CONTENT_TYPE_LABELS[article.contentType] || article.contentType}
+                          </span>
+                        )
+                      )}
+                    </div>
                   </div>
                 </div>
               </Link>

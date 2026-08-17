@@ -95,7 +95,7 @@ export default function HomePostCard({ article, isCompact, showBadge = false, sh
 
       <div className={`flex-1 flex flex-col justify-start w-full ${!showBackground ? (mobileHorizontal ? 'p-0 sm:pt-2' : 'p-0 pt-2') : mobileHorizontal ? 'p-3 sm:p-5' : (isCompact ? 'p-3' : 'p-5 sm:p-6')} ${contentClassName || ''}`}>
         {/* Meta info */}
-        <div className={`flex ${metaClassName ? metaClassName : `items-center gap-1.5`} text-sm ${forceDarkTheme ? 'text-gray-300' : 'text-text-muted'} font-medium ${mobileHorizontal ? 'mb-0.5 sm:mb-2' : (isCompact ? 'mb-1' : 'mb-2')}`}>
+        <div className={`flex ${metaClassName ? metaClassName : `items-center gap-1.5`} text-sm ${forceDarkTheme ? 'text-gray-300' : 'text-text-muted'} font-medium ${mobileHorizontal ? 'mb-0 sm:mb-2' : (isCompact ? 'mb-0 sm:mb-1' : 'mb-0 sm:mb-2')}`}>
           {showAuthor && !isCompact && article.author?.displayName && (
             <>
               <span className="text-[#00e5a0] font-bold sm:mr-2">{article.author.displayName}</span>

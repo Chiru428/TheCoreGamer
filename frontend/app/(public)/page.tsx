@@ -131,7 +131,7 @@ function GameRow({ games }: { games: { id: string; slug: string; title: string; 
   <div className="grid grid-cols-2 gap-5 md:grid-cols-4 md:gap-6">
    {games.map((g) => (
     <Link key={g.id} href={`/games/${g.slug}`} className="group block overflow-hidden">
-     <div className="relative overflow-hidden aspect-[2/3] w-full rounded border border-[var(--text)]">
+     <div className="relative overflow-hidden aspect-[2/3] w-full rounded-none border border-[var(--text)]">
       {g.coverImageUrl ? (
        <Image src={g.coverImageUrl} alt={g.title} fill className="object-cover transition-transform duration-1000 ease-out " sizes="(max-width: 768px) 50vw, 225px" />
       ) : (
@@ -141,9 +141,9 @@ function GameRow({ games }: { games: { id: string; slug: string; title: string; 
       )}
      </div>
      <div className="pt-3">
-      <p className="post-card-title font-bold transition-colors text-[16px] md:text-[20px]" style={{ color: 'var(--text-strong)', lineHeight: 1.3, marginBottom: '4px' }}><span className="hover-underline-animation">{g.title}</span></p>
+      <p className="post-card-title font-bold transition-colors text-[16px] md:text-[18px]" style={{ color: 'var(--text-strong)', lineHeight: 1.3, marginBottom: '4px' }}><span className="hover-underline-animation">{g.title}</span></p>
       {g.publisher && (
-       <p className="hidden md:block" style={{ fontSize: '16px', color: 'var(--muted)', fontWeight: 400 }}>{g.publisher}</p>
+       <p className="hidden md:block" style={{ fontSize: '14px', color: 'var(--muted)', fontWeight: 400 }}>{g.publisher}</p>
       )}
      </div>
     </Link>
@@ -360,7 +360,7 @@ export default async function HomePage() {
      <section className="mb-10 md:mb-14 last:mb-0">
 
       {/* Content wrapper */}
-      <div className="relative z-10 w-full max-w-[1280px] mx-auto px-4 lg:px-0">
+      <div className="relative z-10">
         <SectionHead title="Games" className="mb-6" />
         
         <div className="mb-6">

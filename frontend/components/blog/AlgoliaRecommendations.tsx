@@ -103,23 +103,33 @@ export default function AlgoliaRecommendations({
   if (isLoading) {
     if (hideSkeleton) return null;
     return (
-      <section className={cn('mt-12', className)}>
-        <h3
-        className={cn('section-title-bar', showDivider ? 'mb-3' : 'mb-6', titleClassName)}
-        style={layout === 'sidebar' ? { fontFamily: "'Gibson', sans-serif" } : undefined}
-      >
-        {title}
-      </h3>
-        {showDivider && <hr className="border-border mb-6" />}
+      <section className={cn(layout === 'sidebar' ? 'md:bg-[var(--bg2)] md:px-7 md:py-5 mt-12 md:mt-0' : 'mt-12', className)}>
+        {layout !== 'sidebar' ? (
+          <>
+            <h3 className={cn('section-title-bar', showDivider ? 'mb-3' : 'mb-6', titleClassName)}>
+              {title}
+            </h3>
+            {showDivider && <hr className="border-border mb-6" />}
+          </>
+        ) : (
+          <>
+            <h3 className={cn('section-title-bar flex md:hidden !text-[20px]', showDivider ? 'mb-3' : 'mb-6', titleClassName)} style={{ fontFamily: "'Gibson', sans-serif" }}>
+              {title}
+            </h3>
+            <div className="hidden md:block pb-3 border-b-2 border-accent mb-0">
+              <span className="font-gibson text-[28px] md:text-[28px] font-bold leading-[1.2] text-text-primary block">{title}</span>
+            </div>
+          </>
+        )}
         <div className={
-          layout === 'sidebar' ? 'divide-y divide-border'
+          layout === 'sidebar' ? 'flex flex-col m-0 p-0 list-none'
           : layout === 'list' ? 'space-y-3'
           : layout === 'scroll' ? 'flex gap-4 overflow-x-hidden hide-scrollbar'
           : 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4'
         }>
           {Array.from({ length: 3 }).map((_, i) => (
             <div key={i} className={cn(
-              layout === 'sidebar' ? 'shimmer h-16 my-2' : 'shimmer h-40 card-sm',
+              layout === 'sidebar' ? 'shimmer h-16 my-4 border-b border-border last:border-b-0' : 'shimmer h-40 card-sm',
               layout === 'scroll' && 'w-[220px] shrink-0'
             )} />
           ))}
@@ -131,14 +141,24 @@ export default function AlgoliaRecommendations({
   if (hasError || hits.length === 0) return null;
 
   return (
-    <section className={cn('mt-12', className)}>
-      <h3
-        className={cn('section-title-bar', showDivider ? 'mb-3' : 'mb-6', titleClassName)}
-        style={layout === 'sidebar' ? { fontFamily: "'Gibson', sans-serif" } : undefined}
-      >
-        {title}
-      </h3>
-      {showDivider && <hr className="border-border mb-6" />}
+    <section className={cn(layout === 'sidebar' ? 'md:bg-[var(--bg2)] md:px-7 md:py-5 mt-12 md:mt-0' : 'mt-12', className)}>
+      {layout !== 'sidebar' ? (
+        <>
+          <h3 className={cn('section-title-bar', showDivider ? 'mb-3' : 'mb-6', titleClassName)}>
+            {title}
+          </h3>
+          {showDivider && <hr className="border-border mb-6" />}
+        </>
+      ) : (
+        <>
+          <h3 className={cn('section-title-bar flex md:hidden !text-[20px]', showDivider ? 'mb-3' : 'mb-6', titleClassName)} style={{ fontFamily: "'Gibson', sans-serif" }}>
+            {title}
+          </h3>
+          <div className="hidden md:block pb-3 border-b-2 border-accent mb-0">
+            <span className="font-gibson text-[28px] md:text-[28px] font-bold leading-[1.2] text-text-primary block">{title}</span>
+          </div>
+        </>
+      )}
 
       {layout === 'scroll' ? (
         <div className="flex gap-4 overflow-x-auto pb-2 snap-x hide-scrollbar">
@@ -185,46 +205,79 @@ export default function AlgoliaRecommendations({
           })}
         </div>
       ) : layout === 'sidebar' ? (
-        <div className="divide-y divide-border">
+        <ul className="grid grid-cols-2 md:flex md:flex-col gap-4 md:gap-0 m-0 p-0 list-none">
           {hits.map((hit, i) => {
             const image = hit.coverImageUrl ?? hit.featuredImageUrl;
             const tc = CONTENT_TYPE_COLORS[hit.contentType ?? ''] || { bg: 'var(--accent)', color: '#fff' };
             return (
-              <Link
-                key={hit.objectID}
-                href={hrefFor(hit)}
-                onClick={() => handleClick(hit, i)}
-                className="flex items-center justify-between gap-3 py-4 first:pt-0 last:pb-0 group"
-              >
-                <div className="flex-1 min-w-0">
-                  {hit.contentType && (
-                    <span className={cn(!staticBadges && 'category-badge-bounce', 'mb-1')} style={{ display: 'inline-block', fontSize: '10px', fontWeight: 800, letterSpacing: '1px', textTransform: 'uppercase', color: (hit.contentType === 'GUIDE' && hit.guideType) ? getGuideTypeColor(hit.guideType) : (tc.textColor || tc.bg) }}>
-                      {(hit.contentType === 'GUIDE' && hit.guideType) ? hit.guideType : (CONTENT_TYPE_LABELS[hit.contentType] || hit.contentType)}
-                    </span>
-                  )}
-                  <p className="text-[16px] font-bold text-text-strong" style={{ fontFamily: '"Gibson", sans-serif' }}>
-                    <span className="hover-underline-animation">{hit.title}</span>
-                  </p>
-                  {(hit.authorName || hit.publishedAtISO) && (
-                    <span className="flex items-center gap-4 text-xs text-text-muted mt-1.5">
-                      {hit.authorName && <span className="text-[#00e5a0] font-bold">{hit.authorName}</span>}
-                      {hit.publishedAtISO && formatDate(hit.publishedAtISO)}
-                    </span>
-                  )}
-                </div>
-                <div className="relative h-20 aspect-video shrink-0 overflow-hidden rounded-none bg-bg-elevated">
-                  {image ? (
-                    <Image src={image} alt={hit.title} fill className="object-cover" sizes="144px" unoptimized />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <Gamepad2 className="w-4 h-4 opacity-30" />
+              <li key={hit.objectID} className="md:border-b md:border-border md:last:border-b-0">
+                {/* Desktop: Popular Layout */}
+                <Link
+                  href={hrefFor(hit)}
+                  onClick={() => handleClick(hit, i)}
+                  className="hidden md:flex group items-start gap-[10px] py-[14px] no-underline"
+                >
+                  <div className="flex-1 min-w-0">
+                    <p className="font-gibson text-[16px] font-bold text-text-strong leading-[1.4] m-0">
+                      <span className="hover-underline-animation">{hit.title}</span>
+                    </p>
+                    <div className="flex flex-col gap-1 mt-2">
+                      {hit.authorName && (
+                        <span className="text-[14px] font-bold text-[var(--brand-green)]">{hit.authorName}</span>
+                      )}
+                      <div className="flex flex-wrap items-center gap-3">
+                        {hit.publishedAtISO && (
+                          <span className="text-[14px] font-medium text-muted">{formatDate(hit.publishedAtISO)}</span>
+                        )}
+                        {hit.contentType && (
+                          <span className={cn(!staticBadges && 'category-badge-bounce', 'text-[12px] font-bold tracking-[0.5px] uppercase')} style={{ color: (hit.contentType === 'GUIDE' && hit.guideType) ? getGuideTypeColor(hit.guideType) : (tc.textColor || tc.bg) }}>
+                            {(hit.contentType === 'GUIDE' && hit.guideType) ? hit.guideType : (CONTENT_TYPE_LABELS[hit.contentType] || hit.contentType)}
+                          </span>
+                        )}
+                      </div>
                     </div>
-                  )}
-                </div>
-              </Link>
+                  </div>
+                </Link>
+
+                {/* Mobile: Small Card Grid Layout */}
+                <Link
+                  href={hrefFor(hit)}
+                  onClick={() => handleClick(hit, i)}
+                  className="flex md:hidden flex-col gap-2 group mt-2 md:mt-0"
+                >
+                  <div className="relative w-full aspect-video overflow-hidden bg-bg-elevated rounded-none">
+                    {image ? (
+                      <Image src={image} alt={hit.title} fill className="object-cover" sizes="50vw" unoptimized />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <Gamepad2 className="w-8 h-8 opacity-30" />
+                      </div>
+                    )}
+                    {hit.contentType && (
+                      <div className="absolute bottom-2 left-2">
+                        <span className={cn(!staticBadges && 'category-badge-bounce')} style={{ display: 'inline-block', fontSize: '10px', fontWeight: 800, letterSpacing: '0.5px', textTransform: 'uppercase', padding: '2px 4px', borderRadius: '2px', backgroundColor: (hit.contentType === 'GUIDE' && hit.guideType) ? getGuideTypeColor(hit.guideType) : tc.bg, color: tc.textColor || '#fff' }}>
+                          {(hit.contentType === 'GUIDE' && hit.guideType) ? hit.guideType : (CONTENT_TYPE_LABELS[hit.contentType] || hit.contentType)}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="flex flex-col gap-0 mt-1.5">
+                    {hit.authorName && (
+                      <span className="text-[14px] font-bold text-[var(--brand-green)]">{hit.authorName}</span>
+                    )}
+                    {hit.publishedAtISO && (
+                      <span className="text-[14px] font-medium text-muted">{formatDate(hit.publishedAtISO)}</span>
+                    )}
+                    <p className="text-[16px] font-bold text-text-strong leading-[1.3] mt-0.5" style={{ fontFamily: '"Gibson", sans-serif' }}>
+                      <span className="hover-underline-animation">{hit.title}</span>
+                    </p>
+                  </div>
+                </Link>
+              </li>
             );
           })}
-        </div>
+        </ul>
       ) : layout === 'list' ? (
         <div className="space-y-3">
           {hits.map((hit, i) => {

@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Menu, X, User, LogOut, Bookmark, Shield, ChevronDown, Gamepad2, Star, Newspaper, BookOpen, Trophy, Tag, Play, Settings, Bell, Map, Sun, Moon, Home, UserCircle } from 'lucide-react';
+import { Search, Menu, X, User, LogOut, Bookmark, Shield, ChevronDown, Gamepad2, Star, Newspaper, BookOpen, Trophy, Tag, Play, Settings, Bell, Map, Sun, Moon, Home, UserCircle, ArrowLeft, Mouse, Smartphone, CheckSquare, ShoppingBag, MessageSquare, FileText, Mic, Lightbulb, List, Puzzle, Cpu, Zap, Award, Compass, Heart, Hash } from 'lucide-react';
 import { NAV_LINKS, STAFF_ROLES } from '@/lib/constants';
 import { contentTypePath } from '@/lib/seo';
 import { useAuthStore } from '@/store/authStore';
@@ -41,48 +41,39 @@ function HeaderPill({ href, icon: Icon, children, accent = false, onClick, under
 
 function MobileNavItem({ link, index, setMobileMenuOpen, pathname, isActive, getNavIcon }: any) {
   const [isOpen, setIsOpen] = useState(false);
-  const active = isActive(link);
   const titleCaseLabel = link.label.charAt(0).toUpperCase() + link.label.slice(1).toLowerCase();
+  const active = isActive(link);
   
   if (!link.children) {
     return (
-      <motion.div
-        initial={{ opacity: 0, x: -10 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: index * 0.04, duration: 0.2, ease: 'easeOut' }}
+      <Link
+        href={link.href}
+        onClick={() => setMobileMenuOpen(false)}
+        className={`hud-nav-item flex items-center gap-[12px] px-[10px] py-[11px] text-[18px] font-bold transition-colors ${active ? 'is-active' : ''}`}
+        style={{ color: active ? 'var(--accent)' : 'var(--text-primary)' }}
       >
-        <Link
-          href={link.href}
-          onClick={() => setMobileMenuOpen(false)}
-          className={`flex items-center gap-4 px-4 py-3 rounded-xl font-semibold text-[16px] transition-colors ${active ? 'bg-accent-dim text-accent' : 'text-[color:var(--text)] hover:bg-black/5 dark:hover:bg-white/5'}`}
-        >
-          <span className={active ? 'text-accent' : 'text-gray-500 dark:text-gray-400'}>
-            {getNavIcon(titleCaseLabel)}
-          </span>
-          {titleCaseLabel}
-        </Link>
-      </motion.div>
+        <div className="shrink-0 flex items-center justify-center transition-colors" style={{ color: active ? 'var(--accent)' : 'var(--icon-color)' }}>
+          {getNavIcon(titleCaseLabel)}
+        </div>
+        {titleCaseLabel}
+      </Link>
     );
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, x: -10 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: index * 0.04, duration: 0.2, ease: 'easeOut' }}
-      className="flex flex-col"
-    >
+    <div className="flex flex-col">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center justify-between px-4 py-3 rounded-xl font-semibold text-[16px] transition-colors ${active ? 'bg-accent-dim text-accent' : 'text-[color:var(--text)] hover:bg-black/5 dark:hover:bg-white/5'}`}
+        className={`hud-nav-item flex items-center justify-between px-[10px] py-[11px] text-[18px] font-bold transition-colors w-full ${active ? 'is-active' : ''}`}
+        style={{ color: active ? 'var(--accent)' : 'var(--text-primary)' }}
       >
-        <div className="flex items-center gap-4">
-          <span className={active ? 'text-accent' : 'text-gray-500 dark:text-gray-400'}>
+        <div className="flex items-center gap-[12px]">
+          <div className="shrink-0 flex items-center justify-center transition-colors" style={{ color: active ? 'var(--accent)' : 'var(--icon-color)' }}>
             {getNavIcon(titleCaseLabel)}
-          </span>
+          </div>
           {titleCaseLabel}
         </div>
-        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''} text-gray-400`} />
+        <ChevronDown className={`w-[16px] h-[16px] transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} style={{ color: 'var(--text-secondary)' }} />
       </button>
       
       <AnimatePresence>
@@ -101,7 +92,8 @@ function MobileNavItem({ link, index, setMobileMenuOpen, pathname, isActive, get
                     key={child.href}
                     href={child.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`block py-2.5 text-[14px] font-medium transition-colors ${childActive ? 'text-accent' : 'text-gray-500 dark:text-gray-400 hover:text-[color:var(--text)]'}`}
+                    className="block py-2 text-[16px] font-bold transition-colors"
+                    style={{ color: childActive ? 'var(--accent)' : 'var(--text-secondary)' }}
                   >
                     {child.label}
                   </Link>
@@ -111,7 +103,7 @@ function MobileNavItem({ link, index, setMobileMenuOpen, pathname, isActive, get
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.div>
+    </div>
   );
 }
 
@@ -264,20 +256,27 @@ export default function Header({ tickerArticles = [] }: { tickerArticles?: Artic
 
   const getNavIcon = (label: string) => {
     switch (label) {
-      case 'Home': return <Home className="w-[18px] h-[18px]" />;
-      case 'Games': return <Gamepad2 className="w-[18px] h-[18px]" />;
-      case 'Articles': return <Newspaper className="w-[18px] h-[18px]" />;
-      case 'Guides': return <BookOpen className="w-[18px] h-[18px]" />;
-      case 'Reviews': return <Star className="w-[18px] h-[18px]" />;
-      case 'News': return <Newspaper className="w-[18px] h-[18px]" />;
-      case 'Opinions': return <BookOpen className="w-[18px] h-[18px]" />;
-      case 'Features': return <Newspaper className="w-[18px] h-[18px]" />;
-      case 'Lists': return <Tag className="w-[18px] h-[18px]" />;
-      case 'Mod Guides': return <BookOpen className="w-[18px] h-[18px]" />;
-      case 'Walkthroughs': return <Map className="w-[18px] h-[18px]" />;
-      case 'Videos': return <Play className="w-[18px] h-[18px]" />;
-      case 'Deals': return <Tag className="w-[18px] h-[18px]" />;
-      default: return <Gamepad2 className="w-[18px] h-[18px]" />;
+      case 'Home': return <Home className="w-[20px] h-[20px]" />;
+      case 'Games': return <Gamepad2 className="w-[20px] h-[20px]" />;
+      case 'Articles': return <FileText className="w-[20px] h-[20px]" />;
+      case 'Guides': return <Compass className="w-[20px] h-[20px]" />;
+      case 'Reviews': return <Award className="w-[20px] h-[20px]" />;
+      case 'News': return <Newspaper className="w-[20px] h-[20px]" />;
+      case 'Opinions': return <Lightbulb className="w-[20px] h-[20px]" />;
+      case 'Features': return <Star className="w-[20px] h-[20px]" />;
+      case 'Lists': return <List className="w-[20px] h-[20px]" />;
+      case 'Mod Guides': return <Puzzle className="w-[20px] h-[20px]" />;
+      case 'Walkthroughs': return <Map className="w-[20px] h-[20px]" />;
+      case 'Videos': return <Play className="w-[20px] h-[20px]" />;
+      case 'Deals': return <Tag className="w-[20px] h-[20px]" />;
+      case 'Hardware': return <Cpu className="w-[20px] h-[20px]" />;
+      case 'Gaming': return <Mouse className="w-[20px] h-[20px]" />;
+      case 'Mobile': return <Smartphone className="w-[20px] h-[20px]" />;
+      case 'Roundups': return <Hash className="w-[20px] h-[20px]" />;
+      case 'Interviews': return <Mic className="w-[20px] h-[20px]" />;
+      case 'How To': return <CheckSquare className="w-[20px] h-[20px]" />;
+      case 'Discussions': return <MessageSquare className="w-[20px] h-[20px]" />;
+      default: return <Zap className="w-[20px] h-[20px]" />;
     }
   };
 
@@ -519,11 +518,22 @@ export default function Header({ tickerArticles = [] }: { tickerArticles?: Artic
           <>
             {/* Backdrop */}
             <motion.div
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              style={{ position: 'fixed', inset: 0, zIndex: 9998, background: 'rgba(0,0,0,0.88)' }}
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}
+              className="fixed inset-0 z-[9998] bg-black/60 backdrop-blur-sm"
               onClick={() => setMobileMenuOpen(false)}
               aria-hidden="true"
             />
+            
+            {/* External Close Button */}
+            <motion.button
+              initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }} transition={{ duration: 0.2 }}
+              onClick={() => setMobileMenuOpen(false)}
+              className="fixed top-[18px] right-[18px] z-[9999] p-2 rounded-full bg-black/40 text-white backdrop-blur-md hover:bg-black/60 transition-colors border border-white/10"
+              aria-label="Close sidebar"
+            >
+              <X className="w-[24px] h-[24px]" />
+            </motion.button>
+
             {/* Drawer */}
             <motion.div
               id="mobile-nav-drawer"
@@ -533,87 +543,109 @@ export default function Header({ tickerArticles = [] }: { tickerArticles?: Artic
               initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
               onKeyDown={handleDrawerKeyDown}
-              className="forza-drawer"
+              className="forza-drawer hud-panel forza-drawer-hud"
               style={{
-                position: 'fixed', top: 0, left: 0, bottom: 0, right: 0, width: '100%',
+                position: 'fixed', top: 0, left: 0, bottom: 0, width: '280px', maxWidth: '85vw',
                 zIndex: 9999,
                 overflowY: 'auto', display: 'flex', flexDirection: 'column',
-                fontFamily: "'Gibson', sans-serif",
+                background: 'var(--surface)',
+                backdropFilter: 'blur(12px)',
+                WebkitBackdropFilter: 'blur(12px)'
               }}
             >
-              {/* Header row — Profile left, Close right */}
-              <div className="flex items-center justify-between px-6 py-6 border-b border-[color:var(--border)] shrink-0">
-                <div className="flex items-center gap-4">
+              <style>{`
+                @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+                
+                .forza-drawer-hud {
+                  --surface: ${theme === 'light' ? 'rgba(255, 255, 255, 0.95)' : 'var(--nav-bg)'};
+                  --divider: ${theme === 'light' ? '#E5E7EB' : '#24262B'};
+                  --accent-dim: rgba(255,90,31,0.16);
+                  --accent-border: rgba(255,90,31,0.4);
+                  --text-primary: ${theme === 'light' ? '#111827' : '#F2F1ED'};
+                  --icon-color: ${theme === 'light' ? '#111827' : '#FFFFFF'};
+                  --text-secondary: ${theme === 'light' ? '#6B7280' : '#8B8F98'};
+                  --text-muted: ${theme === 'light' ? '#9CA3AF' : '#565A63'};
+                  --danger: #E24B4A;
+                  --danger-dim: rgba(226,75,74,0.12);
+                  --font-display: 'Gibson', sans-serif;
+                  --font-body: 'Gibson', sans-serif;
+                  --font-mono: 'Gibson', sans-serif;
+                  color: var(--text-primary);
+                  font-family: var(--font-body);
+                }
+                
+                .hud-hex {
+                  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+                }
+                
+                .hud-nav-item.is-active { color: var(--accent); }
+                .hud-nav-item.is-active .icon-box {
+                  background: color-mix(in srgb, var(--accent) 16%, transparent);
+                  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+                  color: var(--accent);
+                }
+              `}</style>
+
+              {/* header */}
+              <div className="flex flex-col px-5 pt-7 pb-5 border-b border-[color:var(--divider)] shrink-0">
+                <div className="flex items-center gap-[14px]">
                   {authLoading ? (
-                    // Skeleton while session hydrates — prevents Sign In flash
-                    <div className="flex items-center gap-4 animate-pulse" aria-hidden="true">
-                      <div className="w-12 h-12 rounded-full bg-white/10 shrink-0" />
-                      <div className="flex flex-col gap-2">
-                        <div className="w-16 h-2.5 rounded bg-white/10" />
-                        <div className="w-24 h-3 rounded bg-white/10" />
-                      </div>
+                    <div className="flex items-center gap-2 animate-pulse" aria-hidden="true">
+                      <div className="w-[46px] h-[46px] rounded-full shrink-0" style={{ background: 'var(--divider)' }} />
+                      <div className="w-20 h-3 rounded" style={{ background: 'var(--divider)' }} />
                     </div>
                   ) : isAuthenticated && user ? (
                     <>
                       {user.avatarUrl ? (
-                        <img src={user.avatarUrl} alt={user.displayName} className="w-12 h-12 rounded-full object-cover shrink-0" />
+                        <div className="w-[46px] h-[46px] rounded-full overflow-hidden shrink-0">
+                          <img src={user.avatarUrl} alt={user.displayName} className="w-full h-full object-cover" />
+                        </div>
                       ) : (
-                        <div className="w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold text-white shrink-0 shadow-lg" style={{ background: `linear-gradient(135deg, var(--accent), var(--accent2, #e040fb))` }}>
-                          {getInitials(user.displayName)}
+                        <div className="w-[46px] h-[46px] rounded-full overflow-hidden shrink-0 flex items-center justify-center text-[18px] font-bold text-[#1A0A03]" style={{ background: 'var(--accent)', fontFamily: 'var(--font-display)' }}>
+                          {getInitials(user.displayName)[0]}
                         </div>
                       )}
-                      <div>
-                        <p className="text-sm font-medium text-gray-500 dark:text-gray-400 leading-tight">Hello,</p>
-                        <p className="text-base font-bold text-[color:var(--text-strong)] leading-tight mt-0.5">{user.displayName}</p>
-                      </div>
+                      <div className="text-[20px] font-semibold tracking-[0.2px]" style={{ fontFamily: 'var(--font-display)', color: 'var(--text-primary)' }}>{user.displayName}</div>
                     </>
                   ) : (
-                    <div className="py-2">
-                      <HeaderPill href="/auth/login" icon={UserCircle} accent underlineOnHover onClick={() => setMobileMenuOpen(false)} className="text-text-primary">
-                        Sign in / Create account
-                      </HeaderPill>
-                    </div>
+                    <Link href="/auth/login" onClick={() => setMobileMenuOpen(false)} className="text-[16px] font-bold text-accent hover:underline" style={{ fontFamily: 'var(--font-display)' }}>
+                      SIGN IN
+                    </Link>
                   )}
-
                 </div>
 
-                <div className="flex items-center gap-2">
-                  {isAuthenticated && user && (
-                    <div className="md:hidden">
-                      <NotificationBell color="var(--text)" />
-                    </div>
-                  )}
-                  <button
-                    onClick={() => { setMobileMenuOpen(false); hamburgerRef.current?.focus(); }}
-                    aria-label="Close menu"
-                    className="p-2 -mr-2 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
-                  >
-                    <X className="w-6 h-6" style={{ color: 'var(--text)' }} />
+                <div className="flex items-center gap-5 mt-[18px]">
+                  <div className="relative cursor-pointer hover:opacity-80 transition-opacity" style={{ color: 'var(--icon-color)' }}>
+                    <NotificationBell color="currentColor" />
+                  </div>
+                  <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} aria-label="Toggle theme" className="cursor-pointer hover:opacity-80 transition-opacity" style={{ color: 'var(--icon-color)' }}>
+                    {theme === 'dark' ? <Sun className="w-[22px] h-[22px]" /> : <Moon className="w-[22px] h-[22px]" />}
                   </button>
                 </div>
               </div>
 
-              {/* Theme Segmented Control */}
-              <div className="px-6 py-5 shrink-0">
-                <p className="text-[13px] font-semibold text-gray-400 dark:text-gray-500 mb-3">Theme</p>
-                <div className="flex p-1 bg-gray-100 dark:bg-[#1a1a1a] rounded-lg border border-[color:var(--border)]">
-                  <button
-                    onClick={() => setTheme('light')}
-                    className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-md text-[13px] font-semibold transition-all ${theme === 'light' ? 'bg-white text-black shadow-sm' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'}`}
-                  >
-                    <Sun className="w-4 h-4" /> Light
-                  </button>
-                  <button
-                    onClick={() => setTheme('dark')}
-                    className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-md text-[13px] font-semibold transition-all ${theme === 'dark' ? 'bg-[#2d2d2d] text-white shadow-sm' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'}`}
-                  >
-                    <Moon className="w-4 h-4" /> Dark
-                  </button>
-                </div>
-              </div>
-
-              {/* Primary nav — Left aligned with icons */}
-              <nav aria-label="Mobile navigation" className="flex flex-col py-4 px-3 gap-1">
+              {/* nav */}
+              <nav className="flex-1 overflow-y-auto px-[14px] pt-[18px] pb-4 flex flex-col">
+                {isAuthenticated && user && (
+                  <>
+                    <Link href="/settings" onClick={() => setMobileMenuOpen(false)} className="hud-nav-item flex items-center gap-[12px] px-[10px] py-[11px] text-[18px] font-bold transition-colors" style={{ color: 'var(--text-primary)' }}>
+                      <div className="shrink-0 flex items-center justify-center transition-colors" style={{ color: 'var(--icon-color)' }}>
+                        <UserCircle className="w-[20px] h-[20px]" />
+                      </div>
+                      My account
+                    </Link>
+                    {STAFF_ROLES.includes(user.role) && (
+                      <Link href="/admin" onClick={() => setMobileMenuOpen(false)} className="hud-nav-item flex items-center gap-[12px] px-[10px] py-[11px] text-[18px] font-bold transition-colors" style={{ color: 'var(--text-primary)' }}>
+                        <div className="shrink-0 flex items-center justify-center transition-colors" style={{ color: 'var(--icon-color)' }}>
+                          <Shield className="w-[20px] h-[20px]" />
+                        </div>
+                        Admin panel
+                      </Link>
+                    )}
+                    <div className="h-[1px] mx-2 my-4 shrink-0" style={{ background: 'var(--divider)' }}></div>
+                  </>
+                )}
+                
                 <MobileNavItem
                   link={{ label: 'Home', href: '/', exact: true }}
                   index={-1}
@@ -622,52 +654,28 @@ export default function Header({ tickerArticles = [] }: { tickerArticles?: Artic
                   isActive={isActive}
                   getNavIcon={getNavIcon}
                 />
-                {NAV_LINKS.map((link, index) => {
-                  return (
-                    <MobileNavItem
-                      key={link.label}
-                      link={link}
-                      index={index}
-                      setMobileMenuOpen={setMobileMenuOpen}
-                      pathname={pathname}
-                      isActive={isActive}
-                      getNavIcon={getNavIcon}
-                    />
-                  );
-                })}
+                {NAV_LINKS.map((link, index) => (
+                  <MobileNavItem
+                    key={link.label}
+                    link={link}
+                    index={index}
+                    setMobileMenuOpen={setMobileMenuOpen}
+                    pathname={pathname}
+                    isActive={isActive}
+                    getNavIcon={getNavIcon}
+                  />
+                ))}
               </nav>
 
-              {/* Footer */}
-              <div className="px-6 py-4 mb-4 shrink-0">
-                {!isAuthenticated || !user ? null : (
-                  <div className="flex flex-col gap-4">
-                    <Link
-                      href="/settings"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center gap-4 text-[16px] font-semibold text-[color:var(--text)] transition-colors hover:text-accent"
-                    >
-                      <UserCircle className="w-5 h-5 text-gray-500 dark:text-gray-400" />
-                      My account
-                    </Link>
-
-                    {STAFF_ROLES.includes(user.role) && (
-                      <Link
-                        href="/admin"
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="flex items-center gap-4 text-[16px] font-semibold text-[color:var(--text)] transition-colors hover:text-accent"
-                      >
-                        <Shield className="w-5 h-5 text-gray-500 dark:text-gray-400" />
-                        {user.role.charAt(0) + user.role.slice(1).toLowerCase()} Panel
-                      </Link>
-                    )}
-                    <button
-                      onClick={async () => { setMobileMenuOpen(false); clearSession(); await signOut({ callbackUrl: '/' }); }}
-                      className="w-full flex items-center gap-4 text-[16px] font-semibold text-[color:var(--text)] transition-colors hover:text-red-500 mt-2 pt-4 border-t border-[color:var(--border)]"
-                    >
-                      <LogOut className="w-5 h-5 text-gray-500 dark:text-gray-400" />
-                      Sign Out
-                    </button>
-                  </div>
+              {/* footer */}
+              <div className="px-[18px] pt-[16px] pb-[20px] shrink-0 border-t border-[color:var(--divider)] mt-auto">
+                {isAuthenticated && user && (
+                  <button onClick={async () => { setMobileMenuOpen(false); clearSession(); await signOut({ callbackUrl: '/' }); }} className="flex items-center gap-[12px] px-[10px] py-[11px] w-full text-[18px] font-bold border transition-colors" style={{ border: '1px solid var(--danger-dim)', background: 'var(--danger-dim)', color: 'var(--danger)' }}>
+                    <div className="shrink-0 flex items-center justify-center transition-colors" style={{ color: 'var(--icon-color)' }}>
+                      <LogOut className="w-[20px] h-[20px]" />
+                    </div>
+                    Sign out
+                  </button>
                 )}
               </div>
             </motion.div>

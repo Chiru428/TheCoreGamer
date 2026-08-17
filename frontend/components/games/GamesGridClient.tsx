@@ -131,7 +131,7 @@ export default function GamesGridClient({ initialGames, totalPages: initialTotal
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10">
               {Array.from({ length: 10 }).map((_, i) => (
                 <div key={i} className="flex flex-col gap-3">
-                  <Skeleton className="w-full aspect-[2/3] rounded-sm" />
+                  <Skeleton className="w-full aspect-[2/3] rounded-none" />
                   <Skeleton className="w-3/4 h-4" />
                   <Skeleton className="w-1/2 h-3" />
                 </div>
@@ -171,7 +171,7 @@ export default function GamesGridClient({ initialGames, totalPages: initialTotal
                   return (
                     <Fragment key={id}>
                       <Link href={`/games/${slug}`} className="group block">
-                        <div className="relative overflow-hidden aspect-[2/3] w-full rounded border border-[var(--text)]">
+                        <div className="relative overflow-hidden aspect-[2/3] w-full rounded-none border border-[var(--text)]">
                           {coverImageUrl ? (
                             <img
                               src={coverImageUrl}
@@ -195,11 +195,11 @@ export default function GamesGridClient({ initialGames, totalPages: initialTotal
                           )}
                         </div>
                         <div className="pt-3">
-                          <p className="text-[16px] font-bold text-text leading-tight">
+                          <p className="text-[16px] md:text-[18px] font-bold text-text leading-tight">
                             <span className="hover-underline-animation">{title}</span>
                           </p>
                           {publisher && (
-                            <p className="text-[13px] font-medium text-text-muted mt-1">
+                            <p className="text-[14px] font-medium text-text-muted mt-1">
                               {publisher}
                             </p>
                           )}

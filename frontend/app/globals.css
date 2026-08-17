@@ -68,8 +68,8 @@
   --r: 0px;
   --sidebar-w: 300px;
 
-  --nav-bg: #3A3F4A;
-  --footer-bg: #3A3F4A;
+  --nav-bg: #161A1CEB;
+  --footer-bg: #161A1CEB;
   --ticker-bg: var(--bg);
   --nav-link: #ffffff;
   --nav-link-hover: #ffffff;
@@ -147,8 +147,8 @@
   --filter-accent: #00866B;
 
   /* â”€â”€ NAV / TICKER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-  --nav-bg: #3A3F4A;
-  --footer-bg: #3A3F4A;
+  --nav-bg: #161A1CEB;
+  --footer-bg: #161A1CEB;
   --ticker-bg: var(--bg);
   --nav-link: #ffffff;
   --nav-link-hover: #ffffff;
@@ -3851,7 +3851,7 @@ blockquote.callout-danger {
   @apply border border-border rounded-[14px] px-[18px] py-[16px] my-[18px] grid grid-cols-[60px_1fr] md:grid-cols-[72px_1fr_100px] gap-[14px] md:gap-[18px] items-start bg-bg-surface;
 }
 .game-cover {
-  @apply w-full aspect-[3/4] rounded-lg flex items-center justify-center relative overflow-hidden;
+  @apply w-full aspect-[3/4] rounded-none flex items-center justify-center relative overflow-hidden;
   background: linear-gradient(145deg, var(--hero-bg1), var(--hero-bg2));
 }
 .game-cover svg {

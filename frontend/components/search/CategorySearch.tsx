@@ -134,7 +134,7 @@ export default function CategorySearch({ contentType, placeholder, indexName = '
                     onClick={handleSelect}
                     className="flex flex-col shrink-0 w-[110px] group/card"
                   >
-                    <div className="relative w-[110px] aspect-[2/3] overflow-hidden rounded bg-bg-elevated">
+                    <div className="relative w-[110px] aspect-[2/3] overflow-hidden rounded-none bg-bg-elevated">
                       {image ? (
                         <Image src={image} alt={hit.title} fill className="object-cover" sizes="110px" unoptimized />
                       ) : (

@@ -1,5 +1,7 @@
 import React from 'react';
 
+const adsEnabled = !!process.env.NEXT_PUBLIC_ADSENSE_ID;
+
 function SectionHeadSkeleton({ className = "mb-4" }: { className?: string }) {
   return (
     <div className={`flex flex-col items-start ${className}`}>
@@ -155,25 +157,24 @@ function ReviewsGridSkeleton({ count = 6 }) {
 /* -- Exactly Games Overlay Section ------------------- */
 function GamesOverlaySkeleton() {
   return (
-    <section className="relative w-[100vw] left-[50%] -translate-x-1/2 mb-10 md:mb-14 py-5 overflow-hidden border-y border-white/10 shadow-2xl">
-      <div className="absolute inset-0 w-full h-full bg-[var(--bg2)] pointer-events-none" />
-      <div className="relative z-10 w-full max-w-[1280px] mx-auto px-4 lg:px-0">
+    <section className="mb-10 md:mb-14">
+      <div className="relative z-10">
          <SectionHeadSkeleton className="mb-6" />
          <div className="mb-6">
            {/* Tab Bar */}
            <div className="flex gap-6 mb-8 overflow-hidden">
              {Array.from({ length: 3 }).map((_, i) => (
-                <div key={i} className="h-6 w-[120px] shimmer rounded-sm" />
+                <div key={i} className="h-4 w-[100px] shimmer rounded-sm" />
              ))}
            </div>
-           {/* 4 Cards */}
-           <div className="grid grid-cols-2 gap-5 md:grid-cols-4 md:gap-6">
-             {Array.from({ length: 4 }).map((_, i) => (
-               <div key={i} className="block overflow-hidden">
-                 <div className="w-full aspect-[2/3] shimmer rounded border border-border" />
-                 <div className="pt-4 flex flex-col gap-2">
-                   <div className="h-[20px] w-full shimmer rounded" />
-                   <div className="h-[16px] w-3/4 shimmer rounded" />
+           {/* 5 Cards */}
+           <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-5">
+             {Array.from({ length: 5 }).map((_, i) => (
+               <div key={i} className={`block overflow-hidden ${i === 4 ? 'hidden md:block' : ''}`}>
+                 <div className="w-full aspect-[2/3] shimmer rounded-none border border-[rgba(255,255,255,0.08)]" />
+                 <div className="pt-[10px] flex flex-col gap-1.5">
+                   <div className="h-[16px] md:h-[18px] w-full shimmer rounded" />
+                   <div className="h-[14px] w-2/3 shimmer rounded hidden md:block" />
                  </div>
                </div>
              ))}
@@ -226,16 +227,20 @@ export default function HomepageLoading() {
   return (
     <div className="home-page-root" style={{ background: 'var(--bg)' }}>
       {/* TOP AD */}
-      <div className="hidden sm:block">
-        <AdSlotSkeleton id="ADS-01" />
-      </div>
+      {adsEnabled && (
+        <div className="hidden sm:block">
+          <AdSlotSkeleton id="ADS-01" />
+        </div>
+      )}
       
       <HeroSkeleton />
       
       {/* MOBILE AD */}
-      <div className="sm:hidden block">
-        <AdSlotSkeleton id="ADS-01m" />
-      </div>
+      {adsEnabled && (
+        <div className="sm:hidden block">
+          <AdSlotSkeleton id="ADS-01m" />
+        </div>
+      )}
 
       <div className="w-full max-w-[1280px] mx-auto px-4 lg:px-0 pt-10 md:pt-14 pb-0">
         
@@ -254,9 +259,11 @@ export default function HomepageLoading() {
         </section>
 
         {/* AD SLOT 02 */}
-        <div className="mb-10 md:mb-14 flex justify-center w-full">
-           <AdSlotSkeleton id="ADS-02" />
-        </div>
+        {adsEnabled && (
+          <div className="mb-10 md:mb-14 flex justify-center w-full">
+             <AdSlotSkeleton id="ADS-02" />
+          </div>
+        )}
 
         {/* POLL */}
         <section className="mb-14 md:mb-20 flex justify-center w-full">

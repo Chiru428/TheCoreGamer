@@ -5,7 +5,7 @@ import Link from 'next/link';
 import useSWR from 'swr';
 import { motion, useReducedMotion } from 'framer-motion';
 import { useSession } from 'next-auth/react';
-import { Facebook, Instagram, MessageCircle, Twitch, Twitter, Youtube, BookOpen, Globe, ExternalLink, ShoppingCart, Gamepad2, Star } from 'lucide-react';
+import { Facebook, Instagram, MessageCircle, Twitch, Twitter, Youtube, BookOpen, Globe, ExternalLink, ShoppingCart, Gamepad2, Star, Loader2 } from 'lucide-react';
 import GameTrailerModal from '@/components/games/GameTrailerModal';
 import { getAlgoliaUserToken, sendAlgoliaEvent } from '@/lib/algolia';
 import { trackClarityEvent } from '@/lib/clarity';
@@ -30,15 +30,16 @@ interface GameHeroProps {
 }
 
 export default function GameHero({ game, slug, trailerUrl, youtubeId, youtubeSearchUrl }: GameHeroProps) {
-  const { data: session } = useSession();
+  const { data: session, status: sessionStatus } = useSession();
   const shouldReduceMotion = useReducedMotion();
 
   // Check if the current user has already submitted a rating for this game
-  const { data: ratingsRes } = useSWR(
+  const { data: ratingsRes, isLoading: ratingsLoading } = useSWR(
     session?.user?.id ? `game-ratings-${slug}-helpful-1` : null,
     () => fetchGameRatings(slug, 1, 'helpful')
   );
   const hasUserRated = !!ratingsRes?.data?.aggregate?.userRating;
+  const isReviewStatusLoading = sessionStatus === 'loading' || (sessionStatus === 'authenticated' && !ratingsRes && ratingsLoading);
 
   const releaseDateText = game.releaseDate ? formatDate(game.releaseDate) : 'TBA';
   const releaseYear = game.releaseDate ? new Date(game.releaseDate).getFullYear() : null;
@@ -132,8 +133,10 @@ export default function GameHero({ game, slug, trailerUrl, youtubeId, youtubeSea
                 <span className="text-[20px] font-bold text-white mb-1">Game Rating</span>
                 <span className="text-[16px] text-white/80">Our Review: <strong className="text-white">{game.GameReview?.[0]?.reviewScore ? `${game.GameReview[0].reviewScore}/10` : 'N/A'}</strong></span>
                 <span className="text-[16px] text-white/80">User Ratings: <strong className="text-white">{game.userRatings?.average ? `${game.userRatings.average.toFixed(1)}/10` : 'N/A'} <span className="text-xs font-normal">({game.userRatings?.count ?? 0})</span></strong></span>
-                <Link href="?tab=reviews" scroll={false} className="mt-3 bg-[#00E5A0] hover:bg-[#00C98A] text-black text-[16px] font-bold py-2 px-4 transition-colors w-fit shadow-md text-center">
-                  {hasUserRated ? 'Edit Your Review' : 'Write a Review'}
+                <Link href="?tab=reviews" scroll={false} className="mt-3 bg-[#00E5A0] hover:bg-[#00C98A] text-black text-[16px] font-bold py-2 px-4 transition-colors w-fit shadow-md text-center min-w-[140px] flex justify-center items-center">
+                  {isReviewStatusLoading ? (
+                    <Loader2 size={20} className="animate-spin" />
+                  ) : hasUserRated ? 'Edit Your Review' : 'Write a Review'}
                 </Link>
               </div>
               <div className="w-20 h-20 relative flex items-center justify-center shrink-0">
@@ -202,8 +205,10 @@ export default function GameHero({ game, slug, trailerUrl, youtubeId, youtubeSea
                 <span className="text-[20px] font-bold text-white mb-1">Game Rating</span>
                 <span className="text-[16px] text-white/80">Our Review: <strong className="text-white">{game.GameReview?.[0]?.reviewScore ? `${game.GameReview[0].reviewScore}/10` : 'N/A'}</strong></span>
                 <span className="text-[16px] text-white/80">User Ratings: <strong className="text-white">{game.userRatings?.average ? `${game.userRatings.average.toFixed(1)}/10` : 'N/A'} <span className="text-xs font-normal">({game.userRatings?.count ?? 0})</span></strong></span>
-                <Link href="?tab=reviews" scroll={false} className="mt-3 bg-[#00E5A0] hover:bg-[#00C98A] text-black text-[16px] font-bold py-2 px-4 transition-colors w-fit shadow-md text-center">
-                  {hasUserRated ? 'Edit Your Review' : 'Write a Review'}
+                <Link href="?tab=reviews" scroll={false} className="mt-3 bg-[#00E5A0] hover:bg-[#00C98A] text-black text-[16px] font-bold py-2 px-4 transition-colors w-fit shadow-md text-center min-w-[140px] flex justify-center items-center">
+                  {isReviewStatusLoading ? (
+                    <Loader2 size={20} className="animate-spin" />
+                  ) : hasUserRated ? 'Edit Your Review' : 'Write a Review'}
                 </Link>
               </div>
               <div className="w-20 h-20 relative flex items-center justify-center shrink-0">

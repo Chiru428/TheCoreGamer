@@ -84,23 +84,67 @@ export default function NewsWithTrending({ newsArticles, trendingArticles, sideb
                   >
                     <div className="trending-body">
                       <p className="post-card-title trending-title"><span className="hover-underline-animation">{article.title}</span></p>
-                      <div className="news-meta" style={{ marginTop: '4px' }}>
-                        {article.author?.displayName && (
-                          <span className="news-author" style={{ fontSize: '14px' }}>{article.author.displayName}</span>
-                        )}
-                        <span className="news-date" style={{ fontSize: '14px' }}>{formatDate(article.publishedAt || article.createdAt)}</span>
-                        {showBadge && (
-                          article.contentType === 'GUIDE' && article.guideType ? (
-                            <span style={{ marginLeft: '6px', fontSize: '10px', fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase', color: getGuideTypeColor(article.guideType) }}>
-                              {article.guideType}
-                            </span>
-                          ) : (
-                            <span style={{ marginLeft: '6px', fontSize: '10px', fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase', color: (CONTENT_TYPE_COLORS[article.contentType] || { bg: 'var(--accent)' }).textColor || (CONTENT_TYPE_COLORS[article.contentType] || { bg: 'var(--accent)' }).bg }}>
-                              {CONTENT_TYPE_LABELS[article.contentType] || article.contentType}
-                            </span>
-                          )
-                        )}
-                      </div>
+                      {sidebarTitle === 'Popular Guides' ? (
+                        <>
+                          {/* Mobile: Single row */}
+                          <div className="flex md:hidden flex-wrap items-center gap-3 mt-1">
+                            {article.author?.displayName && (
+                              <span className="text-[14px] font-bold text-[var(--brand-green)]">{article.author.displayName}</span>
+                            )}
+                            <span className="text-[14px] font-medium text-muted">{formatDate(article.publishedAt || article.createdAt)}</span>
+                            {showBadge && (
+                              article.contentType === 'GUIDE' && article.guideType ? (
+                                <span style={{ fontSize: '12px', fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase', color: getGuideTypeColor(article.guideType) }}>
+                                  {article.guideType}
+                                </span>
+                              ) : (
+                                <span style={{ fontSize: '12px', fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase', color: (CONTENT_TYPE_COLORS[article.contentType] || { bg: 'var(--accent)' }).textColor || (CONTENT_TYPE_COLORS[article.contentType] || { bg: 'var(--accent)' }).bg }}>
+                                  {CONTENT_TYPE_LABELS[article.contentType] || article.contentType}
+                                </span>
+                              )
+                            )}
+                          </div>
+
+                          {/* Desktop: Split rows */}
+                          <div className="hidden md:flex flex-col gap-1 mt-2">
+                            {article.author?.displayName && (
+                              <span className="text-[14px] font-bold text-[var(--brand-green)]">{article.author.displayName}</span>
+                            )}
+                            <div className="flex flex-wrap items-center gap-3">
+                              <span className="text-[14px] font-medium text-muted">{formatDate(article.publishedAt || article.createdAt)}</span>
+                              {showBadge && (
+                                article.contentType === 'GUIDE' && article.guideType ? (
+                                  <span style={{ fontSize: '12px', fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase', color: getGuideTypeColor(article.guideType) }}>
+                                    {article.guideType}
+                                  </span>
+                                ) : (
+                                  <span style={{ fontSize: '12px', fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase', color: (CONTENT_TYPE_COLORS[article.contentType] || { bg: 'var(--accent)' }).textColor || (CONTENT_TYPE_COLORS[article.contentType] || { bg: 'var(--accent)' }).bg }}>
+                                    {CONTENT_TYPE_LABELS[article.contentType] || article.contentType}
+                                  </span>
+                                )
+                              )}
+                            </div>
+                          </div>
+                        </>
+                      ) : (
+                        <div className="news-meta" style={{ marginTop: '4px' }}>
+                          {article.author?.displayName && (
+                            <span className="news-author" style={{ fontSize: '14px' }}>{article.author.displayName}</span>
+                          )}
+                          <span className="news-date" style={{ fontSize: '14px' }}>{formatDate(article.publishedAt || article.createdAt)}</span>
+                          {showBadge && (
+                            article.contentType === 'GUIDE' && article.guideType ? (
+                              <span style={{ marginLeft: '6px', fontSize: '10px', fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase', color: getGuideTypeColor(article.guideType) }}>
+                                {article.guideType}
+                              </span>
+                            ) : (
+                              <span style={{ marginLeft: '6px', fontSize: '10px', fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase', color: (CONTENT_TYPE_COLORS[article.contentType] || { bg: 'var(--accent)' }).textColor || (CONTENT_TYPE_COLORS[article.contentType] || { bg: 'var(--accent)' }).bg }}>
+                                {CONTENT_TYPE_LABELS[article.contentType] || article.contentType}
+                              </span>
+                            )
+                          )}
+                        </div>
+                      )}
                     </div>
                   </Link>
                 </li>

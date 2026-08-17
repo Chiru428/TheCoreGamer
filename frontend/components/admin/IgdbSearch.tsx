@@ -210,9 +210,9 @@ export default function IgdbSearch({ onSelectGame }: IgdbSearchProps) {
               className="w-full flex items-center gap-3 p-3 hover:bg-bg-elevated text-left transition-colors border-b border-border last:border-b-0"
             >
               {game.coverUrl ? (
-                <img src={game.coverUrl} alt={game.name} className="w-12 aspect-[3/4] object-cover rounded shrink-0" />
+                <img src={game.coverUrl} alt={game.name} className="w-12 aspect-[3/4] object-cover rounded-none shrink-0" />
               ) : (
-                <div className="w-12 aspect-[3/4] bg-bg-primary rounded flex items-center justify-center shrink-0">
+                <div className="w-12 aspect-[3/4] bg-bg-primary rounded-none flex items-center justify-center shrink-0">
                   <Search className="w-4 h-4 text-text-muted" />
                 </div>
               )}

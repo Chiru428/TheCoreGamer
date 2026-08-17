@@ -113,7 +113,7 @@ export default async function PlatformHubPage({ params }: { params: Promise<{ pl
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
        {topGames.map((game, i) => (
         <div key={game.id} className="card-sm transition-transform hover:-translate-y-[1px] overflow-hidden">
-         <Link href={`/games/${game.slug}`} className="block relative overflow-hidden aspect-[2/3] rounded border border-[var(--text)]">
+         <Link href={`/games/${game.slug}`} className="block relative overflow-hidden aspect-[2/3] rounded-none border border-[var(--text)]">
           {game.coverImageUrl ? (
            <Image src={game.coverImageUrl} alt={game.title} fill className="object-cover" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw" unoptimized={true} priority={i < 4} />
           ) : (
@@ -143,7 +143,7 @@ export default async function PlatformHubPage({ params }: { params: Promise<{ pl
         const colorData = CONTENT_TYPE_COLORS[article.contentType] || { bg: 'var(--accent)' };
         return (
          <Link key={article.id} href={`/articles/${article.slug}`} className="card-sm block group">
-          <div className="relative aspect-[2/3] w-full overflow-hidden rounded border border-[var(--text)]">
+          <div className="relative aspect-[2/3] w-full overflow-hidden rounded-none border border-[var(--text)]">
            {article.featuredImageUrl ? (
             <Image src={article.featuredImageUrl} alt={article.title} fill className="object-cover " sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" unoptimized />
            ) : (
@@ -175,7 +175,7 @@ export default async function PlatformHubPage({ params }: { params: Promise<{ pl
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
        {upcomingGames.map((game, i) => (
         <div key={game.id} className="card-sm transition-transform hover:-translate-y-[1px] overflow-hidden">
-         <Link href={`/games/${game.slug}`} className="block relative overflow-hidden aspect-[2/3] rounded border border-[var(--text)]">
+         <Link href={`/games/${game.slug}`} className="block relative overflow-hidden aspect-[2/3] rounded-none border border-[var(--text)]">
           {game.coverImageUrl ? (
            <Image src={game.coverImageUrl} alt={game.title} fill className="object-cover" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw" unoptimized={true} priority={i < 4} />
           ) : (

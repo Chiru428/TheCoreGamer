@@ -770,7 +770,7 @@ export default function GameForm({ mode, gameId }: GameFormProps) {
           {/* Cover image (2:3) */}
           <Field label="COVER IMAGE (2:3)" hint="Portrait 2:3 cover. Sourced from Steam's library art when available, otherwise IGDB. Used on game grid and game detail page.">
             {coverImageUrl && (
-              <div className="mb-2 relative w-[200px] aspect-[2/3] rounded-lg overflow-hidden border border-border">
+              <div className="mb-2 relative w-[200px] aspect-[2/3] rounded-none overflow-hidden border border-border">
                 <img src={coverImageUrl} alt="Cover preview" className="w-full h-full object-cover" />
               </div>
             )}

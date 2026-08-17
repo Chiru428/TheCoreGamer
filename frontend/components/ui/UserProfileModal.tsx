@@ -118,7 +118,7 @@ function ReviewListItem({ review, avatarUrl, displayName, onNavigate }: ReviewLi
         onClick={onNavigate}
         className="group block float-right ml-4 mb-2 w-28"
       >
-        <div className="relative w-28 aspect-[2/3] rounded-lg overflow-hidden border border-border group-hover:border-accent transition-colors">
+        <div className="relative w-28 aspect-[2/3] rounded-none overflow-hidden border border-border group-hover:border-accent transition-colors">
           {review.gameCoverImageUrl && (
             <Image src={review.gameCoverImageUrl} alt="" fill className="object-cover" sizes="112px" unoptimized />
           )}
