@@ -2,7 +2,7 @@ import { Queue, Worker } from "bullmq";
 import { prisma } from "../lib/prisma";
 import { connection, isConnectionError } from "../lib/bullmq";
 import { captureError } from "../lib/sentry";
-import { syncArticleToAlgolia } from "./algolia.worker";
+import { addSearchIndexJob } from "@/lib/bullmq";
 import { purgeArticle } from "../lib/cloudflare";
 import { revalidateArticlePaths } from "../lib/revalidate";
 
@@ -66,7 +66,8 @@ export const articleWorker = new Worker(
           });
         }
 
-        await Promise.all(articlesToPublish.map((a) => syncArticleToAlgolia(a.id)));
+        // Enqueue to searchIndexQueue so BOTH Postgres searchVector AND Algolia are updated
+        await Promise.all(articlesToPublish.map((a) => addSearchIndexJob({ articleId: a.id, action: "index" })));
         await Promise.all(articlesToPublish.map((a) => purgeArticle(a.slug, a.contentType)));
 
         // Trigger frontend ISR revalidation for each published article —

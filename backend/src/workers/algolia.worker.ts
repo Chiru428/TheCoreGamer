@@ -160,7 +160,7 @@ function buildArticleRecord(article: ArticleForAlgolia): AlgoliaArticleRecord {
     objectID: article.id,
     title: article.title,
     slug: article.slug,
-    excerpt: article.excerpt,
+    excerpt: article.excerpt ? article.excerpt.substring(0, 500) : null,
     contentType: article.contentType,
     authorName: article.User_Article_authorIdToUser.displayName,
     authorUsername: article.User_Article_authorIdToUser.username,
@@ -380,7 +380,7 @@ async function syncVideo(videoId: string) {
 
 // ── Full reindex jobs ─────────────────────────────────────────────────────
 
-async function fullReindexArticles() {
+export async function fullReindexArticles() {
   await clearIndex(ARTICLES_INDEX);
 
   let cursor: string | undefined;

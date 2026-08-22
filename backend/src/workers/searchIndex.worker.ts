@@ -11,22 +11,25 @@ export const searchIndexWorker = new Worker(
     const { articleId, action } = job.data;
 
     if (action === "index") {
-      // Update tsvector for full-text search
-      // Using raw SQL since Prisma doesn't natively support tsvector updates
-      await prisma.$executeRawUnsafe(
-        `
-        UPDATE "Article" SET "searchVector" =
-          setweight(to_tsvector('english', COALESCE("title", '')), 'A') ||
-          setweight(to_tsvector('english', COALESCE("excerpt", '')), 'B') ||
-          setweight(to_tsvector('english', COALESCE((
-            SELECT string_agg("transcript", ' ')
-            FROM "VideoAsset"
-            WHERE "articleId" = "Article"."id" AND "transcript" IS NOT NULL
-          ), '')), 'D')
-        WHERE "id" = $1
-      `,
-        articleId
-      );
+      try {
+        await prisma.$executeRawUnsafe(
+          `
+          UPDATE "Article" SET "searchVector" =
+            setweight(to_tsvector('english', COALESCE("title", '')), 'A') ||
+            setweight(to_tsvector('english', COALESCE("excerpt", '')), 'B') ||
+            setweight(to_tsvector('english', COALESCE(SUBSTRING((
+              SELECT string_agg("transcript", ' ')
+              FROM "VideoAsset"
+              WHERE "articleId" = "Article"."id" AND "transcript" IS NOT NULL
+            ), 1, 100000), '')), 'D')
+          WHERE "id" = $1
+        `,
+          articleId
+        );
+      } catch (sqlErr) {
+        logger.error({ err: sqlErr, articleId }, "[SearchIndexWorker] Failed to update Postgres searchVector");
+        // We continue because we still want to sync to Algolia even if Postgres fails
+      }
 
       logger.info(`[SearchIndexWorker] Indexed article ${articleId}`);
       await syncArticleToAlgolia(articleId);

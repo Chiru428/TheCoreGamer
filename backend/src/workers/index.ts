@@ -53,7 +53,7 @@ logger.info("[Workers]   - Cleanup worker (daily 2 AM UTC — prune stale PriceS
 // Start a tiny HTTP server to satisfy Render's Web Service port binding requirement
 // and provide a target for cron-job.org without running the heavy Next.js API server.
 import http from "http";
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.WORKER_PORT || process.env.PORT || 3003;
 const server = http.createServer((req, res) => {
   if (req.url === "/api/health") {
     res.writeHead(200, { "Content-Type": "application/json" });
