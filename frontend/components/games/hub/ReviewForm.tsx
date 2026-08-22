@@ -12,8 +12,8 @@ function ScoreSelector({ value, onChange }: { value: number | null; onChange: (v
   const display = hover ?? value ?? 0;
 
   return (
-    <div className="flex items-center gap-3">
-      <div className="flex gap-1" onMouseLeave={() => setHover(null)}>
+    <div className="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
+      <div className="flex gap-0.5 sm:gap-1" onMouseLeave={() => setHover(null)}>
         {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => (
           <button
             key={n}
@@ -24,14 +24,14 @@ function ScoreSelector({ value, onChange }: { value: number | null; onChange: (v
             aria-label={`Score ${n}`}
           >
             <Star
-              className={cn('w-6 h-6 transition-colors', n <= display ? 'text-accent' : 'text-border')}
+              className={cn('w-5 h-5 sm:w-6 sm:h-6 transition-colors', n <= display ? 'text-accent' : 'text-border')}
               fill={n <= display ? 'currentColor' : 'none'}
             />
           </button>
         ))}
       </div>
       {display > 0 && (
-        <span className="text-sm font-bold text-text-primary">
+        <span className="text-sm font-bold text-text-primary whitespace-nowrap">
           {display}/10 · {getScoreLabel(display)}
         </span>
       )}

@@ -9,72 +9,134 @@ import { fetchGameScreenshots, submitGameScreenshot } from '@/lib/api';
 import type { UserScreenshot } from '@/types';
 import {
   Camera, Loader2, Upload, X, ZoomIn, Plus,
-  ChevronLeft, ChevronRight,
+  ChevronLeft, ChevronRight, CheckCircle2, AlertCircle,
 } from 'lucide-react';
 import { useUIStore } from '@/store/uiStore';
 
 const VISIBLE_SLOTS = 6;
 
+
+const MAX_FILES = 10;
+
+interface FileEntry {
+  file: File;
+  preview: string;
+  caption: string;
+  status: 'pending' | 'uploading' | 'done' | 'error';
+  errorMsg?: string;
+}
+
 export function SubmitForm({ slug, onSubmitted }: { slug: string; onSubmitted: () => void }) {
   const { addToast } = useUIStore();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [file, setFile] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
-  const [caption, setCaption] = useState('');
+  const [entries, setEntries] = useState<FileEntry[]>([]);
   const [submitting, setSubmitting] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<{ done: number; total: number } | null>(null);
 
-  const handleFile = (f: File | null) => {
-    setFile(f);
-    setPreview(f ? URL.createObjectURL(f) : null);
+  const addFiles = (files: File[]) => {
+    const images = files.filter(f => f.type.startsWith('image/'));
+    if (images.length < files.length) {
+      addToast({ type: 'error', message: 'Some files were skipped — only images are allowed' });
+    }
+    if (entries.length + images.length > MAX_FILES) {
+      addToast({ type: 'error', message: `Max ${MAX_FILES} images at a time` });
+    }
+    const allowed = images.slice(0, MAX_FILES - entries.length);
+    if (!allowed.length) return;
+    const newEntries: FileEntry[] = allowed.map(f => ({
+      file: f,
+      preview: URL.createObjectURL(f),
+      caption: '',
+      status: 'pending',
+    }));
+    setEntries(prev => [...prev, ...newEntries]);
   };
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
-    const dropped = e.dataTransfer.files?.[0];
-    if (dropped && dropped.type.startsWith('image/')) {
-      handleFile(dropped);
-    } else if (dropped) {
-      addToast({ type: 'error', message: 'Please drop an image file' });
-    }
+    addFiles(Array.from(e.dataTransfer.files));
+  };
+
+  const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) addFiles(Array.from(e.target.files));
+    e.target.value = '';
+  };
+
+  const removeEntry = (index: number) => {
+    setEntries(prev => {
+      URL.revokeObjectURL(prev[index].preview);
+      return prev.filter((_, i) => i !== index);
+    });
+  };
+
+  const updateCaption = (index: number, value: string) => {
+    setEntries(prev => prev.map((e, i) => i === index ? { ...e, caption: value } : e));
   };
 
   const handleSubmit = async () => {
-    if (!file || submitting) return;
+    if (!entries.length || submitting) return;
     setSubmitting(true);
-    const res = await submitGameScreenshot(slug, file, caption.trim() || undefined);
+    const total = entries.length;
+    setUploadProgress({ done: 0, total });
+    let successCount = 0;
+    let failCount = 0;
+
+    for (let i = 0; i < entries.length; i++) {
+      const entry = entries[i];
+      setEntries(prev => prev.map((e, idx) => idx === i ? { ...e, status: 'uploading' } : e));
+      try {
+        const res = await submitGameScreenshot(slug, entry.file, entry.caption.trim() || undefined);
+        if (res.success) {
+          successCount++;
+          setEntries(prev => prev.map((e, idx) => idx === i ? { ...e, status: 'done' } : e));
+        } else {
+          failCount++;
+          setEntries(prev => prev.map((e, idx) => idx === i ? { ...e, status: 'error', errorMsg: res.error || 'Upload failed' } : e));
+        }
+      } catch {
+        failCount++;
+        setEntries(prev => prev.map((e, idx) => idx === i ? { ...e, status: 'error', errorMsg: 'Network error' } : e));
+      }
+      setUploadProgress({ done: i + 1, total });
+    }
+
     setSubmitting(false);
-    if (res.success) {
-      addToast({ type: 'success', message: res.message || 'Screenshot submitted for review' });
-      handleFile(null);
-      setCaption('');
-      if (fileInputRef.current) fileInputRef.current.value = '';
-      onSubmitted();
+
+    if (successCount > 0) {
+      addToast({
+        type: 'success',
+        message: failCount > 0
+          ? `${successCount} screenshot${successCount > 1 ? 's' : ''} submitted, ${failCount} failed`
+          : `${successCount} screenshot${successCount > 1 ? 's' : ''} submitted for review`,
+      });
+      // Remove successfully uploaded entries after a short delay
+      setTimeout(() => {
+        setEntries(prev => prev.filter(e => e.status !== 'done'));
+        setUploadProgress(null);
+        onSubmitted();
+      }, 1200);
     } else {
-      addToast({ type: 'error', message: res.error || 'Failed to submit screenshot' });
+      addToast({ type: 'error', message: 'All uploads failed. Please try again.' });
+      setUploadProgress(null);
     }
   };
+
+  const hasPending = entries.some(e => e.status === 'pending');
 
   return (
     <div className="p-4 bg-bg-surface border border-accent/30 rounded-xl">
       <h3 className="text-sm font-bold text-text-primary mb-3 flex items-center gap-2">
         <Camera className="w-4 h-4 text-accent" />
         Submit a screenshot
+        <span className="ml-auto text-xs font-normal text-text-muted">
+          {entries.length}/{MAX_FILES} images
+        </span>
       </h3>
 
-      {preview ? (
-        <div className="relative mb-3 rounded-lg overflow-hidden border border-border aspect-video">
-          <Image src={preview} alt="Preview" fill unoptimized className="object-cover" sizes="(max-width: 768px) 100vw, 500px" />
-          <button
-            onClick={() => handleFile(null)}
-            className="absolute top-2 right-2 p-1.5 rounded-full bg-black/60 text-white hover:bg-black/80 transition-colors"
-            aria-label="Remove selected image"
-          >
-            <X className="w-4 h-4" />
-          </button>
-        </div>
-      ) : (
+      {/* Drop Zone — always visible if below limit */}
+      {entries.length < MAX_FILES && (
         <div
           onClick={() => fileInputRef.current?.click()}
           onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
@@ -82,40 +144,116 @@ export function SubmitForm({ slug, onSubmitted }: { slug: string; onSubmitted: (
           onDrop={handleDrop}
           role="button"
           tabIndex={0}
-          className={`w-full mb-3 flex flex-col items-center justify-center gap-2 py-8 border-2 border-dashed rounded-lg cursor-pointer transition-colors ${
+          className={`w-full mb-3 flex flex-col items-center justify-center gap-2 py-6 border-2 border-dashed rounded-lg cursor-pointer transition-colors ${
             isDragging
               ? 'border-accent text-accent bg-accent/5'
               : 'border-border text-text-muted hover:border-accent/50 hover:text-accent'
           }`}
         >
           <Upload className="w-6 h-6" />
-          <span className="text-sm font-medium">Drag & drop an image, or click to choose</span>
+          <span className="text-sm font-medium">
+            {entries.length === 0
+              ? 'Drag & drop images, or click to choose'
+              : 'Add more images'}
+          </span>
+          <span className="text-xs text-text-muted">Up to {MAX_FILES} images at once</span>
         </div>
       )}
+
       <input
         ref={fileInputRef}
         type="file"
         accept="image/*"
+        multiple
         className="hidden"
-        onChange={(e) => handleFile(e.target.files?.[0] ?? null)}
+        onChange={handleFileInput}
       />
 
-      <input
-        value={caption}
-        onChange={(e) => setCaption(e.target.value)}
-        maxLength={300}
-        placeholder="Add a caption (optional)"
-        className="w-full px-3 py-2 bg-bg-primary border border-border rounded-lg text-sm text-text-primary outline-none focus:border-accent placeholder:text-text-muted"
-      />
-      <div className="flex items-center justify-between mt-2">
-        <span className="text-xs text-text-muted">Submissions are reviewed by moderators before appearing publicly.</span>
+      {/* Preview grid */}
+      {entries.length > 0 && (
+        <div className="flex flex-col gap-3 mb-3">
+          {entries.map((entry, i) => (
+            <div
+              key={entry.preview}
+              className={`flex gap-3 p-2 rounded-lg border transition-colors ${
+                entry.status === 'done' ? 'border-green-500/40 bg-green-500/5' :
+                entry.status === 'error' ? 'border-red-500/40 bg-red-500/5' :
+                entry.status === 'uploading' ? 'border-accent/40 bg-accent/5' :
+                'border-border bg-bg-primary'
+              }`}
+            >
+              {/* Thumbnail */}
+              <div className="relative shrink-0 w-24 h-16 rounded-md overflow-hidden bg-black">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={entry.preview} alt={`Preview ${i + 1}`} className="w-full h-full object-cover" />
+                {/* Status overlay */}
+                {entry.status === 'uploading' && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+                    <Loader2 className="w-5 h-5 text-white animate-spin" />
+                  </div>
+                )}
+                {entry.status === 'done' && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-green-500/40">
+                    <CheckCircle2 className="w-5 h-5 text-white" />
+                  </div>
+                )}
+                {entry.status === 'error' && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-red-500/40">
+                    <AlertCircle className="w-5 h-5 text-white" />
+                  </div>
+                )}
+              </div>
+
+              {/* Caption + info */}
+              <div className="flex-1 min-w-0 flex flex-col gap-1.5 justify-center">
+                <p className="text-xs text-text-muted truncate">{entry.file.name}</p>
+                {entry.status === 'error' && (
+                  <p className="text-xs text-red-400">{entry.errorMsg}</p>
+                )}
+                {entry.status !== 'done' && entry.status !== 'error' && (
+                  <input
+                    value={entry.caption}
+                    onChange={(e) => updateCaption(i, e.target.value)}
+                    maxLength={300}
+                    placeholder="Caption (optional)"
+                    disabled={entry.status === 'uploading'}
+                    className="w-full px-2 py-1 bg-bg-primary border border-border rounded text-xs text-text-primary outline-none focus:border-accent placeholder:text-text-muted disabled:opacity-50"
+                  />
+                )}
+                {entry.status === 'done' && (
+                  <p className="text-xs text-green-400 font-medium">Submitted for review ✓</p>
+                )}
+              </div>
+
+              {/* Remove button */}
+              {entry.status !== 'uploading' && entry.status !== 'done' && (
+                <button
+                  onClick={() => removeEntry(i)}
+                  className="shrink-0 self-start p-1 rounded-full text-text-muted hover:text-red-400 hover:bg-red-500/10 transition-colors"
+                  aria-label="Remove image"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Footer */}
+      <div className="flex items-center justify-between gap-3">
+        <span className="text-xs text-text-muted">
+          {uploadProgress
+            ? `Uploading ${uploadProgress.done} of ${uploadProgress.total}…`
+            : 'Submissions are reviewed by moderators before appearing publicly.'}
+        </span>
         <button
           onClick={handleSubmit}
-          disabled={submitting || !file}
-          className="shrink-0 ml-3 px-4 py-2 bg-accent text-white rounded-lg text-sm font-semibold disabled:opacity-50 hover:bg-[#00A5E0]/90 transition-colors flex items-center gap-2"
+          disabled={submitting || !hasPending}
+          className="shrink-0 px-4 py-2 bg-accent text-white rounded-lg text-sm font-semibold disabled:opacity-50 hover:bg-[#00A5E0]/90 transition-colors flex items-center gap-2"
         >
           {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
-          Submit
+          {entries.length > 1 ? `Submit ${entries.filter(e => e.status === 'pending').length} screenshot${entries.filter(e => e.status === 'pending').length !== 1 ? 's' : ''}` : 'Submit'}
         </button>
       </div>
     </div>

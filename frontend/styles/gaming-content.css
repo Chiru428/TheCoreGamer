@@ -44,6 +44,48 @@
   color: var(--gc-text);
 }
 
+/* ── Prose width constraint ────────────────────────────────────────────────
+   Narrows only text-flow elements to 700px for optimal reading comfort.
+   Images, galleries, gaming blocks, tables, and embeds remain full-width.
+   ──────────────────────────────────────────────────────────────────────── */
+.gaming-content > p,
+.gaming-content > h1,
+.gaming-content > h2,
+.gaming-content > h3,
+.gaming-content > h4,
+.gaming-content > h5,
+.gaming-content > h6,
+.gaming-content > ul,
+.gaming-content > ol,
+.gaming-content > li,
+.gaming-content > blockquote,
+.gaming-content > pre,
+.gaming-content > .code-block-wrapper,
+.gaming-content > hr,
+.gaming-content > .table-wrapper,
+/* Mod guide pages: prose elements are inside section.mod-guide-section */
+.gaming-content .mod-guide-section > p,
+.gaming-content .mod-guide-section > h1,
+.gaming-content .mod-guide-section > h2,
+.gaming-content .mod-guide-section > h3,
+.gaming-content .mod-guide-section > h4,
+.gaming-content .mod-guide-section > h5,
+.gaming-content .mod-guide-section > h6,
+.gaming-content .mod-guide-section > ul,
+.gaming-content .mod-guide-section > ol,
+.gaming-content .mod-guide-section > li,
+.gaming-content .mod-guide-section > blockquote,
+.gaming-content .mod-guide-section > pre,
+.gaming-content .mod-guide-section > .code-block-wrapper,
+.gaming-content .mod-guide-section > hr,
+.gaming-content .mod-guide-section > .table-wrapper {
+  max-width: 700px;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+
+
 .gaming-content h1 {
   font-family: var(--gc-font-heading);
   font-size: 2.5rem;

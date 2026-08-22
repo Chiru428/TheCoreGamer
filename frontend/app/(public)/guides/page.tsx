@@ -89,6 +89,7 @@ export default async function GuidesPage({ searchParams }: Props) {
         <GuidesListClient
           initialGuides={articles}
           totalPages={mainRes.pagination?.totalPages || 1}
+          initialFacets={facetsRes?.data || null}
           sidebarChildren={
             <>
               {/* Popular guides */}

@@ -247,7 +247,7 @@ export default async function GenericArticlePage({ params, expectedPath }: { par
               <ReadingManager slug={slug} wordCount={wc} />
               <div className="-mx-5 md:mx-0">
                 <ArticleBody
-                  content={(article.contentType === 'GUIDE' && article.guideType === 'Mod Guide') ? (article.modGuide?.sections || []) : article.content}
+                  content={article.content}
                   slug={slug}
                 />
               </div>

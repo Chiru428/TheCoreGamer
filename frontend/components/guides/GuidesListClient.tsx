@@ -13,14 +13,19 @@ import Skeleton, { FilterBoxSkeleton } from '@/components/ui/Skeleton';
 interface Props {
   initialGuides: Article[];
   totalPages: number;
+  initialFacets?: Record<string, { value: string; count: number }[]> | null;
   sidebarChildren?: React.ReactNode;
 }
 
-export default function GuidesListClient({ initialGuides, totalPages: initialTotalPages, sidebarChildren }: Props) {
+export default function GuidesListClient({ initialGuides, totalPages: initialTotalPages, initialFacets, sidebarChildren }: Props) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-  const { hits, facets, isLoading, totalHits, totalPages: algoliaTotalPages, page: algoliaPage } = useAlgoliaArticles({ searchParams, contentType: 'GUIDE' });
+  const { hits, facets: algoliaFacets, isLoading, totalHits, totalPages: algoliaTotalPages, page: algoliaPage } = useAlgoliaArticles({ searchParams, contentType: 'GUIDE' });
+
+  // Use Algolia facets when available (they're real-time per query), otherwise fall back
+  // to server-fetched DB facets which are always accurate (deleted articles don't appear)
+  const facets = Object.keys(algoliaFacets).length > 0 ? algoliaFacets : (initialFacets ?? {});
 
   const filterKeys = ['type', 'platform', 'genre', 'game', 'tag'];
   

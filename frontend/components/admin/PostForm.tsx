@@ -145,21 +145,7 @@ export default function PostForm({
   const { addToast } = useUIStore();
   const { user } = useAuthStore();
   const initialContent = useMemo(() => {
-    const modSections = (initialData?.modGuide as any)?.sections;
-    const isModGuide =
-      (initialData?.contentType === "GUIDE" && initialData?.guideType === "Mod Guide") || (type === "GUIDE" && initialData?.guideType === "Mod Guide");
-
-    if (isModGuide) {
-      if (modSections && modSections.length > 0) return modSections;
-      // If converting from standard post to Mod Guide for the first time,
-      // move the body into the primary "Main Content" tab.
-      if (initialData?.content) {
-        return [
-          { id: "main", label: "Main Content", content: initialData.content },
-        ];
-      }
-      return null;
-    }
+    // All article types (including mod guides) now use article.content directly.
     return initialData?.content || null;
   }, [initialData, type]);
 
@@ -494,12 +480,8 @@ export default function PostForm({
     const payload = {
       ...data,
       slug: data.slug?.trim() || undefined,
-      content:
-        (currentType === "GUIDE" && data.guideType === "Mod Guide") ? { type: "doc", content: [] } : content,
-      sections:
-        (currentType === "GUIDE" && data.guideType === "Mod Guide")
-          ? (content as any[])?.map(({ id: _id, ...s }: any) => s)
-          : undefined,
+      content,
+      sections: undefined,
       prerequisiteList:
         (currentType === "GUIDE" && data.guideType === "Mod Guide")
           ? prereqs
@@ -785,7 +767,6 @@ export default function PostForm({
                 <RichTextEditor
                   content={content as Record<string, unknown>}
                   onChange={setContent}
-                  multiSection={currentType === "GUIDE" && watch("guideType") === "Mod Guide"}
                   postTitle={watch("title")}
                   slug={slug}
                   pendingDraftId={pendingDraftId}

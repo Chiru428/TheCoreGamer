@@ -122,14 +122,14 @@ export default function ScreenshotsTab({ slug, game }: { slug: string; game: Gam
       <div className="mb-8">
         <div className="section-title-bar">Official Artwork{officialItems.length > 0 ? ` (${officialItems.length})` : ''}</div>
         {isLoading ? (
-          <div className={styles.masonry}>
+          <div className={styles.masonryColumns}>
             {Array.from({ length: 3 }).map((_, i) => (
               <div key={i} className={`shimmer ${styles.masonryItem}`} style={{ height: 160 + (i % 3) * 60 }} />
             ))}
           </div>
         ) : officialItems.length > 0 ? (
           <>
-            <div className={styles.masonry}>
+            <div className={styles.masonryColumns}>
               {officialItems.slice(0, officialLimit).map((shot, i) => (
                 <div key={shot.id} className={styles.masonryItem} onClick={() => setOfficialIndex(i)}>
                   <Image

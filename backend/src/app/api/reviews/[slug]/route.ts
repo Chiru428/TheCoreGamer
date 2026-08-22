@@ -305,11 +305,15 @@ export async function PUT(request: Request, { params }: RouteParams) {
       // in sync — without this, edits to a published review's title/slug leave
       // stale data behind until the next publish/approve action.
       await addSearchIndexJob({ articleId: updated.id, action: "index" });
+      // Bust facets cache so filter counts reflect newly published article
+      try { await cacheDeletePattern("reviews:facets:*"); } catch (err) {}
     } else if (article.status === "PUBLISHED") {
       // Was published, now isn't (e.g. unpublished/archived) — drop it from the index.
       await addSearchIndexJob({ articleId: updated.id, action: "remove" });
       await purgeArticle(article.slug, "REVIEW");
       await revalidateArticlePaths(article.slug, "REVIEW");
+      // Bust facets cache so filter counts reflect the removal
+      try { await cacheDeletePattern("reviews:facets:*"); } catch (err) {}
     }
 
     return NextResponse.json(successResponse(serializeArticle(updated), "Review updated"));
@@ -334,8 +338,17 @@ export async function DELETE(request: Request, { params }: RouteParams) {
 
     await withRetry(() => prisma.article.delete({ where: { id: article.id } }));
 
+    // Remove from Algolia search index so filter facet counts stay accurate
+    try {
+      await addSearchIndexJob({ articleId: article.id, action: "remove" });
+    } catch (err) {
+      logger.warn({ err }, "Algolia de-index job failed to enqueue");
+    }
+
     try {
       await cacheDeletePattern("reviews:list:*");
+      // Bust the facets cache so filter counts reflect the deletion immediately
+      await cacheDeletePattern("reviews:facets:*");
     } catch (err) {
       logger.warn({ err }, "Cache invalidation failed");
     }

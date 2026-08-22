@@ -899,23 +899,44 @@
 
 /* ════ SCREENSHOTS TAB ════════════════════════════════════════════════ */
 
+/* Community screenshots: CSS Grid — fills left→right so no empty column gaps */
 .masonry {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  align-items: start;
+}
+
+@media (min-width: 640px) {
+  .masonry { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .masonry { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Official artwork: CSS columns — true masonry that handles varying aspect
+   ratios (portrait, landscape, square) naturally without forced equal heights */
+.masonryColumns {
   columns: 1;
   column-gap: 12px;
 }
 
 @media (min-width: 640px) {
-  .masonry { columns: 2; }
+  .masonryColumns { columns: 2; }
 }
 
 @media (min-width: 1024px) {
-  .masonry { columns: 3; }
+  .masonryColumns { columns: 3; }
+}
+
+.masonryColumns .masonryItem {
+  break-inside: avoid;
+  margin-bottom: 12px;
 }
 
 .masonryItem {
   position: relative;
-  break-inside: avoid;
-  margin-bottom: 12px;
   border: 1px solid var(--border);
   background: var(--bg3);
   cursor: zoom-in;

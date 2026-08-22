@@ -55,6 +55,7 @@ export default async function ReviewsListingPage({ searchParams }: Props) {
       <ReviewsListClient 
         initialReviews={articles} 
         totalPages={mainRes.pagination?.totalPages || 1}
+        initialFacets={facetsRes?.data || null}
         sidebarChildren={
           <>
             {/* Popular Reviews panel */}

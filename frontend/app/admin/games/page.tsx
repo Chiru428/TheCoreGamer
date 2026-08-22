@@ -13,7 +13,7 @@ import ImageUploader from '@/components/admin/ImageUploader';
 import IgdbSearch, { type IgdbGameData, type IgdbWebsiteLinks } from '@/components/admin/IgdbSearch';
 import { revalidateGamePage } from '@/app/admin/actions';
 import { formatRelativeDate } from '@/lib/utils';
-import { Plus, Pencil, Trash2, ExternalLink, RefreshCw, Check, X, Camera, Copy } from 'lucide-react';
+import { Plus, Pencil, Trash2, ExternalLink, RefreshCw, Check, X, Camera, Copy, ZoomIn } from 'lucide-react';
 
 // --- Screenshot moderation queue ----------------------------------------------
 
@@ -24,6 +24,7 @@ function ScreenshotModerationQueue() {
   const [isBulkLoading, setIsBulkLoading] = useState(false);
   const [screenshotToDelete, setScreenshotToDelete] = useState<string | null>(null);
   const [isDeletingBulk, setIsDeletingBulk] = useState(false);
+  const [lightboxScreenshot, setLightboxScreenshot] = useState<any | null>(null);
 
   const { data, mutate, isLoading } = useSWR(
     ['admin-screenshots', statusFilter],
@@ -155,14 +156,24 @@ function ScreenshotModerationQueue() {
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
           {!isLoading && screenshots.map((s: any) => (
             <div key={s.id} className={`rounded-none bg-bg-surface border overflow-hidden transition-all ${selectedIds.has(s.id) ? 'border-accent ring-1 ring-accent' : 'border-border'}`}>
-              <div className="relative w-full aspect-[2/3] bg-bg-elevated group cursor-pointer" onClick={() => toggleSelect(s.id)}>
-                <Image src={s.imageUrl} alt={s.caption || 'Screenshot'} fill unoptimized className="object-cover group-hover:brightness-90 transition-all" />
-                <div className="absolute top-3 left-3 z-10">
-                  <input 
-                    type="checkbox" 
+              {/* Image — click opens lightbox; checkbox click selects for bulk */}
+              <div
+                className="relative w-full aspect-video bg-bg-elevated group cursor-zoom-in"
+                onClick={() => setLightboxScreenshot(s)}
+              >
+                <Image src={s.imageUrl} alt={s.caption || 'Screenshot'} fill unoptimized className="object-cover group-hover:brightness-75 transition-all" />
+                {/* Zoom hint on hover */}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div className="w-9 h-9 rounded-full flex items-center justify-center bg-black/50 border border-white/20 opacity-0 scale-90 transition-all duration-200 group-hover:opacity-100 group-hover:scale-100">
+                    <ZoomIn className="w-4 h-4 text-white" />
+                  </div>
+                </div>
+                {/* Checkbox — stop propagation so it doesn't open lightbox */}
+                <div className="absolute top-3 left-3 z-10" onClick={(e) => e.stopPropagation()}>
+                  <input
+                    type="checkbox"
                     checked={selectedIds.has(s.id)}
                     onChange={() => toggleSelect(s.id)}
-                    onClick={(e) => e.stopPropagation()}
                     className="w-5 h-5 rounded border-white/20 bg-black/50 text-accent focus:ring-accent/50 shadow-sm cursor-pointer"
                   />
                 </div>
@@ -196,6 +207,92 @@ function ScreenshotModerationQueue() {
             <div className="col-span-full p-8 text-center text-text-muted rounded-xl bg-bg-surface border border-border">No screenshots to moderate</div>
           )}
         </div>
+
+      {/* ── Full-screen image lightbox ─────────────────────────────── */}
+      {lightboxScreenshot && (
+        <div
+          className="fixed inset-0 z-[9999] bg-black/95 flex flex-col items-center justify-center p-4"
+          onClick={() => setLightboxScreenshot(null)}
+        >
+          {/* Close button */}
+          <button
+            onClick={() => setLightboxScreenshot(null)}
+            className="absolute top-5 right-5 p-2.5 rounded-full bg-white/10 hover:bg-red-600 text-white transition-all border border-white/10"
+            aria-label="Close preview"
+          >
+            <X className="w-6 h-6" />
+          </button>
+
+          {/* Image */}
+          <div
+            className="relative w-full max-w-5xl max-h-[75vh] flex items-center justify-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={lightboxScreenshot.imageUrl}
+              alt={lightboxScreenshot.caption || 'Screenshot'}
+              className="max-w-full max-h-[75vh] object-contain shadow-2xl"
+            />
+          </div>
+
+          {/* Info + actions bar */}
+          <div
+            className="mt-4 w-full max-w-5xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white/5 border border-white/10 rounded-xl px-5 py-4 backdrop-blur-sm"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="min-w-0">
+              <p className="text-white font-semibold text-sm truncate">{lightboxScreenshot.Game?.title || 'Unknown game'}</p>
+              <p className="text-white/50 text-xs mt-0.5">
+                by {lightboxScreenshot.User?.displayName || 'Unknown'} · {formatRelativeDate(lightboxScreenshot.createdAt)}
+              </p>
+              {lightboxScreenshot.caption && (
+                <p className="text-white/70 text-xs mt-1.5 italic">"{lightboxScreenshot.caption}"</p>
+              )}
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full ${
+                lightboxScreenshot.status === 'APPROVED'
+                  ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
+                  : 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
+              }`}>
+                {lightboxScreenshot.status}
+              </span>
+              {lightboxScreenshot.status !== 'APPROVED' && (
+                <button
+                  onClick={async () => {
+                    await handleAction(lightboxScreenshot.id, 'APPROVED');
+                    setLightboxScreenshot((prev: any) => prev ? { ...prev, status: 'APPROVED' } : null);
+                  }}
+                  className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-emerald-500 text-white text-xs font-bold hover:bg-emerald-600 transition-colors"
+                >
+                  <Check className="w-3.5 h-3.5" /> Approve
+                </button>
+              )}
+              {lightboxScreenshot.status !== 'PENDING' && (
+                <button
+                  onClick={async () => {
+                    await handleAction(lightboxScreenshot.id, 'PENDING');
+                    setLightboxScreenshot((prev: any) => prev ? { ...prev, status: 'PENDING' } : null);
+                  }}
+                  className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-yellow-500/20 text-yellow-400 text-xs font-bold hover:bg-yellow-500/30 border border-yellow-500/30 transition-colors"
+                >
+                  <X className="w-3.5 h-3.5" /> Unapprove
+                </button>
+              )}
+              <button
+                onClick={() => {
+                  setScreenshotToDelete(lightboxScreenshot.id);
+                  setLightboxScreenshot(null);
+                }}
+                className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-red-500/20 text-red-400 text-xs font-bold hover:bg-red-500/30 border border-red-500/30 transition-colors"
+              >
+                <Trash2 className="w-3.5 h-3.5" /> Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       </div>
 
       <Modal isOpen={!!screenshotToDelete || isDeletingBulk} onClose={() => { setScreenshotToDelete(null); setIsDeletingBulk(false); }} title={isDeletingBulk ? "Delete Screenshots" : "Delete Screenshot"} size="sm">

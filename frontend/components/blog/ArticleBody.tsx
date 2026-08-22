@@ -900,8 +900,13 @@ function renderNodes(node: TipTapNode | any, idCounts: Map<string, number>, docH
     // Multi-section mod guide: array of { id, label, content }
     return node.map(section => {
       const sectionHtml = renderNodes(section.content, idCounts, docHeadings);
+      // Skip the label heading for the default "Main" section — it's a
+      // placeholder name that shouldn't appear as a visible heading.
+      const labelHtml = section.label && section.label.trim().toLowerCase() !== 'main'
+        ? `<h2 class="section-label">${section.label}</h2>`
+        : '';
       return `<section class="mod-guide-section" id="section-${section.id}">
-        <h2 class="section-label">${section.label}</h2>
+        ${labelHtml}
         ${sectionHtml}
       </section>`;
     }).join('');

@@ -112,23 +112,49 @@ export default function GameHero({ game, slug, trailerUrl, youtubeId, youtubeSea
           </div>
 
           {/* Details below cover */}
-          <div className="px-4 mt-5 flex flex-col gap-3">
+          <div className="mt-5 flex flex-col gap-3 w-[300px] mx-auto">
             {/* Title */}
             <h1 className="text-[30px] font-black font-display leading-tight break-words text-center" title={game.title}>
               {game.title}
             </h1>
 
-            {/* Metadata rows — grid layout for aligned values */}
-            <div className="grid grid-cols-[120px_1fr] gap-y-2 gap-x-2 text-[16px] text-white/70 w-[330px] mx-auto">
-              {displayReleaseStatus && <><span>Status:</span> <strong className="text-white font-bold">{displayReleaseStatus}</strong></>}
-              {releaseDateText && <><span>Release Date:</span> <strong className="text-white font-bold">{releaseDateText}</strong></>}
-              {game.platforms && game.platforms.length > 0 && <><span>System:</span> <strong className="text-white font-bold">{game.platforms.join(', ')}</strong></>}
-              {game.publisher && <><span>Publisher:</span> <strong className="text-white font-bold">{game.publisher}</strong></>}
-              {game.developer && <><span>Developer:</span> <strong className="text-white font-bold">{game.developer}</strong></>}
+            {/* Metadata rows — stacked centered on mobile */}
+            <div className="flex flex-col items-center gap-3 text-[16px] text-white/70 w-full">
+              {displayReleaseStatus && (
+                <div className="flex flex-col items-center gap-0.5">
+                  <span className="text-[12px] font-bold uppercase tracking-widest text-white/50">Status</span>
+                  <strong className="text-white font-bold text-center">{displayReleaseStatus}</strong>
+                </div>
+              )}
+              {releaseDateText && (
+                <div className="flex flex-col items-center gap-0.5">
+                  <span className="text-[12px] font-bold uppercase tracking-widest text-white/50">Release Date</span>
+                  <strong className="text-white font-bold text-center">{releaseDateText}</strong>
+                </div>
+              )}
+              {game.platforms && game.platforms.length > 0 && (
+                <div className="flex flex-col items-center gap-0.5">
+                  <span className="text-[12px] font-bold uppercase tracking-widest text-white/50">System</span>
+                  <strong className="text-white font-bold text-center">{game.platforms.join(', ')}</strong>
+                </div>
+              )}
+              {game.publisher && (
+                <div className="flex flex-col items-center gap-0.5">
+                  <span className="text-[12px] font-bold uppercase tracking-widest text-white/50">Publisher</span>
+                  <strong className="text-white font-bold text-center">{game.publisher}</strong>
+                </div>
+              )}
+              {game.developer && (
+                <div className="flex flex-col items-center gap-0.5">
+                  <span className="text-[12px] font-bold uppercase tracking-widest text-white/50">Developer</span>
+                  <strong className="text-white font-bold text-center">{game.developer}</strong>
+                </div>
+              )}
             </div>
 
+
             {/* Rating Box — same styling as desktop */}
-            <div className="bg-[#183973] py-4 px-6 flex items-center gap-6 shadow-sm justify-between mt-1 w-[330px] mx-auto">
+            <div className="bg-[#183973] py-4 px-6 flex items-center gap-6 shadow-sm justify-between mt-1 w-full">
               <div className="flex flex-col gap-1.5">
                 <span className="text-[20px] font-bold text-white mb-1">Game Rating</span>
                 <span className="text-[16px] text-white/80">Our Review: <strong className="text-white">{game.GameReview?.[0]?.reviewScore ? `${game.GameReview[0].reviewScore}/10` : 'N/A'}</strong></span>
