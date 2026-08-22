@@ -113,23 +113,32 @@ export async function recordLoginDevice(
   });
 
   let location: string | undefined = existing?.location || undefined;
-  // If no existing device, or IP changed, or location is missing/wrong, fetch it
+  // Re-resolve location if: new device, IP changed, or location is missing/wrong.
   if (!existing || existing.ipAddress !== anonymizedIp || !existing.location || existing.location === "United States") {
     try {
-      const vercelCountry = req.headers.get("x-vercel-ip-country");
-      if (vercelCountry) {
-        // We could use a map, but let's just fall back to ip-api for full names
-        // Actually, if we're doing fetch, let's just use ip-api.
-      }
-      const res = await fetch(`http://ip-api.com/json/${realClientIp}?fields=country`);
-      if (res.ok) {
-        const data = await res.json();
-        if (data.country) {
-          location = data.country;
+      // Primary: Vercel injects the real client country at the edge (free, instant,
+      // no outbound network call needed). Value is an ISO 3166-1 alpha-2 code (e.g. "IN").
+      const vercelCountryCode = req.headers.get("x-vercel-ip-country");
+      if (vercelCountryCode) {
+        // Convert ISO code → full country name via the Intl API (built-in, no deps).
+        try {
+          const displayName = new Intl.DisplayNames(["en"], { type: "region" });
+          location = displayName.of(vercelCountryCode) ?? vercelCountryCode;
+        } catch {
+          location = vercelCountryCode; // fallback to code if Intl fails
+        }
+      } else {
+        // Fallback: ip-api.com (HTTPS) when not running on Vercel (e.g. local dev).
+        const res = await fetch(`https://ip-api.com/json/${realClientIp}?fields=country`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.country) {
+            location = data.country;
+          }
         }
       }
     } catch (e) {
-      // Ignore network errors for geoip
+      // Ignore network errors for geoip — location stays as-is
     }
   }
 
