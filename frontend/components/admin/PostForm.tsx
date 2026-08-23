@@ -623,11 +623,11 @@ export default function PostForm({
       });
       await revalidatePublicPages(slug, data.contentType);
       const redirectMap: Record<string, string> = {
-        GUIDE: "/admin/posts?contentType=GUIDE",
+        GUIDE: "/admin/guides",
         REVIEW: "/admin/reviews",
         NEWS: "/admin/news",
         DEAL: "/admin/deals",
-        FEATURE: "/admin/features",
+        FEATURE: "/admin/news",
         OPINION: "/admin/opinions",
         LISTICLE: "/admin/listicles",
       };

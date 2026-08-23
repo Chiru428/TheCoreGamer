@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { cn } from '@/lib/utils';
 import hub from '@/components/games/hub/gamehub.module.css';
 
@@ -167,23 +168,23 @@ export function FilterBoxSkeleton() {
 
 export function ReviewDetailSkeleton() {
   return (
-    <article className="max-w-[1280px] mx-auto px-4 lg:px-0 py-4 md:py-6 relative min-h-screen">
-      {/* Featured image at the top */}
+    <article className="max-w-[1280px] mx-auto px-4 lg:px-0 pt-0 pb-6 md:pt-3 relative">
+      {/* Full-width featured image */}
       <div className="w-full">
-        <Skeleton className="w-full aspect-video rounded-none mt-4 md:mt-6 mb-2 border-0" />
-        <div className="flex items-center justify-between gap-4 mt-1 mb-2 px-4 lg:px-0">
-          <Skeleton className="h-3 w-32" />
-          <Skeleton className="h-3 w-48 hidden md:block" />
+        <Skeleton className="w-full aspect-video rounded-none border-0" />
+        <div className="flex items-center justify-between gap-4 mt-1 mb-[6px] px-4 lg:px-0">
+          <Skeleton className="h-3 w-28" />
+          <Skeleton className="h-3 w-52 hidden md:block" />
         </div>
       </div>
 
       <div className="max-w-[945.6px] lg:pl-[68px] relative">
-        {/* Sticky left-gap action bar */}
+        {/* Sticky left action bar — 3 square icon buttons */}
         <div className="hidden lg:flex flex-col absolute left-0 top-0 bottom-[1000px] w-[44px] pt-4">
-          <div className="sticky top-24 flex flex-col gap-4 items-center">
-            <Skeleton className="h-8 w-8 rounded-full" />
-            <Skeleton className="h-8 w-8 rounded-full" />
-            <Skeleton className="h-8 w-8 rounded-full" />
+          <div className="sticky top-24 flex flex-col items-center">
+            <Skeleton className="h-[44px] w-[44px] rounded-none" />
+            <Skeleton className="h-[44px] w-[44px] rounded-none mt-0" />
+            <Skeleton className="h-[44px] w-[44px] rounded-none mt-0" />
           </div>
         </div>
 
@@ -194,37 +195,115 @@ export function ReviewDetailSkeleton() {
               className="flex flex-col lg:flex-row gap-8"
               style={{ width: 'calc(100% + max(0px, min(100vw, 1280px) - 945.6px))' }}
             >
-              <div className="w-full lg:w-[849.6px] lg:shrink-0 lg:border-r lg:border-border lg:pr-8">
-                {/* Hero */}
+              {/* Article body — matches w-full lg:w-[849.6px] lg:border-r-2 */}
+              <div className="w-full lg:w-[849.6px] lg:shrink-0 lg:border-r-2 lg:border-border lg:pr-8">
+
+                {/* Hero: breadcrumb + title */}
                 <div className="mt-1 md:mt-2 mb-3 md:mb-6">
                   <div className="mb-2">
-                    <Skeleton className="h-4 w-32" />
+                    <Skeleton className="h-4 w-24" />
                   </div>
-                  <Skeleton className="h-9 md:h-10 w-3/4 mb-3" />
-                  
-                  {/* Author / Date line */}
-                  <div className="flex items-center gap-3 mb-6">
-                    <Skeleton className="h-4 w-64" />
+                  <Skeleton className="h-8 md:h-10 w-4/5 mb-1" />
+                  <Skeleton className="h-8 md:h-10 w-3/5 mb-3" />
+                </div>
+
+                {/* Byline */}
+                <div className="mb-2 md:mb-4">
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <Skeleton className="h-8 w-8 rounded-full" />
+                    <Skeleton className="h-4 w-32" />
+                    <Skeleton className="h-4 w-24 hidden md:block" />
+                    <Skeleton className="h-4 w-20 hidden md:block" />
                   </div>
                 </div>
 
-                {/* Score Box (Desktop) */}
-                <Skeleton className="hidden lg:block h-64 w-full rounded-lg mb-8" />
+                {/* Game Info Card — px-7 py-5 bg-[var(--bg2)] */}
+                <div className="w-full px-7 py-5 bg-bg-surface mb-4 md:mb-8">
+                  <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-center md:items-start">
+                    {/* Game info table: 2-col label/value grid */}
+                    <div className="flex-1 w-full min-w-0 flex flex-col justify-center py-2">
+                      <Skeleton className="h-6 w-40 mb-5" />
+                      <div className="grid grid-cols-[90px_1fr] md:grid-cols-[110px_1fr] gap-x-6 gap-y-3">
+                        {Array.from({ length: 5 }).map((_, i) => (
+                          <Fragment key={i}>
+                            <Skeleton className="h-4 w-20" />
+                            <Skeleton className="h-4 w-28" />
+                          </Fragment>
+                        ))}
+                      </div>
+                    </div>
+                    {/* Hexagon score badge — desktop only */}
+                    <div className="hidden md:flex flex-col items-center justify-center shrink-0 md:mr-12 md:self-center gap-3">
+                      <Skeleton
+                        className="shrink-0"
+                        style={{
+                          width: '126px', height: '145px',
+                          clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
+                          borderRadius: 0,
+                        }}
+                      />
+                      <Skeleton className="h-5 w-20" />
+                    </div>
+                  </div>
+                </div>
 
-                {/* Paragraphs */}
-                <div className="space-y-6">
-                  {Array.from({ length: 6 }).map((_, p) => (
-                    <Skeleton key={p} className="h-24 w-full rounded-lg" />
-                  ))}
+                {/* Article body content — varied heights like real paragraphs */}
+                <div className="space-y-5">
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-[92%]" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-4/5" />
+                  {/* Inline image block */}
+                  <Skeleton className="w-full aspect-video rounded-none" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-[88%]" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-3/4" />
+                  {/* H2 heading */}
+                  <Skeleton className="h-6 w-56 mt-4" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-[95%]" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-[80%]" />
+                  {/* Another image */}
+                  <Skeleton className="w-full aspect-video rounded-none" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-[90%]" />
+                </div>
+
+                {/* Bottom action bar */}
+                <div className="flex flex-row flex-wrap items-center justify-between gap-4 mt-10">
+                  <div className="flex gap-2">
+                    {Array.from({ length: 3 }).map((_, i) => (
+                      <Skeleton key={i} className="h-9 w-9 rounded-full" />
+                    ))}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Skeleton className="h-9 w-24 rounded-full" />
+                    <Skeleton className="h-9 w-9 rounded-full" />
+                    <Skeleton className="h-9 w-9 rounded-full" />
+                  </div>
                 </div>
               </div>
 
-              {/* Right Sidebar */}
-              <aside className="w-full lg:flex-1 flex flex-col gap-8 hidden lg:flex">
-                <Skeleton className="w-full h-[250px] rounded-lg" />
-                <div className="space-y-4">
+              {/* Right Sidebar — hidden on mobile, visible lg+ */}
+              <aside className="w-full lg:flex-1 flex-col hidden lg:flex">
+                {/* Ad slot */}
+                <div className="sticky top-24 w-full">
+                  <Skeleton className="w-full h-[250px] rounded-none" />
+                </div>
+                {/* Recommendations */}
+                <div className="mt-6 space-y-3">
+                  <Skeleton className="h-5 w-36 mb-4" />
                   {Array.from({ length: 4 }).map((_, i) => (
-                    <SidebarItemSkeleton key={i} />
+                    <div key={i} className="flex gap-3 items-center">
+                      <Skeleton className="h-16 w-24 rounded-none shrink-0" />
+                      <div className="flex-1 space-y-2">
+                        <Skeleton className="h-4 w-full" />
+                        <Skeleton className="h-3 w-3/4" />
+                        <Skeleton className="h-3 w-1/2" />
+                      </div>
+                    </div>
                   ))}
                 </div>
               </aside>
@@ -238,7 +317,114 @@ export function ReviewDetailSkeleton() {
 
 export function DetailSkeleton() {
   return (
-    <ReviewDetailSkeleton />
+    <article className="max-w-[1280px] mx-auto px-4 lg:px-0 pt-0 pb-6 md:py-6 relative">
+      {/* Full-width featured image */}
+      <div className="w-full">
+        <Skeleton className="w-full aspect-video rounded-none border-0" />
+      </div>
+
+      <div className="max-w-[945.6px] lg:pl-[68px] relative">
+        {/* Sticky left action bar — 3 square icon buttons */}
+        <div className="hidden lg:flex flex-col absolute left-0 top-0 bottom-[1000px] w-[44px] pt-4">
+          <div className="sticky top-24 flex flex-col items-center">
+            <Skeleton className="h-[44px] w-[44px] rounded-none" />
+            <Skeleton className="h-[44px] w-[44px] rounded-none" />
+            <Skeleton className="h-[44px] w-[44px] rounded-none" />
+          </div>
+        </div>
+
+        <div className="flex flex-col xl:flex-row gap-8 xl:gap-12">
+          <div className="flex-1 min-w-0">
+            <div
+              className="flex flex-col lg:flex-row gap-8"
+              style={{ width: 'calc(100% + max(0px, min(100vw, 1280px) - 945.6px))' }}
+            >
+              {/* Main column — matches lg:w-[849.6px] lg:border-r-2 */}
+              <div className="w-full lg:w-[849.6px] lg:shrink-0 lg:border-r-2 lg:border-border lg:pr-8">
+
+                {/* Breadcrumb + Title */}
+                <div className="mt-1 md:mt-2 mb-3 md:mb-6">
+                  <div className="mb-2">
+                    <Skeleton className="h-4 w-24" />
+                  </div>
+                  <Skeleton className="h-8 md:h-10 w-4/5 mb-1" />
+                  <Skeleton className="h-8 md:h-10 w-3/5 mb-3" />
+                </div>
+
+                {/* Byline */}
+                <div className="mb-4 md:mb-6">
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <Skeleton className="h-8 w-8 rounded-full" />
+                    <Skeleton className="h-4 w-28" />
+                    <Skeleton className="h-4 w-20 hidden md:block" />
+                    <Skeleton className="h-4 w-16 hidden md:block" />
+                  </div>
+                </div>
+
+                {/* Article body — realistic paragraph lines */}
+                <div className="space-y-5">
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-[94%]" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-4/5" />
+                  <Skeleton className="h-4 w-full" />
+                  {/* Inline image */}
+                  <Skeleton className="w-full aspect-video rounded-none" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-[88%]" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-3/4" />
+                  {/* H2 */}
+                  <Skeleton className="h-6 w-52 mt-4" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-[96%]" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-[82%]" />
+                  {/* Second image */}
+                  <Skeleton className="w-full aspect-video rounded-none" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-[91%]" />
+                </div>
+
+                {/* Bottom action bar */}
+                <div className="flex flex-row flex-wrap items-center justify-between gap-4 mt-10">
+                  <div className="flex gap-2">
+                    {Array.from({ length: 3 }).map((_, i) => (
+                      <Skeleton key={i} className="h-9 w-9 rounded-full" />
+                    ))}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Skeleton className="h-9 w-24 rounded-full" />
+                    <Skeleton className="h-9 w-9 rounded-full" />
+                    <Skeleton className="h-9 w-9 rounded-full" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Sidebar */}
+              <aside className="w-full lg:flex-1 flex-col hidden lg:flex">
+                <div className="sticky top-24 w-full">
+                  <Skeleton className="w-full h-[250px] rounded-none" />
+                </div>
+                <div className="mt-6 space-y-3">
+                  <Skeleton className="h-5 w-36 mb-4" />
+                  {Array.from({ length: 4 }).map((_, i) => (
+                    <div key={i} className="flex gap-3 items-center">
+                      <Skeleton className="h-16 w-24 rounded-none shrink-0" />
+                      <div className="flex-1 space-y-2">
+                        <Skeleton className="h-4 w-full" />
+                        <Skeleton className="h-3 w-3/4" />
+                        <Skeleton className="h-3 w-1/2" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </aside>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
   );
 }
 
@@ -267,8 +453,8 @@ export function AdminDashboardSkeleton() {
       {/* Header & Quick Actions */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div className="space-y-2">
-          <Skeleton className="h-8 w-48" />
-          <Skeleton className="h-4 w-64" />
+          <Skeleton className="h-9 w-44" />
+          <Skeleton className="h-4 w-72" />
         </div>
         <div className="flex gap-3">
           <Skeleton className="h-10 w-28 rounded-xl" />
@@ -276,57 +462,177 @@ export function AdminDashboardSkeleton() {
         </div>
       </div>
 
-      {/* Primary Metrics Bento Grid */}
+      {/* Primary Metrics Bento Grid — 4 cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {Array.from({ length: 4 }).map((_, i) => (
           <div key={i} className="rounded-2xl p-6 bg-bg-surface/50 border border-white/5 space-y-4">
-            <div className="flex justify-between items-start">
-              <Skeleton className="h-4 w-24" />
+            <div className="flex justify-between items-start mb-4">
+              <Skeleton className="h-4 w-32" />
               <Skeleton className="h-10 w-10 rounded-xl" />
             </div>
-            <Skeleton className="h-10 w-16" />
+            <Skeleton className="h-10 w-20" />
           </div>
         ))}
       </div>
 
-      {/* Main Charts & Analytics Area */}
+      {/* Row 1: Traffic Chart (2/3) + Top Contributors (1/3) */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="rounded-2xl p-6 lg:col-span-2 bg-bg-surface/50 border border-white/5">
+        {/* Traffic Overview */}
+        <div className="rounded-2xl p-6 lg:col-span-2 bg-bg-surface/50 border border-white/5 flex flex-col">
           <div className="flex justify-between items-center mb-6">
             <div className="space-y-2">
-              <Skeleton className="h-6 w-32" />
-              <Skeleton className="h-4 w-48" />
+              <Skeleton className="h-6 w-36" />
+              <Skeleton className="h-4 w-52" />
             </div>
-            <div className="flex gap-4">
-              <div className="hidden sm:flex flex-col items-end space-y-2">
-                <Skeleton className="h-3 w-20" />
-                <Skeleton className="h-6 w-16" />
+            <div className="hidden sm:flex gap-4">
+              <div className="flex flex-col items-end space-y-1">
+                <Skeleton className="h-3 w-24" />
+                <Skeleton className="h-6 w-14" />
               </div>
-              <div className="hidden sm:flex flex-col items-end space-y-2">
+              <div className="flex flex-col items-end space-y-1">
                 <Skeleton className="h-3 w-20" />
-                <Skeleton className="h-6 w-16" />
+                <Skeleton className="h-6 w-10" />
               </div>
             </div>
           </div>
-          <Skeleton className="w-full h-[300px] rounded-xl" />
+          {/* Matches: flex-1 flex flex-col justify-end min-h-[200px] */}
+          <div className="flex-1 flex flex-col justify-end min-h-[200px]">
+            <Skeleton className="w-full h-[180px] rounded-xl" />
+          </div>
         </div>
-        
-        {/* Top Authors Area */}
-        <div className="rounded-2xl p-6 bg-bg-surface/50 border border-white/5 space-y-6">
-          <Skeleton className="h-6 w-32" />
-          <div className="space-y-4">
+
+        {/* Top Contributors */}
+        <div className="rounded-2xl p-6 bg-bg-surface/50 border border-white/5 flex flex-col">
+          <div className="flex items-center gap-2 mb-6">
+            <Skeleton className="h-5 w-5 rounded" />
+            <Skeleton className="h-6 w-36" />
+          </div>
+          <div className="flex-1 space-y-4 min-h-[200px]">
             {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="flex items-center justify-between">
+              <div key={i} className="flex items-center justify-between p-3 rounded-xl bg-bg-elevated/30 border border-white/5">
                 <div className="flex items-center gap-3">
-                  <Skeleton className="h-10 w-10 rounded-full" />
-                  <div className="space-y-2">
-                    <Skeleton className="h-4 w-24" />
-                    <Skeleton className="h-3 w-16" />
+                  <Skeleton className="h-9 w-9 rounded-full flex-shrink-0" />
+                  <div className="space-y-1.5">
+                    <Skeleton className="h-4 w-28" />
+                    <Skeleton className="h-3 w-12" />
                   </div>
                 </div>
-                <Skeleton className="h-5 w-8 rounded" />
+                <div className="text-right space-y-1">
+                  <Skeleton className="h-5 w-8" />
+                  <Skeleton className="h-3 w-10" />
+                </div>
               </div>
             ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Row 2: Recent Activity (2/3) + Right column stack (1/3) */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Recent Activity */}
+        <div className="rounded-2xl p-6 lg:col-span-2 bg-bg-surface/50 border border-white/5">
+          <div className="flex items-center gap-2 mb-6">
+            <Skeleton className="h-5 w-5 rounded" />
+            <Skeleton className="h-6 w-36" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Latest Posts */}
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <Skeleton className="h-3 w-3 rounded" />
+                <Skeleton className="h-3 w-24" />
+              </div>
+              <div className="space-y-3">
+                {Array.from({ length: 3 }).map((_, i) => (
+                  <div key={i} className="p-3.5 rounded-xl bg-bg-elevated/20 border border-white/5 space-y-2">
+                    <Skeleton className="h-4 w-full" />
+                    <div className="flex justify-between">
+                      <Skeleton className="h-3 w-24" />
+                      <Skeleton className="h-3 w-16" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {/* Latest Comments */}
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <Skeleton className="h-3 w-3 rounded" />
+                <Skeleton className="h-3 w-28" />
+              </div>
+              <div className="space-y-3">
+                {Array.from({ length: 3 }).map((_, i) => (
+                  <div key={i} className="p-3.5 rounded-xl bg-bg-elevated/20 border border-white/5 space-y-2">
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-4/5" />
+                    <div className="flex justify-between">
+                      <Skeleton className="h-3 w-20" />
+                      <Skeleton className="h-3 w-14" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Right column: Content Distribution + Top Affiliate Stores + System Health */}
+        <div className="space-y-6 flex flex-col">
+          {/* Content Distribution */}
+          <div className="rounded-2xl p-6 bg-bg-surface/50 border border-white/5">
+            <div className="flex items-center gap-2 mb-4">
+              <Skeleton className="h-5 w-5 rounded" />
+              <Skeleton className="h-5 w-40" />
+            </div>
+            <div className="space-y-4">
+              <Skeleton className="w-full h-2 rounded-full" />
+              <div className="grid grid-cols-2 gap-y-2 gap-x-4">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <div key={i} className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Skeleton className="w-1.5 h-1.5 rounded-full" />
+                      <Skeleton className="h-3 w-16" />
+                    </div>
+                    <Skeleton className="h-3 w-6" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Top Affiliate Stores */}
+          <div className="rounded-2xl p-6 bg-bg-surface/50 border border-white/5 flex-1">
+            <div className="flex items-center gap-2 mb-6">
+              <Skeleton className="h-5 w-5 rounded" />
+              <Skeleton className="h-5 w-36" />
+            </div>
+            <div className="space-y-3">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className="flex justify-between items-center p-3 rounded-xl bg-bg-elevated/20 border border-white/5">
+                  <div className="flex items-center gap-2">
+                    <Skeleton className="w-2 h-2 rounded-full" />
+                    <Skeleton className="h-4 w-20" />
+                  </div>
+                  <Skeleton className="h-4 w-16" />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* System Health */}
+          <div className="rounded-2xl p-6 bg-bg-surface/50 border border-white/5">
+            <div className="flex items-center gap-2 mb-4">
+              <Skeleton className="h-5 w-5 rounded" />
+              <Skeleton className="h-5 w-32" />
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="p-3 rounded-xl bg-bg-elevated/20 border border-white/5 space-y-1.5">
+                  <Skeleton className="h-3 w-20" />
+                  <Skeleton className="h-4 w-12" />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

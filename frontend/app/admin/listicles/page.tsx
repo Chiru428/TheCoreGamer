@@ -27,7 +27,7 @@ function AdminListiclesList() {
   const [deletingSlug, setDeletingSlug] = useState<string | null>(null);
   const searchParams = useSearchParams();
   const page = Number(searchParams.get('page')) || 1;
-  const { data, mutate, isLoading } = useSWR(['admin-reviews', statusFilter, search, isAuthorRole, page], ([_, status, q, mine, p]) => fetchAdminPosts({ contentType: 'LISTICLE', status: status || undefined, search: q || undefined, sort: 'updated', mine, page: Number(p), limit: 50 }));
+  const { data, mutate, isLoading } = useSWR(['admin-listicles', statusFilter, search, isAuthorRole, page], ([_, status, q, mine, p]) => fetchAdminPosts({ contentType: 'LISTICLE', status: status || undefined, search: q || undefined, sort: 'updated', mine, page: Number(p), limit: 50 }));
   const articles = data?.data || [];
 
   const handleDelete = async (slug: string) => {
@@ -119,7 +119,7 @@ function AdminListiclesList() {
                     </td>
                     <td className="px-4 py-3 text-center text-text-muted">
                       <div className="flex items-center justify-center gap-1">
-                        <Link href={`/listicles/${a.slug}`} className="p-1.5 rounded hover:bg-bg-elevated text-text-dim hover:text-text-primary"><Eye className="w-4 h-4" /></Link>
+                        <Link href={`/lists/${a.slug}`} className="p-1.5 rounded hover:bg-bg-elevated text-text-dim hover:text-text-primary"><Eye className="w-4 h-4" /></Link>
                         <Link href={`/admin/posts/${a.slug}/edit`} className="p-1.5 rounded hover:bg-bg-elevated text-text-dim hover:text-accent-light"><Edit className="w-4 h-4" /></Link>
                         {(isAdminRole || (isAuthorRole && !a.deletionRequestedAt && (a.status === 'DRAFT' || a.status === 'IN_REVIEW'))) && (
                           <button onClick={() => handleDelete(a.slug)} disabled={deletingSlug === a.slug} className="p-1.5 rounded hover:bg-red-500/10 text-text-dim hover:text-red-400 disabled:opacity-50">

@@ -27,7 +27,7 @@ function AdminNewsList() {
   const [deletingSlug, setDeletingSlug] = useState<string | null>(null);
   const searchParams = useSearchParams();
   const page = Number(searchParams.get('page')) || 1;
-  const { data, mutate, isLoading } = useSWR(['admin-reviews', statusFilter, search, isAuthorRole, page], ([_, status, q, mine, p]) => fetchAdminPosts({ contentType: 'NEWS', status: status || undefined, search: q || undefined, sort: 'updated', mine, page: Number(p), limit: 50 }));
+  const { data, mutate, isLoading } = useSWR(['admin-news', statusFilter, search, isAuthorRole, page], ([_, status, q, mine, p]) => fetchAdminPosts({ contentType: 'NEWS', status: status || undefined, search: q || undefined, sort: 'updated', mine, page: Number(p), limit: 50 }));
   const articles = data?.data || [];
 
   const handleDelete = async (slug: string) => {

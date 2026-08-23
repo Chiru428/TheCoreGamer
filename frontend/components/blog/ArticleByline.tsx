@@ -172,7 +172,7 @@ export default function ArticleByline({ authorName, authorUsername, publishedAt,
   );
 
   return (
-    <div className="mb-2 pb-2 md:mb-6 md:pb-4 border-b border-border">
+    <div className="mb-2 pb-2 md:mb-6 md:pb-4 border-b-2 border-border">
       {/* Desktop / tablet layout */}
       <div className="hidden md:flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap items-center gap-2 text-text-muted">
