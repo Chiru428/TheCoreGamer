@@ -48,10 +48,21 @@ export async function requireRole(
   let session: any = null;
   if (request) {
     const { getToken } = await import("next-auth/jwt");
+    const cookieHeader = request.headers.get("cookie") || "";
+    let cookieName = "authjs.session-token";
+    if (cookieHeader.includes("__Secure-authjs.session-token=")) {
+      cookieName = "__Secure-authjs.session-token";
+    } else if (cookieHeader.includes("__Secure-next-auth.session-token=")) {
+      cookieName = "__Secure-next-auth.session-token";
+    } else if (cookieHeader.includes("next-auth.session-token=")) {
+      cookieName = "next-auth.session-token";
+    }
+
     const token = await getToken({
       req: request as any,
       secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET,
       secureCookie: process.env.NODE_ENV === "production" && !process.env.NEXTAUTH_URL?.startsWith("http://localhost"),
+      cookieName,
     });
     if (token) session = { user: token };
   }
@@ -84,10 +95,21 @@ export async function requireAuth(request?: Request) {
   let session: any = null;
   if (request) {
     const { getToken } = await import("next-auth/jwt");
+    const cookieHeader = request.headers.get("cookie") || "";
+    let cookieName = "authjs.session-token";
+    if (cookieHeader.includes("__Secure-authjs.session-token=")) {
+      cookieName = "__Secure-authjs.session-token";
+    } else if (cookieHeader.includes("__Secure-next-auth.session-token=")) {
+      cookieName = "__Secure-next-auth.session-token";
+    } else if (cookieHeader.includes("next-auth.session-token=")) {
+      cookieName = "next-auth.session-token";
+    }
+
     const token = await getToken({
       req: request as any,
       secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET,
       secureCookie: process.env.NODE_ENV === "production" && !process.env.NEXTAUTH_URL?.startsWith("http://localhost"),
+      cookieName,
     });
     if (token) session = { user: token };
   }

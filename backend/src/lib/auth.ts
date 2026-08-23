@@ -204,10 +204,22 @@ export const auth = async (...args: any[]) => {
       const req = new NextRequest(process.env.NEXTAUTH_URL || "http://localhost:3001", {
         headers: reqHeaders,
       });
+
+      const cookieHeader = reqHeaders.get("cookie") || "";
+      let cookieName = "authjs.session-token";
+      if (cookieHeader.includes("__Secure-authjs.session-token=")) {
+        cookieName = "__Secure-authjs.session-token";
+      } else if (cookieHeader.includes("__Secure-next-auth.session-token=")) {
+        cookieName = "__Secure-next-auth.session-token";
+      } else if (cookieHeader.includes("next-auth.session-token=")) {
+        cookieName = "next-auth.session-token";
+      }
+
       const token = await getToken({
         req,
         secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET,
         secureCookie: process.env.NODE_ENV === "production",
+        cookieName,
       });
       if (token) return { user: token } as any;
     } catch (e) {
