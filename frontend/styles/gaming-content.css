@@ -39,7 +39,7 @@
 
 .gaming-content {
   font-family: var(--gc-font-body) !important;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.85;
   color: var(--gc-text);
 }
@@ -97,7 +97,7 @@
 
 .gaming-content h2 {
   font-family: var(--gc-font-heading);
-  font-size: 1.8rem;
+  font-size: 24px !important;
   font-weight: 600;
   line-height: 1.2;
   margin: 2rem 0 1rem;
@@ -147,6 +147,7 @@
 }
 
 .gaming-content p {
+  font-size: 18px !important;
   margin-bottom: 0.75rem;
   margin-top: 0;
   line-height: 1.7;

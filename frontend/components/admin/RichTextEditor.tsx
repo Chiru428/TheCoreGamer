@@ -3721,7 +3721,7 @@ const EDITOR_CSS = `
   letter-spacing: -0.02em; line-height: 1.15; margin: 0 0 1.25rem;
 }
 .gaming-prose-wrapper .ProseMirror h2 {
-  font-family: "Rajdhani", sans-serif; font-size: 1.8rem; font-weight: 600;
+  font-family: "Rajdhani", sans-serif; font-size: 24px; font-weight: 600;
   letter-spacing: -0.01em; line-height: 1.2; margin: 2rem 0 1rem;
 }
 .gaming-prose-wrapper .ProseMirror h3 {
@@ -3741,7 +3741,7 @@ const EDITOR_CSS = `
   font-family: "Rajdhani", sans-serif; font-size: 0.8rem; font-weight: 500;
   line-height: 1.35; margin: 0.75rem 0 0.35rem; opacity: 0.75;
 }
-.gaming-prose-wrapper .ProseMirror p { margin-bottom: 1.25rem; }
+.gaming-prose-wrapper .ProseMirror p { font-size: 18px; margin-bottom: 1.25rem; }
 /* Fix #9: Empty paragraphs were display:none in the editor — authors pressing Enter to space
    content would see nothing happen, which is very confusing. Now they show a subtle placeholder
    so the cursor target is visible. The frontend (gaming-content.css) still hides them. */
