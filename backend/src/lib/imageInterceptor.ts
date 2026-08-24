@@ -20,7 +20,7 @@ function getExtension(url: string): string {
 }
 
 /**
- * Intercepts game payload data. If it contains steam hotlinked images,
+ * Intercepts game payload data. If it contains external hotlinked images (like IGDB or Steam),
  * downloads them and uploads to Cloudinary automatically, preserving quality.
  * Mutates `data` in-place with the new Cloudinary URLs.
  * 
@@ -28,12 +28,16 @@ function getExtension(url: string): string {
  * @param gameId The ID of the game to use for the Cloudinary folder
  * @returns boolean indicating whether any images were intercepted and updated
  */
-export async function processSteamImagesForGame(data: any, gameId: string): Promise<boolean> {
+export async function processExternalImagesForGame(data: any, gameId: string): Promise<boolean> {
   let updated = false;
 
   try {
-    if (data.coverImageUrl && data.coverImageUrl.includes("steamstatic.com")) {
-      logger.info(`[Steam Interceptor] Auto-uploading cover image for game ${gameId}`);
+    if (
+      data.coverImageUrl &&
+      data.coverImageUrl.startsWith("http") &&
+      !data.coverImageUrl.includes("res.cloudinary.com")
+    ) {
+      logger.info(`[Image Interceptor] Auto-uploading cover image for game ${gameId}`);
       const buffer = await downloadImageToBuffer(data.coverImageUrl);
       const format = getExtension(data.coverImageUrl);
       const result = await uploadToCloudinary(buffer, {
@@ -44,8 +48,12 @@ export async function processSteamImagesForGame(data: any, gameId: string): Prom
       updated = true;
     }
 
-    if (data.backgroundImageUrl && data.backgroundImageUrl.includes("steamstatic.com")) {
-      logger.info(`[Steam Interceptor] Auto-uploading background image for game ${gameId}`);
+    if (
+      data.backgroundImageUrl &&
+      data.backgroundImageUrl.startsWith("http") &&
+      !data.backgroundImageUrl.includes("res.cloudinary.com")
+    ) {
+      logger.info(`[Image Interceptor] Auto-uploading background image for game ${gameId}`);
       const buffer = await downloadImageToBuffer(data.backgroundImageUrl);
       const format = getExtension(data.backgroundImageUrl);
       const result = await uploadToCloudinary(buffer, {
@@ -56,7 +64,7 @@ export async function processSteamImagesForGame(data: any, gameId: string): Prom
       updated = true;
     }
   } catch (err) {
-    logger.error({ err }, `[Steam Interceptor] Failed to intercept images for game ${gameId}`);
+    logger.error({ err }, `[Image Interceptor] Failed to intercept images for game ${gameId}`);
     // If it fails, we swallow the error so it doesn't break the game creation/update completely, 
     // it will just save the hotlink as a fallback.
   }

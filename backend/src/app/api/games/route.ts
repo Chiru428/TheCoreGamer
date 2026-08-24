@@ -14,7 +14,7 @@ import { CACHE_TTL } from "@/lib/constants";
 import { csrfProtection } from "@/middleware/csrfProtection";
 import { syncGameToAlgolia, syncGame } from "@/workers/algolia.worker";
 import { triggerFrontendRevalidation } from "@/lib/revalidate";
-import { processSteamImagesForGame } from "@/lib/steamImageInterceptor";
+import { processExternalImagesForGame } from "@/lib/imageInterceptor";
 
 export async function GET(request: NextRequest) {
   try {
@@ -142,8 +142,8 @@ export async function POST(request: Request) {
       })
     );
 
-    const hasSteamImages = await processSteamImagesForGame(data, game.id);
-    if (hasSteamImages) {
+    const hasExternalImages = await processExternalImagesForGame(data, game.id);
+    if (hasExternalImages) {
       await prisma.game.update({
         where: { id: game.id },
         data: {
