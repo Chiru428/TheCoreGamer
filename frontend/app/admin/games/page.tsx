@@ -483,6 +483,7 @@ export default function AdminGamesPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
   const [isLoadingEdit, setIsLoadingEdit] = useState<string | null>(null);
   const [isFetchingIgdb, setIsFetchingIgdb] = useState(false);
   const [igdbId, setIgdbId] = useState<number | null>(null);
@@ -667,8 +668,8 @@ export default function AdminGamesPage() {
     } finally { setIsSaving(false); }
   };
 
-  const handleDeleteClick = async (g: any) => {
-    if (!window.confirm(`Delete "${g.title}"?`)) return;
+  const executeDelete = async (g: any) => {
+    setConfirmDeleteId(null);
     setDeletingId(g.id);
     const res = await deleteGame(g.slug || g.id);
     setDeletingId(null);
@@ -743,20 +744,39 @@ export default function AdminGamesPage() {
                   ? <img src={g.coverImageUrl} alt={g.title} className="w-full aspect-[2/3] object-cover" />
                   : <div className="w-full aspect-[2/3] bg-gradient-to-br from-accent/20 to-accent-green/20 flex items-center justify-center text-3xl">🎮</div>
                 }
-                <div className="p-3 flex items-start justify-between">
-                  <div className="min-w-0 flex-1">
-                    <p className="text-sm font-medium text-text-primary" title={g.title}>{g.title}</p>
-                    {g.createdAt && (
-                      <p className="text-[10px] text-text-dim mt-0.5" title="Added to library">
-                        {new Date(g.createdAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })} IST
-                      </p>
-                    )}
+                <div className="p-3 flex flex-col gap-2">
+                  <div className="min-w-0 pb-1">
+                    <p className="text-sm font-medium text-text-primary leading-tight" title={g.title}>{g.title}</p>
                   </div>
-                  <div className="flex gap-1 shrink-0 ml-2 mt-0.5">
-                    <button onClick={() => handleEditClick(g)} className="text-text-muted hover:text-accent transition-colors p-1"><Pencil className="w-4 h-4" /></button>
-                    <button onClick={() => handleDeleteClick(g)} disabled={deletingId === g.id} className="text-text-muted hover:text-danger transition-colors p-1 disabled:opacity-50">
-                      {deletingId === g.id ? <Spinner className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
-                    </button>
+                  <div className="flex justify-between items-center shrink-0 border-t border-border/30 pt-2 mt-auto">
+                    {g.createdAt ? (
+                      <div className="flex flex-col" title="Added to library">
+                        <span className="text-xs font-medium text-text-primary/90">
+                          {new Date(g.createdAt).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata', day: '2-digit', month: '2-digit', year: 'numeric' })}
+                        </span>
+                        <span className="text-xs text-text-dim">
+                          {new Date(g.createdAt).toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit' })} IST
+                        </span>
+                      </div>
+                    ) : <div />}
+                    <div className="flex gap-1">
+                      <button onClick={() => handleEditClick(g)} className="text-text-muted hover:text-accent transition-colors p-1"><Pencil className="w-4 h-4" /></button>
+                      <div className="relative">
+                        <button onClick={() => setConfirmDeleteId(confirmDeleteId === g.id ? null : g.id)} disabled={deletingId === g.id} className="text-text-muted hover:text-danger transition-colors p-1 disabled:opacity-50">
+                          {deletingId === g.id ? <Spinner className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
+                        </button>
+                        
+                        {confirmDeleteId === g.id && (
+                          <div className="absolute right-0 bottom-full mb-2 bg-bg-surface border border-border rounded-lg shadow-xl p-3 z-50 min-w-[200px]">
+                            <p className="text-sm font-medium text-text-primary mb-3">Delete "{g.title}"?</p>
+                            <div className="flex gap-2 justify-end">
+                              <button onClick={() => setConfirmDeleteId(null)} className="px-3 py-1.5 text-xs font-medium text-text-muted hover:text-text-primary bg-bg-surface-hover rounded-md transition-colors">Cancel</button>
+                              <button onClick={() => executeDelete(g)} className="px-3 py-1.5 text-xs font-medium text-white bg-danger hover:bg-danger/90 rounded-md transition-colors">Delete</button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
