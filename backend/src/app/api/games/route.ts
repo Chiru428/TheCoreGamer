@@ -70,6 +70,7 @@ export async function GET(request: NextRequest) {
     if (sort === "top-rated") orderBy = { totalRating: { sort: "desc", nulls: "last" } };
     if (sort === "popular") orderBy = { totalRatingCount: { sort: "desc", nulls: "last" } };
     if (sort === "coming-soon") orderBy = { releaseDate: { sort: "asc", nulls: "last" } };
+    if (sort === "created") orderBy = { createdAt: "desc" };
 
     const cacheKey = `games:list:p${page}:l${limit}:q${search || ""}:g${genres || ""}:s${sort || ""}:pub${publisher || ""}:col${collection || ""}:f${fields || ""}:maxd${maxReleaseDate || ""}`;
 

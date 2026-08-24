@@ -463,8 +463,8 @@ export default function AdminGamesPage() {
   }, [searchQuery]);
 
   const { data: response, mutate, isLoading } = useSWR(
-    ['admin-games', debouncedQuery], 
-    () => fetchGames({ limit: 100, search: debouncedQuery })
+    ['admin-games', debouncedQuery, 'created'], 
+    () => fetchGames({ limit: 100, search: debouncedQuery, sort: 'created' })
   );
   const data = response?.data || [];
   const totalCount = response?.pagination?.total ?? data.length;
@@ -745,10 +745,10 @@ export default function AdminGamesPage() {
                 }
                 <div className="p-3 flex items-start justify-between">
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm font-medium text-text-primary truncate" title={g.title}>{g.title}</p>
+                    <p className="text-sm font-medium text-text-primary" title={g.title}>{g.title}</p>
                     {g.createdAt && (
                       <p className="text-[10px] text-text-dim mt-0.5" title="Added to library">
-                        {new Date(g.createdAt).toLocaleDateString()}
+                        {new Date(g.createdAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })} IST
                       </p>
                     )}
                   </div>
