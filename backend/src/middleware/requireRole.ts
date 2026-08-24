@@ -61,7 +61,8 @@ export async function requireRole(
     const token = await getToken({
       req: request as any,
       secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET,
-      secureCookie: process.env.NODE_ENV === "production" && !process.env.NEXTAUTH_URL?.startsWith("http://localhost"),
+      secureCookie: cookieName.startsWith("__Secure-"),
+      salt: cookieName,
       cookieName,
     });
     if (token) session = { user: token };
@@ -108,7 +109,8 @@ export async function requireAuth(request?: Request) {
     const token = await getToken({
       req: request as any,
       secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET,
-      secureCookie: process.env.NODE_ENV === "production" && !process.env.NEXTAUTH_URL?.startsWith("http://localhost"),
+      secureCookie: cookieName.startsWith("__Secure-"),
+      salt: cookieName,
       cookieName,
     });
     if (token) session = { user: token };

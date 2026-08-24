@@ -218,7 +218,8 @@ export const auth = async (...args: any[]) => {
       const token = await getToken({
         req,
         secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET,
-        secureCookie: process.env.NODE_ENV === "production",
+        secureCookie: cookieName.startsWith("__Secure-"),
+        salt: cookieName,
         cookieName,
       });
       if (token) return { user: token } as any;
