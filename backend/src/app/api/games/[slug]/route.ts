@@ -205,9 +205,13 @@ export async function PUT(request: Request, { params }: RouteParams) {
     }
 
     return NextResponse.json(successResponse(updated, "Game updated"));
-  } catch (err) {
+  } catch (err: any) {
+    if (err?.code === "P2002" && err?.meta?.target?.includes("title")) {
+      return NextResponse.json(errorResponse("A game with this title already exists."), { status: 400 });
+    }
+    console.error("PUT Error:", err);
     captureError(err);
-    return NextResponse.json(errorResponse("Internal server error"), { status: 500 });
+    return NextResponse.json(errorResponse(String(err) || "Internal server error"), { status: 500 });
   }
 }
 

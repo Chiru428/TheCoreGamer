@@ -178,8 +178,12 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json(successResponse(game, "Game created"), { status: 201 });
-  } catch (err) {
+  } catch (err: any) {
+    if (err?.code === "P2002" && err?.meta?.target?.includes("title")) {
+      return NextResponse.json(errorResponse("A game with this title already exists."), { status: 400 });
+    }
+    console.error("POST Error:", err);
     captureError(err);
-    return NextResponse.json(errorResponse("Internal server error"), { status: 500 });
+    return NextResponse.json(errorResponse(String(err) || "Internal server error"), { status: 500 });
   }
 }
