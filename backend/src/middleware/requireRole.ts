@@ -50,11 +50,11 @@ export async function requireRole(
     const { getToken } = await import("next-auth/jwt");
     const cookieHeader = request.headers.get("cookie") || "";
     let cookieName = "authjs.session-token";
-    if (cookieHeader.includes("__Secure-authjs.session-token=")) {
+    if (cookieHeader.includes("__Secure-authjs.session-token")) {
       cookieName = "__Secure-authjs.session-token";
-    } else if (cookieHeader.includes("__Secure-next-auth.session-token=")) {
+    } else if (cookieHeader.includes("__Secure-next-auth.session-token")) {
       cookieName = "__Secure-next-auth.session-token";
-    } else if (cookieHeader.includes("next-auth.session-token=")) {
+    } else if (cookieHeader.includes("next-auth.session-token")) {
       cookieName = "next-auth.session-token";
     }
 
@@ -97,11 +97,11 @@ export async function requireAuth(request?: Request) {
     const { getToken } = await import("next-auth/jwt");
     const cookieHeader = request.headers.get("cookie") || "";
     let cookieName = "authjs.session-token";
-    if (cookieHeader.includes("__Secure-authjs.session-token=")) {
+    if (cookieHeader.includes("__Secure-authjs.session-token")) {
       cookieName = "__Secure-authjs.session-token";
-    } else if (cookieHeader.includes("__Secure-next-auth.session-token=")) {
+    } else if (cookieHeader.includes("__Secure-next-auth.session-token")) {
       cookieName = "__Secure-next-auth.session-token";
-    } else if (cookieHeader.includes("next-auth.session-token=")) {
+    } else if (cookieHeader.includes("next-auth.session-token")) {
       cookieName = "next-auth.session-token";
     }
 
