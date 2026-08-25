@@ -24,6 +24,20 @@ export function formatDate(dateStr: string | null | undefined): string {
   });
 }
 
+/** Format a date string to a readable format with time */
+export function formatDateTime(dateStr: string | null | undefined): string {
+  if (!dateStr) return '';
+  const date = new Date(dateStr);
+  return date.toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  });
+}
+
 /** Format date relative (e.g., "2 hours ago") */
 export function formatRelativeDate(dateStr: string): string {
   const date = new Date(dateStr);

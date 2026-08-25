@@ -306,6 +306,12 @@ export const BubbleToolbar = ({ editor, addToast }: BubbleToolbarProps) => {
     const contentTypeToPath: Record<string, string> = {
       REVIEW: 'reviews',
       MOD_GUIDE: 'mod-guides',
+      NEWS: 'news',
+      GUIDE: 'guides',
+      OPINION: 'opinions',
+      LISTICLE: 'listicles',
+      DEAL: 'deals',
+      POLL: 'polls',
     };
     const path = contentTypeToPath[article.contentType] ?? 'articles';
     const href = `/${path}/${article.slug}`;
@@ -433,7 +439,7 @@ export const BubbleToolbar = ({ editor, addToast }: BubbleToolbarProps) => {
             if (!v) { setShowLinkPanel(false); setShowGameLinkPanel(false); }
             return !v;
           });
-        }} active={showArticleLinkPanel || (editor.isActive('link') && editor.getAttributes('link').href?.match(/^\/(articles|reviews|mod-guides)\//))} title="Article Link">
+        }} active={showArticleLinkPanel || (editor.isActive('link') && editor.getAttributes('link').href?.match(/^\/(articles|reviews|mod-guides|news|guides|opinions|listicles|deals|polls)\//))} title="Article Link">
           <BookOpen className="w-3.5 h-3.5" />
         </ToolBtn>
         <ToolBtn onClick={() => {

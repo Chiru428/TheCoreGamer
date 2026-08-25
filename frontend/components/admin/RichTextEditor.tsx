@@ -2938,7 +2938,13 @@ export default function RichTextEditor({
   const handleApplyArticleLink = (article: PickedArticle) => {
     const contentTypeToPath: Record<string, string> = {
       REVIEW: 'reviews',
+      MOD_GUIDE: 'mod-guides',
+      NEWS: 'news',
       GUIDE: 'guides',
+      OPINION: 'opinions',
+      LISTICLE: 'listicles',
+      DEAL: 'deals',
+      POLL: 'polls',
     };
     const path = contentTypeToPath[article.contentType] ?? 'articles';
     const href = `/${path}/${article.slug}`;

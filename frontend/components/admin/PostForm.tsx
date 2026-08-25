@@ -653,6 +653,28 @@ export default function PostForm({
               {currentStatusObj.label}
             </Badge>
           )}
+          {mode === 'edit' && initialData && (
+            <div className="flex flex-wrap items-center gap-x-4 text-[11px] text-text-muted ml-2 border-l border-border pl-4">
+              {initialData.createdAt && (
+                <div className="flex gap-1">
+                  <span className="font-semibold text-text-primary">Created:</span>
+                  <span>{new Date(initialData.createdAt as string).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })}</span>
+                </div>
+              )}
+              {initialData.publishedAt && (
+                <div className="flex gap-1">
+                  <span className="font-semibold text-text-primary">Published:</span>
+                  <span>{new Date(initialData.publishedAt as string).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })}</span>
+                </div>
+              )}
+              {initialData.updatedAt && (
+                <div className="flex gap-1">
+                  <span className="font-semibold text-text-primary">Updated:</span>
+                  <span>{new Date(initialData.updatedAt as string).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })}</span>
+                </div>
+              )}
+            </div>
+          )}
         </div>
         <div className="flex gap-2">
           <Button
@@ -750,15 +772,6 @@ export default function PostForm({
                 </p>
               )}
             </div>
-
-            {/* "Article Content" label row */}
-            <div className="px-5 pt-3 pb-2 flex items-center gap-3">
-              <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-text-dim select-none shrink-0">
-                Article Content
-              </span>
-              <div className="flex-1 h-px bg-border" />
-            </div>
-
 
 
             {/* Editor — inside card, editor handles its own border / chrome */}

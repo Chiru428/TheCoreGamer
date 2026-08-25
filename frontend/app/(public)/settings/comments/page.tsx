@@ -48,12 +48,14 @@ export default function CommentsSettingsPage() {
           {comments.map(c => {
             if (!c.article) return null;
             const contentTypeToPath: Record<string, string> = { 
-              NEWS: '/news', 
               REVIEW: '/reviews', 
-              MOD_GUIDE: '/mod-guides', 
-              WALKTHROUGH: '/articles', 
-              OPINION: '/articles', 
-              DEAL: '/deals' 
+              MOD_GUIDE: '/mod-guides',
+              NEWS: '/news',
+              GUIDE: '/guides',
+              OPINION: '/opinions',
+              LISTICLE: '/listicles',
+              DEAL: '/deals',
+              POLL: '/polls',
             };
             const link = `${contentTypeToPath[c.article.contentType] ?? '/articles'}/${c.article.slug}`;
             return (

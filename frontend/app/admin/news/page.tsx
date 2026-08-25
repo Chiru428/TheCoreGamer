@@ -9,10 +9,10 @@ import useSWR from 'swr';
 import { fetchAdminPosts } from '@/lib/api';
 import Badge from '@/components/ui/Badge';
 import { ARTICLE_STATUS_LABELS } from '@/lib/constants';
-import { formatDate } from '@/lib/utils';
-import { Plus, Edit, Eye, Trash2, Search } from 'lucide-react';
+import { formatDate, formatDateTime } from '@/lib/utils';
+import { Plus, Edit, Eye, Trash2, Search, Star } from 'lucide-react';
 import Button from '@/components/ui/Button';
-import { deletePost } from '@/lib/api';
+import { deletePost, toggleFeatured } from '@/lib/api';
 import { revalidatePublicPages } from '../actions';
 import { useAuthStore } from '@/store/authStore';
 import { useUIStore } from '@/store/uiStore';
@@ -25,10 +25,25 @@ function AdminNewsList() {
   const [statusFilter, setStatusFilter] = useState('');
   const [search, setSearch] = useState('');
   const [deletingSlug, setDeletingSlug] = useState<string | null>(null);
+  const [togglingSlug, setTogglingSlug] = useState<string | null>(null);
+  const isEditorRole = user?.role === 'EDITOR';
   const searchParams = useSearchParams();
   const page = Number(searchParams.get('page')) || 1;
-  const { data, mutate, isLoading } = useSWR(['admin-news', statusFilter, search, isAuthorRole, page], ([_, status, q, mine, p]) => fetchAdminPosts({ contentType: 'NEWS', status: status || undefined, search: q || undefined, sort: 'updated', mine, page: Number(p), limit: 50 }));
+  const { data, mutate, isLoading } = useSWR(['admin-news', statusFilter, search, isAuthorRole, page], ([_, status, q, mine, p]) => fetchAdminPosts({ contentType: 'NEWS', status: status || undefined, search: q || undefined, sort: undefined, mine, page: Number(p), limit: 50 }));
   const articles = data?.data || [];
+
+  const handleToggleFeatured = async (slug: string, current: boolean) => {
+    setTogglingSlug(slug);
+    const res = await toggleFeatured(slug, !current);
+    setTogglingSlug(null);
+    if (res.success) {
+      addToast({ type: 'success', message: 'Featured status updated' });
+      mutate();
+      await revalidatePublicPages();
+    } else {
+      addToast({ type: 'error', message: res.error || 'Failed' });
+    }
+  };
 
   const handleDelete = async (slug: string) => {
     if (!confirm('Delete this news?')) return;
@@ -92,7 +107,7 @@ function AdminNewsList() {
                   <tr key={a.id} className="hover:bg-bg-elevated/50">
                     <td className="px-4 py-3 max-w-[160px] sm:max-w-xs">
                       <div className="flex items-center gap-1.5">
-                        <span className="font-medium text-text-primary truncate">{a.title}</span>
+                        <span title={a.title} className="font-medium text-text-primary truncate">{a.title}</span>
                         {a.featured && <Badge variant="purple" size="sm" className="flex-shrink-0">Featured</Badge>}
                         {a.isBreaking && <Badge variant="danger" size="sm" className="flex-shrink-0">Breaking</Badge>}
                       </div>
@@ -110,7 +125,7 @@ function AdminNewsList() {
                       </div>
                     </td>
                     <td className="hidden md:table-cell px-4 py-3 text-text-muted whitespace-nowrap">
-                      <div>{formatDate(published)}</div>
+                      <div>{formatDateTime(published)}</div>
                       {hasBeenUpdated && (
                         <div className="text-xs text-text-dim mt-0.5">
                           Updated: {new Date(a.updatedAt!).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true })}
@@ -121,6 +136,11 @@ function AdminNewsList() {
                       <div className="flex items-center justify-center gap-1">
                         <Link href={`/news/${a.slug}`} className="p-1.5 rounded hover:bg-bg-elevated text-text-dim hover:text-text-primary"><Eye className="w-4 h-4" /></Link>
                         <Link href={`/admin/posts/${a.slug}/edit`} className="p-1.5 rounded hover:bg-bg-elevated text-text-dim hover:text-accent-light"><Edit className="w-4 h-4" /></Link>
+                        {(isAdminRole || isEditorRole) && (
+                          <button onClick={() => handleToggleFeatured(a.slug, a.featured)} disabled={togglingSlug === a.slug} className={`p-1.5 rounded hover:bg-bg-elevated ${a.featured ? 'text-accent-light' : 'text-text-dim'} disabled:opacity-50`} title={a.featured ? "Unfeature" : "Feature"}>
+                            {togglingSlug === a.slug ? <Spinner className="w-4 h-4 animate-spin" /> : <Star className={`w-4 h-4 ${a.featured ? 'fill-current' : ''}`} />}
+                          </button>
+                        )}
                         {(isAdminRole || (isAuthorRole && !a.deletionRequestedAt && (a.status === 'DRAFT' || a.status === 'IN_REVIEW'))) && (
                           <button onClick={() => handleDelete(a.slug)} disabled={deletingSlug === a.slug} className="p-1.5 rounded hover:bg-red-500/10 text-text-dim hover:text-red-400 disabled:opacity-50">
                             {deletingSlug === a.slug ? <Spinner className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}

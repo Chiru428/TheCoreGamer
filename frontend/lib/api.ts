@@ -540,6 +540,8 @@ export const fetchAdminPosts = (params?: Record<string, unknown>) => {
   if (params) Object.entries(params).forEach(([k, v]) => { if (v) sp.set(k, String(v)); });
   return apiFetch<Article[]>(`/api/posts?${sp}`, { cache: 'no-store' });
 };
+export const toggleFeatured = (slug: string, featured: boolean) => 
+  apiMutate<{ featured: boolean }>(`/api/posts/${slug}/feature`, 'PATCH', { featured });
 
 // PUSH — Admin broadcast
 /** Send a push notification broadcast to all subscribers (ADMIN only) */

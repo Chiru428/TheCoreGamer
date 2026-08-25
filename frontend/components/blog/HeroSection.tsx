@@ -157,8 +157,8 @@ export default function HeroSection({
                         </h2>
                       </div>
                     </div>
-                    {/* Small cover image, vertically centered */}
-                    <div className="relative w-[114px] h-[64px] shrink-0 overflow-hidden bg-[var(--deep,#0d0d1a)] self-center">
+                    {/* Small cover image, top aligned */}
+                    <div className="relative w-[114px] h-[64px] shrink-0 overflow-hidden bg-[var(--deep,#0d0d1a)] self-start mt-0.5">
                       {article.featuredImageUrl ? (
                         <Image quality={100} src={article.featuredImageUrl} alt={article.title} fill className="object-cover" sizes="114px" />
                       ) : (

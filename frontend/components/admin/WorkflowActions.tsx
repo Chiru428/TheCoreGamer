@@ -6,7 +6,7 @@ import { useAuthStore } from '@/store/authStore';
 import Button from '@/components/ui/Button';
 import { useUIStore } from '@/store/uiStore';
 import Modal from '@/components/ui/Modal';
-import { Send, CheckCircle, XCircle, Globe, EyeOff, Calendar, ShieldCheck, ShieldOff, Trash2, AlertOctagon } from 'lucide-react';
+import { Send, CheckCircle, XCircle, Globe, EyeOff, Calendar, ShieldCheck, ShieldOff, Trash2, AlertOctagon, RefreshCw } from 'lucide-react';
 import { validateForPublish, PublishValidationInput, ValidationCheck } from '@/lib/publish-validation';
 import { requestPostDeletion, cancelPostDeletionRequest, deletePost } from '@/lib/api';
 import PublishGate from './PublishGate';
@@ -418,14 +418,24 @@ export default function WorkflowActions({ articleSlug, contentType, currentStatu
         )}
 
         {isEditorOrAdmin && currentStatus === 'PUBLISHED' && (
-          <Button
-            onClick={() => handleAction('unpublished', 'unpublish')}
-            loading={loadingAction === 'unpublished'}
-            className="w-full gap-2 justify-center"
-            variant="outline"
-          >
-            <EyeOff className="w-4 h-4" /> Unpublish
-          </Button>
+          <>
+            <Button
+              onClick={() => handleAction('unpublished', 'unpublish')}
+              loading={loadingAction === 'unpublished'}
+              className="w-full gap-2 justify-center"
+              variant="outline"
+            >
+              <EyeOff className="w-4 h-4" /> Unpublish
+            </Button>
+            <Button
+              onClick={() => handleAction('cache synced', 'sync-cache')}
+              loading={loadingAction === 'cache synced'}
+              className="w-full gap-2 justify-center"
+              variant="outline"
+            >
+              <RefreshCw className="w-4 h-4" /> Sync Cache
+            </Button>
+          </>
         )}
       </div>
 

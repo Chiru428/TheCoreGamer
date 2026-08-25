@@ -9,10 +9,10 @@ import useSWR from 'swr';
 import { fetchAdminPosts } from '@/lib/api';
 import Badge from '@/components/ui/Badge';
 import { ARTICLE_STATUS_LABELS } from '@/lib/constants';
-import { formatDate } from '@/lib/utils';
-import { Plus, Edit, Eye, Trash2, Search } from 'lucide-react';
+import { formatDate, formatDateTime } from '@/lib/utils';
+import { Plus, Edit, Eye, Trash2, Search, Star } from 'lucide-react';
 import Button from '@/components/ui/Button';
-import { deletePost } from '@/lib/api';
+import { deletePost, toggleFeatured } from '@/lib/api';
 import { revalidatePublicPages } from '../actions';
 import { useAuthStore } from '@/store/authStore';
 import { useUIStore } from '@/store/uiStore';
@@ -25,10 +25,25 @@ function AdminGuidesList() {
   const [statusFilter, setStatusFilter] = useState('');
   const [search, setSearch] = useState('');
   const [deletingSlug, setDeletingSlug] = useState<string | null>(null);
+  const [togglingSlug, setTogglingSlug] = useState<string | null>(null);
+  const isEditorRole = user?.role === 'EDITOR';
   const searchParams = useSearchParams();
   const page = Number(searchParams.get('page')) || 1;
-  const { data, mutate, isLoading } = useSWR(['admin-guides', statusFilter, search, isAuthorRole, page], ([_, status, q, mine, p]) => fetchAdminPosts({ contentType: 'GUIDE', status: status || undefined, search: q || undefined, sort: 'updated', mine, page: Number(p), limit: 50 }));
+  const { data, mutate, isLoading } = useSWR(['admin-guides', statusFilter, search, isAuthorRole, page], ([_, status, q, mine, p]) => fetchAdminPosts({ contentType: 'GUIDE', status: status || undefined, search: q || undefined, sort: undefined, mine, page: Number(p), limit: 50 }));
   const articles = data?.data || [];
+
+  const handleToggleFeatured = async (slug: string, current: boolean) => {
+    setTogglingSlug(slug);
+    const res = await toggleFeatured(slug, !current);
+    setTogglingSlug(null);
+    if (res.success) {
+      addToast({ type: 'success', message: 'Featured status updated' });
+      mutate();
+      await revalidatePublicPages();
+    } else {
+      addToast({ type: 'error', message: res.error || 'Failed' });
+    }
+  };
 
   const handleDelete = async (slug: string) => {
     if (!confirm('Delete this guide?')) return;
@@ -91,7 +106,7 @@ function AdminGuidesList() {
                   <tr key={a.id} className="hover:bg-bg-elevated/50">
                     <td className="px-4 py-3 max-w-[160px] sm:max-w-xs">
                       <div className="flex items-center gap-1.5">
-                        <span className="font-medium text-text-primary truncate">{a.title}</span>
+                        <span title={a.title} className="font-medium text-text-primary truncate">{a.title}</span>
                         {a.featured && <Badge variant="purple" size="sm" className="flex-shrink-0">Featured</Badge>}
                         {a.isBreaking && <Badge variant="danger" size="sm" className="flex-shrink-0">Breaking</Badge>}
                       </div>
@@ -105,7 +120,7 @@ function AdminGuidesList() {
                     </td>
                     <td className="hidden md:table-cell px-4 py-3">
                       <div className="flex flex-col text-xs text-text-muted">
-                        <span>{formatDate(published)}</span>
+                        <span>{formatDateTime(published)}</span>
                         {hasBeenUpdated && <span>(Updated {formatDate(a.updatedAt!)})</span>}
                       </div>
                     </td>
