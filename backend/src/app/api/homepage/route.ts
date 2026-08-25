@@ -75,7 +75,7 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    let featured, breaking, latest, news, guides, reviews, popular, deals, listicles, opinions, homepagePoll1, homepagePoll2;
+    let featured: any, breaking: any, latest: any, news: any, guides: any, reviews: any, popular: any, deals: any, listicles: any, opinions: any, homepagePoll1: any, homepagePoll2: any;
     await withRetry(async () => {
       featured = await prisma.article.findMany({
         where: { status: "PUBLISHED", featured: true },
