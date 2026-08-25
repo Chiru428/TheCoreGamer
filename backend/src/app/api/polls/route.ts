@@ -65,17 +65,17 @@ export async function GET(request: NextRequest) {
     // For each poll, find articles that embed it inline in their content JSON
     // (separate from the poll's own optional `articleId` FK) so the admin list
     // can flag polls created from an inline-poll block in an article.
-    const inlineArticlesByPoll = await withRetry(() =>
-      Promise.all(
-        polls.map((p) =>
-          prisma.article.findMany({
-            where: { content: { path: [], string_contains: p.id } },
-            select: { id: true, title: true, slug: true, contentType: true },
-            take: 3,
-          })
-        )
-      )
-    );
+    const inlineArticlesByPoll: any[] = [];
+    for (const p of polls) {
+      const articles = await withRetry(() =>
+        prisma.article.findMany({
+          where: { content: { path: [], string_contains: p.id } },
+          select: { id: true, title: true, slug: true, contentType: true },
+          take: 3,
+        })
+      );
+      inlineArticlesByPoll.push(articles);
+    }
 
     const result = polls.map((p, i) => ({
       ...p,

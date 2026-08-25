@@ -41,41 +41,40 @@ export async function GET(request: Request, { params }: RouteParams) {
       orderBy: { createdAt: "asc" }
     });
 
-    const enrichedAwards = await Promise.all(
-      awards.map(async (award) => {
-        // Aggregate votes for this award
-        const votes = await prisma.awardVote.groupBy({
-          by: ["gameId"],
-          where: { awardId: award.id },
-          _count: { _all: true },
-        });
+    const enrichedAwards: any[] = [];
+    for (const award of awards) {
+      // Aggregate votes for this award
+      const votes = await prisma.awardVote.groupBy({
+        by: ["gameId"],
+        where: { awardId: award.id },
+        _count: { _all: true },
+      });
 
-        const voteCounts: Record<string, number> = {};
-        let totalVotes = 0;
-        votes.forEach(v => {
-          voteCounts[v.gameId] = v._count._all;
-          totalVotes += v._count._all;
-        });
+      const voteCounts: Record<string, number> = {};
+      let totalVotes = 0;
+      votes.forEach(v => {
+        voteCounts[v.gameId] = v._count._all;
+        totalVotes += v._count._all;
+      });
 
-        let nominees = [];
-        try {
-          if (award.nomineesJson) {
-            nominees = typeof award.nomineesJson === 'string' 
-              ? JSON.parse(award.nomineesJson) 
-              : award.nomineesJson;
-          }
-        } catch (e) {
-          console.error("Failed to parse nomineesJson", e);
+      let nominees = [];
+      try {
+        if (award.nomineesJson) {
+          nominees = typeof award.nomineesJson === 'string' 
+            ? JSON.parse(award.nomineesJson) 
+            : award.nomineesJson;
         }
+      } catch (e) {
+        console.error("Failed to parse nomineesJson", e);
+      }
 
-        return {
-          award,
-          nominees,
-          voteCounts,
-          totalVotes,
-        };
-      })
-    );
+      enrichedAwards.push({
+        award,
+        nominees,
+        voteCounts,
+        totalVotes,
+      });
+    }
 
     try {
       await cacheSet(cacheKey, enrichedAwards, 300); // 5 minutes cache
