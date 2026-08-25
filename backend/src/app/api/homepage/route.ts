@@ -75,91 +75,89 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    const [featured, breaking, latest, news, guides, reviews, popular, deals, listicles, opinions, homepagePoll1, homepagePoll2] =
-      await withRetry(() =>
-        Promise.all([
-          prisma.article.findMany({
-            where: { status: "PUBLISHED", featured: true },
-            select: ARTICLE_SELECT,
-            orderBy: { publishedAt: { sort: "desc", nulls: "last" } },
-            take: 5,
-          }),
-          prisma.article.findMany({
-            where: { status: "PUBLISHED", isBreaking: true },
-            select: ARTICLE_SELECT,
-            orderBy: { publishedAt: { sort: "desc", nulls: "last" } },
-            take: 10,
-          }),
-          prisma.article.findMany({
-            where: { status: "PUBLISHED" },
-            select: ARTICLE_SELECT,
-            orderBy: { publishedAt: { sort: "desc", nulls: "last" } },
-            take: 12,
-          }),
-          prisma.article.findMany({
-            where: { status: "PUBLISHED", contentType: "NEWS" },
-            select: ARTICLE_SELECT,
-            orderBy: { publishedAt: { sort: "desc", nulls: "last" } },
-            take: 15,
-          }),
-          prisma.article.findMany({
-            where: { status: "PUBLISHED", contentType: "GUIDE" },
-            select: ARTICLE_SELECT,
-            orderBy: { publishedAt: { sort: "desc", nulls: "last" } },
-            take: 20,
-          }),
-          prisma.article.findMany({
-            where: { status: "PUBLISHED", contentType: "REVIEW" },
-            select: ARTICLE_SELECT,
-            orderBy: { publishedAt: { sort: "desc", nulls: "last" } },
-            take: 15,
-          }),
-          prisma.article.findMany({
-            where: { status: "PUBLISHED" },
-            select: ARTICLE_SELECT,
-            orderBy: { viewCount: "desc" },
-            take: 9,
-          }),
-          prisma.article.findMany({
-            where: { status: "PUBLISHED", contentType: "DEAL" },
-            select: ARTICLE_SELECT,
-            orderBy: { publishedAt: { sort: "desc", nulls: "last" } },
-            take: 10,
-          }),
-          prisma.article.findMany({
-            where: { status: "PUBLISHED", contentType: "LISTICLE" },
-            select: ARTICLE_SELECT,
-            orderBy: { publishedAt: { sort: "desc", nulls: "last" } },
-            take: 10,
-          }),
-          prisma.article.findMany({
-            where: { status: "PUBLISHED", contentType: "OPINION" },
-            select: ARTICLE_SELECT,
-            orderBy: { publishedAt: { sort: "desc", nulls: "last" } },
-            take: 10,
-          }),
-          prisma.poll.findFirst({
-            where: { homepageSlot: 1, isActive: true, OR: [{ expiresAt: null }, { expiresAt: { gt: new Date() } }] },
-            select: { id: true },
-          }),
-          prisma.poll.findFirst({
-            where: { homepageSlot: 2, isActive: true, OR: [{ expiresAt: null }, { expiresAt: { gt: new Date() } }] },
-            select: { id: true },
-          }),
-        ])
-      );
+    let featured, breaking, latest, news, guides, reviews, popular, deals, listicles, opinions, homepagePoll1, homepagePoll2;
+    await withRetry(async () => {
+      featured = await prisma.article.findMany({
+        where: { status: "PUBLISHED", featured: true },
+        select: ARTICLE_SELECT,
+        orderBy: { publishedAt: { sort: "desc", nulls: "last" } },
+        take: 5,
+      });
+      breaking = await prisma.article.findMany({
+        where: { status: "PUBLISHED", isBreaking: true },
+        select: ARTICLE_SELECT,
+        orderBy: { publishedAt: { sort: "desc", nulls: "last" } },
+        take: 10,
+      });
+      latest = await prisma.article.findMany({
+        where: { status: "PUBLISHED" },
+        select: ARTICLE_SELECT,
+        orderBy: { publishedAt: { sort: "desc", nulls: "last" } },
+        take: 12,
+      });
+      news = await prisma.article.findMany({
+        where: { status: "PUBLISHED", contentType: "NEWS" },
+        select: ARTICLE_SELECT,
+        orderBy: { publishedAt: { sort: "desc", nulls: "last" } },
+        take: 15,
+      });
+      guides = await prisma.article.findMany({
+        where: { status: "PUBLISHED", contentType: "GUIDE" },
+        select: ARTICLE_SELECT,
+        orderBy: { publishedAt: { sort: "desc", nulls: "last" } },
+        take: 20,
+      });
+      reviews = await prisma.article.findMany({
+        where: { status: "PUBLISHED", contentType: "REVIEW" },
+        select: ARTICLE_SELECT,
+        orderBy: { publishedAt: { sort: "desc", nulls: "last" } },
+        take: 15,
+      });
+      popular = await prisma.article.findMany({
+        where: { status: "PUBLISHED" },
+        select: ARTICLE_SELECT,
+        orderBy: { viewCount: "desc" },
+        take: 9,
+      });
+      deals = await prisma.article.findMany({
+        where: { status: "PUBLISHED", contentType: "DEAL" },
+        select: ARTICLE_SELECT,
+        orderBy: { publishedAt: { sort: "desc", nulls: "last" } },
+        take: 10,
+      });
+      listicles = await prisma.article.findMany({
+        where: { status: "PUBLISHED", contentType: "LISTICLE" },
+        select: ARTICLE_SELECT,
+        orderBy: { publishedAt: { sort: "desc", nulls: "last" } },
+        take: 10,
+      });
+      opinions = await prisma.article.findMany({
+        where: { status: "PUBLISHED", contentType: "OPINION" },
+        select: ARTICLE_SELECT,
+        orderBy: { publishedAt: { sort: "desc", nulls: "last" } },
+        take: 10,
+      });
+      homepagePoll1 = await prisma.poll.findFirst({
+        where: { homepageSlot: 1, isActive: true, OR: [{ expiresAt: null }, { expiresAt: { gt: new Date() } }] },
+        select: { id: true },
+      });
+      homepagePoll2 = await prisma.poll.findFirst({
+        where: { homepageSlot: 2, isActive: true, OR: [{ expiresAt: null }, { expiresAt: { gt: new Date() } }] },
+        select: { id: true },
+      });
+    });
 
     const payload = {
-      featured: featured.map(serializeArticle),
-      breaking: breaking.map(serializeArticle),
-      latest: latest.map(serializeArticle),
-      news: news.map(serializeArticle),
-      guides: guides.map(serializeArticle),
-      reviews: reviews.map(serializeArticle),
-      popular: popular.map(serializeArticle),
-      deals: deals.map(serializeArticle),
-      listicles: listicles.map(serializeArticle),
-      opinions: opinions.map(serializeArticle),
+      featured: featured!.map(serializeArticle),
+      breaking: breaking!.map(serializeArticle),
+      latest: latest!.map(serializeArticle),
+      news: news!.map(serializeArticle),
+      guides: guides!.map(serializeArticle),
+      reviews: reviews!.map(serializeArticle),
+      popular: popular!.map(serializeArticle),
+      deals: deals!.map(serializeArticle),
+      listicles: listicles!.map(serializeArticle),
+      opinions: opinions!.map(serializeArticle),
       homepagePollId: homepagePoll1?.id ?? null,
       homepagePoll2Id: homepagePoll2?.id ?? null,
     };
