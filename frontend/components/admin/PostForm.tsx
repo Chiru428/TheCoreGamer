@@ -655,19 +655,19 @@ export default function PostForm({
           )}
           {mode === 'edit' && initialData && (
             <div className="flex flex-wrap items-center gap-x-4 text-[11px] text-text-muted ml-2 border-l border-border pl-4">
-              {initialData.createdAt && (
+              {!!initialData.createdAt && (
                 <div className="flex gap-1">
                   <span className="font-semibold text-text-primary">Created:</span>
                   <span>{new Date(initialData.createdAt as string).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })}</span>
                 </div>
               )}
-              {initialData.publishedAt && (
+              {!!initialData.publishedAt && (
                 <div className="flex gap-1">
                   <span className="font-semibold text-text-primary">Published:</span>
                   <span>{new Date(initialData.publishedAt as string).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })}</span>
                 </div>
               )}
-              {initialData.updatedAt && (
+              {!!initialData.updatedAt && (
                 <div className="flex gap-1">
                   <span className="font-semibold text-text-primary">Updated:</span>
                   <span>{new Date(initialData.updatedAt as string).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })}</span>
