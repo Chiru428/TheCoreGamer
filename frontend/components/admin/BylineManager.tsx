@@ -21,7 +21,7 @@ interface Author {
 const API_BASE =
   typeof window === 'undefined'
     ? process.env.BACKEND_URL || 'http://localhost:3001'
-    : process.env.NEXT_PUBLIC_API_URL || '';
+    : '';
 
 /** MISMATCH-05: Use API_BASE so SSR and cross-origin deployments work correctly */
 const apiFetcher = (url: string) =>

@@ -61,6 +61,7 @@ export async function GET(request: Request, { params }: RouteParams) {
       })
     );
   } catch (err) {
+    console.error("[AUTOSAVE GET ERROR]", err);
     return NextResponse.json(errorResponse("Internal server error"), { status: 500 });
   }
 }
@@ -119,6 +120,7 @@ export async function PATCH(request: Request, { params }: RouteParams) {
 
     return NextResponse.json(successResponse({ success: true }));
   } catch (err) {
+    console.error("[AUTOSAVE PATCH ERROR]", err);
     return NextResponse.json(errorResponse("Internal server error"), { status: 500 });
   }
 }
@@ -166,6 +168,7 @@ export async function DELETE(request: Request, { params }: RouteParams) {
 
     return NextResponse.json(successResponse({ success: true }));
   } catch (err) {
+    console.error("[AUTOSAVE DELETE ERROR]", err);
     return NextResponse.json(errorResponse("Internal server error"), { status: 500 });
   }
 }

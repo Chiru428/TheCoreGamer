@@ -277,13 +277,21 @@
 .gaming-content blockquote {
   border: 1px solid var(--gc-border);
   border-left: 4px solid var(--gc-accent);
-  background: var(--gc-elevated);
-  padding: 16px 20px;
-  border-radius: 10px;
+  background: #15191B;
+  padding: 12px 20px;
+  border-radius: 0;
   color: var(--gc-text);
-  font-style: italic;
+  font-style: normal;
   margin: 1.5rem 0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.gaming-content blockquote > *:first-child {
+  margin-top: 0;
+}
+
+.gaming-content blockquote > *:last-child {
+  margin-bottom: 0;
 }
 
 .gaming-content ul {
@@ -2488,7 +2496,7 @@ a.gc-dep-name:hover {
 .callout-node {
   border: 1px solid var(--gc-border);
   background: var(--gc-elevated);
-  border-radius: 10px;
+  border-radius: 0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   padding: 16px 20px;
   margin: 1.5rem 0;
@@ -4778,8 +4786,13 @@ tr:last-child .gc-loot-td {
    ══════════════════════════════════════════════════════════════ */
 
 .gaming-content .gc-figure {
-  margin: 1.25rem 0;
+  margin-top: 1.25rem;
+  margin-bottom: 0.25rem;
   padding: 0;
+}
+
+.gaming-content .gc-figure + * {
+  margin-top: 0.5rem !important;
 }
 
 .gaming-content .gc-figure img {
@@ -4797,7 +4810,7 @@ tr:last-child .gc-loot-td {
   align-items: center;
   justify-content: center;
   gap: 12px;
-  padding: 12px 0 0 0;
+  padding: 8px 0 0 0;
   font-size: 13px;
   color: var(--gc-muted);
   font-style: italic;
@@ -4806,7 +4819,7 @@ tr:last-child .gc-loot-td {
 }
 
 .gaming-content .gc-image-credit {
-  font-size: 10px;
+  font-size: 12px;
   color: var(--gc-muted);
   white-space: nowrap;
   font-style: normal;

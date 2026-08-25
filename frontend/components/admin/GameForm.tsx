@@ -412,7 +412,7 @@ export default function GameForm({ mode, gameId }: GameFormProps) {
 
       setIsFetchingIgdb(true);
       try {
-        const backendUrl = process.env.NEXT_PUBLIC_API_URL || '';
+        const backendUrl = '';
         const res = await fetch(`${backendUrl}/api/games/igdb-search?id=${existingGame.data.igdbId}`);
         if (!res.ok) return;
         const { data } = await res.json();
@@ -469,7 +469,7 @@ export default function GameForm({ mode, gameId }: GameFormProps) {
     }
     setIsFetchingIgdb(true);
     try {
-      const backendUrl = process.env.NEXT_PUBLIC_API_URL || '';
+      const backendUrl = '';
       const res = await fetch(`${backendUrl}/api/games/igdb-search?id=${igdbId}&refresh=1`);
       if (!res.ok) throw new Error('Not found on IGDB');
       const { data } = await res.json();

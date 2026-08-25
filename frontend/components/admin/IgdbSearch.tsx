@@ -151,7 +151,7 @@ export default function IgdbSearch({ onSelectGame }: IgdbSearchProps) {
       if (!query.trim()) { setResults([]); return; }
       setIsSearching(true);
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || ''}/api/games/igdb-search?q=${encodeURIComponent(query)}`, { credentials: 'include' });
+        const res = await fetch(`/api/games/igdb-search?q=${encodeURIComponent(query)}`, { credentials: 'include' });
         if (!res.ok) throw new Error('Failed to fetch from IGDB');
         const data = await res.json();
         setResults(data.data || []);
@@ -170,7 +170,7 @@ export default function IgdbSearch({ onSelectGame }: IgdbSearchProps) {
     setResults([]);
     setQuery('');
     try {
-      const backendUrl = process.env.NEXT_PUBLIC_API_URL || '';
+      const backendUrl = '';
       const res = await fetch(`${backendUrl}/api/games/igdb-search?id=${game.igdbId}&refresh=1`, { credentials: 'include' });
       if (!res.ok) throw new Error('Failed to fetch game details');
       const { data } = await res.json();
