@@ -157,10 +157,10 @@ export async function getPrices(itadGameIds: string[]): Promise<PriceResult[]> {
       }));
       results.push(...gameResults);
       try {
-        // Cache ITAD prices for only 1 minute so the hourly deals worker always
-        // fetches and writes fresh prices. Previously CACHE_TTL.LONG (30 min)
-        // caused the worker to reuse stale ITAD data across hourly runs.
-        await cacheSet(`itad:prices:${game.id}`, gameResults, CACHE_TTL.SHORT);
+        // Cache ITAD prices for the full poll interval (12 h) so repeated
+        // calls within the same window return the cached result instead of
+        // hitting the ITAD API again.
+        await cacheSet(`itad:prices:${game.id}`, gameResults, 12 * 3600);
       } catch {}
     }
 
@@ -170,7 +170,7 @@ export async function getPrices(itadGameIds: string[]): Promise<PriceResult[]> {
     for (const id of uncached) {
       if (!returnedIds.has(id)) {
         try {
-          await cacheSet(`itad:prices:${id}`, [], CACHE_TTL.SHORT);
+          await cacheSet(`itad:prices:${id}`, [], 12 * 3600);
         } catch {}
       }
     }

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { logger } from "@/lib/logger";
 import { prisma } from "@/lib/prisma";
+import { Prisma } from "@/generated/prisma";
 import { auth } from "@/lib/auth";
 import { requireRole } from "@/middleware/requireRole";
 import { addSearchIndexJob, addPushJob } from "@/lib/bullmq";
@@ -9,6 +10,8 @@ import { captureError } from "@/lib/sentry";
 import { successResponse, errorResponse } from "@/types";
 import { csrfProtection } from "@/middleware/csrfProtection";
 import { contentTypePath } from "@/lib/seoPaths";
+import { purgeArticle } from "@/lib/cloudflare";
+import { revalidateArticlePaths } from "@/lib/revalidate";
 
 interface RouteParams {
   params: Promise<{ slug: string }>;
@@ -31,18 +34,32 @@ export async function POST(request: Request, { params }: RouteParams) {
     if (article.status !== "IN_REVIEW")
       return NextResponse.json(errorResponse("Article is not in review"), { status: 400 });
 
+    const now = new Date();
+
+    // originallyPublishedAt is immutable — only set on first-ever publish, never overwritten
+    const updateData: Prisma.ArticleUncheckedUpdateInput = {
+      status: "PUBLISHED",
+      publishedAt: now,
+      editorId: session!.user.id,
+    };
+    if (!article.originallyPublishedAt) {
+      updateData.originallyPublishedAt = now;
+    }
+
     await prisma.article.update({
       where: { id: article.id },
-      data: { status: "PUBLISHED", editorId: session!.user.id, publishedAt: new Date() },
+      data: updateData,
     });
 
-    // Send approval email directly and fire-and-forget
+    // Send approval email fire-and-forget
     sendArticleApprovalEmail(
       article.User_Article_authorIdToUser.email!,
       article.User_Article_authorIdToUser.displayName,
       article.title,
       article.slug,
     ).catch(() => {});
+
+    // Invalidate Redis caches
     try {
       const { cacheDeletePattern, cacheDelete } = await import("@/lib/redis");
       await Promise.all([
@@ -55,12 +72,20 @@ export async function POST(request: Request, { params }: RouteParams) {
       logger.warn({ err }, "Cache invalidation failed");
     }
 
+    // Index in Postgres searchVector + Algolia
     await addSearchIndexJob({ articleId: article.id, action: "index" });
+
+    // Push notification to subscribers
     await addPushJob({
       title: `New: ${article.title}`,
       body: article.excerpt || "Check out this new article on TheCoreGamer!",
       url: `/${contentTypePath(article.contentType)}/${article.slug}`,
     });
+
+    // Purge Cloudflare CDN + revalidate Next.js ISR cache
+    // Previously missing — mirrors what the /publish route already does
+    await purgeArticle(article.slug, article.contentType);
+    await revalidateArticlePaths(article.slug, article.contentType);
 
     return NextResponse.json(successResponse(null, "Article approved and published"));
   } catch (err) {
