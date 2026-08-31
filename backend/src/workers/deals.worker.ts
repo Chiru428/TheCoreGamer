@@ -8,7 +8,7 @@ import { triggerFrontendRevalidationBatch } from "@/lib/revalidate";
 
 // ── Shop selection config ─────────────────────────────────────────────────────
 // Maximum number of shop price records to keep per game per poll.
-const MAX_SHOPS = 5;
+const MAX_SHOPS = 7;
 
 // Priority stores (India-relevant, globally accessible). These are always
 // picked first. Remaining slots (up to MAX_SHOPS) are filled with the
@@ -19,6 +19,8 @@ const PREFERRED_SHOPS = [
   "GOG",
   "Humble Store",
   "Microsoft Store",
+  "EA Store",
+  "Ubisoft Store",
 ];
 
 /**
