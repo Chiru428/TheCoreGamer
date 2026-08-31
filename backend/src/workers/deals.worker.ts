@@ -18,7 +18,7 @@ const PREFERRED_SHOPS = [
   "Epic Games Store",
   "GOG",
   "Humble Store",
-  "Fanatical",
+  "Microsoft Store",
 ];
 
 /**
