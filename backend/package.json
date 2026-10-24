@@ -29,7 +29,9 @@
     "workers:logs": "pm2 logs thecoregamer-workers",
     "workers:status": "pm2 status",
     "dev:workers": "npx tsx --env-file=.env src/workers/index.ts",
-    "email:preview": "email dev --dir src/emails --port 3002"
+    "email:preview": "email dev --dir src/emails --port 3002",
+    "igdb:sync": "npx tsx --env-file=.env manual-igdb-sync.ts",
+    "deals:sync": "npx tsx --env-file=.env manual-deals.ts"
   },
   "prisma": {
     "seed": "npx tsx prisma/seed.ts"

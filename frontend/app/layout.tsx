@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
-import localFont from 'next/font/local';
 import { SessionProvider as NextAuthSessionProvider } from 'next-auth/react';
 import './globals.css';
 import ToastContainer from '@/components/ui/Toast';
@@ -11,37 +10,8 @@ import ServiceWorkerRegistration from '@/components/ui/ServiceWorkerRegistration
 import ClarityScript from '@/components/shared/ClarityScript';
 import ScrollRestoration from '@/components/ui/ScrollRestoration';
 import { SITE_NAME, SITE_DESCRIPTION, SITE_URL } from '@/lib/constants';
-import { Orbitron } from 'next/font/google';
-
-const orbitron = Orbitron({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-orbitron',
-});
 
 const ADSENSE_PUB_ID = process.env.NEXT_PUBLIC_ADSENSE_ID;
-
-const calibre = localFont({
-  src: [
-    {
-      path: '../public/fonts/fa2e688780748037-s.p.woff2',
-      weight: '200',
-      style: 'normal',
-    },
-    {
-      path: '../public/fonts/69c8001088dcc787-s.p.woff2',
-      weight: '400',
-      style: 'normal',
-    },
-    {
-      path: '../public/fonts/acd629bf77ed15ef-s.p.woff2',
-      weight: '600',
-      style: 'normal',
-    },
-  ],
-  variable: '--font-calibre',
-  display: 'swap',
-});
 
 export const metadata: Metadata = {
   title: { default: SITE_NAME, template: `%s | ${SITE_NAME}` },
@@ -62,12 +32,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             Removing them saves ~6 network requests and unblocks first paint. */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Google Fonts — only families actively used in the UI (Rajdhani for headings/badges, IBM Plex Sans for gaming-content blocks) */}
         <link
-          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400;1,700&family=IBM+Plex+Serif:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&family=Barlow+Condensed:wght@700;800&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400;1,700&family=Space+Grotesk:wght@400;500;600;700&family=Sora:wght@400;500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,600;0,700;1,400&family=Rajdhani:wght@500;600;700&display=swap"
           rel="stylesheet"
         />
-        <link href="https://db.onlinewebfonts.com/c/03d33d67fd07fb2d31001eb9f90d58bf?family=Posterama+2001+W04+SemiBold" rel="stylesheet" />
-        {/* Adobe Fonts (Typekit) — Acumin Pro, used as the primary app font */}
+        {/* Adobe Fonts (Typekit) — Acumin Pro & Gibson, primary app fonts */}
         <link rel="stylesheet" href="https://use.typekit.net/vmc1rba.css" />
 
         {ADSENSE_PUB_ID && (
@@ -87,7 +57,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="alternate" type="application/rss+xml" title="TheCoreGamer Guides" href="/rss/guides.xml" />
         <link rel="alternate" type="application/rss+xml" title="TheCoreGamer Features" href="/rss/features.xml" />
       </head>
-      <body className={`${calibre.variable} ${orbitron.variable} font-sans antialiased bg-bg-primary text-text-primary`}>
+      <body className="font-sans antialiased bg-bg-primary text-text-primary">
         {/* Theme hydration script */}
         <Script id="theme-hydration" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: `
           (function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();

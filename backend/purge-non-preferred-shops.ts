@@ -2,7 +2,12 @@
  * purge-non-preferred-shops.ts
  *
  * One-time cleanup: deletes all PriceSnapshot rows whose `shop` is NOT one of
- * the 5 preferred stores we now track (Steam, Epic, GOG, Humble, Fanatical).
+ * the 7 preferred stores we now track:
+ *   Steam, Epic Games Store, GOG, Humble Store, Microsoft Store, EA Store, Ubisoft Store.
+ *
+ * This removes any stale rows from previously tracked shops (e.g. Fanatical)
+ * and any non-preferred fallback shops that were written before the filter
+ * was introduced.
  *
  * Uses chunked deletes (500 rows at a time) to avoid long table locks that
  * would block live price reads during the cleanup.
@@ -22,7 +27,9 @@ const PREFERRED_SHOPS = [
   "Epic Games Store",
   "GOG",
   "Humble Store",
-  "Fanatical",
+  "Microsoft Store",
+  "EA Store",
+  "Ubisoft Store",
 ];
 
 const CHUNK_SIZE = 500;
@@ -94,7 +101,7 @@ async function main() {
   }
 
   console.log(`\n✅ Done — removed ${totalDeleted.toLocaleString()} stale PriceSnapshot rows.`);
-  console.log(`   Only Steam, Epic, GOG, Humble Store, and Fanatical prices remain.`);
+  console.log(`   Remaining shops: Steam, Epic Games Store, GOG, Humble Store, Microsoft Store, EA Store, Ubisoft Store.`);
 }
 
 main()

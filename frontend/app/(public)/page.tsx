@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import { fetchHomepage, fetchGames } from '@/lib/api';
 import { formatDate } from '@/lib/utils';
 import HomePostCard from '@/components/blog/HomePostCard';
@@ -8,20 +9,23 @@ import { CONTENT_TYPE_LABELS, CONTENT_TYPE_COLORS, SITE_NAME, SITE_DESCRIPTION }
 import type { Article } from '@/types';
 import type { Metadata } from 'next';
 import HeroSection from '@/components/blog/HeroSection';
-
-import ScrollableArticleSection from '@/components/home/ScrollableArticleSection';
-import GameTabsSection from '@/components/home/GameTabsSection';
-import ReviewsGrid from '@/components/home/ReviewsGrid';
-import NewsWithTrending from '@/components/home/NewsWithTrending';
-import DiscoveryTabsSection from '@/components/home/DiscoveryTabsSection';
-import PollWidget from '@/components/blog/PollWidget';
-import { contentTypePath } from '@/lib/seo';
 import AdSlot from '@/components/monetization/AdSlot';
+import { contentTypePath } from '@/lib/seo';
+
+// Below-fold client components — dynamically imported so their JS is code-split
+// into separate chunks and doesn't block the initial hero render.
+const ScrollableArticleSection = dynamic(() => import('@/components/home/ScrollableArticleSection'));
+const GameTabsSection          = dynamic(() => import('@/components/home/GameTabsSection'));
+const ReviewsGrid              = dynamic(() => import('@/components/home/ReviewsGrid'));
+const NewsWithTrending         = dynamic(() => import('@/components/home/NewsWithTrending'));
+const DiscoveryTabsSection     = dynamic(() => import('@/components/home/DiscoveryTabsSection'));
+const PollWidget               = dynamic(() => import('@/components/blog/PollWidget'));
+
 
 // Ad slots always enabled on homepage
 const adsEnabled = !!process.env.NEXT_PUBLIC_ADSENSE_ID;
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 60; // ISR — regenerate homepage every 60 s in the background
 
 export const metadata: Metadata = {
  title: `${SITE_NAME} — Reviews, News & Guides`,
