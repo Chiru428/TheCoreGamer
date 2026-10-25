@@ -2,14 +2,13 @@ import { Worker, type Job, connection, isConnectionError, igdbSyncQueue } from "
 import type { IGDBImportJobData } from "@/lib/bullmq";
 import { prisma } from "@/lib/prisma";
 import { withRetry } from "@/lib/withRetry";
-import { getIGDBGame, mapIGDBGameToDb } from "@/lib/igdb";
+import { getIGDBGame, mapIGDBGameToDb, getIGDBRatingsBatch } from "@/lib/igdb";
 import { cacheSet, cacheDeletePattern } from "@/lib/redis";
 import { CACHE_TTL } from "@/lib/constants";
 import { captureError } from "@/lib/sentry";
 import { logger } from "@/lib/logger";
 import { syncGameToAlgolia, buildGameRecordById, bulkSyncGamesToAlgolia } from "./algolia.worker";
 
-const SYNC_BATCH_SIZE = 50;
 
 // Register the refresh for IGDB rating/popularity fields.
 // Runs every 3 days at 3 AM UTC instead of nightly — ratings change slowly
@@ -113,37 +112,54 @@ async function handleNightlySync() {
   }
 
 
-  let cursor: string | undefined;
+  // ── Bandwidth-efficient batch rating sync ─────────────────────────────────
+  // Previously called getIGDBGame() (2 HTTP requests, 50+ fields) per game,
+  // consuming 3–4 GB per run. Now we fetch ONLY the 3 rating fields for 500
+  // games per API call — reducing outbound traffic by ~99%.
+
+  // 1. Load all games with an igdbId from the DB in one query
+  const allGames = await prisma.game.findMany({
+    where: { igdbId: { not: null } },
+    select: { id: true, igdbId: true, title: true },
+    orderBy: { id: "asc" },
+  });
+
   let refreshed = 0;
   let failed = 0;
 
-  while (true) {
-    const games = await prisma.game.findMany({
-      where: { igdbId: { not: null } },
-      select: { id: true, igdbId: true, title: true },
-      take: SYNC_BATCH_SIZE,
-      ...(cursor ? { skip: 1, cursor: { id: cursor } } : {}),
-      orderBy: { id: "asc" },
-    });
+  // 2. Process in chunks of 500 (IGDB Apicalypse hard limit per request)
+  const IGDB_BATCH = 500;
+  for (let i = 0; i < allGames.length; i += IGDB_BATCH) {
+    const chunk = allGames.slice(i, i + IGDB_BATCH);
+    const igdbIds = chunk.map((g) => g.igdbId!).filter((id): id is number => id != null);
 
-    if (games.length === 0) break;
-    cursor = games[games.length - 1].id;
+    let ratingsMap: Map<number, { aggregated_rating?: number; aggregated_rating_count?: number }>;
+    try {
+      // Single API call returns ratings for up to 500 games
+      const ratings = await getIGDBRatingsBatch(igdbIds);
+      ratingsMap = new Map(ratings.map((r) => [r.id, r]));
+    } catch (err) {
+      failed += chunk.length;
+      logger.warn({ err }, `[IGDBWorker] Nightly sync batch failed (chunk ${i}–${i + chunk.length})`);
+      // Brief pause before next chunk on error
+      await new Promise((r) => setTimeout(r, 2000));
+      continue;
+    }
 
-    // Collect IDs of games successfully updated this batch so we can
-    // flush them to Algolia in one batched saveObjects call instead of
-    // firing one individual HTTP request per game.
+    // 3. Bulk-update DB rows for this chunk
     const updatedGameIds: string[] = [];
-
-    for (const game of games) {
+    for (const game of chunk) {
       if (!game.igdbId) continue;
+      const rating = ratingsMap.get(game.igdbId);
+      // Skip if IGDB returned no entry for this ID (unlisted/removed game)
+      if (!rating) continue;
       try {
-        const igdbGame = await getIGDBGame(game.igdbId);
         await withRetry(() =>
           prisma.game.update({
             where: { id: game.id },
             data: {
-              totalRating: igdbGame.aggregated_rating ?? null,
-              totalRatingCount: igdbGame.aggregated_rating_count ?? null,
+              totalRating: rating.aggregated_rating ?? null,
+              totalRatingCount: rating.aggregated_rating_count ?? null,
             },
           })
         );
@@ -151,22 +167,21 @@ async function handleNightlySync() {
         refreshed++;
       } catch (err) {
         failed++;
-        logger.warn({ err }, `[IGDBWorker] Nightly sync failed for "${game.title}"`);
+        logger.warn({ err }, `[IGDBWorker] DB update failed for "${game.title}"`);
       }
-      // IGDB free tier allows 4 req/s — stay well under it
-      await new Promise((resolve) => setTimeout(resolve, 300));
     }
 
-    // Flush all updated games to Algolia in one batched call per batch
-    // instead of N individual saveObject calls — reduces outbound HTTP
-    // calls from O(games) to O(games/SYNC_BATCH_SIZE).
+    // 4. Flush this chunk to Algolia in one batched call
     if (updatedGameIds.length > 0) {
       bulkSyncGamesToAlgolia(updatedGameIds).catch((err) =>
         logger.warn({ err }, "[IGDBWorker] Batched Algolia sync failed")
       );
     }
 
-    if (games.length < SYNC_BATCH_SIZE) break;
+    // Respect IGDB rate limit (4 req/s free tier) — 1s between batch calls
+    if (i + IGDB_BATCH < allGames.length) {
+      await new Promise((r) => setTimeout(r, 1000));
+    }
   }
 
   await cacheDeletePattern("games:list:*");

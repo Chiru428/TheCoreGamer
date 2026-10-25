@@ -512,7 +512,7 @@ export default function Header({ tickerArticles = [] }: { tickerArticles?: Artic
     </header>
 
     {/* Mobile menu — portal + focus trap + aria-modal */}
-    {typeof document !== 'undefined' && createPortal(
+    {themeMounted && createPortal(
       <AnimatePresence>
         {mobileMenuOpen && (
           <>

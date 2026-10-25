@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import useSWR from 'swr';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -47,11 +47,14 @@ function HoverCardBody({ profile }: { profile: UserProfileSummary }) {
 
 export default function UserHoverCard({ username, children, className }: UserHoverCardProps) {
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [coords, setCoords] = useState({ top: 0, left: 0 });
   const triggerRef = useRef<HTMLSpanElement>(null);
   const openTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const openProfile = useProfileModalStore((s) => s.openProfile);
+
+  useEffect(() => { setMounted(true); }, []);
 
   const { data } = useSWR(open ? `user-summary:${username}` : null, () => fetchUserSummary(username));
   const profile = data?.data;
@@ -88,7 +91,7 @@ export default function UserHoverCard({ username, children, className }: UserHov
       onMouseLeave={handleLeave}
     >
       {children}
-      {typeof document !== 'undefined' &&
+      {mounted &&
         createPortal(
           <AnimatePresence>
             {open && (

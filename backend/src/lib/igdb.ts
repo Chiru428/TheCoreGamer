@@ -330,6 +330,27 @@ export async function searchIGDB(query: string): Promise<IGDBGame[]> {
   return igdbFetch<IGDBGame[]>("games", body);
 }
 
+/**
+ * Lightweight batch fetch — retrieves ONLY aggregated_rating and
+ * aggregated_rating_count for up to 500 IGDB game IDs in a single API call.
+ *
+ * Use this in the nightly sync instead of getIGDBGame() to avoid fetching
+ * 50+ fields (DLCs, screenshots, similar games, etc.) per game, which was
+ * the primary cause of excessive Render outbound bandwidth (~3–4 GB per run).
+ */
+export async function getIGDBRatingsBatch(
+  igdbIds: number[]
+): Promise<Array<{ id: number; aggregated_rating?: number; aggregated_rating_count?: number }>> {
+  if (igdbIds.length === 0) return [];
+  // IGDB Apicalypse limit is 500 per request
+  const ids = igdbIds.slice(0, 500).join(",");
+  const body = `fields id,aggregated_rating,aggregated_rating_count; where id = (${ids}); limit 500;`;
+  return igdbFetch<Array<{ id: number; aggregated_rating?: number; aggregated_rating_count?: number }>>(
+    "games",
+    body
+  );
+}
+
 export async function getIGDBGame(igdbId: number): Promise<IGDBGame> {
   const body = `fields ${GAME_FIELDS}; where id = ${igdbId};`;
   const results = await igdbFetch<IGDBGame[]>("games", body);

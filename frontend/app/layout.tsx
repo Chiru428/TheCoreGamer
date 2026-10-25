@@ -17,6 +17,14 @@ export const metadata: Metadata = {
   title: { default: SITE_NAME, template: `%s | ${SITE_NAME}` },
   description: SITE_DESCRIPTION,
   metadataBase: new URL(SITE_URL),
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/icon-192.png', type: 'image/png', sizes: '192x192' },
+    ],
+    apple: [{ url: '/icon-192.png', sizes: '192x192', type: 'image/png' }],
+    other: [{ rel: 'mask-icon', url: '/icon.svg' }],
+  },
   openGraph: { type: 'website', siteName: SITE_NAME, locale: 'en_US' },
   twitter: { card: 'summary_large_image' },
   robots: { index: true, follow: true },
