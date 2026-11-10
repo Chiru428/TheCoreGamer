@@ -1,3 +1,4 @@
+import { ADS_LIVE } from '@/lib/ads';
 import { fetchPosts, fetchGuideFacets } from '@/lib/api';
 import Pagination from '@/components/ui/Pagination';
 import AdSlot from '@/components/monetization/AdSlot';
@@ -12,7 +13,7 @@ import GuideActiveFilters from '@/components/search/GuideActiveFilters';
 import GuidesListClient from '@/components/guides/GuidesListClient';
 import type { Article } from '@/types';
 
-const adsEnabled = !!process.env.NEXT_PUBLIC_ADSENSE_ID;
+const adsEnabled = ADS_LIVE;
 
 export const dynamic = 'force-dynamic';
 export const metadata = buildMeta({

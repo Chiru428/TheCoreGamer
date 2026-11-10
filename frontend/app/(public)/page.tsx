@@ -1,3 +1,4 @@
+import { ADS_LIVE } from '@/lib/ads';
 import Link from 'next/link';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
@@ -23,7 +24,7 @@ const PollWidget               = dynamic(() => import('@/components/blog/PollWid
 
 
 // Ad slots always enabled on homepage
-const adsEnabled = !!process.env.NEXT_PUBLIC_ADSENSE_ID;
+const adsEnabled = ADS_LIVE;
 
 export const revalidate = 60; // ISR — regenerate homepage every 60 s in the background
 
@@ -270,7 +271,7 @@ export default async function HomePage() {
    {adsEnabled && (
    <div className="hidden sm:flex w-full justify-center border-b border-white/[0.06]" style={{ background: 'var(--bg2)' }}>
      <div className="w-full max-w-[970px] min-h-[250px] flex items-center justify-center py-5">
-       <AdSlot slot="ADS-01" className="w-full" showPlaceholder />
+       <AdSlot slot="ADS-01" className="w-full" />
      </div>
    </div>
    )}
@@ -295,7 +296,7 @@ export default async function HomePage() {
    {adsEnabled && (
    <div className="flex sm:hidden w-full bg-[var(--bg2)] py-5 justify-center border-y border-[var(--border)]">
      <div className="w-full min-h-[250px] flex items-center justify-center px-4">
-       <AdSlot slot="ADS-01" className="w-full" showPlaceholder />
+       <AdSlot slot="ADS-01" className="w-full" />
      </div>
    </div>
    )}
@@ -335,12 +336,12 @@ export default async function HomePage() {
     <div className="mb-10 md:mb-14 flex justify-center w-full">
       <div className="hidden sm:flex w-full bg-[var(--bg2)] py-5 items-center justify-center border border-[var(--border)]">
         <div className="w-full max-w-[970px] min-h-[250px] flex items-center justify-center px-4">
-          <AdSlot slot="ADS-02" className="w-full" showPlaceholder />
+          <AdSlot slot="ADS-02" className="w-full" />
         </div>
       </div>
       <div className="flex sm:hidden w-[100vw] relative left-[50%] -translate-x-1/2 bg-[var(--bg2)] py-5 items-center justify-center border-y border-[var(--border)]">
         <div className="w-full min-h-[250px] flex items-center justify-center px-4">
-          <AdSlot slot="ADS-02" className="w-full" showPlaceholder />
+          <AdSlot slot="ADS-02" className="w-full" />
         </div>
       </div>
     </div>
@@ -452,7 +453,7 @@ export default async function HomePage() {
         {adsEnabled && (
          <div className="flex justify-center lg:sticky lg:top-[100px] mt-8 w-full">
           <div className="w-full bg-[var(--bg2)] py-5 px-4 flex items-center justify-center border border-[var(--border)]">
-            <AdSlot slot="ADS-06" className="w-full flex justify-center" showPlaceholder />
+            <AdSlot slot="ADS-06" className="w-full flex justify-center" />
           </div>
          </div>
         )}

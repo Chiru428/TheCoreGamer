@@ -1,6 +1,7 @@
+import { ADS_LIVE } from '@/lib/ads';
 import React from 'react';
 
-const adsEnabled = !!process.env.NEXT_PUBLIC_ADSENSE_ID;
+const adsEnabled = ADS_LIVE;
 
 function SectionHeadSkeleton({ className = "mb-4" }: { className?: string }) {
   return (

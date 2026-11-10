@@ -1,8 +1,9 @@
+import { ADS_LIVE } from '@/lib/ads';
 import { fetchPosts } from '@/lib/api';
 import Pagination from '@/components/ui/Pagination';
 import AdSlot from '@/components/monetization/AdSlot';
 
-const adsEnabled = !!process.env.NEXT_PUBLIC_ADSENSE_ID;
+const adsEnabled = ADS_LIVE;
 import { buildMeta } from '@/lib/seo';
 import SharedListCard from '@/components/blog/SharedListCard';
 import HomeListCard from '@/components/blog/HomeListCard';

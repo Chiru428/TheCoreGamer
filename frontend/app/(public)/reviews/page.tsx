@@ -1,8 +1,9 @@
+import { ADS_LIVE } from '@/lib/ads';
 import { fetchReviews, fetchReviewFacets } from '@/lib/api';
 import AdSlot from '@/components/monetization/AdSlot';
 import TrendingSidebarBox from '@/components/ui/TrendingSidebarBox';
 
-const adsEnabled = !!process.env.NEXT_PUBLIC_ADSENSE_ID;
+const adsEnabled = ADS_LIVE;
 import { buildMeta } from '@/lib/seo';
 import HomeListCard from '@/components/blog/HomeListCard';
 import CategorySearch from '@/components/search/CategorySearch';

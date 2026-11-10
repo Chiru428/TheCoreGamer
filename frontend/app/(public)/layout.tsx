@@ -1,3 +1,4 @@
+import { ADS_LIVE } from '@/lib/ads';
 import Header from '@/components/ui/Header';
 import Footer from '@/components/ui/Footer';
 import CookieBanner from '@/components/ui/CookieBanner';
@@ -8,7 +9,7 @@ import SearchOverlay from '@/components/search/SearchOverlay';
 import { fetchHomepage } from '@/lib/api';
 
 // Hide all ad layer boxes when AdSense is not yet configured
-const adsEnabled = !!process.env.NEXT_PUBLIC_ADSENSE_ID;
+const adsEnabled = ADS_LIVE;
 
 export default async function PublicLayout({ children }: { children: React.ReactNode }) {
   // Top ticker bar — breaking news takes priority, falls back to latest articles

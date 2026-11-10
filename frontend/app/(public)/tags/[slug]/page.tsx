@@ -1,3 +1,4 @@
+import { ADS_LIVE } from '@/lib/ads';
 import { fetchPosts, fetchTags } from '@/lib/api';
 import Pagination from '@/components/ui/Pagination';
 import { buildMeta } from '@/lib/seo';
@@ -8,7 +9,7 @@ import ContentTypeHeading from '@/components/ui/ContentTypeHeading';
 import AdSlot from '@/components/monetization/AdSlot';
 import PopularTagsBox from '@/components/ui/PopularTagsBox';
 
-const adsEnabled = !!process.env.NEXT_PUBLIC_ADSENSE_ID;
+const adsEnabled = ADS_LIVE;
 
 export const revalidate = 120;
 interface Props { params: Promise<{ slug: string }>; searchParams: Promise<Record<string, string | undefined>> }
