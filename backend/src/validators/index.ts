@@ -583,3 +583,12 @@ export const aiTagsSchema = z.object({
 export const aiRewriteSchema = z.object({
   text: z.string().min(1).max(500),
 });
+
+export const contactSchema = z.object({
+  name: z.string().trim().min(1).max(100),
+  email: z.string().trim().email().max(200),
+  subject: z.string().trim().min(1).max(200),
+  message: z.string().trim().min(10).max(5000),
+  // Honeypot: real users never fill this hidden field; bots do.
+  website: z.string().max(200).optional(),
+});

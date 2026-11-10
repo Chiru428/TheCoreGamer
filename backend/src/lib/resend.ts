@@ -162,4 +162,41 @@ export async function sendAccountDeletedEmail(email: string, displayName: string
   });
 }
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+/**
+ * Contact-form message → support inbox. replyTo is the visitor so replying
+ * from the inbox goes straight to them. All user input is HTML-escaped.
+ */
+export async function sendContactMessageEmail(data: {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}) {
+  const to = process.env.CONTACT_TO_EMAIL || "support@thecoregamer.com";
+  const html = `<div style="font-family:sans-serif;line-height:1.5">
+<p><strong>From:</strong> ${escapeHtml(data.name)} &lt;${escapeHtml(data.email)}&gt;</p>
+<p><strong>Subject:</strong> ${escapeHtml(data.subject)}</p>
+<hr />
+<p style="white-space:pre-wrap">${escapeHtml(data.message)}</p>
+</div>`;
+  // Subject is single-line only: strip CR/LF to prevent header injection.
+  const safeSubject = data.subject.replace(/[\r\n]+/g, " ").slice(0, 150);
+  return resend.emails.send({
+    from: FROM_EMAIL,
+    to,
+    replyTo: data.email,
+    subject: `[Contact] ${safeSubject}`,
+    html,
+  });
+}
+
 export default resend;

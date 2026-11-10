@@ -442,6 +442,7 @@ export const revokeSession = (id: string) => apiMutate<null>(`/api/user/sessions
 export const fetchUserStrikes = () => apiFetch<UserStrike[]>('/api/user/strikes', { cache: 'no-store' });
 
 // NEWSLETTER
+export const submitContactForm = (data: { name: string; email: string; subject: string; message: string; website?: string }) => apiMutate<null>('/api/contact', 'POST', data);
 export const subscribeNewsletter = (email: string, prefs?: Record<string, boolean>) => apiMutate<null>('/api/newsletter/subscribe', 'POST', { email, preferences: prefs });
 export const sendCampaign = (data: Record<string, unknown>) => apiMutate<null>('/api/newsletter/send', 'POST', data);
 export const sendWeeklyRoundup = () => apiMutate<null>('/api/newsletter/weekly-roundup', 'POST');

@@ -8,12 +8,14 @@ import { Mail, MessageSquare, Loader2, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import Link from 'next/link';
+import { submitContactForm } from '@/lib/api';
 
 const schema = z.object({ 
   name: z.string().min(1, 'Name is required'), 
   email: z.string().email('Valid email required'), 
   subject: z.string().min(1, 'Subject is required'), 
-  message: z.string().min(10, 'Message must be at least 10 characters') 
+  message: z.string().min(10, 'Message must be at least 10 characters'),
+  website: z.string().optional(),
 });
 
 export default function ContactPage() {
@@ -25,14 +27,20 @@ export default function ContactPage() {
     mode: 'onTouched'
   });
 
-  const onSubmit = async () => {
+  const onSubmit = async (values: z.infer<typeof schema> & { website?: string }) => {
     setButtonState('loading');
-    // Simulate network delay
-    await new Promise(r => setTimeout(r, 1000));
-    setButtonState('success');
-    addToast({ type: 'success', message: 'Message sent! We\'ll get back to you soon.' });
-    reset();
-    setTimeout(() => setButtonState('idle'), 2000);
+    try {
+      const res = await submitContactForm(values);
+      if (!res.success) throw new Error(res.error || 'Failed');
+      setButtonState('success');
+      addToast({ type: 'success', message: 'Message sent! We\'ll get back to you soon.' });
+      reset();
+      setTimeout(() => setButtonState('idle'), 2000);
+    } catch {
+      setButtonState('error');
+      addToast({ type: 'error', message: 'Could not send your message. Please email support@thecoregamer.com directly.' });
+      setTimeout(() => setButtonState('idle'), 2000);
+    }
   };
 
   return (
@@ -66,6 +74,15 @@ export default function ContactPage() {
         </p>
 
         <form onSubmit={handleSubmit(onSubmit as never)} className="space-y-4">
+          {/* Honeypot — hidden from people, bots fill it */}
+          <input
+            {...register('website')}
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            className="absolute -left-[9999px] h-0 w-0 opacity-0"
+          />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Name field */}
             <div className="relative">
