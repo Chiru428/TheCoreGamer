@@ -49,11 +49,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="stylesheet" href="https://use.typekit.net/vmc1rba.css" />
 
         {ADSENSE_PUB_ID && (
-          <Script
+          // Plain <script> (not next/script) so the tag is in the server-rendered HTML —
+          // AdSense's site verification crawler doesn't execute JS.
+          <script
             async
             src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_PUB_ID}`}
             crossOrigin="anonymous"
-            strategy="afterInteractive"
           />
         )}
         <link rel="manifest" href="/manifest.json" />
