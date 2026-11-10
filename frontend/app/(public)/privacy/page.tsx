@@ -6,7 +6,7 @@ export default function PrivacyPage() {
     <div className="max-w-3xl mx-auto px-4 py-12">
       <h1 className="text-3xl font-bold text-text-primary mb-6">Privacy Policy</h1>
       <div className="space-y-4 text-text-muted text-sm leading-relaxed">
-        <p>Last updated: 16 June 2026</p>
+        <p>Last updated: 10 November 2026</p>
 
         <h2 className="text-lg font-bold text-text-primary mt-8">1. Data We Collect</h2>
         <p>We collect information you provide directly when you create an account or interact with the site:</p>
@@ -38,14 +38,23 @@ export default function PrivacyPage() {
         <h2 className="text-lg font-bold text-text-primary mt-8">4. Cookies &amp; Consent</h2>
         <p>We use a cookie consent banner to obtain your explicit permission before loading analytics or advertising cookies. You can change your preferences at any time via the "Cookie Settings" link in the site footer. Consent choices are stored locally for 12 months before we re-prompt you. Strictly necessary cookies (session management, CSRF protection, theme preference) are always active and do not require consent.</p>
 
-        <h2 className="text-lg font-bold text-text-primary mt-8">5. Your Rights (GDPR)</h2>
+        <h2 className="text-lg font-bold text-text-primary mt-8">5. Advertising &amp; Google AdSense</h2>
+        <p>We use Google AdSense to display advertisements on this website. Third-party vendors, including Google, use cookies to serve ads based on a user&apos;s prior visits to this website or other websites.</p>
+        <ul className="list-disc list-inside space-y-1 ml-2">
+          <li>Google&apos;s use of advertising cookies enables it and its partners to serve ads to you based on your visit to this site and/or other sites on the Internet.</li>
+          <li>You can opt out of personalised advertising by visiting <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" className="underline text-accent">Google Ads Settings</a>. Alternatively, you can opt out of a third-party vendor&apos;s use of cookies for personalised advertising by visiting <a href="https://www.aboutads.info" target="_blank" rel="noopener noreferrer" className="underline text-accent">www.aboutads.info</a>.</li>
+          <li>To learn how Google uses data when you use our site, see <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer" className="underline text-accent">How Google uses information from sites or apps that use our services</a>.</li>
+          <li>If you are in the EEA, UK, or Switzerland, personalised ads are shown only if you give advertising consent through our cookie banner. You can change your choice at any time via the &quot;Cookie Settings&quot; link in the site footer.</li>
+        </ul>
+
+        <h2 className="text-lg font-bold text-text-primary mt-8">6. Your Rights (GDPR)</h2>
         <p>If you are in the EEA, UK, or Switzerland you have the right to access, correct, export, and erase your personal data. You may also object to processing, withdraw consent at any time, and lodge a complaint with your local data protection authority.</p>
         <p className="mt-2">To exercise your data rights, visit your <a href="/settings/profile" className="underline text-accent">Account Settings</a> page where you can download or permanently delete your account. For requests we cannot fulfil automatically, email <a href="mailto:privacy@thecoregamer.com" className="underline text-accent">privacy@thecoregamer.com</a>.</p>
 
-        <h2 className="text-lg font-bold text-text-primary mt-8">6. Data Retention</h2>
+        <h2 className="text-lg font-bold text-text-primary mt-8">7. Data Retention</h2>
         <p>We retain your account data for as long as your account is active. If you delete your account, your profile information (name, username, avatar, bio, email, and password) is anonymised immediately and your personal activity data — bookmarks, reading lists, followed teams, badges, point history, and push subscriptions — is permanently deleted. Comments you have posted remain visible to preserve discussion threads but are no longer associated with your account. Server logs and aggregated analytics data may be retained for up to 90 days for security and abuse-prevention purposes. Backups containing your data are rotated out within 30 days. Newsletter subscription records are retained until you unsubscribe, after which only an anonymised unsubscribed-at timestamp is kept for compliance purposes.</p>
 
-        <h2 className="text-lg font-bold text-text-primary mt-8">7. Contact</h2>
+        <h2 className="text-lg font-bold text-text-primary mt-8">8. Contact</h2>
         <p>For privacy inquiries, email <a href="mailto:privacy@thecoregamer.com" className="underline text-accent">privacy@thecoregamer.com</a>.</p>
       </div>
     </div>
