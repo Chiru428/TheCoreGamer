@@ -156,7 +156,8 @@ const nextConfig: NextConfig = {
       " https://cdn.jsdelivr.net" +
       " https://www.clarity.ms" +
       " https://clarity.ms" +
-      " https://scripts.clarity.ms",
+      " https://scripts.clarity.ms" +
+      " https://*.adtrafficquality.google",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://use.typekit.net https://p.typekit.net https://db.onlinewebfonts.com",
       "img-src 'self' data: blob:" +
       " https://res.cloudinary.com" +
@@ -187,7 +188,8 @@ const nextConfig: NextConfig = {
       (process.env.NEXT_PUBLIC_R2_HOST ? ` https://${process.env.NEXT_PUBLIC_R2_HOST.replace(/^https?:\/\//, '')}` : '') +
       " https://media0.giphy.com https://media1.giphy.com https://media2.giphy.com https://media3.giphy.com https://media4.giphy.com" +
       " https://m.media-amazon.com" +
-      " https://xboxwire.thesourcemediaassets.com",
+      " https://xboxwire.thesourcemediaassets.com" +
+      " https://*.adtrafficquality.google",
       "font-src 'self' https://fonts.gstatic.com https://use.typekit.net https://p.typekit.net https://db.onlinewebfonts.com",
       `connect-src 'self'` +
       ` https://res.cloudinary.com` +
@@ -213,6 +215,7 @@ const nextConfig: NextConfig = {
       ` https://*.algolianet.com` +
       ` https://*.algolia.io` +
       ` https://*.clarity.ms` +
+      ` https://*.adtrafficquality.google` +
       (process.env.NEXT_PUBLIC_API_URL
         ? ` ${process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, '')}`
         : '') +
@@ -223,6 +226,7 @@ const nextConfig: NextConfig = {
       " https://pagead2.googlesyndication.com" +
       " https://googleads.g.doubleclick.net" +
       " https://tpc.googlesyndication.com" +
+      " https://*.adtrafficquality.google" +
       " https://www.youtube.com" +
       " https://player.mux.com",  // B5 — video embeds
       "object-src 'none'",
