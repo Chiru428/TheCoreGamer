@@ -82,16 +82,21 @@ const BATCH_SIZE = 50;
 const RETENTION_MS = 5 * 24 * 60 * 60 * 1000; // 120 hours
 
 export function startDealsWorker() {
-  // ── Self-healing: remove any stale repeatable schedules from previous deploys ──
-  // The old "deals-poll-hourly" (every hour) was replaced by "deals-poll-every-12h".
-  // Running removeRepeatableByKey on startup ensures the old schedule is gone
-  // even if a manual cleanup script couldn't connect to Redis from outside Render.
+  // ── Self-healing: remove EVERY repeatable schedule except the intended one ──
+  // The only schedule this queue should ever have is "deals-poll-every-12h".
+  // Matching stale schedules by a hard-coded id missed any that were registered
+  // without a jobId (id === null) or under another id, so they kept firing —
+  // e.g. an hourly poll running alongside the 12h one. Instead, keep ONE known
+  // id and remove all others. Runs on Render (which can reach Redis), so no
+  // manual script from a local machine is needed.
+  const KEEP_REPEAT_ID = "deals-poll-every-12h";
   dealsQueue.getRepeatableJobs().then(async (jobs) => {
     for (const job of jobs) {
-      if (job.id === "deals-poll-hourly" || job.id === "deals-poll-every-6h") {
-        await dealsQueue.removeRepeatableByKey(job.key);
-        logger.info(`[DealsWorker] Removed stale repeatable job: "${job.id}" (${job.pattern})`);
-      }
+      if (job.id === KEEP_REPEAT_ID) continue;
+      await dealsQueue.removeRepeatableByKey(job.key);
+      logger.info(
+        `[DealsWorker] Removed stale repeatable job: id="${job.id}" pattern="${job.pattern}" every="${job.every}"`
+      );
     }
   }).catch((err) => {
     if (!isConnectionError(err)) {
