@@ -227,6 +227,7 @@ const nextConfig: NextConfig = {
       " https://googleads.g.doubleclick.net" +
       " https://tpc.googlesyndication.com" +
       " https://*.adtrafficquality.google" +
+      " https://www.google.com" +
       " https://www.youtube.com" +
       " https://player.mux.com",  // B5 — video embeds
       "object-src 'none'",
