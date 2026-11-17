@@ -28,7 +28,7 @@ const nextConfig: NextConfig = {
       "img-src 'self' data: blob: https://res.cloudinary.com https://*.supabase.co https://pagead2.googlesyndication.com https://*.googleusercontent.com https://www.google.com https://www.gstatic.com https://images.unsplash.com https://shared.akamai.steamstatic.com https://images.igdb.com https://img.youtube.com https://api.dicebear.com https://assets.nintendo.com",
       "font-src 'self' https://fonts.gstatic.com",
       "connect-src 'self' https://res.cloudinary.com https://pagead2.googlesyndication.com https://www.google-analytics.com https://analytics.google.com https://googleads.g.doubleclick.net https://adservice.google.com https://api.igdb.com https://images.igdb.com https://id.twitch.tv https://*.sentry.io",
-      "frame-src 'self' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://www.youtube.com https://player.twitch.tv https://player.mux.com",
+      "frame-src 'self' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://*.adtrafficquality.google https://www.google.com https://www.youtube.com https://player.twitch.tv https://player.mux.com",
       "object-src 'none'",
       "base-uri 'self'",
       "form-action 'self'",
