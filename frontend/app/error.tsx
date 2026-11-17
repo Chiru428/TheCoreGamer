@@ -7,6 +7,19 @@ import { AlertTriangle, RefreshCw } from 'lucide-react';
 
 export default function GlobalError({ error, reset }: { error: Error; reset: () => void }) {
   useEffect(() => {
+    // Auto-reload on stale deployment chunk errors (happens after a new deploy
+    // when the browser has cached old HTML referencing old JS chunk hashes).
+    const isChunkError =
+      error.name === 'ChunkLoadError' ||
+      error.message?.includes('Loading chunk') ||
+      error.message?.includes('Failed to fetch dynamically imported module') ||
+      error.message?.includes('Importing a module script failed');
+
+    if (isChunkError) {
+      window.location.reload();
+      return;
+    }
+
     // Report to Sentry if available
     if (typeof window !== 'undefined' && (window as unknown as Record<string, unknown>).Sentry) {
       (window as unknown as { Sentry: { captureException: (e: Error) => void } }).Sentry.captureException(error);

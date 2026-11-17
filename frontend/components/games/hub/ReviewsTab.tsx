@@ -27,6 +27,7 @@ const SORT_TABS: Array<{ id: SortMode; label: string }> = [
 ];
 
 import { Trash2, Loader2, Pencil } from 'lucide-react';
+import { useUIStore } from '@/store/uiStore';
 
 function RatingCard({ 
   rating, 
@@ -49,6 +50,7 @@ function RatingCard({
   const [isExpanded, setIsExpanded] = useState(false);
   const voteRequestId = useRef(0);
   const isLong = (rating.body?.length ?? 0) > REVIEW_TRUNCATE_LENGTH;
+  const { addToast } = useUIStore();
 
   const handleVote = async () => {
     if (!canVote || isOwn) return;
@@ -81,7 +83,10 @@ function RatingCard({
     const res = await deleteGameRating(slug);
     setDeleting(false);
     if (res.success) {
+      addToast({ type: 'success', message: 'Review deleted' });
       onDelete(rating.id);
+    } else {
+      addToast({ type: 'error', message: res.error || 'Failed to delete review' });
     }
   };
 
@@ -334,7 +339,7 @@ export default function ReviewsTab({ game, slug }: { game: GameHubData; slug: st
             );
             setIsEditing(false);
             // Reconcile the average score/distribution/total in the background.
-            mutate();
+            setTimeout(() => mutate(), 1500);
           }}
           onCancel={ratingsRes?.data?.aggregate?.userRating ? () => setIsEditing(false) : undefined}
         />
