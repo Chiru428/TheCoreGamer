@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Menu, X, User, LogOut, Bookmark, Shield, ChevronDown, Gamepad2, Star, Newspaper, BookOpen, Trophy, Tag, Play, Settings, Bell, Map, Sun, Moon, Home, UserCircle, ArrowLeft, Mouse, Smartphone, CheckSquare, ShoppingBag, MessageSquare, FileText, Mic, Lightbulb, List, Puzzle, Cpu, Zap, Award, Compass, Heart, Hash } from 'lucide-react';
-import { NAV_LINKS, STAFF_ROLES } from '@/lib/constants';
+import { STAFF_ROLES, type NavLink } from '@/lib/constants';
 import { contentTypePath } from '@/lib/seo';
 import { useAuthStore } from '@/store/authStore';
 import { useUIStore } from '@/store/uiStore';
@@ -107,7 +107,7 @@ function MobileNavItem({ link, index, setMobileMenuOpen, pathname, isActive, get
   );
 }
 
-export default function Header({ tickerArticles = [] }: { tickerArticles?: Article[] }) {
+export default function Header({ tickerArticles = [], navLinks }: { tickerArticles?: Article[]; navLinks: readonly NavLink[] }) {
   const pathname = usePathname();
   const { user, isAuthenticated, isLoading: authLoading, clearSession } = useAuthStore();
   const { mobileMenuOpen, setMobileMenuOpen, setSearchOverlayOpen, theme, setTheme } = useUIStore();
@@ -346,7 +346,7 @@ export default function Header({ tickerArticles = [] }: { tickerArticles?: Artic
 
         {/* Primary nav — desktop only, dropdowns for categories with children */}
         <nav aria-label="Main navigation" className="hidden md:flex flex-1 justify-center items-center gap-1 lg:gap-2">
-          {NAV_LINKS.map((link) => {
+          {navLinks.map((link) => {
             if (link.children) {
               return <NavDropdown key={link.label} link={link} active={isParentActive(link)} pathname={pathname} />;
             }
@@ -683,7 +683,7 @@ export default function Header({ tickerArticles = [] }: { tickerArticles?: Artic
                   isActive={isActive}
                   getNavIcon={getNavIcon}
                 />
-                {NAV_LINKS.map((link, index) => (
+                {navLinks.map((link, index) => (
                   <MobileNavItem
                     key={link.label}
                     link={link}

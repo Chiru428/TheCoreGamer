@@ -1,5 +1,7 @@
 'use client';
 
+import GameTabEmptyState from './GameTabEmptyState';
+
 import { useMemo, useState, useEffect, useRef } from 'react';
 import useSWR from 'swr';
 import Image from 'next/image';
@@ -157,7 +159,7 @@ export default function ScreenshotsTab({ slug, game }: { slug: string; game: Gam
             )}
           </>
         ) : (
-          <div className={styles.emptyState}>No official artwork available yet.</div>
+          <GameTabEmptyState variant="artwork" />
         )}
       </div>
 
@@ -235,7 +237,7 @@ export default function ScreenshotsTab({ slug, game }: { slug: string; game: Gam
             )}
           </>
         ) : (
-          <div className={styles.emptyState}>No screenshots yet. Be the first to share one!</div>
+          <GameTabEmptyState variant="screenshots" />
         )}
       </div>
 

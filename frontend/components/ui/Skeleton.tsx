@@ -701,47 +701,56 @@ const GAME_HUB_TAB_COUNT = 7; // Overview, Reviews, Articles, Media, DLC & Editi
 /** Mirrors GameHero.tsx's structure/classes so the loading state doesn't jump on hydration */
 function GameHeroSkeleton() {
   return (
-    <section className="relative w-full flex flex-col mt-[-90px]">
+    <section className="relative w-full flex flex-col">
       {/* Backdrop Image — desktop only */}
-      <div className="relative w-full h-[300px] sm:h-[400px] overflow-hidden hidden md:block">
+      <div className="relative w-full h-[400px] overflow-hidden hidden md:block">
         <div className="absolute inset-0 shimmer" />
         <div className="absolute inset-0 bg-black/20" />
       </div>
 
       {/* Blue Info Bar */}
-      <div className="w-full bg-[#2453A4] relative z-10 min-h-[400px] md:min-h-[140px]">
+      <div className="w-full bg-[#2453A4] relative z-10">
         {/* MOBILE layout */}
-        <div className="md:hidden pt-[100px] pb-6 flex flex-col px-4 gap-5">
+        <div className="md:hidden pt-6 pb-6 flex flex-col">
           <div className="flex justify-center px-6">
-             <div className="w-[300px] aspect-[2/3] shimmer border-2 border-white/40" />
+            <div className="w-[300px] bg-[#1c3e8a] p-2 border-2 border-white/40 shadow-xl">
+              <div className="w-full aspect-[2/3] shimmer" />
+            </div>
           </div>
-          <div className="flex flex-col gap-3 items-center">
-             <div className="shimmer rounded" style={{ height: 36, width: '80%' }} />
-             <div className="shimmer rounded" style={{ height: 20, width: '60%' }} />
-             <div className="shimmer rounded" style={{ height: 20, width: '70%' }} />
+          <div className="mt-5 flex flex-col gap-3 w-[300px] mx-auto">
+            <div className="shimmer rounded h-[37.5px] w-4/5 mx-auto" />
+            <div className="flex flex-col items-center gap-3 w-full">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <div key={i} className="flex flex-col items-center gap-0.5 w-full">
+                  <div className="shimmer rounded h-[18px] w-20" />
+                  <div className="shimmer rounded h-6 w-3/4" />
+                </div>
+              ))}
+            </div>
+            <div className="bg-[#183973] mt-1 h-[184px] w-full shimmer" />
           </div>
-          <div className="bg-[#183973] mt-4 shimmer" style={{ height: 120 }} />
         </div>
 
         {/* DESKTOP layout */}
         <div className="max-w-[1280px] mx-auto pr-4 lg:pr-8 relative min-h-[140px] hidden md:flex md:flex-row md:items-center justify-between pb-4 pt-4 pl-4 md:pl-[280px] lg:pl-[300px]">
           {/* Absolute Cover Art */}
-          <div className="absolute bottom-[-50px] left-4 lg:left-8 w-[260px] p-3 pb-[50px] z-20">
+          <div className="absolute bottom-[-50px] left-4 lg:left-8 w-[260px] bg-[#2453A4] p-3 pb-[50px] z-20">
             <div className="w-full aspect-[2/3] relative border-4 border-white shimmer" />
           </div>
 
           {/* Left Metadata */}
-          <div className="flex flex-col gap-4 z-10 py-4 flex-1 min-w-0 pr-4 md:pr-8">
+          <div className="flex flex-col gap-2 z-10 py-4 flex-1 min-w-0 pr-4 md:pr-8">
             <div className="shimmer rounded" style={{ height: 44, width: '60%' }} />
-            <div className="flex flex-col gap-3">
-              <div className="shimmer rounded" style={{ height: 20, width: '40%' }} />
-              <div className="shimmer rounded" style={{ height: 20, width: '50%' }} />
+            <div className="flex flex-col gap-2">
+              <div className="shimmer rounded" style={{ height: 24, width: '70%' }} />
+              <div className="shimmer rounded" style={{ height: 24, width: '80%' }} />
+              <div className="shimmer rounded" style={{ height: 24, width: '60%' }} />
             </div>
           </div>
 
           {/* Right Ratings */}
           <div className="flex flex-col items-end gap-4 relative z-10 shrink-0">
-             <div className="bg-[#183973] shadow-sm min-w-[280px] h-[116px] shimmer" />
+             <div className="bg-[#183973] shadow-sm w-[330px] h-[184px] shimmer" />
           </div>
         </div>
       </div>
@@ -752,10 +761,10 @@ function GameHeroSkeleton() {
 /** Mirrors GameHubTabs.tsx's sticky tab bar */
 function GameHubTabBarSkeleton() {
   return (
-    <nav className={hub.tabBar} aria-hidden>
-      <div className={hub.tabBarInner}>
+    <nav className="w-full bg-[#2453A4] sticky z-30 shadow-lg" style={{ top: 'var(--sticky-offset, 90px)' }} aria-hidden>
+      <div className="max-w-[1280px] mx-auto px-4 lg:px-8 h-[50px] flex overflow-hidden whitespace-nowrap">
         {Array.from({ length: GAME_HUB_TAB_COUNT }).map((_, i) => (
-          <div key={i} className={hub.tabBtn}>
+          <div key={i} className="flex items-center px-4 md:px-5 h-full border-b-4 border-transparent shrink-0">
             <div className="shimmer rounded" style={{ height: 12, width: 60 }} />
           </div>
         ))}

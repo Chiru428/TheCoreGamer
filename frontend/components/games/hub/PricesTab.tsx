@@ -1,5 +1,7 @@
 'use client';
 
+import GameTabEmptyState from './GameTabEmptyState';
+
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { ExternalLink, CalendarDays, ShieldCheck } from 'lucide-react';
@@ -163,7 +165,7 @@ export default function PricesTab({ game, slug }: { game: GameHubData; slug: str
   }, [game.id]);
 
   if (prices.length === 0 && !loading) {
-    return <div className="text-center py-12 text-gray-400 bg-[#1a1a1a] border border-dashed border-white/10 rounded-none">No price data tracked yet for {game.title}.</div>;
+    return <GameTabEmptyState variant="prices" />;
   }
 
   return (

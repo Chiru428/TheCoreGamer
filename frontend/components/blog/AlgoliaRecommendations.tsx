@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -43,6 +43,8 @@ interface AlgoliaRecommendationsProps {
   staticBadges?: boolean;
   /** If true, render nothing while loading (suppress the shimmer skeleton). */
   hideSkeleton?: boolean;
+  /** Optional empty state when no recommendations are available. */
+  emptyFallback?: ReactNode;
 }
 
 export default function AlgoliaRecommendations({
@@ -57,6 +59,7 @@ export default function AlgoliaRecommendations({
   titleClassName,
   staticBadges = false,
   hideSkeleton = false,
+  emptyFallback = null,
 }: AlgoliaRecommendationsProps) {
   const { data: session } = useSession();
   const [hits, setHits] = useState<RecommendationHit[]>([]);
@@ -138,7 +141,7 @@ export default function AlgoliaRecommendations({
     );
   }
 
-  if (hasError || hits.length === 0) return null;
+  if (hasError || hits.length === 0) return emptyFallback;
 
   return (
     <section className={cn(layout === 'sidebar' ? 'md:bg-[var(--bg2)] md:px-7 md:py-5 mt-12 md:mt-0' : 'mt-12', className)}>

@@ -1,5 +1,7 @@
 'use client';
 
+import GameTabEmptyState from './GameTabEmptyState';
+
 import Link from 'next/link';
 import type { GameHubData } from '@/types';
 import AlgoliaRecommendations from '@/components/blog/AlgoliaRecommendations';
@@ -44,9 +46,7 @@ export default function SimilarTab({ game }: { game: GameHubData }) {
       ))}
      </div>
     </>
-   ) : (
-    <div style={{ color: 'var(--text-muted)', padding: '2rem 0' }}>No similar games found in the database.</div>
-   )}
+   ) : null}
 
    <AlgoliaRecommendations
     objectID={`game_${game.id}`}
@@ -56,6 +56,7 @@ export default function SimilarTab({ game }: { game: GameHubData }) {
     max={8}
     layout="grid"
     hideSkeleton
+    emptyFallback={similarGames.length === 0 ? <GameTabEmptyState variant="similar" /> : null}
    />
   </div>
  );

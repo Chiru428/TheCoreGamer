@@ -1,5 +1,7 @@
 'use client';
 
+import GameTabEmptyState from './GameTabEmptyState';
+
 import { useState, useRef } from 'react';
 import useSWR from 'swr';
 import Link from 'next/link';
@@ -297,10 +299,7 @@ export default function ReviewsTab({ game, slug }: { game: GameHubData; slug: st
       ) : (
         <div className={styles.contentCard}>
           <div className="section-title-bar">TheCoreGamer Review</div>
-          <div className="flex items-center gap-5">
-            <div className={`shimmer ${styles.shimmerHex}`} />
-            <p style={{ color: 'var(--muted2)' }}>No review yet — check back soon.</p>
-          </div>
+          <GameTabEmptyState variant="review" compact />
         </div>
       )}
 
@@ -346,6 +345,7 @@ export default function ReviewsTab({ game, slug }: { game: GameHubData; slug: st
         </p>
       )}
 
+      {ratings.length > 0 && (
       <div className={styles.sortTabs}>
         {SORT_TABS.map((t) => (
           <button
@@ -358,6 +358,8 @@ export default function ReviewsTab({ game, slug }: { game: GameHubData; slug: st
           </button>
         ))}
       </div>
+
+      )}
 
       {isLoading ? (
         <div className={styles.ratingGrid}>
@@ -429,7 +431,7 @@ export default function ReviewsTab({ game, slug }: { game: GameHubData; slug: st
           )}
         </>
       ) : (
-        <div className={styles.emptyState}>No community ratings yet. Be the first to rate this game!</div>
+        <GameTabEmptyState variant="community" compact />
       )}
     </div>
   );

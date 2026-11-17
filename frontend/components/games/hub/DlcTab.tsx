@@ -1,5 +1,7 @@
 'use client';
 
+import GameTabEmptyState from './GameTabEmptyState';
+
 import Image from 'next/image';
 import { ExternalLink, ShoppingCart, Package } from 'lucide-react';
 import type { GameHubData, GameMediaEntry } from '@/types';
@@ -59,7 +61,7 @@ export default function DlcTab({ game }: { game: GameHubData }) {
     linkedEditions.length === 0 && dlcsJson.length === 0 && expansionsJson.length === 0;
 
   if (hasNothing) {
-    return <div className={styles.emptyState}>No DLC tracked yet for {game.title}.</div>;
+    return <GameTabEmptyState variant="dlc" />;
   }
 
   const groupedDlc = CATEGORY_ORDER.map((category) => ({

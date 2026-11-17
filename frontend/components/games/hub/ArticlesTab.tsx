@@ -1,5 +1,7 @@
 'use client';
 
+import GameTabEmptyState from './GameTabEmptyState';
+
 import { useState } from 'react';
 import useSWRInfinite from 'swr/infinite';
 import { Loader2 } from 'lucide-react';
@@ -103,9 +105,10 @@ export default function ArticlesTab({ game, slug }: { game: GameHubData; slug: s
           )}
         </>
       ) : (
-        <div className={styles.emptyState}>
-          No {contentType ? contentType.replace('_', ' ').toLowerCase() : ''} articles linked to this game yet.
-        </div>
+        <GameTabEmptyState
+          variant="articles"
+          description={contentType ? `No ${contentType.replace('_', ' ').toLowerCase()} articles available for this game yet.` : undefined}
+        />
       )}
     </div>
   );

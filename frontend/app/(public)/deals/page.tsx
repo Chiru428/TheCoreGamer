@@ -6,7 +6,7 @@ import AdSlot from '@/components/monetization/AdSlot';
 const adsEnabled = ADS_LIVE;
 import { buildMeta } from '@/lib/seo';
 import SharedListCard from '@/components/blog/SharedListCard';
-import HomeListCard from '@/components/blog/HomeListCard';
+import GamingComingSoon from '@/components/ui/GamingComingSoon';
 import TrendingSidebarBox from '@/components/ui/TrendingSidebarBox';
 
 import CategorySearch from '@/components/search/CategorySearch';
@@ -29,6 +29,7 @@ export default async function DealsListingPage({ searchParams }: Props) {
 
   const articles = mainRes.data || [];
   const popularArticles = popularRes.data || [];
+  const hasContent = articles.length > 0 || popularArticles.length > 0;
 
   return (
     <>
@@ -43,15 +44,20 @@ export default async function DealsListingPage({ searchParams }: Props) {
 
       <div className="w-full max-w-[1280px] mx-auto px-4 lg:px-0 pt-6 md:pt-10 pb-8">
         <ContentTypeHeading title="DEALS" />
-        <div className="mb-4 md:mb-8 flex flex-wrap items-center justify-between gap-4">
-          <CategorySearch contentType="DEAL" placeholder="Search deals..." />
-        </div>
+        {hasContent && (
+          <div className="mb-4 md:mb-8 flex flex-wrap items-center justify-between gap-4">
+            <CategorySearch contentType="DEAL" placeholder="Search deals..." />
+          </div>
+        )}
 
       {/* Two-column layout */}
+      {!hasContent ? (
+        <GamingComingSoon section="deals" />
+      ) : (
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] xl:grid-cols-[900px_1fr] gap-6 md:gap-8 items-start min-h-screen">
 
         {/* -- Main list ----------------------------------- */}
-        <div className="lg:border-r-2 lg:border-border lg:pr-8">
+        <div className={hasContent ? 'lg:border-r-2 lg:border-border lg:pr-8' : undefined}>
           {articles.length === 0 ? (
             <div className="text-center py-20 text-text-muted">No deals yet. Check back soon!</div>
           ) : (
@@ -87,6 +93,7 @@ export default async function DealsListingPage({ searchParams }: Props) {
           )}
         </aside>
       </div>
+      )}
     </div>
     </>
   );
