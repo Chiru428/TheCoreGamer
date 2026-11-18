@@ -6,7 +6,7 @@ import { validateBody } from "@/middleware/validateBody";
 import { updateGameSchema } from "@/validators";
 import { captureError } from "@/lib/sentry";
 import { successResponse, errorResponse } from "@/types";
-import { cacheGet, cacheSet, cacheDeletePattern } from "@/lib/redis";
+import { cacheGet, cacheSet, cacheDelete, cacheDeletePattern } from "@/lib/redis";
 import { CACHE_TTL } from "@/lib/constants";
 import { logger } from "@/lib/logger";
 import { csrfProtection } from "@/middleware/csrfProtection";
@@ -212,7 +212,7 @@ export async function PUT(request: Request, { params }: RouteParams) {
 
     try {
       await cacheDeletePattern("games:list:*");
-      await cacheDeletePattern(`game:hub:${updated.slug}`);
+      await cacheDelete(`game:hub:${updated.slug}`);
       await triggerFrontendRevalidation("/games");
       await triggerFrontendRevalidation(`/games/${updated.slug}`);
     } catch (err) {
@@ -255,7 +255,7 @@ export async function DELETE(request: Request, { params }: RouteParams) {
 
     try {
       await cacheDeletePattern("games:list:*");
-      await cacheDeletePattern(`game:hub:${game.slug}`);
+      await cacheDelete(`game:hub:${game.slug}`);
       await triggerFrontendRevalidation("/games");
       await triggerFrontendRevalidation(`/games/${game.slug}`);
     } catch (err) {

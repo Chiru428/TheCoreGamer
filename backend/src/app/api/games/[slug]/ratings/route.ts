@@ -7,10 +7,28 @@ import { requireAuth } from "@/middleware/requireRole";
 import { validateBody } from "@/middleware/validateBody";
 import { captureError } from "@/lib/sentry";
 import { parsePagination, buildPaginationMeta, successResponse, errorResponse } from "@/types";
-import { cacheGet, cacheSet, cacheDeletePattern } from "@/lib/redis";
+import { cacheGet, cacheSet, cacheDelete } from "@/lib/redis";
 import { CACHE_TTL } from "@/lib/constants";
 import { createUserRatingSchema } from "@/validators";
 import { csrfProtection } from "@/middleware/csrfProtection";
+
+type Params = { params: Promise<{ slug: string }> };
+
+// Bust all known rating cache keys for a slug atomically.
+// Using explicit deletes instead of pattern scan (cacheDeletePattern via
+// redis.keys() is unreliable on Upstash REST tier — often returns empty).
+async function bustRatingsCache(slug: string) {
+  // Bust agg key
+  await cacheDelete(`game:${slug}:ratings:agg`);
+  // Bust common paginated keys (pages 1-5, default limits 10 & 50)
+  const pageLimits = [
+    [1, 10], [1, 50], [2, 10], [2, 50], [3, 10], [3, 50],
+    [4, 10], [4, 50], [5, 10], [5, 50],
+  ];
+  await Promise.all(
+    pageLimits.map(([p, l]) => cacheDelete(`game:${slug}:ratings:p${p}:l${l}`))
+  );
+}
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -209,17 +227,13 @@ export async function POST(request: NextRequest, { params }: Params) {
       User: undefined,
     };
 
-    // Recomputing the game's average score and busting the ratings cache
-    // don't affect this response — running them after the response is sent
-    // (rather than awaiting several sequential DB/Redis round trips first)
-    // is what was making "Post review" feel slow.
-    after(async () => {
-      try {
-        await cacheDeletePattern(`game:${slug}:ratings:*`);
-      } catch {
-        /* intentionally empty */
-      }
-    });
+    // Bust ratings cache synchronously before responding so a reload
+    // immediately after posting always sees the new rating (not stale cache).
+    try {
+      await bustRatingsCache(slug);
+    } catch {
+      /* non-fatal */
+    }
 
     return NextResponse.json(successResponse(mappedRating, "Rating saved"), { status: 201 });
   } catch (err) {
@@ -255,9 +269,9 @@ export async function DELETE(request: NextRequest, { params }: Params) {
     );
 
     try {
-      await cacheDeletePattern(`game:${slug}:ratings:*`);
+      await bustRatingsCache(slug);
     } catch {
-      /* intentionally empty */
+      /* non-fatal */
     }
 
     return NextResponse.json(successResponse(null, "Rating removed"));
