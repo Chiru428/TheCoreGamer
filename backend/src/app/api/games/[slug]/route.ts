@@ -63,7 +63,7 @@ export async function GET(request: Request, { params }: RouteParams) {
         },
         dlcs: {
           select: {
-            id: true, title: true, slug: true, coverImageUrl: true, 
+            id: true, title: true, slug: true, coverImageUrl: true,
             releaseDate: true, gameEdition: true,
           }
         },
