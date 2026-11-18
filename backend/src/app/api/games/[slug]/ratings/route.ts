@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse, after } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { logger } from "@/lib/logger";
 import { prisma } from "@/lib/prisma";
 import { withRetry } from "@/lib/withRetry";
@@ -11,8 +11,6 @@ import { cacheGet, cacheSet, cacheDelete } from "@/lib/redis";
 import { CACHE_TTL } from "@/lib/constants";
 import { createUserRatingSchema } from "@/validators";
 import { csrfProtection } from "@/middleware/csrfProtection";
-
-type Params = { params: Promise<{ slug: string }> };
 
 // Bust all known rating cache keys for a slug atomically.
 // Using explicit deletes instead of pattern scan (cacheDeletePattern via
