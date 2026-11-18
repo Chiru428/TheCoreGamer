@@ -6,7 +6,8 @@ import { validateBody } from "@/middleware/validateBody";
 import { updateGameSchema } from "@/validators";
 import { captureError } from "@/lib/sentry";
 import { successResponse, errorResponse } from "@/types";
-import { cacheDeletePattern } from "@/lib/redis";
+import { cacheGet, cacheSet, cacheDeletePattern } from "@/lib/redis";
+import { CACHE_TTL } from "@/lib/constants";
 import { logger } from "@/lib/logger";
 import { csrfProtection } from "@/middleware/csrfProtection";
 import { syncGameToAlgolia, deleteGameFromAlgolia } from "@/workers/algolia.worker";
@@ -23,6 +24,17 @@ export async function GET(request: Request, { params }: RouteParams) {
     if (rateLimitResponse) return rateLimitResponse;
 
     const { slug } = await params;
+
+    // ── Redis cache ────────────────────────────────────────────────────────
+    const cacheKey = `game:hub:${slug}`;
+    try {
+      const cached = await cacheGet<Record<string, unknown>>(cacheKey);
+      if (cached) return NextResponse.json(successResponse(cached));
+    } catch {
+      /* non-fatal: proceed to DB */
+    }
+    // ──────────────────────────────────────────────────────────────────────
+
     const game = await prisma.game.findUnique({
       where: { slug },
       include: {
@@ -142,19 +154,27 @@ export async function GET(request: Request, { params }: RouteParams) {
       }))
       .sort((a, b) => a.priceINR - b.priceINR);
 
-    return NextResponse.json(
-      successResponse({
-        ...game,
-        articlesCount,
-        articleContentTypes: articleContentTypesRaw.map(g => g.contentType),
-        userRatings: {
-          average: ratingAgg._avg.score !== null ? Number(ratingAgg._avg.score.toFixed(1)) : 0,
-          count: ratingAgg._count._all,
-        },
-        priceData,
-        dbSimilarGames,
-      })
-    );
+    const payload = {
+      ...game,
+      articlesCount,
+      articleContentTypes: articleContentTypesRaw.map(g => g.contentType),
+      userRatings: {
+        average: ratingAgg._avg.score !== null ? Number(ratingAgg._avg.score.toFixed(1)) : 0,
+        count: ratingAgg._count._all,
+      },
+      priceData,
+      dbSimilarGames,
+    };
+
+    // Write to cache (non-fatal). TTL = MEDIUM (5 min).
+    // Busted on game PUT/DELETE below.
+    try {
+      await cacheSet(cacheKey, payload, CACHE_TTL.MEDIUM);
+    } catch {
+      /* non-fatal */
+    }
+
+    return NextResponse.json(successResponse(payload));
   } catch (err: any) {
     logger.error("API GET ERROR:", err);
     captureError(err);
@@ -192,6 +212,7 @@ export async function PUT(request: Request, { params }: RouteParams) {
 
     try {
       await cacheDeletePattern("games:list:*");
+      await cacheDeletePattern(`game:hub:${updated.slug}`);
       await triggerFrontendRevalidation("/games");
       await triggerFrontendRevalidation(`/games/${updated.slug}`);
     } catch (err) {
@@ -234,6 +255,7 @@ export async function DELETE(request: Request, { params }: RouteParams) {
 
     try {
       await cacheDeletePattern("games:list:*");
+      await cacheDeletePattern(`game:hub:${game.slug}`);
       await triggerFrontendRevalidation("/games");
       await triggerFrontendRevalidation(`/games/${game.slug}`);
     } catch (err) {
