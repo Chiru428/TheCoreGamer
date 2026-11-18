@@ -316,20 +316,20 @@ export default function ReviewsTab({ game, slug }: { game: GameHubData; slug: st
           slug={slug} 
           existing={ratingsRes?.data?.aggregate?.userRating ?? null} 
           onSaved={(saved) => {
-            // Update the cache with the rating the POST already returned
-            // instead of waiting on a second round-trip refetch to learn
-            // it — that revalidation lag was what made the form linger
-            // on-screen after the "Review posted!" toast.
+            // Called twice: once optimistically (immediate), once with real server data.
+            // Both times we update the local SWR cache without re-fetching the server
+            // so the editor never flips back due to a stale cache response.
             mutate(
               (current) => {
                 if (!current?.data) return current;
-                const wasNew = !current.data.aggregate.userRating;
+                const wasNew = !current.data.aggregate.userRating ||
+                  current.data.aggregate.userRating.id?.startsWith('optimistic-');
                 return {
                   ...current,
                   data: {
                     ...current.data,
                     ratings: wasNew
-                      ? [saved, ...current.data.ratings]
+                      ? [saved, ...current.data.ratings.filter((r) => !r.id?.startsWith('optimistic-'))]
                       : current.data.ratings.map((r) => (r.userId === saved.userId ? saved : r)),
                     aggregate: { ...current.data.aggregate, userRating: saved },
                   },
@@ -338,10 +338,6 @@ export default function ReviewsTab({ game, slug }: { game: GameHubData; slug: st
               { revalidate: false }
             );
             setIsEditing(false);
-            // Reconcile the average score/distribution/total in the background,
-            // but keep revalidate:false so the userRating we just optimistically
-            // set isn't wiped out by a stale cache response from the server.
-            setTimeout(() => mutate(undefined, { revalidate: false }), 1500);
           }}
           onCancel={ratingsRes?.data?.aggregate?.userRating ? () => setIsEditing(false) : undefined}
         />
@@ -406,8 +402,9 @@ export default function ReviewsTab({ game, slug }: { game: GameHubData; slug: st
                       },
                       { revalidate: false }
                     );
-                    // Reconcile the average score/distribution/total in the background.
-                    mutate();
+                    // Reconcile aggregate stats after cache has had time to bust.
+                    // revalidate:false keeps the optimistic removal intact.
+                    setTimeout(() => mutate(undefined, { revalidate: false }), 2000);
                   }}
                 />
               );

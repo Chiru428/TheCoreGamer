@@ -5,6 +5,7 @@ import { Star, Loader2 } from 'lucide-react';
 import { cn, getScoreLabel } from '@/lib/utils';
 import { createGameRating } from '@/lib/api';
 import { useUIStore } from '@/store/uiStore';
+import { useSession } from 'next-auth/react';
 import type { UserRating } from '@/types';
 
 function ScoreSelector({ value, onChange }: { value: number | null; onChange: (v: number) => void }) {
@@ -51,6 +52,7 @@ export default function ReviewForm({
   onCancel?: () => void;
 }) {
   const { addToast } = useUIStore();
+  const { data: session } = useSession();
   const [score, setScore] = useState<number | null>(existing?.score ?? null);
   const [body, setBody] = useState(existing?.body ?? '');
   const [saving, setSaving] = useState(false);
@@ -61,10 +63,34 @@ export default function ReviewForm({
       return;
     }
     setSaving(true);
+
+    // Build an optimistic rating immediately so the parent can close the
+    // form and show the card without waiting for the API round-trip.
+    const optimistic: UserRating = {
+      ...(existing ?? ({} as UserRating)),
+      id: existing?.id ?? `optimistic-${Date.now()}`,
+      userId: existing?.userId ?? session?.user?.id ?? '',
+      gameId: existing?.gameId ?? '',
+      score,
+      body: body.trim() || null,
+      helpfulCount: existing?.helpfulCount ?? 0,
+      createdAt: existing?.createdAt ?? new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      myVote: existing?.myVote ?? null,
+      user: existing?.user ?? {
+        id: session?.user?.id ?? '',
+        username: (session?.user as any)?.username ?? session?.user?.name ?? '',
+        displayName: session?.user?.name ?? '',
+        avatarUrl: session?.user?.image ?? null,
+      },
+    } as unknown as UserRating;
+    onSaved(optimistic);
+
     const res = await createGameRating(slug, { score, body: body.trim() || undefined });
     setSaving(false);
     if (res.success && res.data) {
       addToast({ type: 'success', message: existing ? 'Review updated' : 'Review posted!' });
+      // Replace the optimistic card with the real server data
       onSaved(res.data);
     } else {
       addToast({ type: 'error', message: res.error || 'Failed to save review' });
