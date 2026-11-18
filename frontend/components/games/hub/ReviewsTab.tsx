@@ -338,8 +338,10 @@ export default function ReviewsTab({ game, slug }: { game: GameHubData; slug: st
               { revalidate: false }
             );
             setIsEditing(false);
-            // Reconcile the average score/distribution/total in the background.
-            setTimeout(() => mutate(), 1500);
+            // Reconcile the average score/distribution/total in the background,
+            // but keep revalidate:false so the userRating we just optimistically
+            // set isn't wiped out by a stale cache response from the server.
+            setTimeout(() => mutate(undefined, { revalidate: false }), 1500);
           }}
           onCancel={ratingsRes?.data?.aggregate?.userRating ? () => setIsEditing(false) : undefined}
         />
